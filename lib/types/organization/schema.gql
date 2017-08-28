@@ -1,0 +1,31 @@
+type OrganizationInfo {
+  id: String!
+  name: String!
+}
+
+type Organization {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  name: String!
+  members: [MemberInfo]!
+  activeTournaments: [TournamentInfo]!
+  finishedTournaments: [TournamentInfo]!
+}
+
+extend type Mutation {
+  # Every member can create an organization
+  createOrganization(memberId: String!, name: String!): Organization
+  # Promote a member to admin
+  setMemberAsAdmin(memberId: String!, organizationId: String!): Organization
+  # Every member can add new members to the organization
+  addMemberToOrganization(
+    memberId: String!
+    organizationId: String!
+  ): Organization
+  # Only admin members can remove members from the organization
+  removeMemberFromOrganization(
+    memberId: String!
+    organizationId: String!
+  ): Organization
+}

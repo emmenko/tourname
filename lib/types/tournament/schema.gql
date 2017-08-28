@@ -1,0 +1,153 @@
+enum Discipline {
+  POOL_TABLE
+  TABLE_TENNIS
+}
+
+enum TournamentSize {
+  SMALL
+  MEDIUM
+  LARGE
+  XLARGE
+}
+
+enum TournamentStatus {
+  NEW
+  IN_PROGRESS
+  FINISHED
+}
+
+type PlayerInfo {
+  id: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+}
+
+interface Tournament {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  discipline: Discipline!
+  name: String!
+  organizationId: String!
+  status: TournamentStatus!
+  players: [PlayerInfo]!
+}
+
+type TournamentInfo {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  discipline: Discipline!
+  name: String!
+  status: TournamentStatus!
+  size: TournamentSize!
+}
+
+type TournamentSmall implements Tournament {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  discipline: Discipline!
+  name: String!
+  organizationId: String!
+  status: TournamentStatus!
+  # Small: 4 players
+  players: [PlayerInfo]!
+  matchesLeg1: [Match]! # 2 matches
+  matchesLeg2: Match # 1 match
+}
+
+type TournamentMedium implements Tournament {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  discipline: Discipline!
+  name: String!
+  organizationId: String!
+  status: TournamentStatus!
+  # Small: 8 players
+  players: [PlayerInfo]!
+  matchesLeg1: [Match]! # 4 matches
+  matchesLeg2: [Match]! # 2 matches
+  matchesLeg3: Match # 1 match
+}
+
+type TournamentLarge implements Tournament {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  discipline: Discipline!
+  name: String!
+  organizationId: String!
+  status: TournamentStatus!
+  # Small: 16 players
+  players: [PlayerInfo]!
+  matchesLeg1: [Match]! # 8 matches
+  matchesLeg2: [Match]! # 4 matches
+  matchesLeg3: [Match]! # 2 matches
+  matchesLeg4: Match # 1 match
+}
+
+type TournamentXLarge implements Tournament {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  discipline: Discipline!
+  name: String!
+  organizationId: String!
+  status: TournamentStatus!
+  # Small: 32 players
+  players: [PlayerInfo]!
+  matchesLeg1: [Match]! # 16 matches
+  matchesLeg2: [Match]! # 8 matches
+  matchesLeg3: [Match]! # 4 matches
+  matchesLeg4: [Match]! # 2 matches
+  matchesLeg5: Match # 1 match
+}
+
+extend type Query {
+  tournament(id: String!): Tournament
+}
+
+extend type Mutation {
+  # Every member can create a new tournament
+  createSmallTournament(
+    name: String!
+    discipline: Discipline!
+    organizationId: String!
+  ): TournamentSmall
+  createMediumTournament(
+    name: String!
+    discipline: Discipline!
+    organizationId: String!
+  ): TournamentMedium
+  createLargeTournament(
+    name: String!
+    discipline: Discipline!
+    organizationId: String!
+  ): TournamentLarge
+  createXLargeTournament(
+    name: String!
+    discipline: Discipline!
+    organizationId: String!
+  ): TournamentXLarge
+  # Called when a member wants to join a tournament
+  addPlayerToTournament(id: String!, memberId: String!): Tournament
+  # Called when a member wants to pull out of a tournament
+  removePlayerFromTournament(id: String!, memberId: String!): Tournament
+  # Will create all the tournament matches, then assign players randomly to the
+  # first leg and change the status to "IN_PROGRESS".
+  # NOTE: this can be triggered only when the tournament has the correct amount
+  # of players
+  startTournament(id: String!): Tournament
+  # Update a match to set the winnerId. If the match is the last of the tournament,
+  # the tournament will be set as finished.
+  # This action is irreversible, once the winner is set, it cannot be
+  # changed.
+  setMatchWinner(
+    tournamentId: String!
+    matchId: String!
+    playerId: String!
+  ): Tournament
+}

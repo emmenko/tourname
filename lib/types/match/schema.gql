@@ -1,0 +1,9 @@
+# A match describes who is playing against who, and who the winner was
+type Match {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  playerLeft: PlayerInfo
+  playerRight: PlayerInfo
+  winner: PlayerInfo
+}

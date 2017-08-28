@@ -1,0 +1,40 @@
+interface User {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+}
+
+type MemberInfo implements User {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  isAdmin: Boolean!
+  email: String!
+  firstName: String!
+  lastName: String!
+}
+
+type Member implements User {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+  availableOrganizations: [OrganizationInfo]!
+  organization(id: String): Organization
+  # The list of matches played by this player
+  matches: [Match]!
+  # TODO: add statistics (matchesWon, matchesLost)
+}
+
+extend type Query {
+  me: Member!
+}
+
+extend type Mutation {
+  createUser(email: String!, firstName: String!, lastName: String!): Member!
+}

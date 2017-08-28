@@ -3,27 +3,99 @@
   "description": "",
   "version": "0.1.0",
   "private": true,
-  "main": "./src/server.js",
+  "main": "./lib/server.js",
   "scripts": {
-    "start": "MONGO_URL=mongodb://$(docker-machine ip dev):27017 node ./src/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "postinstall": "check-node-version --package",
+    "lint": "npm run lint:js && npm run lint:graphql",
+    "lint:js": "./scripts/lint.sh lib",
+    "lint:graphql": "graphql-schema-linter 'lib/**/*.gql'",
+    "start": "MONGO_URL=mongodb://$(docker-machine ip dev):27017 node ./lib/server.js",
+    "test": "check-node-version --package && echo \"Error: no test specified\" && exit 1",
+    "commitmsg": "node_modules/.bin/validate-commit-msg",
+    "precommit": "./scripts/lint-staged-files.sh"
   },
   "author": "Nicola Molinari <me@emmenko.org> (http://emmenko.org)",
   "license" : "BSD-3-Clause",
-  "engine": {
+  "engines": {
     "node": ">=8",
     "npm": ">=5"
   },
   "dependencies": {
-    "body-parser": "^1.17.2",
-    "express": "^4.15.4",
-    "graphql": "^0.11.1",
-    "graphql-tools": "^1.2.1",
-    "graphql-server-express": "^1.1.2",
-    "lodash.shuffle": "^4.2.0",
-    "mongodb": "^2.2.31",
-    "uuid": "^3.1.0"
+    "apollo-connector-mongodb": "1.1.17",
+    "body-parser": "1.17.2",
+    "express": "4.15.4",
+    "graphql": "0.10.1",
+    "graphql-tools": "1.2.1",
+    "graphql-server-express": "1.1.2",
+    "lodash.merge": "4.6.0",
+    "lodash.shuffle": "4.2.0",
+    "mongodb": "2.2.31",
+    "uuid": "3.1.0"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "check-node-version": "^2.1.0",
+    "cz-conventional-changelog": "^2.0.0",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-config-prettier": "^2.3.0",
+    "eslint-formatter-pretty": "^1.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jest": "^20.0.3",
+    "eslint-plugin-prettier": "^2.1.2",
+    "graphql-schema-linter": "^0.0.14",
+    "husky": "^0.14.3",
+    "jest": "^20.0.4",
+    "prettier": "^1.6.0",
+    "validate-commit-msg": "^2.12.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "plugin:jest/recommended",
+      "prettier"
+    ],
+    "env": {
+      "es6": true,
+      "jest": true,
+      "node": true,
+      "mocha": false
+    },
+    "plugins": [
+      "jest",
+      "prettier"
+    ],
+    "rules": {
+      "comma-dangle": [
+        "error",
+        {
+          "arrays": "always-multiline",
+          "objects": "always-multiline",
+          "imports": "never",
+          "exports": "never",
+          "functions": "never"
+        }
+      ],
+      "jest/no-identical-title": "warn",
+      "jest/no-focused-tests": 2,
+      "no-underscore-dangle": 0,
+      "no-use-before-define": ["error", { "functions": false }]
+    }
+  },
+  "graphql-schema-linter": {
+    "rules": [
+      "defined-types-are-used",
+      "deprecations-have-a-reason",
+      "types-are-capitalized"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testRegex": "\\.spec\\.js$"
   }
 }
