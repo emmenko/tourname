@@ -1,0 +1,29 @@
+{
+  "name": "tourname",
+  "description": "",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/server.js",
+  "scripts": {
+    "start": "MONGO_URL=mongodb://$(docker-machine ip dev):27017 node ./src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nicola Molinari <me@emmenko.org> (http://emmenko.org)",
+  "license" : "BSD-3-Clause",
+  "engine": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "graphql": "^0.11.1",
+    "graphql-tools": "^1.2.1",
+    "graphql-server-express": "^1.1.2",
+    "lodash.shuffle": "^4.2.0",
+    "mongodb": "^2.2.31",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+  }
+}
