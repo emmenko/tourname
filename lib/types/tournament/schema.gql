@@ -23,6 +23,20 @@ type PlayerInfo {
   lastName: String!
 }
 
+type Team {
+  key: String! # a short random token
+  players: [PlayerInfo]!
+}
+
+type Match {
+  id: String!
+  createdAt: String!
+  lastModifiedAt: String!
+  teamLeft: Team
+  teamRight: Team
+  winner: Team
+}
+
 interface Tournament {
   id: String!
   createdAt: String!
@@ -31,7 +45,9 @@ interface Tournament {
   name: String!
   organizationId: String!
   status: TournamentStatus!
-  players: [PlayerInfo]!
+  # At least 1 player
+  teamSize: Int!
+  teams: [Team]!
 }
 
 type TournamentInfo {
@@ -42,6 +58,7 @@ type TournamentInfo {
   name: String!
   status: TournamentStatus!
   size: TournamentSize!
+  teamSize: Int!
 }
 
 type TournamentSmall implements Tournament {
@@ -52,8 +69,10 @@ type TournamentSmall implements Tournament {
   name: String!
   organizationId: String!
   status: TournamentStatus!
-  # Small: 4 players
-  players: [PlayerInfo]!
+  # At least 1 player
+  teamSize: Int!
+  # Small: 4 teams
+  teams: [Team]!
   matchesLeg1: [Match]! # 2 matches
   matchesLeg2: Match # 1 match
 }
@@ -66,8 +85,10 @@ type TournamentMedium implements Tournament {
   name: String!
   organizationId: String!
   status: TournamentStatus!
-  # Small: 8 players
-  players: [PlayerInfo]!
+  # At least 1 player
+  teamSize: Int!
+  # Medium: 8 players
+  teams: [Team]!
   matchesLeg1: [Match]! # 4 matches
   matchesLeg2: [Match]! # 2 matches
   matchesLeg3: Match # 1 match
@@ -81,8 +102,10 @@ type TournamentLarge implements Tournament {
   name: String!
   organizationId: String!
   status: TournamentStatus!
-  # Small: 16 players
-  players: [PlayerInfo]!
+  # At least 1 player
+  teamSize: Int!
+  # Large: 16 players
+  teams: [Team]!
   matchesLeg1: [Match]! # 8 matches
   matchesLeg2: [Match]! # 4 matches
   matchesLeg3: [Match]! # 2 matches
@@ -97,8 +120,10 @@ type TournamentXLarge implements Tournament {
   name: String!
   organizationId: String!
   status: TournamentStatus!
-  # Small: 32 players
-  players: [PlayerInfo]!
+  # At least 1 player
+  teamSize: Int!
+  # XLarge: 32 players
+  teams: [Team]!
   matchesLeg1: [Match]! # 16 matches
   matchesLeg2: [Match]! # 8 matches
   matchesLeg3: [Match]! # 4 matches
@@ -111,43 +136,44 @@ extend type Query {
 }
 
 extend type Mutation {
-  # Every member can create a new tournament
   createSmallTournament(
     name: String!
     discipline: Discipline!
     organizationId: String!
+    teamSize: Int!
   ): TournamentSmall
   createMediumTournament(
     name: String!
     discipline: Discipline!
     organizationId: String!
+    teamSize: Int!
   ): TournamentMedium
   createLargeTournament(
     name: String!
     discipline: Discipline!
     organizationId: String!
+    teamSize: Int!
   ): TournamentLarge
   createXLargeTournament(
     name: String!
     discipline: Discipline!
     organizationId: String!
+    teamSize: Int!
   ): TournamentXLarge
-  # Called when a member wants to join a tournament
-  addPlayerToTournament(id: String!, memberId: String!): Tournament
-  # Called when a member wants to pull out of a tournament
-  removePlayerFromTournament(id: String!, memberId: String!): Tournament
-  # Will create all the tournament matches, then assign players randomly to the
-  # first leg and change the status to "IN_PROGRESS".
-  # NOTE: this can be triggered only when the tournament has the correct amount
-  # of players
-  startTournament(id: String!): Tournament
-  # Update a match to set the winnerId. If the match is the last of the tournament,
-  # the tournament will be set as finished.
-  # This action is irreversible, once the winner is set, it cannot be
-  # changed.
+  addPlayerToTeam(
+    key: String!
+    tournamentId: String!
+    playerId: String!
+  ): Tournament
+  removePlayerFromTeam(
+    key: String!
+    tournamentId: String!
+    playerId: String!
+  ): Tournament
+  startTournament(tournamentId: String!): Tournament
   setMatchWinner(
     tournamentId: String!
     matchId: String!
-    playerId: String!
+    teamKey: String!
   ): Tournament
 }
