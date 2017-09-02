@@ -6,13 +6,19 @@ Create your own tournaments and see who comes out on top, challenge a single pla
 
 
 ## TODO
+* ~~dataloader for queries optimizatio~~
+* tests for resolvers
 * (social) login authentication
-* dataloader for queries optimization
 * monorepo (server, client, natives)
 * features
-  * team matches (more than one player)
+  * ~~team matches (more than one player)~~
   * single matches (1 vs 1, team vs team)
+  * allow to enter a custom "discipline", in case it's not listed as a default
+* CI
+* Documentation
 
+## Development
+_TBD_
 
 ---
-`<>` with :heart:
+`<>` with `<3`

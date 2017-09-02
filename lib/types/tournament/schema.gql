@@ -161,13 +161,13 @@ extend type Mutation {
     teamSize: Int!
   ): TournamentXLarge
   addPlayerToTeam(
-    key: String!
     tournamentId: String!
+    teamKey: String!
     playerId: String!
   ): Tournament
   removePlayerFromTeam(
-    key: String!
     tournamentId: String!
+    teamKey: String!
     playerId: String!
   ): Tournament
   startTournament(tournamentId: String!): Tournament
