@@ -15,17 +15,17 @@ type Organization {
 
 extend type Mutation {
   # Every member can create an organization
-  createOrganization(memberId: String!, name: String!): Organization
+  createOrganization(name: String!, memberId: String!): Organization
   # Promote a member to admin
-  setMemberAsAdmin(memberId: String!, organizationId: String!): Organization
+  setMemberAsAdmin(organizationId: String!, memberId: String!): Organization
   # Every member can add new members to the organization
   addMemberToOrganization(
-    memberId: String!
     organizationId: String!
+    memberId: String!
   ): Organization
   # Only admin members can remove members from the organization
   removeMemberFromOrganization(
-    memberId: String!
     organizationId: String!
+    memberId: String!
   ): Organization
 }
