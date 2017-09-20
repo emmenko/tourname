@@ -5,67 +5,95 @@
   "private": true,
   "main": "./lib/server.js",
   "scripts": {
-    "postinstall": "check-node-version --package",
-    "lint": "npm run lint:js && npm run lint:graphql",
-    "lint:js": "./scripts/lint.sh lib",
-    "lint:graphql": "graphql-schema-linter 'lib/**/*.gql'",
-    "start": "MONGO_URL=mongodb://$(docker-machine ip dev):27017 node ./lib/server.js",
-    "test": "check-node-version --package && echo \"Error: no test specified\" && exit 1",
+    "postinstall": "check-node-version --package && lerna bootstrap",
+    "lint": "npm run lint:all && npm run lint:single",
+    "lint:all": "./scripts/lint.sh 'packages/**/src/**/*.js'",
+    "lint:single": "lerna run lint",
+    "start": "npm-run-all --parallel start:server start:client",
+    "start:server": "lerna exec --scope http-server -- node src/server.js",
+    "start:client": "lerna exec --scope web-app -- react-scripts start",
+    "test":
+      "check-node-version --package && echo \"Error: no test specified\" && exit 1",
     "commitmsg": "node_modules/.bin/validate-commit-msg",
     "precommit": "./scripts/lint-staged-files.sh"
   },
   "author": "Nicola Molinari <me@emmenko.org> (http://emmenko.org)",
-  "license" : "BSD-3-Clause",
+  "license": "BSD-3-Clause",
   "engines": {
     "node": ">=8",
     "npm": ">=5"
   },
-  "dependencies": {
-    "body-parser": "1.17.2",
-    "dataloader": "1.3.0",
-    "express": "4.15.4",
-    "graphql": "0.10.1",
-    "graphql-server-express": "1.1.2",
-    "graphql-tools": "1.2.1",
-    "lodash.merge": "4.6.0",
-    "lodash.shuffle": "4.2.0",
-    "mongodb": "2.2.31",
-    "uuid": "3.1.0"
-  },
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
+    "babel-eslint": "8.0.0",
     "check-node-version": "^2.1.0",
     "cz-conventional-changelog": "^2.0.0",
-    "eslint": "^4.3.0",
-    "eslint-config-airbnb-base": "^11.3.1",
-    "eslint-config-prettier": "^2.3.0",
-    "eslint-formatter-pretty": "^1.1.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jest": "^20.0.3",
-    "eslint-plugin-prettier": "^2.1.2",
-    "graphql-schema-linter": "^0.0.14",
+    "eslint": "4.7.1",
+    "eslint-config-airbnb-base": "11.3.2",
+    "eslint-config-prettier": "2.5.0",
+    "eslint-formatter-pretty": "1.3.0",
+    "eslint-plugin-import": "2.7.0",
+    "eslint-plugin-jest": "21.1.0",
+    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-prefer-object-spread": "1.2.1",
+    "eslint-plugin-prettier": "2.3.0",
+    "eslint-plugin-react": "7.3.0",
     "husky": "^0.14.3",
     "jest": "^20.0.4",
+    "lerna": "^2.2.0",
+    "npm-run-all": "^4.1.1",
     "prettier": "^1.6.0",
     "validate-commit-msg": "^2.12.2"
   },
   "eslintConfig": {
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaFeatures": {
+        "jsx": true
+      },
+      "ecmaVersion": 8,
+      "sourceType": "module"
+    },
     "extends": [
       "airbnb-base",
       "plugin:jest/recommended",
-      "prettier"
+      "plugin:react/recommended",
+      "prettier",
+      "prettier/react"
     ],
     "env": {
+      "browser": true,
       "es6": true,
       "jest": true,
       "node": true,
       "mocha": false
     },
     "plugins": [
+      "import",
       "jest",
-      "prettier"
+      "jsx-a11y",
+      "prefer-object-spread",
+      "prettier",
+      "react"
     ],
     "rules": {
+      "class-methods-use-this": [
+        "error",
+        {
+          "exceptMethods": [
+            "render",
+            "getInitialState",
+            "getDefaultProps",
+            "getChildContext",
+            "componentWillMount",
+            "componentDidMount",
+            "componentWillReceiveProps",
+            "shouldComponentUpdate",
+            "componentWillUpdate",
+            "componentDidUpdate",
+            "componentWillUnmount"
+          ]
+        }
+      ],
       "comma-dangle": [
         "error",
         {
@@ -76,18 +104,17 @@
           "functions": "never"
         }
       ],
+      "import/extensions": ["error", "always", { "js": "never" }],
+      "import/no-extraneous-dependencies": 0,
+      "import/no-named-as-default": 0,
+      "import/no-unresolved": 0,
+      "import/first": 0,
+      "import/order": 2,
       "jest/no-identical-title": "warn",
       "jest/no-focused-tests": 2,
       "no-underscore-dangle": 0,
       "no-use-before-define": ["error", { "functions": false }]
     }
-  },
-  "graphql-schema-linter": {
-    "rules": [
-      "defined-types-are-used",
-      "deprecations-have-a-reason",
-      "types-are-capitalized"
-    ]
   },
   "config": {
     "commitizen": {

@@ -1,0 +1,26 @@
+{
+  "name": "web-app",
+  "description": "",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "auth0-js": "8.10.1",
+    "belle": "3.0.2",
+    "history": "4.7.2",
+    "morgan": "^1.8.2",
+    "prop-types": "15.5.10",
+    "react": "15.6.1",
+    "react-dom": "15.6.1",
+    "react-router": "4.2.0",
+    "react-router-dom": "4.2.2",
+    "recompose": "0.25.0"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.13"
+  }
+}
