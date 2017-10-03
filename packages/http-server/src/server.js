@@ -1,51 +1,51 @@
 /* eslint-disable no-console */
 require('dotenv').config();
 const express = require('express');
-const jwt = require('jsonwebtoken');
-// const jwt = require('express-jwt');
-// const jwksRsa = require('jwks-rsa');
+const jwt = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
+const { createClient } = require('@commercetools/sdk-client');
+const { createHttpMiddleware } = require('@commercetools/sdk-middleware-http');
 const DataLoader = require('dataloader');
 const { MongoClient } = require('mongodb');
+const createAuthMiddleware = require('./utils/create-auth-middleware');
 const executableSchema = require('./schema');
 
 const port = process.env.HTTP_PORT;
 const mongoConnectionUrl = `${process.env.MONGO_URL}/tourname`;
 const isProd = process.env.NODE_ENV === 'production';
 
-// const checkJwt = jwt({
-//   // Dynamically provide a signing key based on the kid in the header and the
-//   // singing keys provided by the JWKS endpoint.
-//   secret: jwksRsa.expressJwtSecret({
-//     cache: true,
-//     rateLimit: true,
-//     jwksRequestsPerMinute: 5,
-//     jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
-//   }),
+const authMiddleware = createAuthMiddleware({
+  host: process.env.AUTH0_DOMAIN,
+  clientId: process.env.API_CLIENT_ID,
+  clientSecret: process.env.API_CLIENT_SECRET,
+});
+const httpMiddleware = createHttpMiddleware({
+  host: `${process.env.AUTH0_DOMAIN}/api/v2`,
+});
+const httpClient = createClient({
+  middlewares: [authMiddleware, httpMiddleware],
+});
+const AUTH0_USER_FIELDS = 'user_id,email,name,picture,created_at,updated_at';
 
-//   // Validate the audience and the issuer.
-//   audience: process.env.AUTH0_AUDIENCE,
-//   issuer: `https://${process.env.AUTH0_DOMAIN}/`,
-//   algorithms: ['RS256'],
-// });
+const checkJwt = jwt({
+  // Dynamically provide a signing key based on the kid in the header and the
+  // singing keys provided by the JWKS endpoint.
+  secret: jwksRsa.expressJwtSecret({
+    cache: true,
+    rateLimit: true,
+    jwksRequestsPerMinute: 5,
+    jwksUri: `${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
+  }),
 
-const validateJwt = (request, response, next) => {
-  const token = request.headers.authorization;
-  jwt.verify(
-    token,
-    process.env.CLIENT_SECRET,
-    { algorithms: ['HS256'] },
-    (err, verifiedToken) => {
-      if (err) throw new Error('UnauthorizedError');
-      request.userId = verifiedToken.sub;
-      return next();
-    }
-  );
-};
+  // Validate the audience and the issuer.
+  audience: `${process.env.AUTH0_DOMAIN}/api/v2/`,
+  issuer: process.env.AUTH0_DOMAIN,
+  algorithms: ['RS256'],
+});
 
-// const connector = new MongoConnector(mongoConnectionUrl);
 MongoClient.connect(mongoConnectionUrl, (error, db) => {
   if (error) {
     console.error(
@@ -62,7 +62,7 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
     context: {
       // The current "logged in" user, based on the auth token
       // provided with the request.
-      userId: request.userId,
+      userId: request.user && request.user.sub,
       // Expose DB collections. Those should be generally used for mutations.
       db: {
         users: db.collection('users'),
@@ -74,19 +74,31 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
       loaders: {
         userById: new DataLoader(
           ids =>
-            db
-              .collection('users')
-              .find({ _id: ids[0] })
-              .toArray(),
+            httpClient
+              .execute({
+                uri: `/users/${ids[0]}?include_fields=true&fields=${encodeURIComponent(
+                  AUTH0_USER_FIELDS
+                )}`,
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+              })
+              .then(response => [response.body]),
           { batch: false }
         ),
-        users: new DataLoader(ids =>
-          db
-            .collection('users')
-            .find({ _id: { $in: ids } })
-            .sort({ email: 1 })
-            .toArray()
-        ),
+        users: new DataLoader(ids => {
+          const queryForIds = encodeURIComponent(
+            `user_id:(${ids.join(' OR ')})`
+          );
+          return httpClient
+            .execute({
+              uri: `/users?include_fields=true&fields=${encodeURIComponent(
+                AUTH0_USER_FIELDS
+              )}&q=${queryForIds}`,
+              method: 'GET',
+              headers: { 'Content-Type': 'application/json' },
+            })
+            .then(response => response.body);
+        }),
         organizationById: new DataLoader(
           ids =>
             db
@@ -127,37 +139,10 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
 
   const server = express();
   server.use(cors());
-  server.use('/token', bodyParser.json(), async (req, res) => {
-    const idToken = req.body.idToken;
-    const clientSecret = process.env.CLIENT_SECRET;
-    let decodedToken;
-    try {
-      decodedToken = jwt.verify(idToken, clientSecret, {
-        algorithms: ['RS256'],
-      });
-    } catch (e) {
-      throw new Error('UnauthorizedError', e);
-    }
-    // Check if the user exists in the DB
-    const existingUserDoc = await db
-      .collections('users')
-      .findOne({ email: decodedToken.email });
-    if (!existingUserDoc)
-      console.log('user not found, creating a new one', decodedToken.email);
 
-    // Issue a new token
-    const jwtToken = {
-      // Registred claims (https://tools.ietf.org/html/rfc7519#section-4.1)
-      exp: Math.floor(Date.now() / 1000) + 3600,
-      sub: existingUserDoc.id,
-      iss: `https://${process.env.AUTH0_DOMAIN}`,
-    };
-    res.json({
-      token: jwt.sign(jwtToken, process.env.JWT_SECRET, { algorithm: 'RS256' }),
-    });
-  });
-  server.use('/graphql', validateJwt, bodyParser.json(), handleGraphQLRequest);
+  server.use('/graphql', checkJwt, bodyParser.json(), handleGraphQLRequest);
 
+  // TODO: use auth0 workflow for accessing /graphiql
   if (!isProd) {
     server.use(
       '/graphiql',
@@ -169,7 +154,7 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
         },
       })
     );
-    server.use('/_graphql', (request, response) =>
+    server.use('/_graphql', (request, response, next) =>
       bodyParser.json()(request, response, () => {
         if (
           request.body &&
@@ -178,9 +163,9 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
         ) {
           const userId = request.body.variables.userId;
           // eslint-disable-next-line no-param-reassign
-          request.userId = userId;
+          request.user = { sub: userId };
         }
-        return handleGraphQLRequest(request, response);
+        return handleGraphQLRequest(request, response, next);
       })
     );
   }

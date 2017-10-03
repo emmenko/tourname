@@ -3,18 +3,18 @@ interface User {
   createdAt: String!
   lastModifiedAt: String!
   email: String!
-  firstName: String!
-  lastName: String!
+  name: String!
+  picture: String!
 }
 
 type MemberInfo implements User {
   id: String!
   createdAt: String!
   lastModifiedAt: String!
-  isAdmin: Boolean!
   email: String!
-  firstName: String!
-  lastName: String!
+  name: String!
+  picture: String!
+  isAdmin: Boolean!
 }
 
 type Member implements User {
@@ -22,8 +22,8 @@ type Member implements User {
   createdAt: String!
   lastModifiedAt: String!
   email: String!
-  firstName: String!
-  lastName: String!
+  name: String!
+  picture: String!
   availableOrganizations: [OrganizationInfo]!
   organization(id: String): Organization
   # The list of matches played by this player
@@ -33,8 +33,4 @@ type Member implements User {
 
 extend type Query {
   me: Member!
-}
-
-extend type Mutation {
-  createUser(email: String!, firstName: String!, lastName: String!): Member!
 }

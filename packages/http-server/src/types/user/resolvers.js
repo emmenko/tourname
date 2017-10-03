@@ -1,13 +1,18 @@
-const uuid = require('uuid/v4');
-
 module.exports = {
   Query: {
     me: (obj, args, context) =>
       // Active userId is implicit in `context`
-      context.loaders.users.load(context.userId),
+      context.loaders.userById.load(context.userId),
+  },
+  MemberInfo: {
+    id: obj => obj.user_id,
+    createdAt: obj => obj.created_at,
+    lastModifiedAt: obj => obj.updated_at,
   },
   Member: {
-    id: obj => obj._id,
+    id: obj => obj.user_id,
+    createdAt: obj => obj.created_at,
+    lastModifiedAt: obj => obj.updated_at,
     availableOrganizations: (obj, args, context) =>
       // TODO: find a way to use dataloader: one key -> to many results
       context.db.organizations
@@ -24,20 +29,5 @@ module.exports = {
         .find({ $or: [{ playerLeftId: obj._id }, { playerRightId: obj._id }] })
         .sort({ lastModifiedAt: -1 })
         .toArray(),
-  },
-  Mutation: {
-    // TODO: remove once a proper (social) login flow it implemented
-    createUser: async (obj, args, context) => {
-      const isoDate = new Date().toISOString();
-      const doc = await context.db.users.insertOne({
-        _id: uuid(),
-        createdAt: isoDate,
-        lastModifiedAt: isoDate,
-        email: args.email,
-        firstName: args.firstName,
-        lastName: args.lastName,
-      });
-      return context.loaders.users.load(doc.insertedId);
-    },
   },
 };

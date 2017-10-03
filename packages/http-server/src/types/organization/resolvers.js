@@ -14,13 +14,11 @@ module.exports = {
       const docs = await context.loaders.users.loadMany(
         Object.keys(normalizedUsers)
       );
-      return docs.map(doc => ({
-        id: doc._id,
-        isAdmin: normalizedUsers[doc._id].isAdmin,
-        email: doc.email,
-        firstName: doc.firstName,
-        lastName: doc.lastName,
-      }));
+      return docs.map(doc =>
+        Object.assign({}, doc, {
+          isAdmin: normalizedUsers[doc.user_id].isAdmin,
+        })
+      );
     },
     activeTournaments: (obj, args, context) =>
       // TODO: find a way to use dataloader: one key -> to many results
@@ -52,6 +50,7 @@ module.exports = {
      * - memberId
      */
     createOrganization: async (obj, args, context) => {
+      // TODO: find a better way to check if the user exists in auth0
       const userDoc = await context.loaders.userById.load(args.memberId);
       if (!userDoc)
         throw new Error(`Cannot find member with id "${args.memberId}"`);
@@ -100,6 +99,7 @@ module.exports = {
           `You are not an admin of the organization "${args.organizationId}". Only admins can promote users to admin`
         );
 
+      // TODO: find a better way to check if the user exists in auth0
       const targetUserDoc = await context.loaders.userById.load(args.memberId);
       if (!targetUserDoc)
         throw new Error(
@@ -131,6 +131,7 @@ module.exports = {
           `Cannot find organization with id "${args.organizationId}"`
         );
 
+      // TODO: find a better way to check if the user exists in auth0
       const targetUserDoc = await context.loaders.userById.load(args.memberId);
       if (!targetUserDoc)
         throw new Error(

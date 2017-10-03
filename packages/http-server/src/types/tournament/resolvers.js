@@ -190,7 +190,7 @@ module.exports = {
       context.loaders.tournamentById.load(args.id),
   },
   PlayerInfo: {
-    id: obj => obj._id,
+    id: obj => obj.user_id,
   },
   Team: {
     players: (obj, args, context) => {
@@ -330,6 +330,7 @@ module.exports = {
           `Cannot add a new player to the team "${args.teamKey}" as the team is already full of players`
         );
 
+      // TODO: find a better way to check if the user exists in auth0
       const userDoc = await context.loaders.userById.load(args.playerId);
       if (!userDoc)
         throw new Error(`Cannot find user with id "${args.playerId}"`);

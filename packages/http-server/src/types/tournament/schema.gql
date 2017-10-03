@@ -19,8 +19,8 @@ enum TournamentStatus {
 type PlayerInfo {
   id: String!
   email: String!
-  firstName: String!
-  lastName: String!
+  name: String!
+  picture: String!
 }
 
 type Team {

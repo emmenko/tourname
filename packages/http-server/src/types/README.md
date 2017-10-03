@@ -4,17 +4,7 @@ This folder contains the different GraphQL types with their schemas.
 The DB documents however are slightly different from the GraphQL types.
 
 ### User
-
-```js
-{
-  _id, // UUID
-  createdAt, // ISO datetime
-  lastModifiedAt, // ISO datetime
-  email, // string
-  firstName, // string
-  lastName, // string
-}
-```
+> We don't directly store users, instead we fetch user information from Auth0 Management API
 
 ### Organization
 
