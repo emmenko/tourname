@@ -9,16 +9,21 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "apollo-cache-inmemory": "0.2.0-beta.3",
+    "apollo-client": "2.0.0-beta.3",
+    "apollo-link": "0.7.0",
+    "apollo-link-error": "0.1.0",
+    "apollo-link-http": "0.7.0",
+    "graphql-tag": "2.4.2",
     "auth0-js": "8.10.1",
-    "belle": "3.0.2",
     "history": "4.7.2",
-    "morgan": "^1.8.2",
-    "prop-types": "15.5.10",
-    "react": "15.6.1",
-    "react-dom": "15.6.1",
+    "prop-types": "15.6.0",
+    "react": "16.0.0",
+    "react-apollo": "2.0.0-beta.0",
+    "react-dom": "16.0.0",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
-    "recompose": "0.25.0"
+    "recompose": "0.25.1"
   },
   "devDependencies": {
     "react-scripts": "1.0.13"

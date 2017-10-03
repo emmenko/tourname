@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
-import { Spinner } from 'belle';
 import withAuth from '../with-auth';
 
 class Callback extends React.Component {
@@ -38,7 +37,7 @@ class Callback extends React.Component {
         {this.state.errorMessage ? (
           <p>{this.state.errorMessage}</p>
         ) : (
-          <Spinner />
+          <p>{'Loading'}</p>
         )}
       </div>
     );

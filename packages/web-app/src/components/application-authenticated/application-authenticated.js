@@ -1,27 +1,44 @@
 import React from 'react';
-// import {
-//   BrowserRouter as Router,
-//   Route,
-//   Link,
-//   Redirect,
-//   withRouter,
-// } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
+import TopNavigation from '../top-navigation';
 
-const ApplicationAuthenticated = () => <div>{'Application authenticated'}</div>;
+const LoggedInUserQuery = gql`
+  query LoggedInUser {
+    me {
+      name
+      picture
+    }
+  }
+`;
 
-/*
-<AuthButton />
-<ul>
-  <li>
-    <Link to="/public">Public Page</Link>
-  </li>
-  <li>
-    <Link to="/protected">Protected Page</Link>
-  </li>
-</ul>
-<Route path="/public" component={Public} />
-<Route path="/login" component={Login} />
-<PrivateRoute path="/protected" component={Protected} />
-*/
+const ApplicationAuthenticated = props => {
+  const user =
+    props.loggedInUser && props.loggedInUser.me
+      ? {
+          name: props.loggedInUser.me.name,
+          picture: props.loggedInUser.me.picture,
+        }
+      : null;
+  return (
+    <div>
+      <TopNavigation isUserLoggedIn={true} user={user} />
+      {'Application authenticated'}
+    </div>
+  );
+};
+ApplicationAuthenticated.propTypes = {
+  loggedInUser: PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.object,
+    me: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      picture: PropTypes.string.isRequired,
+    }),
+  }),
+};
 
-export default ApplicationAuthenticated;
+export default graphql(LoggedInUserQuery, {
+  name: 'loggedInUser',
+})(ApplicationAuthenticated);

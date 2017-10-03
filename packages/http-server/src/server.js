@@ -42,7 +42,7 @@ const checkJwt = jwt({
 
   // Validate the audience and the issuer.
   audience: `${process.env.AUTH0_DOMAIN}/api/v2/`,
-  issuer: process.env.AUTH0_DOMAIN,
+  issuer: `${process.env.AUTH0_DOMAIN}/`,
   algorithms: ['RS256'],
 });
 
@@ -173,7 +173,7 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
   // eslint-disable-next-line no-unused-vars
   server.use((err, req, res, next) => {
     if (err.name === 'UnauthorizedError') {
-      res.status(401).send('Invalid token');
+      res.status(401).json(err);
     }
   });
 
