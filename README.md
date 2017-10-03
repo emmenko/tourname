@@ -1,3 +1,5 @@
+<h2 align="center">🚧 Under construction 🚧</h2>
+
 # Tourname
 A OSS service for managing tournaments within an organization.
 
@@ -6,10 +8,10 @@ Create your own tournaments and see who comes out on top, challenge a single pla
 
 
 ## TODO
-* ~~dataloader for queries optimizatio~~
+* ~~dataloader for queries optimization~~
 * tests for resolvers
-* (social) login authentication
-* monorepo (server, client, natives)
+* ~~(social) login authentication~~
+* ~~monorepo (server, client, natives)~~
 * features
   * ~~team matches (more than one player)~~
   * single matches (1 vs 1, team vs team)
@@ -19,6 +21,12 @@ Create your own tournaments and see who comes out on top, challenge a single pla
 
 ## Development
 _TBD_
+
+```bash
+$ yarn start
+# - starts the backend server on port 3001
+# - starts the web app on port 3000, using react-scripts
+```
 
 ---
 `<>` with `<3`
