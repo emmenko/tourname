@@ -72,19 +72,6 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
       },
       // Expose data loaders. Those should be generally used for queries.
       loaders: {
-        userById: new DataLoader(
-          ids =>
-            httpClient
-              .execute({
-                uri: `/users/${ids[0]}?include_fields=true&fields=${encodeURIComponent(
-                  AUTH0_USER_FIELDS
-                )}`,
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-              })
-              .then(response => [response.body]),
-          { batch: false }
-        ),
         users: new DataLoader(ids => {
           const queryForIds = encodeURIComponent(
             `user_id:(${ids.join(' OR ')})`
@@ -99,29 +86,17 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
             })
             .then(response => response.body);
         }),
-        organizationById: new DataLoader(
-          ids =>
-            db
-              .collection('organizations')
-              .find({ _id: ids[0] })
-              .toArray(),
-          { batch: false }
+        organizations: new DataLoader(ids =>
+          db
+            .collection('organizations')
+            .find({ _id: { $in: ids } })
+            .toArray()
         ),
-        tournamentById: new DataLoader(
-          ids =>
-            db
-              .collection('tournaments')
-              .find({ _id: ids[0] })
-              .toArray(),
-          { batch: false }
-        ),
-        matchById: new DataLoader(
-          ids =>
-            db
-              .collection('matches')
-              .find({ _id: ids[0] })
-              .toArray(),
-          { batch: false }
+        tournaments: new DataLoader(ids =>
+          db
+            .collection('tournaments')
+            .find({ _id: { $in: ids } })
+            .toArray()
         ),
         matches: new DataLoader(ids =>
           db

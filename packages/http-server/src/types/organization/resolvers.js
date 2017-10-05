@@ -51,7 +51,7 @@ module.exports = {
      */
     createOrganization: async (obj, args, context) => {
       // TODO: find a better way to check if the user exists in auth0
-      const userDoc = await context.loaders.userById.load(args.memberId);
+      const userDoc = await context.loaders.users.load(args.memberId);
       if (!userDoc)
         throw new Error(`Cannot find member with id "${args.memberId}"`);
 
@@ -63,7 +63,7 @@ module.exports = {
         name: args.name,
         users: [{ id: args.memberId, isAdmin: true }],
       });
-      return context.loaders.organizationById.load(doc.insertedId);
+      return context.loaders.organizations.load(doc.insertedId);
     },
     // TODO: allow to remove an organization.
     // - check that needs to be cleaned up
@@ -80,7 +80,7 @@ module.exports = {
         throw new Error(
           `You cannot set yourself admin of the organization "${args.organizationId}"`
         );
-      const orgDoc = await context.loaders.organizationById.load(
+      const orgDoc = await context.loaders.organizations.load(
         args.organizationId
       );
       if (!orgDoc)
@@ -100,7 +100,7 @@ module.exports = {
         );
 
       // TODO: find a better way to check if the user exists in auth0
-      const targetUserDoc = await context.loaders.userById.load(args.memberId);
+      const targetUserDoc = await context.loaders.users.load(args.memberId);
       if (!targetUserDoc)
         throw new Error(
           `The member "${args.memberId}" that you are trying to promote to admin does not exist`
@@ -113,7 +113,7 @@ module.exports = {
         // element that matches the query document.
         { $set: { lastModifiedAt: isoDate, 'users.$.isAdmin': true } }
       );
-      return context.loaders.organizationById
+      return context.loaders.organizations
         .clear(args.organizationId)
         .load(args.organizationId);
     },
@@ -123,7 +123,7 @@ module.exports = {
      * - memberId
      */
     addMemberToOrganization: async (obj, args, context) => {
-      const orgDoc = await context.loaders.organizationById.load(
+      const orgDoc = await context.loaders.organizations.load(
         args.organizationId
       );
       if (!orgDoc)
@@ -132,7 +132,7 @@ module.exports = {
         );
 
       // TODO: find a better way to check if the user exists in auth0
-      const targetUserDoc = await context.loaders.userById.load(args.memberId);
+      const targetUserDoc = await context.loaders.users.load(args.memberId);
       if (!targetUserDoc)
         throw new Error(
           `The member "${args.memberId}" that you are trying to add does not exist`
@@ -146,7 +146,7 @@ module.exports = {
           $addToSet: { users: { id: args.memberId, isAdmin: false } },
         }
       );
-      context.loaders.organizationById
+      context.loaders.organizations
         .clear(args.organizationId)
         .load(args.organizationId);
     },
@@ -165,7 +165,7 @@ module.exports = {
         throw new Error(
           `You cannot remove yourself from the organization "${args.organizationId}"`
         );
-      const orgDoc = await context.loaders.organizationById.load(
+      const orgDoc = await context.loaders.organizations.load(
         args.organizationId
       );
       if (!orgDoc)
@@ -192,7 +192,7 @@ module.exports = {
           $pull: { users: { id: args.memberId } },
         }
       );
-      context.loaders.organizationById
+      context.loaders.organizations
         .clear(args.organizationId)
         .load(args.organizationId);
     },

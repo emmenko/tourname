@@ -49,7 +49,7 @@ const createNewTournamentResolver = (size, legs) => async (
       legs
     )
   );
-  return context.loaders.tournamentById.load(doc.insertedId);
+  return context.loaders.tournaments.load(doc.insertedId);
 };
 
 const mapMatchIdToMatchDefinition = (
@@ -187,7 +187,7 @@ const mapMatchesToUpdate = (size, groupedMatchesByLeg) => {
 module.exports = {
   Query: {
     tournament: (obj, args, context) =>
-      context.loaders.tournamentById.load(args.id),
+      context.loaders.tournaments.load(args.id),
   },
   PlayerInfo: {
     id: obj => obj.user_id,
@@ -313,7 +313,7 @@ module.exports = {
      * - playerId
      */
     addPlayerToTeam: async (obj, args, context) => {
-      const doc = await context.loaders.tournamentById.load(args.tournamentId);
+      const doc = await context.loaders.tournaments.load(args.tournamentId);
       if (!doc)
         throw new Error(
           `Cannot find tournament with id "${args.tournamentId}"`
@@ -331,7 +331,7 @@ module.exports = {
         );
 
       // TODO: find a better way to check if the user exists in auth0
-      const userDoc = await context.loaders.userById.load(args.playerId);
+      const userDoc = await context.loaders.users.load(args.playerId);
       if (!userDoc)
         throw new Error(`Cannot find user with id "${args.playerId}"`);
 
@@ -343,7 +343,7 @@ module.exports = {
           $addToSet: { [`teams.${args.teamKey}`]: args.playerId },
         }
       );
-      return context.loaders.tournamentById
+      return context.loaders.tournaments
         .clear(args.tournamentId)
         .load(args.tournamentId);
     },
@@ -354,7 +354,7 @@ module.exports = {
      * - playerId
      */
     removePlayerFromTeam: async (obj, args, context) => {
-      const doc = await context.loaders.tournamentById.load(args.tournamentId);
+      const doc = await context.loaders.tournaments.load(args.tournamentId);
       if (!doc)
         throw new Error(
           `Cannot find tournament with id "${args.tournamentId}"`
@@ -381,7 +381,7 @@ module.exports = {
           $pull: { [`teams.${args.key}`]: args.playerId },
         }
       );
-      return context.loaders.tournamentById
+      return context.loaders.tournaments
         .clear(args.tournamentId)
         .load(args.tournamentId);
     },
@@ -397,7 +397,7 @@ module.exports = {
      * - tournamentId
      */
     startTournament: async (obj, args, context) => {
-      const doc = await context.loaders.tournamentById.load(args.tournamentId);
+      const doc = await context.loaders.tournaments.load(args.tournamentId);
       if (!doc)
         throw new Error(
           `Cannot find tournament with id "${args.tournamentId}"`
@@ -494,7 +494,7 @@ module.exports = {
           ),
         }
       );
-      return context.loaders.tournamentById
+      return context.loaders.tournaments
         .clear(args.tournamentId)
         .load(args.tournamentId);
     },
@@ -509,7 +509,7 @@ module.exports = {
      * - teamKey
      */
     setMatchWinner: async (obj, args, context) => {
-      const doc = await context.loaders.matchById.load(args.matchId);
+      const doc = await context.loaders.matches.load(args.matchId);
       if (!doc) throw new Error(`Cannot find match with id "${args.matchId}"`);
       // Check that the match had both players set in order to set the winner
       if (!doc.teamLeft || !doc.teamRight)
@@ -535,12 +535,12 @@ module.exports = {
         }
       );
       // Clear the cache for the updated match
-      context.loaders.matchById.clear(args.matchId);
+      context.loaders.matches.clear(args.matchId);
 
       // If the match has a `nextMatchId`, assign the winner to that match
       // otherwise end the tournament.
       if (doc.nextMatchId) {
-        const nextDoc = await context.loaders.matchById.load(doc.nextMatchId);
+        const nextDoc = await context.loaders.matches.load(doc.nextMatchId);
         const teamFieldKey = nextDoc.teamLeft ? 'teamRight' : 'teamLeft';
         // Assign the winner to the next match
         await context.db.matches.updateOne(
@@ -553,7 +553,7 @@ module.exports = {
           }
         );
         // Clear the cache for the updated match
-        context.loaders.matchById.clear(args.nextMatchId);
+        context.loaders.matches.clear(args.nextMatchId);
       } else
         // End the tournament
         await context.db.tournaments.updateOne(
@@ -565,7 +565,7 @@ module.exports = {
             },
           }
         );
-      return context.loaders.tournamentById
+      return context.loaders.tournaments
         .clear(args.tournamentId)
         .load(args.tournamentId);
     },
