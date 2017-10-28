@@ -4,7 +4,6 @@ import { Route, Switch } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import Dashboard from '../dashboard';
-import Loading from '../loading';
 import TopNavigation from '../top-navigation';
 import TournamentCreate from '../tournament-create';
 import TournamentDetail from '../tournament-detail';
@@ -35,8 +34,7 @@ const ApplicationAuthenticated = props => {
         <Route
           exact={true}
           path="/"
-          render={() =>
-            user ? <Dashboard userFullName={user && user.name} /> : <Loading />}
+          render={() => <Dashboard userFullName={user && user.name} />}
         />
         <Route exact path="/tournaments/new" render={TournamentCreate} />
         <Route path="/tournaments/:id" render={TournamentDetail} />

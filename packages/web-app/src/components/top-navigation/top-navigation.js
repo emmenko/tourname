@@ -23,17 +23,28 @@ const UserMenu = styled.div`
     margin: 0 0 0 8px;
   }
 `;
+const PlaceholderText = styled.div`
+  background-color: #eaeaea;
+  height: 20px;
+  width: 100px;
+`;
+const PlaceholderImage = styled.div`
+  background-color: #eaeaea;
+  border-radius: 36px;
+  height: 36px;
+  width: 36px;
+`;
 const Button = styled.button`
   border-radius: 3px;
   padding: 4px 16px;
   margin: 0;
   background: transparent;
-  color: #0074D9;
-  border: 2px solid #0074D9;
+  color: #0074d9;
+  border: 2px solid #0074d9;
   cursor: pointer;
 
   :hover {
-    background-color: #0074D9;
+    background-color: #0074d9;
     color: white;
   }
 `;
@@ -44,16 +55,18 @@ const TopNavigation = props => (
     <div>
       {props.isUserLoggedIn ? (
         <UserMenu>
+          <div key="name">
+            {props.user ? props.user.name : <PlaceholderText />}
+          </div>
           {props.user ? (
-            [
-              <div key="name">{props.user.name}</div>,
-              <UserAvatar
-                key="picture"
-                alt="User avatar"
-                src={props.user.picture}
-              />,
-            ]
-          ) : null}
+            <UserAvatar
+              key="picture"
+              alt="User avatar"
+              src={props.user.picture}
+            />
+          ) : (
+            <PlaceholderImage />
+          )}
           <Link to="/logout">{'Logout'}</Link>
         </UserMenu>
       ) : (

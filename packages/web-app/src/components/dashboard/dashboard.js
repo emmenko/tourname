@@ -77,7 +77,7 @@ const Dashboard = props => (
   </View>
 );
 Dashboard.propTypes = {
-  userFullName: PropTypes.string.isRequired,
+  userFullName: PropTypes.string,
 };
 
 export default Dashboard;
