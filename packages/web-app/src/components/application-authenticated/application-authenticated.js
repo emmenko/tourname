@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route, Switch } from 'react-router-dom';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+import Dashboard from '../dashboard';
+import Loading from '../loading';
 import TopNavigation from '../top-navigation';
+import TournamentCreate from '../tournament-create';
+import TournamentDetail from '../tournament-detail';
+import TournamentsList from '../tournaments-list';
 
 const LoggedInUserQuery = gql`
   query LoggedInUser {
@@ -25,6 +31,17 @@ const ApplicationAuthenticated = props => {
     <div>
       <TopNavigation isUserLoggedIn={true} user={user} />
       {'Application authenticated'}
+      <Switch>
+        <Route
+          exact={true}
+          path="/"
+          render={() =>
+            user ? <Dashboard userFullName={user && user.name} /> : <Loading />}
+        />
+        <Route exact path="/tournaments/new" render={TournamentCreate} />
+        <Route path="/tournaments/:id" render={TournamentDetail} />
+        <Route path="/tournaments" render={TournamentsList} />
+      </Switch>
     </div>
   );
 };
