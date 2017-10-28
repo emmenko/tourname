@@ -1,0 +1,35 @@
+version: 2
+jobs:
+  lint_and_test:
+    working_directory: ~/tourname
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:8
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - yarn-cache-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - yarn-cache-
+      - run:
+          name: Install greenkeeper-lockfile-update
+          command: yarn global add greenkeeper-lockfile@1 --prefix ~/.yarn
+      - run:
+          name: Install dependencies
+          command: yarn install --pure-lockfile
+      - save_cache:
+          key: yarn-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+      - run:
+          name: Update greenkeeper-lockfile
+          command: ~/.yarn/bin/greenkeeper-lockfile-update
+      - run:
+          name: Run linters
+          command: yarn lint
+      - run:
+          name: Upload greenkeeper-lockfile
+          command: ~/.yarn/bin/greenkeeper-lockfile-upload
