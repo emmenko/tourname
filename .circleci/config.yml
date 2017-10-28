@@ -33,3 +33,10 @@ jobs:
       - run:
           name: Upload greenkeeper-lockfile
           command: ~/.yarn/bin/greenkeeper-lockfile-upload
+
+workflows:
+  version: 2
+  # Workflow for master branch pipeline
+  build_and_deploy:
+    jobs:
+      - lint_and_test
