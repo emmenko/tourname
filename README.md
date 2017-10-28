@@ -1,6 +1,8 @@
 <h2 align="center">🚧 Under construction 🚧</h2>
 
 # Tourname
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/emmenko/tourname.svg)](https://greenkeeper.io/)
 A OSS service for managing tournaments within an organization.
 
 You have a table tennis, a pool table, a table soccer (or something similar) in your office and you always wanted to keep track of the matches between you and your colleagues? With `tourname` you can do that!
