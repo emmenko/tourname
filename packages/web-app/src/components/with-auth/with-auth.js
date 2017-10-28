@@ -29,15 +29,18 @@ const clearSession = () => {
   localStorage.removeItem('access_token');
   localStorage.removeItem('id_token');
   localStorage.removeItem('expires_at');
-}
+};
 
 const getIsAuthenticated = () => {
-  const accessToken = localStorage.getItem('access_token')
-  if (!accessToken) return false
+  const accessToken = localStorage.getItem('access_token');
+  if (!accessToken) return false;
 
   const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-  return new Date().getTime() < expiresAt;
-} 
+  const isTokenValid = new Date().getTime() < expiresAt;
+
+  if (!isTokenValid) clearSession();
+  return isTokenValid;
+};
 
 const withAuth = withProps(() => ({
   authorize: webAuth0.authorize.bind(webAuth0),
