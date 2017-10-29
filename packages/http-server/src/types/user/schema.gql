@@ -25,7 +25,7 @@ type Member implements User {
   name: String!
   picture: String!
   availableOrganizations: [OrganizationInfo]!
-  organization(id: String): Organization
+  organization(id: String, key: String): Organization
   # The list of matches played by this player
   matches: [Match]!
   # TODO: add statistics (matchesWon, matchesLost)

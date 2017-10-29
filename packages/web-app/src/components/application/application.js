@@ -36,7 +36,7 @@ const client = new ApolloClient({
 const Application = props =>
   props.isAuthenticated ? (
     <ApolloProvider client={client}>
-      <ApplicationAuthenticated />
+      <ApplicationAuthenticated {...props} />
     </ApolloProvider>
   ) : (
     <ApplicationLandingPage />

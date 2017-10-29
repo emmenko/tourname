@@ -38,7 +38,10 @@ const getIsAuthenticated = () => {
   const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
   const isTokenValid = new Date().getTime() < expiresAt;
 
-  if (!isTokenValid) clearSession();
+  if (!isTokenValid) {
+    console.log('Session expired');
+    clearSession();
+  }
   return isTokenValid;
 };
 

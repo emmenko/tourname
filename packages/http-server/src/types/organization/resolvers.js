@@ -1,6 +1,12 @@
 const uuid = require('uuid/v4');
 
 module.exports = {
+  Query: {
+    isOrganizationKeyUsed: async (obj, args, context) => {
+      const doc = await context.db.organizations.findOne({ key: args.key });
+      return Boolean(doc);
+    },
+  },
   OrganizationInfo: {
     id: obj => obj._id,
   },
@@ -46,6 +52,7 @@ module.exports = {
   Mutation: {
     /**
      * Args:
+     * - key
      * - name
      * - memberId
      */
@@ -55,11 +62,18 @@ module.exports = {
       if (!userDoc)
         throw new Error(`Cannot find member with id "${args.memberId}"`);
 
+      const existingOrgForGivenKey = await context.db.organizations.findOne({
+        key: args.key,
+      });
+      if (existingOrgForGivenKey)
+        throw new Error(`An organization for key "${args.key}" already exist`);
+
       const isoDate = new Date().toISOString();
       const doc = await context.db.organizations.insertOne({
         _id: uuid(),
         createdAt: isoDate,
         lastModifiedAt: isoDate,
+        key: args.key,
         name: args.name,
         users: [{ id: args.memberId, isAdmin: true }],
       });

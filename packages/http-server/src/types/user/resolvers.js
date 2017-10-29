@@ -19,10 +19,12 @@ module.exports = {
         .find({ 'users.id': context.userId })
         .sort({ name: 1 })
         .toArray(),
-    organization: (obj, args, context) =>
-      args.id
-        ? context.loaders.organizations.load(args.id)
-        : context.db.organizations.findOne(null, { sort: { name: 1 } }),
+    organization: (obj, args, context) => {
+      const orgIdOrKey = args.id || args.key;
+      return orgIdOrKey
+        ? context.loaders.organizations.load(orgIdOrKey)
+        : context.db.organizations.findOne(null, { sort: { name: 1 } })
+    },
     matches: (obj, args, context) =>
       // TODO: find a way to use dataloader: one key -> to many results
       context.db.matches

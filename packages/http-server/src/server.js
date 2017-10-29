@@ -89,7 +89,7 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
         organizations: new DataLoader(ids =>
           db
             .collection('organizations')
-            .find({ _id: { $in: ids } })
+            .find({ $or: [{ _id: { $in: ids } }, { key: { $in: ids } }] })
             .toArray()
         ),
         tournaments: new DataLoader(ids =>
@@ -136,7 +136,7 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
           request.body.variables &&
           request.body.variables.userId
         ) {
-          const userId = request.body.variables.userId;
+          const { userId } = request.body.variables;
           // eslint-disable-next-line no-param-reassign
           request.user = { sub: userId };
         }

@@ -1,5 +1,6 @@
 type OrganizationInfo {
   id: String!
+  key: String! # unique identifier
   name: String!
 }
 
@@ -7,15 +8,24 @@ type Organization {
   id: String!
   createdAt: String!
   lastModifiedAt: String!
+  key: String! # unique identifier
   name: String!
   members: [MemberInfo]!
   activeTournaments: [TournamentInfo]!
   finishedTournaments: [TournamentInfo]!
 }
 
+extend type Query {
+  isOrganizationKeyUsed(key: String!): Boolean!
+}
+
 extend type Mutation {
   # Every member can create an organization
-  createOrganization(name: String!, memberId: String!): Organization
+  createOrganization(
+    key: String! # unique identifier
+    name: String!
+    memberId: String!
+  ): Organization
   # Promote a member to admin
   setMemberAsAdmin(organizationId: String!, memberId: String!): Organization
   # Every member can add new members to the organization

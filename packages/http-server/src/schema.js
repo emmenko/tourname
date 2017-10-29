@@ -3,11 +3,11 @@ const merge = require('lodash.merge');
 const { makeExecutableSchema } = require('graphql-tools');
 const pkg = require('../package.json');
 const requireGraphql = require('./utils/require-graphql')(__dirname);
-
-const schemaDefinition = requireGraphql('./root.gql');
 const user = require('./types/user');
 const organization = require('./types/organization');
 const tournament = require('./types/tournament');
+
+const schemaDefinition = requireGraphql('./root.gql');
 
 module.exports = makeExecutableSchema({
   typeDefs: [

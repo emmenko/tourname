@@ -10,7 +10,7 @@ The DB documents however are slightly different from the GraphQL types.
 
 ```js
 {
-  _id, // UUID
+  _id, // string (given by the user as `key`)
   createdAt, // ISO datetime
   lastModifiedAt, // ISO datetime
   name, // string
