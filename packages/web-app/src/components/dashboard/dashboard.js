@@ -51,7 +51,7 @@ const Dashboard = props => (
           {mockedActiveTournaments.map(tournament => (
             <ListItem key={tournament.id}>
               <Link
-                to={`/${props.organization.organizationForUser
+                to={`/${props.organization.organizationByKey
                   .key}/tournaments/${tournament.id}`}
               >
                 {tournament.name}
@@ -69,7 +69,7 @@ const Dashboard = props => (
           {mockedPlayedTournaments.map(tournament => (
             <ListItem key={tournament.id}>
               <Link
-                to={`/${props.organization.organizationForUser
+                to={`/${props.organization.organizationByKey
                   .key}/tournaments/${tournament.id}`}
               >
                 {tournament.name}
@@ -80,9 +80,7 @@ const Dashboard = props => (
       </SectionBlock>
     </Section>
     <Section>
-      <Link
-        to={`/${props.organization.organizationForUser.key}/tournaments/new`}
-      >
+      <Link to={`/${props.organization.organizationByKey.key}/tournaments/new`}>
         <Button>{'Create new tournament'}</Button>
       </Link>
     </Section>

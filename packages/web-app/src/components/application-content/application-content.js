@@ -12,7 +12,7 @@ const NotFound = () => <div>{'404 Not Found'}</div>;
 
 const ApplicationContent = props => {
   if (props.organization.loading) return <Loading />;
-  if (!props.organization.organizationForUser) return <NotFound />;
+  if (!props.organization.organizationByKey) return <NotFound />;
   return (
     <div>
       <Route
