@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import withUser, { userShape } from '../with-user';
 
 const Container = styled.div`
   display: flex;
@@ -49,40 +50,48 @@ const Button = styled.button`
   }
 `;
 
+const TopNavigationUserMenu = props => (
+  <UserMenu>
+    <div key="name">
+      {props.loggedInUser.me ? props.loggedInUser.me.name : <PlaceholderText />}
+    </div>
+    {props.loggedInUser.me ? (
+      <UserAvatar
+        key="picture"
+        alt="User avatar"
+        src={props.loggedInUser.me.picture}
+      />
+    ) : (
+      <PlaceholderImage />
+    )}
+    <Link to="/logout">{'Logout'}</Link>
+  </UserMenu>
+);
+TopNavigationUserMenu.propTypes = {
+  loggedInUser: userShape.isRequired,
+};
+
+const WithAuthenticatedUser = withUser(TopNavigationUserMenu);
+const WithoutAuthenticatedUser = () => (
+  <Link to="/login">
+    <Button>{'Login'}</Button>
+  </Link>
+);
+
 const TopNavigation = props => (
   <Container>
     <div>{'Logo'}</div>
     <div>
-      {props.isUserLoggedIn ? (
-        <UserMenu>
-          <div key="name">
-            {props.user ? props.user.name : <PlaceholderText />}
-          </div>
-          {props.user ? (
-            <UserAvatar
-              key="picture"
-              alt="User avatar"
-              src={props.user.picture}
-            />
-          ) : (
-            <PlaceholderImage />
-          )}
-          <Link to="/logout">{'Logout'}</Link>
-        </UserMenu>
+      {props.isUserAuthenticated ? (
+        <WithAuthenticatedUser />
       ) : (
-        <Link to="/login">
-          <Button>{'Login'}</Button>
-        </Link>
+        <WithoutAuthenticatedUser />
       )}
     </div>
   </Container>
 );
 TopNavigation.propTypes = {
-  isUserLoggedIn: PropTypes.bool.isRequired,
-  user: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    picture: PropTypes.string.isRequired,
-  }),
+  isUserAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default TopNavigation;

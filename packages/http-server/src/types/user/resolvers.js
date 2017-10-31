@@ -3,6 +3,10 @@ module.exports = {
     me: (obj, args, context) =>
       // Active userId is implicit in `context`
       context.loaders.users.load(context.userId),
+    organizationForUser: (obj, args, context) =>
+      context.db.organizations.findOne({
+        $and: [{ key: args.key }, { 'users.id': args.memberId }],
+      }),
   },
   MemberInfo: {
     id: obj => obj.user_id,
@@ -19,12 +23,6 @@ module.exports = {
         .find({ 'users.id': context.userId })
         .sort({ name: 1 })
         .toArray(),
-    organization: (obj, args, context) => {
-      const orgIdOrKey = args.id || args.key;
-      return orgIdOrKey
-        ? context.loaders.organizations.load(orgIdOrKey)
-        : context.db.organizations.findOne(null, { sort: { name: 1 } })
-    },
     matches: (obj, args, context) =>
       // TODO: find a way to use dataloader: one key -> to many results
       context.db.matches

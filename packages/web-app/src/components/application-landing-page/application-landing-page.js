@@ -3,7 +3,7 @@ import TopNavigation from '../top-navigation';
 
 const ApplicationLandingPage = () => (
   <div>
-    <TopNavigation isUserLoggedIn={false} />
+    <TopNavigation isUserAuthenticated={false} />
     {'Landing page'}
   </div>
 );

@@ -6,6 +6,7 @@ import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloProvider } from 'react-apollo';
+import { Redirect } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import { GRAPHQL_CONFIG } from '../../config';
 import withAuth from '../with-auth';
@@ -33,16 +34,21 @@ const client = new ApolloClient({
   link: ApolloLink.from([middlewareLink, errorLink, httpLink]),
 });
 
-const Application = props =>
-  props.isAuthenticated ? (
-    <ApolloProvider client={client}>
-      <ApplicationAuthenticated {...props} />
-    </ApolloProvider>
-  ) : (
-    <ApplicationLandingPage />
-  );
+const Application = props => {
+  if (props.isAuthenticated)
+    return (
+      <ApolloProvider client={client}>
+        <ApplicationAuthenticated {...props} />
+      </ApolloProvider>
+    );
+  if (props.location.pathname !== '/') return <Redirect to="/" />;
+  return <ApplicationLandingPage />;
+};
 Application.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default withAuth(Application);

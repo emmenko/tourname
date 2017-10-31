@@ -196,6 +196,14 @@ formidable@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/formidable/-/formidable-1.1.1.tgz#96b8886f7c3c3508b932d6bd70c4d3a88f35f1a9"
 
+formik@0.9.4:
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/formik/-/formik-0.9.4.tgz#e284620539c54d7d052c1950230b1e44c5acc6a4"
+  dependencies:
+    lodash.isequal "4.5.0"
+    prop-types "^15.5.10"
+    warning "^3.0.0"
+
 graphql-anywhere@^4.0.0-beta.2:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-4.0.0.tgz#4cf7ae7ed93aabeb95d329caa08c3867ddaef45e"
@@ -317,6 +325,10 @@ lodash.flowright@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/lodash.flowright/-/lodash.flowright-3.5.0.tgz#2b5fff399716d7e7dc5724fe9349f67065184d67"
 
+lodash.isequal@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+
 lodash.pick@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
@@ -380,7 +392,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.6.0, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0:
+prop-types@15.6.0, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:

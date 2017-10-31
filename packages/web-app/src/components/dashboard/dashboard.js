@@ -1,7 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { compose } from 'recompose';
+import withUser, { userShape } from '../with-user';
+import withOrganization, { organizationShape } from '../with-organization';
 import Welcome from '../welcome';
 
 const View = styled.div`
@@ -13,7 +15,9 @@ const Section = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const SectionBlock = styled.div`flex: 1;`;
+const SectionBlock = styled.div`
+  flex: 1;
+`;
 const SectionBlockTitle = styled.h3``;
 const Button = styled.button``;
 const List = styled.ul``;
@@ -32,7 +36,7 @@ const mockedPlayedTournaments = [
 const Dashboard = props => (
   <View>
     <Section>
-      <Welcome name={props.userFullName} />
+      <Welcome name={props.loggedInUser.me.name} />
       {/* TODO: show some statistics (and maybe a chart?), e.g.:
         - number of tournaments played
         - number of wins
@@ -46,7 +50,10 @@ const Dashboard = props => (
         <List>
           {mockedActiveTournaments.map(tournament => (
             <ListItem key={tournament.id}>
-              <Link to={`/tournaments/${tournament.id}`}>
+              <Link
+                to={`/${props.organization.organizationForUser
+                  .key}/tournaments/${tournament.id}`}
+              >
                 {tournament.name}
               </Link>
             </ListItem>
@@ -61,7 +68,10 @@ const Dashboard = props => (
         <List>
           {mockedPlayedTournaments.map(tournament => (
             <ListItem key={tournament.id}>
-              <Link to={`/tournaments/${tournament.id}`}>
+              <Link
+                to={`/${props.organization.organizationForUser
+                  .key}/tournaments/${tournament.id}`}
+              >
                 {tournament.name}
               </Link>
             </ListItem>
@@ -70,14 +80,17 @@ const Dashboard = props => (
       </SectionBlock>
     </Section>
     <Section>
-      <Link to="/tournaments/new">
+      <Link
+        to={`/${props.organization.organizationForUser.key}/tournaments/new`}
+      >
         <Button>{'Create new tournament'}</Button>
       </Link>
     </Section>
   </View>
 );
 Dashboard.propTypes = {
-  userFullName: PropTypes.string,
+  loggedInUser: userShape.isRequired,
+  organization: organizationShape.isRequired,
 };
 
-export default Dashboard;
+export default compose(withUser, withOrganization)(Dashboard);
