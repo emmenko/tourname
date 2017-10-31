@@ -6,6 +6,10 @@ module.exports = {
       const doc = await context.db.organizations.findOne({ key: args.key });
       return Boolean(doc);
     },
+    organizationByKey: (obj, args, context) =>
+      context.db.organizations.findOne({
+        $and: [{ key: args.key }, { 'users.id': context.userId }],
+      }),
   },
   OrganizationInfo: {
     id: obj => obj._id,

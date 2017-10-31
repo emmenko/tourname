@@ -3,10 +3,6 @@ module.exports = {
     me: (obj, args, context) =>
       // Active userId is implicit in `context`
       context.loaders.users.load(context.userId),
-    organizationByKey: (obj, args, context) =>
-      context.db.organizations.findOne({
-        $and: [{ key: args.key }, { 'users.id': context.userId }],
-      }),
   },
   MemberInfo: {
     id: obj => obj.user_id,

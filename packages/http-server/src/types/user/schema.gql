@@ -32,5 +32,4 @@ type Member implements User {
 
 extend type Query {
   me: Member!
-  organizationByKey(key: String!): Organization
 }

@@ -17,6 +17,7 @@ type Organization {
 
 extend type Query {
   isOrganizationKeyUsed(key: String!): Boolean!
+  organizationByKey(key: String!): Organization
 }
 
 extend type Mutation {
