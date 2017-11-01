@@ -24,11 +24,13 @@ export const organizationShape = PropTypes.shape({
   }),
 });
 
-const withOrganization = Component =>
+const withOrganization = mapDataToProps => Component =>
   compose(
     withRouter,
     graphql(OrganizationQuery, {
       name: 'organization',
+      props: ({ organization }) =>
+        mapDataToProps ? mapDataToProps(organization) : { organization },
       options: ownProps => ({
         variables: {
           key: ownProps.match.params.organizationKey,

@@ -56,4 +56,4 @@ class SelectOrganization extends React.PureComponent {
   }
 }
 
-export default compose(withRouter, withUser)(SelectOrganization);
+export default compose(withRouter, withUser())(SelectOrganization);

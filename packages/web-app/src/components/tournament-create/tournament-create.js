@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { Formik } from 'formik';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import withUser, { userShape } from '../with-user';
+import withUser from '../with-user';
 
 const FormView = styled.div`
   > * + * {
@@ -49,7 +49,7 @@ const TournamentCreate = props => (
         name: '',
         size: 'SMALL',
         discipline: '',
-        organizationId: props.loggedInUser.me.availableOrganizations[0].id,
+        organizationId: props.defaultOrganizationId,
         teamSize: 1,
       }}
       validate={values => {
@@ -110,7 +110,7 @@ const TournamentCreate = props => (
             onBlur={handleBlur}
             value={values.organizationId}
           >
-            {props.loggedInUser.me.availableOrganizations.map(org => (
+            {props.availableOrganizations.map(org => (
               <SelectOption key={org.key} value={org.id}>
                 {org.name}
               </SelectOption>
@@ -170,12 +170,22 @@ TournamentCreate.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  loggedInUser: userShape.isRequired,
+  defaultOrganizationId: PropTypes.string.isRequired,
+  availableOrganizations: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      key: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   createTournament: PropTypes.func.isRequired,
 };
 
 export default compose(
   withRouter,
-  withUser,
+  withUser(data => ({
+    defaultOrganizationId: data.me.availableOrganizations[0].id,
+    availableOrganizations: data.me.availableOrganizations,
+  })),
   graphql(CreateTournament, { name: 'createTournament' })
 )(TournamentCreate);

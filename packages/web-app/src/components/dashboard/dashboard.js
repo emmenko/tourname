@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { compose } from 'recompose';
-import withUser, { userShape } from '../with-user';
-import withOrganization, { organizationShape } from '../with-organization';
+import withUser from '../with-user';
 import Welcome from '../welcome';
 
 const View = styled.div`
@@ -36,7 +37,7 @@ const mockedPlayedTournaments = [
 const Dashboard = props => (
   <View>
     <Section>
-      <Welcome name={props.loggedInUser.me.name} />
+      <Welcome name={props.fullName} />
       {/* TODO: show some statistics (and maybe a chart?), e.g.:
         - number of tournaments played
         - number of wins
@@ -51,8 +52,8 @@ const Dashboard = props => (
           {mockedActiveTournaments.map(tournament => (
             <ListItem key={tournament.id}>
               <Link
-                to={`/${props.organization.organizationByKey
-                  .key}/tournaments/${tournament.id}`}
+                to={`/${props.match.params
+                  .organizationKey}/tournaments/${tournament.id}`}
               >
                 {tournament.name}
               </Link>
@@ -69,8 +70,8 @@ const Dashboard = props => (
           {mockedPlayedTournaments.map(tournament => (
             <ListItem key={tournament.id}>
               <Link
-                to={`/${props.organization.organizationByKey
-                  .key}/tournaments/${tournament.id}`}
+                to={`/${props.match.params
+                  .organizationKey}/tournaments/${tournament.id}`}
               >
                 {tournament.name}
               </Link>
@@ -87,8 +88,15 @@ const Dashboard = props => (
   </View>
 );
 Dashboard.propTypes = {
-  loggedInUser: userShape.isRequired,
-  organization: organizationShape.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      organizationKey: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  fullName: PropTypes.string.isRequired,
 };
 
-export default compose(withUser, withOrganization)(Dashboard);
+export default compose(
+  withRouter,
+  withUser(data => ({ fullName: data.me.name }))
+)(Dashboard);

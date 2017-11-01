@@ -42,4 +42,4 @@ ApplicationContent.propTypes = {
   organization: organizationShape.isRequired,
 };
 
-export default withOrganization(ApplicationContent);
+export default withOrganization()(ApplicationContent);

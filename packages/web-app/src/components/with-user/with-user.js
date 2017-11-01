@@ -34,8 +34,13 @@ export const userShape = PropTypes.shape({
   }),
 });
 
-const withUser = Component =>
-  compose(withRouter, graphql(LoggedInUserQuery, { name: 'loggedInUser' }))(
-    Component
-  );
+const withUser = mapDataToProps => Component =>
+  compose(
+    withRouter,
+    graphql(LoggedInUserQuery, {
+      name: 'loggedInUser',
+      props: ({ loggedInUser }) =>
+        mapDataToProps ? mapDataToProps(loggedInUser) : { loggedInUser },
+    })
+  )(Component);
 export default withUser;
