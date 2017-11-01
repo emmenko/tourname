@@ -10,22 +10,7 @@ const OrganizationQuery = gql`
       id
       key
       name
-      activeTournaments {
-        ...TournamentInfo
-      }
-      finishedTournaments {
-        ...TournamentInfo
-      }
     }
-  }
-
-  fragment TournamentInfo on TournamentInfo {
-    id
-    discipline
-    name
-    status
-    size
-    teamSize
   }
 `;
 

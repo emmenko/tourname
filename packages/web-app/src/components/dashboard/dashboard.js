@@ -38,6 +38,7 @@ const TextDetail = styled.div`
 const TournamentsOverview = gql`
   query TournamentsOverview($key: String!) {
     organizationByKey(key: $key) {
+      id
       activeTournaments {
         ...TournamentInfo
       }
