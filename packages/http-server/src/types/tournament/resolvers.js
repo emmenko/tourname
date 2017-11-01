@@ -242,7 +242,7 @@ module.exports = {
     matchesLeg1: (obj, args, context) =>
       context.loaders.matches.loadMany(obj.matchesLeg1),
     matchesLeg2: (obj, args, context) =>
-      context.loaders.matches.load(obj.matchesLeg2),
+      obj.matchesLeg2 && context.loaders.matches.load(obj.matchesLeg2),
   },
   TournamentMedium: {
     id: obj => obj._id,
@@ -253,7 +253,7 @@ module.exports = {
     matchesLeg2: (obj, args, context) =>
       context.loaders.matches.loadMany(obj.matchesLeg2),
     matchesLeg3: (obj, args, context) =>
-      context.loaders.matches.load(obj.matchesLeg3),
+      obj.matchesLeg3 && context.loaders.matches.load(obj.matchesLeg3),
   },
   TournamentLarge: {
     id: obj => obj._id,
@@ -266,7 +266,7 @@ module.exports = {
     matchesLeg3: (obj, args, context) =>
       context.loaders.matches.loadMany(obj.matchesLeg3),
     matchesLeg4: (obj, args, context) =>
-      context.loaders.matches.load(obj.matchesLeg4),
+      obj.matchesLeg4 && context.loaders.matches.load(obj.matchesLeg4),
   },
   TournamentXLarge: {
     id: obj => obj._id,
@@ -281,9 +281,42 @@ module.exports = {
     matchesLeg4: (obj, args, context) =>
       context.loaders.matches.loadMany(obj.matchesLeg4),
     matchesLeg5: (obj, args, context) =>
-      context.loaders.matches.load(obj.matchesLeg5),
+      obj.matchesLeg5 && context.loaders.matches.load(obj.matchesLeg5),
   },
   Mutation: {
+    createTournament: (obj, args, context) => {
+      switch (args.size) {
+        case TOURNAMENT_SMALL:
+          return createNewTournamentResolver(TOURNAMENT_SMALL, {
+            matchesLeg1: [],
+            matchesLeg2: null,
+          })(obj, args, context);
+        case TOURNAMENT_MEDIUM:
+          return createNewTournamentResolver(TOURNAMENT_MEDIUM, {
+            matchesLeg1: [],
+            matchesLeg2: [],
+            matchesLeg3: null,
+          })(obj, args, context);
+        case TOURNAMENT_LARGE:
+          return createNewTournamentResolver(TOURNAMENT_LARGE, {
+            matchesLeg1: [],
+            matchesLeg2: [],
+            matchesLeg3: [],
+            matchesLeg4: null,
+          })(obj, args, context);
+        case TOURNAMENT_XLARGE:
+          return createNewTournamentResolver(TOURNAMENT_XLARGE, {
+            matchesLeg1: [],
+            matchesLeg2: [],
+            matchesLeg3: [],
+            matchesLeg4: [],
+            matchesLeg5: null,
+          })(obj, args, context);
+        default:
+          // Ignore
+          throw new Error(`Unexpected tournament size: ${args.size}`);
+      }
+    },
     createSmallTournament: createNewTournamentResolver(TOURNAMENT_SMALL, {
       matchesLeg1: [],
       matchesLeg2: null,

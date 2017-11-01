@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import withOrganization, { organizationShape } from '../with-organization';
 import Loading from '../loading';
 import Dashboard from '../dashboard';
-import TournamentCreate from '../tournament-create';
 import TournamentDetail from '../tournament-detail';
 import TournamentsList from '../tournaments-list';
 
@@ -26,11 +25,6 @@ const ApplicationContent = props => {
       />
       <Switch>
         <Route exact={true} path="/:organizationKey" component={Dashboard} />
-        <Route
-          exact={true}
-          path="/:organizationKey/tournaments/new"
-          render={TournamentCreate}
-        />
         <Route
           path="/:organizationKey/tournaments/:id"
           render={TournamentDetail}

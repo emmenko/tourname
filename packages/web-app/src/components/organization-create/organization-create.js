@@ -59,6 +59,7 @@ const OrganizationCreate = props => (
           .then(
             () => {
               actions.setSubmitting(false);
+              // TODO: Notify and redirect to dashboard page
             },
             (/* error */) => {
               actions.setSubmitting(false);

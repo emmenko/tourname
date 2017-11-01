@@ -80,7 +80,7 @@ const Dashboard = props => (
       </SectionBlock>
     </Section>
     <Section>
-      <Link to={`/${props.organization.organizationByKey.key}/tournaments/new`}>
+      <Link to={`/new`}>
         <Button>{'Create new tournament'}</Button>
       </Link>
     </Section>

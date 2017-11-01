@@ -136,6 +136,13 @@ extend type Query {
 }
 
 extend type Mutation {
+  createTournament(
+    name: String!
+    size: TournamentSize!
+    discipline: Discipline!
+    organizationId: String!
+    teamSize: Int!
+  ): Tournament
   createSmallTournament(
     name: String!
     discipline: Discipline!
