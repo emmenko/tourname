@@ -24,8 +24,8 @@ const SubmitButton = styled.button``;
 const CreateTournament = gql`
   mutation CreateTournament(
     $name: String!
-    $size: String!
-    $discipline: String!
+    $size: TournamentSize!
+    $discipline: Discipline!
     $organizationId: String!
     $teamSize: Int!
   ) {
@@ -71,20 +71,28 @@ const TournamentCreate = props => (
         return errors;
       }}
       onSubmit={(values, actions) => {
+        const { organizationId } = values;
         props
           .createTournament({
             variables: {
               name: values.name,
               size: values.size,
               discipline: values.discipline,
-              organizationId: values.organizationId,
+              organizationId,
               teamSize: values.teamSize,
             },
           })
           .then(
-            () => {
+            result => {
               actions.setSubmitting(false);
-              // TODO: Notify and redirect to tournament page
+              const tournamentId = result.data.createTournament.id;
+              const selectedOrganization = props.availableOrganizations.find(
+                org => org.id === organizationId
+              );
+              // TODO: Notify
+              props.history.push(
+                `/${selectedOrganization.key}/tournaments/${tournamentId}`
+              );
             },
             (/* error */) => {
               actions.setSubmitting(false);
