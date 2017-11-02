@@ -1,3 +1,13 @@
+enum SortOrder {
+  ASC
+  DESC
+}
+
+input SortBy {
+  key: String!
+  order: SortOrder!
+}
+
 type OrganizationInfo {
   id: String!
   key: String! # unique identifier
@@ -11,8 +21,12 @@ type Organization {
   key: String! # unique identifier
   name: String!
   members: [MemberInfo]!
-  activeTournaments: [TournamentInfo]!
-  finishedTournaments: [TournamentInfo]!
+  tournaments(
+    status: [TournamentStatus!] # `or` condition
+    sort: SortBy!
+    page: Int!
+    perPage: Int!
+  ): [TournamentInfo]!
 }
 
 extend type Query {

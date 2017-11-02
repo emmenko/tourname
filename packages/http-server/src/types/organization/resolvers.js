@@ -30,28 +30,19 @@ module.exports = {
         })
       );
     },
-    activeTournaments: (obj, args, context) =>
+    tournaments: (obj, args, context) => {
       // TODO: find a way to use dataloader: one key -> to many results
-      context.db.tournaments
-        .find({
-          $and: [
-            { 'organizations.id': { $eq: obj.id } },
-            { status: { $ne: 'FINISHED' } },
-          ],
-        })
-        .sort({ lastModifiedAt: -1 })
-        .toArray(),
-    finishedTournaments: (obj, args, context) =>
-      // TODO: find a way to use dataloader: one key -> to many results
-      context.db.tournaments
-        .find({
-          $and: [
-            { 'organizations.id': { $eq: obj.id } },
-            { status: { $eq: 'FINISHED' } },
-          ],
-        })
-        .sort({ lastModifiedAt: -1 })
-        .toArray(),
+      const queryConditions = [{ 'organizations.id': { $eq: obj.id } }];
+      if (args.status && args.status.length > 0)
+        queryConditions.push({ $or: args.status.map(status => ({ status })) });
+
+      return context.db.tournaments
+        .find({ $and: queryConditions })
+        .skip(args.page > 0 ? (args.page - 1) * args.perPage : 0)
+        .limit(args.perPage)
+        .sort({ [args.sort.key]: args.sort.order === 'ASC' ? 1 : -1 })
+        .toArray();
+    },
   },
   Mutation: {
     /**

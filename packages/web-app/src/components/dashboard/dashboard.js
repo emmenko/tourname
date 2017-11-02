@@ -35,26 +35,45 @@ const TextDetail = styled.div`
   color: #aaa;
 `;
 
-const TournamentsOverview = gql`
-  query TournamentsOverview($key: String!) {
+const ActiveTournaments = gql`
+  query ActiveTournaments($key: String!, $page: Int!, $perPage: Int!) {
     organizationByKey(key: $key) {
       id
-      activeTournaments {
-        ...TournamentInfo
-      }
-      finishedTournaments {
-        ...TournamentInfo
+      tournaments(
+        status: [NEW, IN_PROGRESS]
+        sort: { key: "createdAt", order: DESC }
+        page: $page
+        perPage: $perPage
+      ) {
+        id
+        discipline
+        name
+        status
+        size
+        teamSize
       }
     }
   }
+`;
 
-  fragment TournamentInfo on TournamentInfo {
-    id
-    discipline
-    name
-    status
-    size
-    teamSize
+const FinishedTournaments = gql`
+  query FinishedTournaments($key: String!, $page: Int!, $perPage: Int!) {
+    organizationByKey(key: $key) {
+      id
+      tournaments(
+        status: [FINISHED]
+        sort: { key: "createdAt", order: DESC }
+        page: $page
+        perPage: $perPage
+      ) {
+        id
+        discipline
+        name
+        status
+        size
+        teamSize
+      }
+    }
   }
 `;
 
@@ -66,10 +85,10 @@ class Dashboard extends React.PureComponent {
       }).isRequired,
     }).isRequired,
     fullName: PropTypes.string.isRequired,
-    tournaments: PropTypes.shape({
+    activeTournaments: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
       organizationByKey: PropTypes.shape({
-        activeTournaments: PropTypes.arrayOf(
+        tournaments: PropTypes.arrayOf(
           PropTypes.shape({
             id: PropTypes.string.isRequired,
             discipline: PropTypes.string.isRequired,
@@ -79,7 +98,12 @@ class Dashboard extends React.PureComponent {
             teamSize: PropTypes.number.isRequired,
           })
         ).isRequired,
-        finishedTournaments: PropTypes.arrayOf(
+      }),
+    }),
+    finishedTournaments: PropTypes.shape({
+      loading: PropTypes.bool.isRequired,
+      organizationByKey: PropTypes.shape({
+        tournaments: PropTypes.arrayOf(
           PropTypes.shape({
             id: PropTypes.string.isRequired,
             discipline: PropTypes.string.isRequired,
@@ -94,12 +118,12 @@ class Dashboard extends React.PureComponent {
   };
 
   renderActiveTournamentsList = () => {
-    const { activeTournaments } = this.props.tournaments.organizationByKey;
-    if (activeTournaments.length === 0)
+    const { tournaments } = this.props.activeTournaments.organizationByKey;
+    if (tournaments.length === 0)
       return <div>{'There are no active tournaments at the moment'}</div>;
     return (
       <List>
-        {activeTournaments.map(tournament => (
+        {tournaments.map(tournament => (
           <Link
             key={tournament.id}
             to={`/${this.props.match.params
@@ -116,12 +140,12 @@ class Dashboard extends React.PureComponent {
   };
 
   renderFinishedTournamentsList = () => {
-    const { finishedTournaments } = this.props.tournaments.organizationByKey;
-    if (finishedTournaments.length === 0)
+    const { tournaments } = this.props.finishedTournaments.organizationByKey;
+    if (tournaments.length === 0)
       return <div>{'There are no finished tournaments at the moment'}</div>;
     return (
       <List>
-        {finishedTournaments.map(tournament => (
+        {tournaments.map(tournament => (
           <Link
             key={tournament.id}
             to={`/${this.props.match.params
@@ -151,7 +175,7 @@ class Dashboard extends React.PureComponent {
         <Section>
           <SectionBlock>
             <SectionBlockTitle>{'Active tournaments'}</SectionBlockTitle>
-            {this.props.tournaments.loading ? (
+            {this.props.activeTournaments.loading ? (
               <Loading />
             ) : (
               this.renderActiveTournamentsList()
@@ -159,7 +183,7 @@ class Dashboard extends React.PureComponent {
           </SectionBlock>
           <SectionBlock>
             <SectionBlockTitle>{'Finished tournaments'}</SectionBlockTitle>
-            {this.props.tournaments.loading ? (
+            {this.props.finishedTournaments.loading ? (
               <Loading />
             ) : (
               this.renderFinishedTournamentsList()
@@ -179,11 +203,23 @@ class Dashboard extends React.PureComponent {
 export default compose(
   withRouter,
   withUser(data => ({ fullName: data.me.name })),
-  graphql(TournamentsOverview, {
-    name: 'tournaments',
+  graphql(ActiveTournaments, {
+    name: 'activeTournaments',
     options: ownProps => ({
       variables: {
         key: ownProps.match.params.organizationKey,
+        page: 1,
+        perPage: 20,
+      },
+    }),
+  }),
+  graphql(FinishedTournaments, {
+    name: 'finishedTournaments',
+    options: ownProps => ({
+      variables: {
+        key: ownProps.match.params.organizationKey,
+        page: 1,
+        perPage: 20,
       },
     }),
   })
