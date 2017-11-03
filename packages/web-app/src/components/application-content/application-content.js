@@ -26,13 +26,14 @@ const ApplicationContent = props => {
       <Switch>
         <Route exact={true} path="/:organizationKey" component={Dashboard} />
         <Route
-          path="/:organizationKey/tournaments/:id"
-          render={TournamentDetail}
+          exact={true}
+          path="/:organizationKey/tournaments/:tournamentId"
+          component={TournamentDetail}
         />
         <Route
           exact={true}
           path="/:organizationKey/tournaments"
-          render={TournamentsList}
+          component={TournamentsList}
         />
       </Switch>
     </div>

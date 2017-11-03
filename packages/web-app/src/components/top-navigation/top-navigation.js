@@ -69,12 +69,12 @@ TopNavigationUserMenu.propTypes = {
   pictureUrl: PropTypes.string.isRequired,
 };
 
-const WithAuthenticatedUser = withUser(data => ({
+const MenuForAuthenticatedUser = withUser(data => ({
   isUserLoading: data.loading,
   fullName: data.me.name,
   pictureUrl: data.me.picture,
 }))(TopNavigationUserMenu);
-const WithoutAuthenticatedUser = () => (
+const MenuForNotAuthenticatedUser = () => (
   <Link to="/login">
     <Button>{'Login'}</Button>
   </Link>
@@ -85,9 +85,9 @@ const TopNavigation = props => (
     <div>{'Logo'}</div>
     <div>
       {props.isUserAuthenticated ? (
-        <WithAuthenticatedUser />
+        <MenuForAuthenticatedUser />
       ) : (
-        <WithoutAuthenticatedUser />
+        <MenuForNotAuthenticatedUser />
       )}
     </div>
   </Container>
