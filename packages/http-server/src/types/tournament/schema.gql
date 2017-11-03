@@ -43,7 +43,7 @@ interface Tournament {
   lastModifiedAt: String!
   discipline: Discipline!
   name: String!
-  organizationId: String!
+  organizationKey: String!
   status: TournamentStatus!
   # At least 1 player
   teamSize: Int!
@@ -67,7 +67,7 @@ type TournamentSmall implements Tournament {
   lastModifiedAt: String!
   discipline: Discipline!
   name: String!
-  organizationId: String!
+  organizationKey: String!
   status: TournamentStatus!
   # At least 1 player
   teamSize: Int!
@@ -83,7 +83,7 @@ type TournamentMedium implements Tournament {
   lastModifiedAt: String!
   discipline: Discipline!
   name: String!
-  organizationId: String!
+  organizationKey: String!
   status: TournamentStatus!
   # At least 1 player
   teamSize: Int!
@@ -100,7 +100,7 @@ type TournamentLarge implements Tournament {
   lastModifiedAt: String!
   discipline: Discipline!
   name: String!
-  organizationId: String!
+  organizationKey: String!
   status: TournamentStatus!
   # At least 1 player
   teamSize: Int!
@@ -118,7 +118,7 @@ type TournamentXLarge implements Tournament {
   lastModifiedAt: String!
   discipline: Discipline!
   name: String!
-  organizationId: String!
+  organizationKey: String!
   status: TournamentStatus!
   # At least 1 player
   teamSize: Int!
@@ -140,33 +140,33 @@ extend type Mutation {
     name: String!
     size: TournamentSize!
     discipline: Discipline!
-    organizationId: String!
+    organizationKey: String!
     teamSize: Int!
   ): Tournament
-  createSmallTournament(
-    name: String!
-    discipline: Discipline!
-    organizationId: String!
-    teamSize: Int!
-  ): TournamentSmall
-  createMediumTournament(
-    name: String!
-    discipline: Discipline!
-    organizationId: String!
-    teamSize: Int!
-  ): TournamentMedium
-  createLargeTournament(
-    name: String!
-    discipline: Discipline!
-    organizationId: String!
-    teamSize: Int!
-  ): TournamentLarge
-  createXLargeTournament(
-    name: String!
-    discipline: Discipline!
-    organizationId: String!
-    teamSize: Int!
-  ): TournamentXLarge
+  # createSmallTournament(
+  #   name: String!
+  #   discipline: Discipline!
+  #   organizationKey: String!
+  #   teamSize: Int!
+  # ): TournamentSmall
+  # createMediumTournament(
+  #   name: String!
+  #   discipline: Discipline!
+  #   organizationKey: String!
+  #   teamSize: Int!
+  # ): TournamentMedium
+  # createLargeTournament(
+  #   name: String!
+  #   discipline: Discipline!
+  #   organizationKey: String!
+  #   teamSize: Int!
+  # ): TournamentLarge
+  # createXLargeTournament(
+  #   name: String!
+  #   discipline: Discipline!
+  #   organizationId: String!
+  #   teamSize: Int!
+  # ): TournamentXLarge
   addPlayerToTeam(
     tournamentId: String!
     teamKey: String!

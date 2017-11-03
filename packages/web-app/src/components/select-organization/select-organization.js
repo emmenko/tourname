@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router';
 import styled from 'styled-components';
-import withUser, { userShape } from '../with-user';
-import Loading from '../loading';
+import withUser from '../with-user';
 
 const View = styled.div`
   > * + * {
@@ -20,40 +19,47 @@ class SelectOrganization extends React.PureComponent {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
     }).isRequired,
-    loggedInUser: userShape.isRequired,
+    availableOrganizations: PropTypes.arrayOf(
+      PropTypes.shape({
+        key: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
   };
   componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.loggedInUser.me &&
-      nextProps.loggedInUser.me.availableOrganizations.length === 1
-    )
-      nextProps.history.push(
-        `/${nextProps.loggedInUser.me.availableOrganizations[0].key}`
-      );
+    // Automatically redirect to the first organization page in case
+    // there is only one.
+    if (nextProps.availableOrganizations.length === 1)
+      nextProps.history.push(`/${nextProps.availableOrganizations[0].key}`);
   }
   render() {
     return (
       <View>
         <Title>{'Select an organization from the list'}</Title>
-        {this.props.loggedInUser.loading ? (
-          <Loading />
-        ) : (
-          <Select
-            onChange={event => {
-              const { value } = event.target;
-              this.props.history.push(`/${value}`);
-            }}
-          >
-            {this.props.loggedInUser.me.availableOrganizations.map(org => (
+        <Select
+          onChange={event => {
+            const { value } = event.target;
+            this.props.history.push(`/${value}`);
+          }}
+        >
+          {this.props.availableOrganizations.length > 0 ? (
+            this.props.availableOrganizations.map(org => (
               <SelectOption key={org.key} value={org.key}>
                 {org.name}
               </SelectOption>
-            ))}
-          </Select>
-        )}
+            ))
+          ) : (
+            <SelectOption disabled={true}>{'Loading...'}</SelectOption>
+          )}
+        </Select>
       </View>
     );
   }
 }
 
-export default compose(withRouter, withUser())(SelectOrganization);
+export default compose(
+  withRouter,
+  withUser(data => ({
+    availableOrganizations: data.loading ? [] : data.me.availableOrganizations,
+  }))
+)(SelectOrganization);

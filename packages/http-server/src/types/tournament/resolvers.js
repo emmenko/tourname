@@ -24,34 +24,6 @@ const generateEmptyTeamsForTournament = size =>
     {}
   );
 
-const createNewTournamentResolver = (size, legs) => async (
-  obj,
-  args,
-  context
-) => {
-  if (args.teamSize < 1)
-    throw new Error('Team size must be equal or greater than 1');
-  const isoDate = new Date().toISOString();
-  const doc = await context.db.tournaments.insertOne(
-    Object.assign(
-      {
-        _id: uuid(),
-        createdAt: isoDate,
-        lastModifiedAt: isoDate,
-        size,
-        discipline: args.discipline,
-        name: args.name,
-        organizationId: args.organizationId,
-        status: 'NEW',
-        teamSize: args.teamSize,
-        teams: generateEmptyTeamsForTournament(tournamentSizeMap[size]),
-      },
-      legs
-    )
-  );
-  return context.loaders.tournaments.load(doc.insertedId);
-};
-
 const mapMatchIdToMatchDefinition = (
   ids,
   mapIndexToNextMatchId,
@@ -190,7 +162,7 @@ module.exports = {
       context.loaders.tournaments.load(args.id),
   },
   PlayerInfo: {
-    id: obj => obj.user_id,
+    id: obj => obj.user_id, // The `user_id` field comes from auth0
   },
   Team: {
     players: (obj, args, context) => {
@@ -284,61 +256,77 @@ module.exports = {
       obj.matchesLeg5 && context.loaders.matches.load(obj.matchesLeg5),
   },
   Mutation: {
-    createTournament: (obj, args, context) => {
+    createTournament: async (obj, args, context) => {
+      // Check that the user has access to the given organization
+      const organizationDoc = await context.loaders.organizations.load(
+        args.organizationKey
+      );
+      if (!organizationDoc)
+        // TODO: return proper status code
+        throw new Error('Unauthorized');
+
+      if (args.teamSize < 1)
+        throw new Error('Team size must be equal or greater than 1');
+
+      let legs;
       switch (args.size) {
         case TOURNAMENT_SMALL:
-          return createNewTournamentResolver(TOURNAMENT_SMALL, {
+          legs = {
             matchesLeg1: [],
             matchesLeg2: null,
-          })(obj, args, context);
+          };
+          break;
         case TOURNAMENT_MEDIUM:
-          return createNewTournamentResolver(TOURNAMENT_MEDIUM, {
+          legs = {
             matchesLeg1: [],
             matchesLeg2: [],
             matchesLeg3: null,
-          })(obj, args, context);
+          };
+          break;
         case TOURNAMENT_LARGE:
-          return createNewTournamentResolver(TOURNAMENT_LARGE, {
+          legs = {
             matchesLeg1: [],
             matchesLeg2: [],
             matchesLeg3: [],
             matchesLeg4: null,
-          })(obj, args, context);
+          };
+          break;
         case TOURNAMENT_XLARGE:
-          return createNewTournamentResolver(TOURNAMENT_XLARGE, {
+          legs = {
             matchesLeg1: [],
             matchesLeg2: [],
             matchesLeg3: [],
             matchesLeg4: [],
             matchesLeg5: null,
-          })(obj, args, context);
+          };
+          break;
         default:
-          // Ignore
+          // Ignore, we never get here
           throw new Error(`Unexpected tournament size: ${args.size}`);
       }
+
+      const isoDate = new Date().toISOString();
+      const doc = await context.db.tournaments.insertOne(
+        Object.assign(
+          {
+            _id: uuid(),
+            createdAt: isoDate,
+            lastModifiedAt: isoDate,
+            size: args.size,
+            discipline: args.discipline,
+            name: args.name,
+            organizationKey: args.organizationKey,
+            status: 'NEW',
+            teamSize: args.teamSize,
+            teams: generateEmptyTeamsForTournament(
+              tournamentSizeMap[args.size]
+            ),
+          },
+          legs
+        )
+      );
+      return context.loaders.tournaments.load(doc.insertedId);
     },
-    createSmallTournament: createNewTournamentResolver(TOURNAMENT_SMALL, {
-      matchesLeg1: [],
-      matchesLeg2: null,
-    }),
-    createMediumTournament: createNewTournamentResolver(TOURNAMENT_MEDIUM, {
-      matchesLeg1: [],
-      matchesLeg2: [],
-      matchesLeg3: null,
-    }),
-    createLargeTournament: createNewTournamentResolver(TOURNAMENT_LARGE, {
-      matchesLeg1: [],
-      matchesLeg2: [],
-      matchesLeg3: [],
-      matchesLeg4: null,
-    }),
-    createXLargeTournament: createNewTournamentResolver(TOURNAMENT_XLARGE, {
-      matchesLeg1: [],
-      matchesLeg2: [],
-      matchesLeg3: [],
-      matchesLeg4: [],
-      matchesLeg5: null,
-    }),
     /**
      * Args:
      * - tournamentId

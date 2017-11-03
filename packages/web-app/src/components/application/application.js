@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ApolloClient from 'apollo-client';
-import Cache from 'apollo-cache-inmemory';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { createHttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
@@ -30,7 +30,16 @@ const errorLink = onError(({ networkError }) => {
   }
 });
 const client = new ApolloClient({
-  cache: new Cache(),
+  cache: new InMemoryCache({
+    dataIdFromObject: object => {
+      switch (object.__typename) {
+        case 'Organization':
+          return object.key; // use `key` as the primary key
+        default:
+          return object.id;
+      }
+    },
+  }),
   link: ApolloLink.from([middlewareLink, errorLink, httpLink]),
 });
 

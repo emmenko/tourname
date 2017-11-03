@@ -37,8 +37,8 @@ const TextDetail = styled.div`
 
 const ActiveTournaments = gql`
   query ActiveTournaments($key: String!, $page: Int!, $perPage: Int!) {
-    organizationByKey(key: $key) {
-      id
+    organization(key: $key) {
+      key
       tournaments(
         status: [NEW, IN_PROGRESS]
         sort: { key: "createdAt", order: DESC }
@@ -58,8 +58,8 @@ const ActiveTournaments = gql`
 
 const FinishedTournaments = gql`
   query FinishedTournaments($key: String!, $page: Int!, $perPage: Int!) {
-    organizationByKey(key: $key) {
-      id
+    organization(key: $key) {
+      key
       tournaments(
         status: [FINISHED]
         sort: { key: "createdAt", order: DESC }
@@ -87,7 +87,7 @@ class Dashboard extends React.PureComponent {
     fullName: PropTypes.string.isRequired,
     activeTournaments: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
-      organizationByKey: PropTypes.shape({
+      organization: PropTypes.shape({
         tournaments: PropTypes.arrayOf(
           PropTypes.shape({
             id: PropTypes.string.isRequired,
@@ -102,7 +102,7 @@ class Dashboard extends React.PureComponent {
     }),
     finishedTournaments: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
-      organizationByKey: PropTypes.shape({
+      organization: PropTypes.shape({
         tournaments: PropTypes.arrayOf(
           PropTypes.shape({
             id: PropTypes.string.isRequired,
@@ -118,7 +118,7 @@ class Dashboard extends React.PureComponent {
   };
 
   renderActiveTournamentsList = () => {
-    const { tournaments } = this.props.activeTournaments.organizationByKey;
+    const { tournaments } = this.props.activeTournaments.organization;
     if (tournaments.length === 0)
       return <div>{'There are no active tournaments at the moment'}</div>;
     return (
@@ -140,7 +140,7 @@ class Dashboard extends React.PureComponent {
   };
 
   renderFinishedTournamentsList = () => {
-    const { tournaments } = this.props.finishedTournaments.organizationByKey;
+    const { tournaments } = this.props.finishedTournaments.organization;
     if (tournaments.length === 0)
       return <div>{'There are no finished tournaments at the moment'}</div>;
     return (
@@ -204,6 +204,7 @@ export default compose(
   withRouter,
   withUser(data => ({ fullName: data.me.name })),
   graphql(ActiveTournaments, {
+    alias: 'withActiveTournaments',
     name: 'activeTournaments',
     options: ownProps => ({
       variables: {
@@ -214,6 +215,7 @@ export default compose(
     }),
   }),
   graphql(FinishedTournaments, {
+    alias: 'withFinishedTournaments',
     name: 'finishedTournaments',
     options: ownProps => ({
       variables: {

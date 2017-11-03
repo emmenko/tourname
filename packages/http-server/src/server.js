@@ -55,60 +55,59 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
   }
   console.log(`[MongoDB] Connected to database ${mongoConnectionUrl}`);
 
-  const handleGraphQLRequest = graphqlExpress(request => ({
-    schema: executableSchema,
-    // Pass request information into graphql context to make them
-    // available in the resolvers.
-    context: {
-      // The current "logged in" user, based on the auth token
-      // provided with the request.
-      userId: request.user && request.user.sub,
-      // Expose DB collections. Those should be generally used for mutations.
-      db: {
-        users: db.collection('users'),
-        organizations: db.collection('organizations'),
-        tournaments: db.collection('tournaments'),
-        matches: db.collection('matches'),
+  const handleGraphQLRequest = graphqlExpress(request => {
+    const userId = request.user && request.user.sub;
+    const dbCollections = {
+      users: db.collection('users'),
+      organizations: db.collection('organizations'),
+      tournaments: db.collection('tournaments'),
+      matches: db.collection('matches'),
+    };
+    return {
+      schema: executableSchema,
+      // Pass request information into graphql context to make them
+      // available in the resolvers.
+      context: {
+        // The current "logged in" user, based on the auth token
+        // provided with the request.
+        userId,
+        // Expose DB collections. Those should be generally used for mutations.
+        db: dbCollections,
+        // Expose data loaders. Those should be generally used for queries.
+        loaders: {
+          users: new DataLoader(ids => {
+            const queryForIds = encodeURIComponent(
+              `user_id:(${ids.join(' OR ')})`
+            );
+            return httpClient
+              .execute({
+                uri: `/users?include_fields=true&fields=${encodeURIComponent(
+                  AUTH0_USER_FIELDS
+                )}&q=${queryForIds}`,
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' },
+              })
+              .then(response => response.body);
+          }),
+          organizations: new DataLoader(keys =>
+            dbCollections.organizations
+              .find({ $and: [{ _id: { $in: keys } }, { 'users.id': userId }] })
+              .toArray()
+          ),
+          tournaments: new DataLoader(ids =>
+            dbCollections.tournaments.find({ _id: { $in: ids } }).toArray()
+          ),
+          matches: new DataLoader(ids =>
+            dbCollections.matches
+              .find({ _id: { $in: ids } })
+              .sort({ createdAt: 1 })
+              .toArray()
+          ),
+        },
+        // opticsContext: OpticsAgent.context(request),
       },
-      // Expose data loaders. Those should be generally used for queries.
-      loaders: {
-        users: new DataLoader(ids => {
-          const queryForIds = encodeURIComponent(
-            `user_id:(${ids.join(' OR ')})`
-          );
-          return httpClient
-            .execute({
-              uri: `/users?include_fields=true&fields=${encodeURIComponent(
-                AUTH0_USER_FIELDS
-              )}&q=${queryForIds}`,
-              method: 'GET',
-              headers: { 'Content-Type': 'application/json' },
-            })
-            .then(response => response.body);
-        }),
-        organizations: new DataLoader(ids =>
-          db
-            .collection('organizations')
-            .find({ $or: [{ _id: { $in: ids } }, { key: { $in: ids } }] })
-            .toArray()
-        ),
-        tournaments: new DataLoader(ids =>
-          db
-            .collection('tournaments')
-            .find({ _id: { $in: ids } })
-            .toArray()
-        ),
-        matches: new DataLoader(ids =>
-          db
-            .collection('matches')
-            .find({ _id: { $in: ids } })
-            .sort({ createdAt: 1 })
-            .toArray()
-        ),
-      },
-      // opticsContext: OpticsAgent.context(request),
-    },
-  }));
+    };
+  });
 
   // TODO: ensure indexes
 

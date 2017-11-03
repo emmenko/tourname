@@ -9,22 +9,23 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "apollo-cache-inmemory": "0.2.0-beta.3",
-    "apollo-client": "2.0.0-beta.3",
-    "apollo-link": "0.7.0",
-    "apollo-link-error": "0.1.0",
-    "apollo-link-http": "0.7.0",
+    "apollo-cache-inmemory": "1.0.0",
+    "apollo-client": "2.0.1",
+    "apollo-link": "1.0.0",
+    "apollo-link-error": "1.0.0",
+    "apollo-link-http": "1.1.0",
     "auth0-js": "8.10.1",
     "formik": "0.9.4",
-    "graphql-tag": "2.4.2",
+    "graphql": "0.11.7",
+    "graphql-tag": "2.5.0",
     "history": "4.7.2",
     "prop-types": "15.6.0",
     "react": "16.0.0",
-    "react-apollo": "2.0.0-beta.0",
+    "react-apollo": "2.0.0",
     "react-dom": "16.0.0",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
-    "recompose": "0.25.1",
-    "styled-components": "2.2.0"
+    "recompose": "0.26.0",
+    "styled-components": "2.2.3"
   }
 }

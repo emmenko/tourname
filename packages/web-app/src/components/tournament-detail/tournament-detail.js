@@ -14,7 +14,7 @@ const TournamentDetailQuery = gql`
       lastModifiedAt
       discipline
       name
-      organizationId
+      organizationKey
       status
       teamSize
       teams {
@@ -46,7 +46,7 @@ class TournamentDetail extends React.PureComponent {
         lastModifiedAt: PropTypes.string.isRequired,
         discipline: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        organizationId: PropTypes.string.isRequired,
+        organizationKey: PropTypes.string.isRequired,
         status: PropTypes.string.isRequired,
         teamSize: PropTypes.number.isRequired,
         teams: PropTypes.arrayOf(
@@ -82,6 +82,7 @@ class TournamentDetail extends React.PureComponent {
 }
 
 export default graphql(TournamentDetailQuery, {
+  alias: 'withTournament',
   name: 'tournamentDetail',
   options: ownProps => ({
     variables: {

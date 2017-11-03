@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router-dom';
-import withOrganization, { organizationShape } from '../with-organization';
+import withOrganization from '../with-organization';
 import Loading from '../loading';
 import Dashboard from '../dashboard';
 import TournamentDetail from '../tournament-detail';
@@ -10,8 +11,8 @@ import TournamentsList from '../tournaments-list';
 const NotFound = () => <div>{'404 Not Found'}</div>;
 
 const ApplicationContent = props => {
-  if (props.organization.loading) return <Loading />;
-  if (!props.organization.organizationByKey) return <NotFound />;
+  if (props.isLoadingOrganization) return <Loading />;
+  if (props.isOrganizationNotFound) return <NotFound />;
   return (
     <div>
       <Route
@@ -40,7 +41,11 @@ const ApplicationContent = props => {
   );
 };
 ApplicationContent.propTypes = {
-  organization: organizationShape.isRequired,
+  isLoadingOrganization: PropTypes.bool.isRequired,
+  isOrganizationNotFound: PropTypes.bool.isRequired,
 };
 
-export default withOrganization()(ApplicationContent);
+export default withOrganization(data => ({
+  isLoadingOrganization: data.loading,
+  isOrganizationNotFound: !data.loading && !data.organization,
+}))(ApplicationContent);

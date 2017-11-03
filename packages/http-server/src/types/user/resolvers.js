@@ -5,12 +5,12 @@ module.exports = {
       context.loaders.users.load(context.userId),
   },
   MemberInfo: {
-    id: obj => obj.user_id,
+    id: obj => obj.user_id, // The `user_id` field comes from auth0
     createdAt: obj => obj.created_at,
     lastModifiedAt: obj => obj.updated_at,
   },
   Member: {
-    id: obj => obj.user_id,
+    id: obj => obj.user_id, // The `user_id` field comes from auth0
     createdAt: obj => obj.created_at,
     lastModifiedAt: obj => obj.updated_at,
     availableOrganizations: (obj, args, context) =>

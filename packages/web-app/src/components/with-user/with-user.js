@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { compose } from 'recompose';
 import gql from 'graphql-tag';
@@ -11,7 +10,6 @@ const LoggedInUserQuery = gql`
       name
       picture
       availableOrganizations {
-        id
         key
         name
       }
@@ -19,25 +17,11 @@ const LoggedInUserQuery = gql`
   }
 `;
 
-export const userShape = PropTypes.shape({
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
-  me: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    picture: PropTypes.string.isRequired,
-    availableOrganizations: PropTypes.arrayOf(
-      PropTypes.shape({
-        key: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-      })
-    ),
-  }),
-});
-
 const withUser = mapDataToProps => Component =>
   compose(
     withRouter,
     graphql(LoggedInUserQuery, {
+      alias: 'withUser',
       name: 'loggedInUser',
       props: ({ loggedInUser }) =>
         mapDataToProps ? mapDataToProps(loggedInUser) : { loggedInUser },

@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { Formik } from 'formik';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import withUser from '../with-user';
 
 const FormView = styled.div`
   > * + * {
@@ -53,7 +52,6 @@ const OrganizationCreate = props => (
             variables: {
               key: values.key,
               name: values.name,
-              userId: props.userId,
             },
           })
           .then(
@@ -108,12 +106,10 @@ OrganizationCreate.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  userId: PropTypes.string.isRequired,
   createOrganization: PropTypes.func.isRequired,
 };
 
 export default compose(
   withRouter,
-  withUser(data => ({ userId: data.me.id })),
   graphql(CreateOrganization, { name: 'createOrganization' })
 )(OrganizationCreate);

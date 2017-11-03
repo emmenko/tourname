@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
@@ -6,28 +5,18 @@ import { compose } from 'recompose';
 
 const OrganizationQuery = gql`
   query OrganizationQuery($key: String!) {
-    organizationByKey(key: $key) {
-      id
+    organization(key: $key) {
       key
       name
     }
   }
 `;
 
-export const organizationShape = PropTypes.shape({
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.object,
-  organizationByKey: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    key: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-  }),
-});
-
 const withOrganization = mapDataToProps => Component =>
   compose(
     withRouter,
     graphql(OrganizationQuery, {
+      alias: 'withOrganization',
       name: 'organization',
       props: ({ organization }) =>
         mapDataToProps ? mapDataToProps(organization) : { organization },
