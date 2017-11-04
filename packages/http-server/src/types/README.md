@@ -33,7 +33,7 @@ The DB documents however are slightly different from the GraphQL types.
   size, // enum
   discipline, // enum
   name, // string
-  organizationId, // UUID
+  organizationKey, // string
   status, // enum
   teamSize, // int
   teams: {

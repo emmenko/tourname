@@ -26,14 +26,14 @@ const CreateTournament = gql`
     $name: String!
     $size: TournamentSize!
     $discipline: Discipline!
-    $organizationId: String!
+    $organizationKey: String!
     $teamSize: Int!
   ) {
     createTournament(
       name: $name
       size: $size
       discipline: $discipline
-      organizationId: $organizationId
+      organizationKey: $organizationKey
       teamSize: $teamSize
     ) {
       id
@@ -49,7 +49,7 @@ const TournamentCreate = props => (
         name: '',
         size: 'SMALL',
         discipline: '',
-        organizationId: props.defaultOrganizationId,
+        organizationKey: props.defaultOrganizationKey,
         teamSize: 1,
       }}
       validate={values => {
@@ -60,8 +60,8 @@ const TournamentCreate = props => (
         if (!values.discipline) {
           errors.discipline = 'Required';
         }
-        if (!values.organizationId) {
-          errors.organizationId = 'Required';
+        if (!values.organizationKey) {
+          errors.organizationKey = 'Required';
         }
         if (!values.teamSize) {
           errors.key = 'Required';
@@ -71,14 +71,14 @@ const TournamentCreate = props => (
         return errors;
       }}
       onSubmit={(values, actions) => {
-        const { organizationId } = values;
+        const { organizationKey } = values;
         props
           .createTournament({
             variables: {
               name: values.name,
               size: values.size,
               discipline: values.discipline,
-              organizationId,
+              organizationKey,
               teamSize: values.teamSize,
             },
           })
@@ -86,12 +86,9 @@ const TournamentCreate = props => (
             result => {
               actions.setSubmitting(false);
               const tournamentId = result.data.createTournament.id;
-              const selectedOrganization = props.availableOrganizations.find(
-                org => org.id === organizationId
-              );
               // TODO: Notify
               props.history.push(
-                `/${selectedOrganization.key}/tournaments/${tournamentId}`
+                `/${organizationKey}/tournaments/${tournamentId}`
               );
             },
             (/* error */) => {
@@ -113,13 +110,13 @@ const TournamentCreate = props => (
       }) => (
         <Form onSubmit={handleSubmit}>
           <Select
-            name="organizationId"
+            name="organizationKey"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.organizationId}
+            value={values.organizationKey}
           >
             {props.availableOrganizations.map(org => (
-              <SelectOption key={org.key} value={org.id}>
+              <SelectOption key={org.key} value={org.key}>
                 {org.name}
               </SelectOption>
             ))}
@@ -178,10 +175,9 @@ TournamentCreate.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  defaultOrganizationId: PropTypes.string.isRequired,
+  defaultOrganizationKey: PropTypes.string.isRequired,
   availableOrganizations: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
       key: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     })
@@ -192,7 +188,7 @@ TournamentCreate.propTypes = {
 export default compose(
   withRouter,
   withUser(data => ({
-    defaultOrganizationId: data.me.availableOrganizations[0].id,
+    defaultOrganizationKey: data.me.availableOrganizations[0].key,
     availableOrganizations: data.me.availableOrganizations,
   })),
   graphql(CreateTournament, { name: 'createTournament' })

@@ -25,6 +25,28 @@ const CreateOrganization = gql`
     }
   }
 `;
+const CheckOrganizationKey = gql`
+  query CheckOrganizationKey($key: String!) {
+    isOrganizationKeyUsed(key: $key)
+  }
+`;
+
+const KeyCheck = graphql(CheckOrganizationKey, {
+  skip: ownProps => !ownProps.value,
+  options: ownProps => ({
+    variables: {
+      key: ownProps.value,
+    },
+  }),
+})(props => {
+  if (!props.data) return null;
+  if (props.data.loading) return '...';
+  return props.data.isOrganizationKeyUsed ? (
+    <InputError>{'Organization key already exist'}</InputError>
+  ) : (
+    'OK'
+  );
+});
 
 const OrganizationCreate = props => (
   <FormView>
@@ -44,6 +66,7 @@ const OrganizationCreate = props => (
         } else if (/\s/g.test(values.key)) {
           errors.key = 'Key cannot have whitespaces';
         }
+        // TODO: validate that key is unique
         return errors;
       }}
       onSubmit={(values, actions) => {
@@ -93,6 +116,7 @@ const OrganizationCreate = props => (
             onBlur={handleBlur}
             value={values.key}
           />
+          <KeyCheck value={values.key} />
           {touched.key && errors.key && <InputError>{errors.key}</InputError>}
           <SubmitButton type="submit" disabled={!isValid || isSubmitting}>
             {'Create organization'}

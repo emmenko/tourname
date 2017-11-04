@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import auth from '../../auth';
 import withUser from '../with-user';
@@ -83,7 +84,9 @@ const MenuForNotAuthenticatedUser = () => (
 
 const TopNavigation = props => (
   <Container>
-    <div>{'Logo'}</div>
+    <div>
+      <Link to="/">{'Logo'}</Link>
+    </div>
     <div>
       {props.isUserAuthenticated ? (
         <MenuForAuthenticatedUser />

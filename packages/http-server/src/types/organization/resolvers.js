@@ -1,8 +1,11 @@
 module.exports = {
   Query: {
     isOrganizationKeyUsed: async (obj, args, context) => {
-      const doc = await context.db.organizations.findOne({ key: args.key });
-      return Boolean(doc);
+      const numberOfMatches = await context.db.organizations
+        .find({ _id: args.key }, { _id: 1 })
+        .limit(1)
+        .count();
+      return numberOfMatches > 0;
     },
     organization: (obj, args, context) =>
       context.loaders.organizations.load(args.key),
@@ -98,7 +101,7 @@ module.exports = {
       );
       if (!userSelfInOrg.isAdmin)
         throw new Error(
-          `You are not an admin of the organization "${args.organizationId}". Only admins can promote users to admin`
+          `You are not an admin of the organization "${args.organizationKey}". Only admins can promote users to admin`
         );
 
       // TODO: find a better way to check if the user exists in auth0
