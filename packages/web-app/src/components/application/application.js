@@ -9,7 +9,7 @@ import { ApolloProvider } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
 import { GRAPHQL_CONFIG } from '../../config';
-import withAuth from '../with-auth';
+import auth from '../../auth';
 import ApplicationAuthenticated from '../application-authenticated';
 import ApplicationLandingPage from '../application-landing-page';
 
@@ -19,7 +19,7 @@ const httpLink = createHttpLink({ uri: GRAPHQL_CONFIG.url });
 const middlewareLink = new ApolloLink((operation, forward) => {
   operation.setContext({
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      Authorization: `Bearer ${auth.getAccessToken()}`,
     },
   });
   return forward(operation);
@@ -43,21 +43,33 @@ const client = new ApolloClient({
   link: ApolloLink.from([middlewareLink, errorLink, httpLink]),
 });
 
-const Application = props => {
-  if (props.isAuthenticated)
-    return (
-      <ApolloProvider client={client}>
-        <ApplicationAuthenticated {...props} />
-      </ApolloProvider>
-    );
-  if (props.location.pathname !== '/') return <Redirect to="/" />;
-  return <ApplicationLandingPage />;
-};
-Application.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
-};
+class Application extends React.PureComponent {
+  static propTypes = {
+    // isAuthenticated: PropTypes.bool.isRequired,
+    location: PropTypes.shape({
+      pathname: PropTypes.string.isRequired,
+    }).isRequired,
+  };
 
-export default withAuth(Application);
+  componentDidMount() {
+    if (auth.getIsAccessTokenValid()) {
+      auth.scheduleSessionRenewal();
+    } else if (auth.hasLoginCredentials()) {
+      // Attempt a silent authentication
+      auth.authorize({ prompt: 'none' });
+    }
+  }
+
+  render() {
+    if (auth.getIsAccessTokenValid())
+      return (
+        <ApolloProvider client={client}>
+          <ApplicationAuthenticated {...this.props} />
+        </ApolloProvider>
+      );
+    if (this.props.location.pathname !== '/') return <Redirect to="/" />;
+    return <ApplicationLandingPage />;
+  }
+}
+
+export default Application;

@@ -1,32 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
-import { compose } from 'recompose';
-import withAuth from '../with-auth';
+import auth from '../../auth';
 
-class Callback extends React.Component {
+class AuthorizeCallback extends React.Component {
   static propTypes = {
-    parseHash: PropTypes.func.isRequired,
-    storeSession: PropTypes.func.isRequired,
-    history: PropTypes.object.isRequired,
+    history: PropTypes.shape({
+      replace: PropTypes.func.isRequired,
+    }).isRequired,
   };
   state = {
     errorMessage: null,
   };
   componentDidMount() {
-    this.props.parseHash((error, authResult) => {
+    auth.parseHash((error, authResult) => {
       if (!error && !authResult) {
         this.setState({
           errorMessage:
             'This route has been called without any hash parameter. Please ensure that this route is called by Auth0 for handling authentication requests.',
         });
       } else if (authResult && authResult.accessToken && authResult.idToken) {
-        this.props.storeSession(authResult);
+        auth.storeSession(authResult);
+        auth.scheduleSessionRenewal();
         // Redirect to main page
         this.props.history.replace('/');
       } else if (error) {
+        console.error(error);
         this.setState({
-          errorMessage: `${error.error}: ${error.errorDescription}`,
+          errorMessage: (
+            <div>
+              <p>{error.errorDescription}</p>
+              <p>
+                <span>{'Please '}</span>
+                <a onClick={() => auth.authorize()}>{'Log in'}</a>
+                <span>{' again'}</span>
+              </p>
+            </div>
+          ),
         });
       }
     });
@@ -35,13 +44,13 @@ class Callback extends React.Component {
     return (
       <div>
         {this.state.errorMessage ? (
-          <p>{this.state.errorMessage}</p>
+          <div>{this.state.errorMessage}</div>
         ) : (
-          <p>{'Loading'}</p>
+          <div>{'Loading'}</div>
         )}
       </div>
     );
   }
 }
 
-export default compose(withRouter, withAuth)(Callback);
+export default AuthorizeCallback;

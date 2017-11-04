@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import auth from '../../auth';
 import withUser from '../with-user';
 
 const Container = styled.div`
@@ -49,6 +49,7 @@ const Button = styled.button`
     color: white;
   }
 `;
+const LikeLink = styled.a``;
 
 const TopNavigationUserMenu = props => (
   <UserMenu>
@@ -60,7 +61,7 @@ const TopNavigationUserMenu = props => (
     ) : (
       <UserAvatar key="picture" alt="User avatar" src={props.pictureUrl} />
     )}
-    <Link to="/logout">{'Logout'}</Link>
+    <LikeLink onClick={() => auth.logout()}>{'Logout'}</LikeLink>
   </UserMenu>
 );
 TopNavigationUserMenu.propTypes = {
@@ -75,9 +76,9 @@ const MenuForAuthenticatedUser = withUser(data => ({
   pictureUrl: data.me.picture,
 }))(TopNavigationUserMenu);
 const MenuForNotAuthenticatedUser = () => (
-  <Link to="/login">
+  <LikeLink onClick={() => auth.authorize()}>
     <Button>{'Login'}</Button>
-  </Link>
+  </LikeLink>
 );
 
 const TopNavigation = props => (
