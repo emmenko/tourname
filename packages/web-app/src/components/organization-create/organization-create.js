@@ -5,7 +5,8 @@ import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
+import { graphql, withApollo } from 'react-apollo';
+import debounce from 'lodash.debounce';
 
 const FormView = styled.div`
   > * + * {
@@ -31,22 +32,65 @@ const CheckOrganizationKey = gql`
   }
 `;
 
-const KeyCheck = graphql(CheckOrganizationKey, {
-  skip: ownProps => !ownProps.value,
-  options: ownProps => ({
-    variables: {
-      key: ownProps.value,
+class KeyCheckComponent extends React.Component {
+  static displayName = 'KeyCheck';
+  static propTypes = {
+    client: PropTypes.shape({
+      query: PropTypes.func.isRequired,
+    }).isRequired,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
+  state = {
+    isFetching: false,
+    isOrganizationKeyUsed: false,
+  };
+  componentWillReceiveProps(nextProps) {
+    if (this.props.value !== nextProps.value) {
+      this.executeQuery(nextProps.value);
+    }
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      this.props.value !== nextProps.value ||
+      this.state.isFetching !== nextState.isFetching
+    );
+  }
+  executeQuery = debounce(
+    value => {
+      this.setState({ isFetching: true });
+      this.props.client
+        .query({
+          query: CheckOrganizationKey,
+          variables: {
+            key: value,
+          },
+        })
+        .then(result => {
+          const { isOrganizationKeyUsed } = result.data;
+          this.setState({
+            isFetching: false,
+            isOrganizationKeyUsed,
+          });
+          this.props.onChange(!isOrganizationKeyUsed);
+        })
+        .catch(error => {
+          console.error('[KeyCheck] Error while fetching', error);
+          this.setState({
+            isFetching: false,
+          });
+        });
     },
-  }),
-})(props => {
-  if (!props.data) return null;
-  if (props.data.loading) return '...';
-  return props.data.isOrganizationKeyUsed ? (
-    <InputError>{'Organization key already exist'}</InputError>
-  ) : (
-    'OK'
+    300, // Number of ms to delay
+    { maxWait: 1000 }
   );
-});
+  render() {
+    if (!this.props.value) return null;
+    if (this.state.isFetching) return '...';
+    return this.state.isOrganizationKeyUsed ? 'NO' : 'OK';
+  }
+}
+const KeyCheckWithFetch = withApollo(KeyCheckComponent);
 
 const OrganizationCreate = props => (
   <FormView>
@@ -55,6 +99,7 @@ const OrganizationCreate = props => (
       initialValues={{
         name: '',
         key: '',
+        isValidKey: false,
       }}
       validate={values => {
         const errors = {};
@@ -65,8 +110,9 @@ const OrganizationCreate = props => (
           errors.key = 'Required';
         } else if (/\s/g.test(values.key)) {
           errors.key = 'Key cannot have whitespaces';
+        } else if (!values.isValidKey) {
+          errors.key = 'Organization key already exists';
         }
-        // TODO: validate that key is unique
         return errors;
       }}
       onSubmit={(values, actions) => {
@@ -98,6 +144,7 @@ const OrganizationCreate = props => (
         handleBlur,
         handleSubmit,
         isSubmitting,
+        setFieldValue,
       }) => (
         <Form onSubmit={handleSubmit}>
           <Input
@@ -116,7 +163,12 @@ const OrganizationCreate = props => (
             onBlur={handleBlur}
             value={values.key}
           />
-          <KeyCheck value={values.key} />
+          <KeyCheckWithFetch
+            onChange={isValidKey => {
+              setFieldValue('isValidKey', isValidKey);
+            }}
+            value={values.key}
+          />
           {touched.key && errors.key && <InputError>{errors.key}</InputError>}
           <SubmitButton type="submit" disabled={!isValid || isSubmitting}>
             {'Create organization'}
