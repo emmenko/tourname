@@ -24,7 +24,7 @@
     "npm": ">=5"
   },
   "devDependencies": {
-    "babel-eslint": "8.0.1",
+    "babel-eslint": "8.0.2",
     "check-node-version": "^2.1.0",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "4.10.0",
