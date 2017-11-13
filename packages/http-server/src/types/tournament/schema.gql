@@ -32,9 +32,13 @@ type Match {
   id: String!
   createdAt: String!
   lastModifiedAt: String!
+  discipline: Discipline!
   teamLeft: Team
   teamRight: Team
   winner: Team
+  organizationKey: String!
+  # If the tournamentId is not defined, it's considered as a 1vs1 match
+  tournamentId: String
 }
 
 interface Tournament {
@@ -178,9 +182,17 @@ extend type Mutation {
     playerId: String!
   ): Tournament
   startTournament(tournamentId: String!): Tournament
-  setMatchWinner(
+  setTournamentMatchWinner(
     tournamentId: String!
     matchId: String!
     teamKey: String!
   ): Tournament
+  createQuickMatch(
+    organizationKey: String!
+    discipline: Discipline!
+    teamSize: Int!
+    # list of player ids
+    teamLeft: [String!]!
+    teamRight: [String!]!
+  ): Match
 }

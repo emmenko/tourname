@@ -461,6 +461,7 @@ module.exports = {
             teamRight: null,
             winner: null,
             nextMatchId: null,
+            organizationKey: doc.organizationKey,
             tournamentId: args.tournamentId,
             discipline: doc.discipline,
           };
@@ -529,7 +530,7 @@ module.exports = {
      * - matchId
      * - teamKey
      */
-    setMatchWinner: async (obj, args, context) => {
+    setTournamentMatchWinner: async (obj, args, context) => {
       const doc = await context.loaders.matches.load(args.matchId);
       if (!doc) throw new Error(`Cannot find match with id "${args.matchId}"`);
       // Check that the match had both players set in order to set the winner
@@ -589,6 +590,67 @@ module.exports = {
       return context.loaders.tournaments
         .clear(args.tournamentId)
         .load(args.tournamentId);
+    },
+    createQuickMatch: async (obj, args, context) => {
+      // Check that the user has access to the given organization
+      const organizationDoc = await context.loaders.organizations.load(
+        args.organizationKey
+      );
+      if (!organizationDoc)
+        // TODO: return proper status code
+        throw new Error('Unauthorized');
+
+      if (args.teamSize < 1)
+        throw new Error('Team size must be equal or greater than 1');
+
+      if (args.teamLeft.length !== args.teamSize)
+        throw new Error(
+          `Team left has ${args.teamLeft
+            .length} players, expected ${args.teamSize}`
+        );
+      if (args.teamRight.length !== args.teamSize)
+        throw new Error(
+          `Team right has ${args.teamRight
+            .length} players, expected ${args.teamSize}`
+        );
+
+      const playerIds = args.teamLeft.concat(args.teamRight);
+      // Validate that players exist within the organization
+      const playersDocs = await context.db.organizations
+        .find(
+          {
+            $and: [
+              { _id: args.organizationKey },
+              { 'users.id': { $in: playerIds } },
+            ],
+          },
+          { _id: 1 }
+        )
+        .limit(playerIds.length)
+        .toArray();
+      if (playersDocs.length !== playerIds.length)
+        throw new Error(
+          `Some of the given players are not members of the organization "${args.organizationKey}"`
+        );
+
+      const isoDate = new Date().toISOString();
+      const doc = await context.db.matches.insertOne({
+        _id: uuid(),
+        createdAt: isoDate,
+        lastModifiedAt: isoDate,
+        teamLeft: {
+          key: randomToken(6),
+          players: args.teamLeft,
+        },
+        teamRight: {
+          key: randomToken(6),
+          players: args.teamRight,
+        },
+        winner: null,
+        organizationKey: args.organizationKey,
+        discipline: args.discipline,
+      });
+      return context.loaders.matches.load(doc.insertedId);
     },
   },
 };
