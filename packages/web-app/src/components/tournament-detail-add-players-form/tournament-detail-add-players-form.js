@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import gql from 'graphql-tag';
-import { graphql } from 'react-apollo';
 import styled from 'styled-components';
 
 const Columns = styled.div`
@@ -19,31 +17,7 @@ const UserAvatar = styled.img`
 `;
 const Button = styled.button``;
 
-const TournamentDetailQuery = gql`
-  query TournamentDetail($id: String!) {
-    tournament(id: $id) {
-      id
-      createdAt
-      lastModifiedAt
-      discipline
-      name
-      organizationKey
-      status
-      teamSize
-      teams {
-        key
-        players {
-          id
-          email
-          name
-          picture
-        }
-      }
-    }
-  }
-`;
-
-class TournamentDetail extends React.PureComponent {
+class TournamentDetailAddPlayersForm extends React.PureComponent {
   static propTypes = {
     teamSize: PropTypes.number.isRequired,
     teams: PropTypes.arrayOf(
@@ -105,12 +79,4 @@ class TournamentDetail extends React.PureComponent {
   }
 }
 
-export default graphql(TournamentDetailQuery, {
-  alias: 'withTournament',
-  name: 'tournamentDetail',
-  options: ownProps => ({
-    variables: {
-      id: ownProps.match.params.tournamentId,
-    },
-  }),
-})(TournamentDetail);
+export default TournamentDetailAddPlayersForm;
