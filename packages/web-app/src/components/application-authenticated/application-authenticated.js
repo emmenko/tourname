@@ -6,7 +6,7 @@ import Loading from '../loading';
 import ApplicationContent from '../application-content';
 import TopNavigation from '../top-navigation';
 import OrganizationCreate from '../organization-create';
-import TournamentCreate from '../tournament-create';
+import SelectNewTournament from '../select-new-tournament';
 import SelectOrganization from '../select-organization';
 
 const ApplicationAuthenticated = props => {
@@ -17,7 +17,7 @@ const ApplicationAuthenticated = props => {
     <div>
       <TopNavigation isUserAuthenticated={true} />
       <Switch>
-        <Route exact={true} path="/new" component={TournamentCreate} />
+        <Route exact={true} path="/new" component={SelectNewTournament} />
         <Route
           exact={true}
           path="/organizations/new"

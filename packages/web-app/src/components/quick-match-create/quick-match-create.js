@@ -21,28 +21,28 @@ const SelectOption = styled.option``;
 const InputError = styled.div``;
 const SubmitButton = styled.button``;
 
-const CreateTournament = gql`
-  mutation CreateTournament(
-    $name: String!
-    $size: TournamentSize!
-    $discipline: Discipline!
+const CreateQuickMatch = gql`
+  mutation CreateQuickMatch(
     $organizationKey: String!
+    $discipline: Discipline!
     $teamSize: Int!
+    $playersLeft: [String!]!
+    $playersRight: [String!]!
   ) {
-    createTournament(
-      name: $name
-      size: $size
-      discipline: $discipline
+    createQuickMatch(
       organizationKey: $organizationKey
+      discipline: $discipline
       teamSize: $teamSize
+      teamLeft: $playersLeft
+      teamRight: $playersRight
     ) {
       id
     }
   }
 `;
 
-class TournamentCreate extends React.PureComponent {
-  static displayName = 'TournamentCreate';
+class QuickMatchCreate extends React.PureComponent {
+  static displayName = 'QuickMatchCreate';
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
@@ -54,12 +54,12 @@ class TournamentCreate extends React.PureComponent {
         name: PropTypes.string.isRequired,
       })
     ).isRequired,
-    createTournament: PropTypes.func.isRequired,
+    createQuickMatch: PropTypes.func.isRequired,
   };
   render() {
     return (
       <FormView>
-        <FormTitle>{'Create a new tournament'}</FormTitle>
+        <FormTitle>{'Create a Quick Match'}</FormTitle>
         <Formik
           initialValues={{
             name: '',
@@ -89,7 +89,7 @@ class TournamentCreate extends React.PureComponent {
           onSubmit={(values, actions) => {
             const { organizationKey } = values;
             this.props
-              .createTournament({
+              .createQuickMatch({
                 variables: {
                   name: values.name,
                   size: values.size,
@@ -101,7 +101,7 @@ class TournamentCreate extends React.PureComponent {
               .then(
                 result => {
                   actions.setSubmitting(false);
-                  const tournamentId = result.data.createTournament.id;
+                  const tournamentId = result.data.createQuickMatch.id;
                   // TODO: Notify
                   this.props.history.push(
                     `/${organizationKey}/tournaments/${tournamentId}`
@@ -211,5 +211,5 @@ export default compose(
     defaultOrganizationKey: data.me.availableOrganizations[0].key,
     availableOrganizations: data.me.availableOrganizations,
   })),
-  graphql(CreateTournament, { name: 'createTournament' })
-)(TournamentCreate);
+  graphql(CreateQuickMatch, { name: 'createQuickMatch' })
+)(QuickMatchCreate);
