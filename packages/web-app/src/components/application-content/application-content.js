@@ -4,8 +4,9 @@ import { Route, Switch } from 'react-router-dom';
 import withOrganization from '../with-organization';
 import Loading from '../loading';
 import Dashboard from '../dashboard';
-import TournamentDetail from '../tournament-detail';
 import TournamentsList from '../tournaments-list';
+import TournamentDetail from '../tournament-detail';
+import MatchDetail from '../match-detail';
 
 // TODO: when component is mounted, remove cached org key
 const NotFound = () => <div>{'404 Not Found'}</div>;
@@ -28,13 +29,18 @@ const ApplicationContent = props => {
         <Route exact={true} path="/:organizationKey" component={Dashboard} />
         <Route
           exact={true}
-          path="/:organizationKey/tournaments/:tournamentId"
+          path="/:organizationKey/tournaments"
+          component={TournamentsList}
+        />
+        <Route
+          exact={true}
+          path="/:organizationKey/tournament/:tournamentId"
           component={TournamentDetail}
         />
         <Route
           exact={true}
-          path="/:organizationKey/tournaments"
-          component={TournamentsList}
+          path="/:organizationKey/match/:matchId"
+          component={MatchDetail}
         />
       </Switch>
     </div>

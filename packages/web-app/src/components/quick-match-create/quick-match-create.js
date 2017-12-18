@@ -26,15 +26,15 @@ const CreateQuickMatch = gql`
     $organizationKey: String!
     $discipline: Discipline!
     $teamSize: Int!
-    $playersLeft: [String!]!
-    $playersRight: [String!]!
+    $teamLeft: [String!]!
+    $teamRight: [String!]!
   ) {
     createQuickMatch(
       organizationKey: $organizationKey
       discipline: $discipline
       teamSize: $teamSize
-      teamLeft: $playersLeft
-      teamRight: $playersRight
+      teamLeft: $teamLeft
+      teamRight: $teamRight
     ) {
       id
     }
@@ -62,17 +62,14 @@ class QuickMatchCreate extends React.PureComponent {
         <FormTitle>{'Create a Quick Match'}</FormTitle>
         <Formik
           initialValues={{
-            name: '',
-            size: 'SMALL',
-            discipline: '',
             organizationKey: this.props.defaultOrganizationKey,
+            discipline: '',
             teamSize: 1,
+            teamLeft: [],
+            teamRight: [],
           }}
           validate={values => {
             const errors = {};
-            if (!values.name) {
-              errors.name = 'Required';
-            }
             if (!values.discipline) {
               errors.discipline = 'Required';
             }
@@ -80,34 +77,43 @@ class QuickMatchCreate extends React.PureComponent {
               errors.organizationKey = 'Required';
             }
             if (!values.teamSize) {
-              errors.key = 'Required';
+              errors.teamSize = 'Required';
             } else if (values.teamSize < 1) {
-              errors.key = 'Team size must be at least 1';
+              errors.teamSize = 'Team size must be at least 1';
+            }
+            if (values.teamLeft.length !== values.teamSize) {
+              errors.teamLeft = `Each team must contain ${values.teamSize} players`;
+            }
+            if (values.teamRight.length !== values.teamSize) {
+              errors.teamRight = `Each team must contain ${values.teamSize} players`;
             }
             return errors;
           }}
           onSubmit={(values, actions) => {
             const { organizationKey } = values;
+            console.log('submitting', values)
             this.props
               .createQuickMatch({
                 variables: {
-                  name: values.name,
-                  size: values.size,
-                  discipline: values.discipline,
                   organizationKey,
+                  discipline: values.discipline,
                   teamSize: values.teamSize,
+                  teamLeft: values.teamLeft,
+                  teamRight: values.teamRight,
                 },
               })
               .then(
                 result => {
+                  console.log('ok', result)
                   actions.setSubmitting(false);
-                  const tournamentId = result.data.createQuickMatch.id;
+                  const matchId = result.data.createQuickMatch.id;
                   // TODO: Notify
                   this.props.history.push(
-                    `/${organizationKey}/tournaments/${tournamentId}`
+                    `/${organizationKey}/match/${matchId}`
                   );
                 },
-                (/* error */) => {
+                error => {
+                  console.log('ups', error)
                   actions.setSubmitting(false);
                   // TODO: map graphql errors to formik
                   // actions.setErrors
@@ -123,6 +129,8 @@ class QuickMatchCreate extends React.PureComponent {
             handleBlur,
             handleSubmit,
             isSubmitting,
+            setFieldValue,
+            setFieldTouched,
           }) => (
             <Form onSubmit={handleSubmit}>
               <label>{'Organization'}</label>
@@ -137,34 +145,6 @@ class QuickMatchCreate extends React.PureComponent {
                     {org.name}
                   </SelectOption>
                 ))}
-              </Select>
-              <label>{'Tournament name'}</label>
-              <Input
-                type="text"
-                name="name"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.name}
-              />
-              {touched.name &&
-                errors.name && <InputError>{errors.name}</InputError>}
-              <label>{'Tournament size'}</label>
-              <Select
-                name="size"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.size}
-              >
-                <SelectOption value="SMALL">{'Small (4 players)'}</SelectOption>
-                <SelectOption value="MEDIUM">
-                  {'Medium (8 players)'}
-                </SelectOption>
-                <SelectOption value="LARGE">
-                  {'Large (16 players)'}
-                </SelectOption>
-                <SelectOption value="XLARGE">
-                  {'XLarge (32 players)'}
-                </SelectOption>
               </Select>
               <label>{'Discipline'}</label>
               <Select
@@ -194,8 +174,38 @@ class QuickMatchCreate extends React.PureComponent {
               />
               {touched.teamSize &&
                 errors.teamSize && <InputError>{errors.teamSize}</InputError>}
+              <label>{'Team left players'}</label>
+              {/* TODO: use an autocomplete select to load list of players within the selected organization */}
+              <Input
+                type="text"
+                name="teamLeft"
+                onChange={event => {
+                  const { value } = event.target;
+                  setFieldValue('teamLeft', value.split(','));
+                  setFieldTouched('teamLeft', true);
+                }}
+                onBlur={handleBlur}
+                value={values.teamLeft.join(', ')}
+              />
+              {touched.teamLeft &&
+                errors.teamLeft && <InputError>{errors.teamLeft}</InputError>}
+              <label>{'Team right players'}</label>
+              {/* TODO: use an autocomplete select to load list of players within the selected organization */}
+              <Input
+                type="text"
+                name="teamRight"
+                onChange={event => {
+                  const { value } = event.target;
+                  setFieldValue('teamRight', value.split(','));
+                  setFieldTouched('teamRight', true);
+                }}
+                onBlur={handleBlur}
+                value={values.teamRight.join(', ')}
+              />
+              {touched.teamRight &&
+                errors.teamRight && <InputError>{errors.teamRight}</InputError>}
               <SubmitButton type="submit" disabled={!isValid || isSubmitting}>
-                {'Create tournament'}
+                {'Create quick match'}
               </SubmitButton>
             </Form>
           )}

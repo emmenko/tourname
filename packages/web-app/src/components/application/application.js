@@ -7,13 +7,10 @@ import { createHttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloProvider } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
 import { GRAPHQL_CONFIG } from '../../config';
 import auth from '../../auth';
 import ApplicationAuthenticated from '../application-authenticated';
 import ApplicationLandingPage from '../application-landing-page';
-
-const history = createHistory();
 
 const httpLink = createHttpLink({ uri: GRAPHQL_CONFIG.url });
 const middlewareLink = new ApolloLink((operation, forward) => {
@@ -25,8 +22,8 @@ const middlewareLink = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 const errorLink = onError(({ networkError }) => {
-  if (networkError.status === 401) {
-    history.push('/logout?reason=unauthorized');
+  if (networkError && networkError.statusCode === 401) {
+    auth.logout();
   }
 });
 const client = new ApolloClient({

@@ -80,9 +80,9 @@ class TournamentCreate extends React.PureComponent {
               errors.organizationKey = 'Required';
             }
             if (!values.teamSize) {
-              errors.key = 'Required';
+              errors.teamSize = 'Required';
             } else if (values.teamSize < 1) {
-              errors.key = 'Team size must be at least 1';
+              errors.teamSize = 'Team size must be at least 1';
             }
             return errors;
           }}
