@@ -617,19 +617,16 @@ module.exports = {
 
       const playerIds = args.teamLeft.concat(args.teamRight);
       // Validate that players exist within the organization
-      const playersDocs = await context.db.organizations
-        .find(
-          {
-            $and: [
-              { _id: args.organizationKey },
-              { 'users.id': { $in: playerIds } },
-            ],
-          },
-          { _id: 1 }
-        )
-        .limit(playerIds.length)
-        .toArray();
-      if (playersDocs.length !== playerIds.length)
+      const organizationDocForGivenPlayers = await context.db.organizations.findOne(
+        {
+          $and: [
+            { _id: args.organizationKey },
+            { users: { $all: playerIds.map(id => ({ $elemMatch: { id } })) } },
+          ],
+        },
+        { _id: 1 }
+      );
+      if (!organizationDocForGivenPlayers)
         throw new Error(
           `Some of the given players are not members of the organization "${args.organizationKey}"`
         );
