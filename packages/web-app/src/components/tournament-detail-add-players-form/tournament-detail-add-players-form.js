@@ -20,33 +20,34 @@ const UserAvatar = styled.img`
 const Form = styled.form``;
 const Button = styled.button``;
 
-class TournamentDetailAddPlayersForm extends React.PureComponent {
+class TeamForm extends React.Component {
+  static displayName = 'TeamForm';
   static propTypes = {
+    team: PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      players: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          email: PropTypes.string.isRequired,
+          name: PropTypes.string.isRequired,
+          picture: PropTypes.string.isRequired,
+        })
+      ),
+    }),
+    isTeamFull: PropTypes.bool.isRequired,
     tournamentId: PropTypes.string.isRequired,
-    teamSize: PropTypes.number.isRequired,
-    teams: PropTypes.arrayOf(
-      PropTypes.shape({
-        key: PropTypes.string.isRequired,
-        players: PropTypes.arrayOf(
-          PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            email: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            picture: PropTypes.string.isRequired,
-          })
-        ),
-      })
-    ),
-    registeredPlayers: PropTypes.func.isRequired,
+    registeredPlayers: PropTypes.arrayOf(PropTypes.string).isRequired,
     addPlayerToTeam: PropTypes.func.isRequired,
     removePlayerFromTeam: PropTypes.func.isRequired,
   };
-  renderTeamFormToAddPlayers = team => {
-    const isTeamFull = team.players.length === this.props.teamSize;
+  state = {
+    showAddPlayerForm: false,
+  };
+  render() {
     return (
-      <div key={team.key}>
-        <p>{`Team key: ${team.key}`}</p>
-        {team.players.map(player => (
+      <div key={this.props.team.key}>
+        <p>{`Team key: ${this.props.team.key}`}</p>
+        {this.props.team.players.map(player => (
           <div key={player.id}>
             <UserAvatar key="picture" alt="User avatar" src={player.picture} />
             <div>{player.name}</div>
@@ -56,7 +57,7 @@ class TournamentDetailAddPlayersForm extends React.PureComponent {
                 this.props.removePlayerFromTeam({
                   variables: {
                     tournamentId: this.props.tournamentId,
-                    teamKey: team.key,
+                    teamKey: this.props.team.key,
                     playerId: player.id,
                   },
                 });
@@ -66,7 +67,12 @@ class TournamentDetailAddPlayersForm extends React.PureComponent {
             </Button>
           </div>
         ))}
-        {isTeamFull ? null : (
+        {this.props.isTeamFull ? null : (
+          <Button onClick={() => this.setState({ showAddPlayerForm: true })}>
+            {'Add'}
+          </Button>
+        )}
+        {this.state.showAddPlayerForm && (
           <Formik
             initialValues={{ playerId: null }}
             onSubmit={(values, actions) => {
@@ -74,16 +80,18 @@ class TournamentDetailAddPlayersForm extends React.PureComponent {
                 .addPlayerToTeam({
                   variables: {
                     tournamentId: this.props.tournamentId,
-                    teamKey: team.key,
+                    teamKey: this.props.team.key,
                     playerId: values.playerId,
                   },
                 })
                 .then(
                   () => {
                     actions.setSubmitting(false);
+                    this.setState({ showAddPlayerForm: false });
                   },
                   (/* error */) => {
                     actions.setSubmitting(false);
+                    this.setState({ showAddPlayerForm: false });
                     // TODO: map graphql errors to formik
                     // actions.setErrors
                   }
@@ -110,6 +118,29 @@ class TournamentDetailAddPlayersForm extends React.PureComponent {
         )}
       </div>
     );
+  }
+}
+
+class TournamentDetailAddPlayersForm extends React.Component {
+  static propTypes = {
+    tournamentId: PropTypes.string.isRequired,
+    teamSize: PropTypes.number.isRequired,
+    teams: PropTypes.arrayOf(
+      PropTypes.shape({
+        key: PropTypes.string.isRequired,
+        players: PropTypes.arrayOf(
+          PropTypes.shape({
+            id: PropTypes.string.isRequired,
+            email: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            picture: PropTypes.string.isRequired,
+          })
+        ),
+      })
+    ),
+    registeredPlayers: PropTypes.arrayOf(PropTypes.string).isRequired,
+    addPlayerToTeam: PropTypes.func.isRequired,
+    removePlayerFromTeam: PropTypes.func.isRequired,
   };
   render() {
     const halfTheNumberOfTeams = this.props.teams.length / 2;
@@ -121,8 +152,32 @@ class TournamentDetailAddPlayersForm extends React.PureComponent {
     return (
       <div>
         <Columns>
-          <Column>{firstHalf.map(this.renderTeamFormToAddPlayers)}</Column>
-          <Column>{secondHalf.map(this.renderTeamFormToAddPlayers)}</Column>
+          <Column>
+            {firstHalf.map(team => (
+              <TeamForm
+                key={team.key}
+                team={team}
+                isTeamFull={team.players.length === this.props.teamSize}
+                tournamentId={this.props.tournamentId}
+                registeredPlayers={this.props.registeredPlayers}
+                addPlayerToTeam={this.props.addPlayerToTeam}
+                removePlayerFromTeam={this.props.removePlayerFromTeam}
+              />
+            ))}
+          </Column>
+          <Column>
+            {secondHalf.map(team => (
+              <TeamForm
+                key={team.key}
+                team={team}
+                isTeamFull={team.players.length === this.props.teamSize}
+                tournamentId={this.props.tournamentId}
+                registeredPlayers={this.props.registeredPlayers}
+                addPlayerToTeam={this.props.addPlayerToTeam}
+                removePlayerFromTeam={this.props.removePlayerFromTeam}
+              />
+            ))}
+          </Column>
         </Columns>
         <div>
           {canStartTournament ? (

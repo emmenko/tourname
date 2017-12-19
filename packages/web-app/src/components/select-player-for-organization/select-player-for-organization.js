@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Select from 'react-select';
 import withOrganization from '../with-organization';
 
 const UserAvatar = styled.img`
   height: 36px;
   border-radius: 18px;
 `;
-const Select = styled.select``;
-const SelectOption = styled.option``;
+const SelectOption = styled.div``;
 
 class SelectPlayerForOrganization extends React.Component {
   static displayName = 'SelectPlayerForOrganization';
@@ -26,42 +26,44 @@ class SelectPlayerForOrganization extends React.Component {
       })
     ),
   };
+  state = {
+    selectedOption: undefined,
+  };
   render() {
     if (this.props.isLoadingOrganization) return null;
 
     const availableMembers = this.props.organizationMembers.filter(
       member => !this.props.ignoreValues.includes(member.id)
     );
-    // TODO: use react-select for "search" functionality
+    if (availableMembers.length === 0) {
+      return 'No more members available';
+    }
+
     return (
       <Select
-        onChange={event => {
-          this.props.onChange(event.target.value);
+        name="select-player-for-organization"
+        value={this.state.selectedOption}
+        onChange={selectedOption => {
+          this.setState({ selectedOption });
+          this.props.onChange(selectedOption.id);
         }}
-      >
-        {availableMembers.length > 0 ? (
-          <React.Fragment>
-            <SelectOption />
-            {availableMembers.map(member => (
-              <SelectOption key={member.id} value={member.id}>
-                <div>
-                  <UserAvatar
-                    key="picture"
-                    alt="User avatar"
-                    src={member.picture}
-                  />
-                  <div>{member.name}</div>
-                  <div>{member.email}</div>
-                </div>
-              </SelectOption>
-            ))}
-          </React.Fragment>
-        ) : (
-          <SelectOption disabled={true}>
-            {'No more members available'}
+        valueKey="id"
+        options={availableMembers}
+        optionRenderer={option => (
+          <SelectOption key={option.id} value={option.id}>
+            <UserAvatar key="picture" alt="User avatar" src={option.picture} />
+            <div>{option.name}</div>
+            <div>{option.email}</div>
           </SelectOption>
         )}
-      </Select>
+        valueRenderer={option => (
+          <div>{`${option.name} (${option.email})`}</div>
+        )}
+        filterOption={(option, filterString) =>
+          option.email.includes(filterString.toLowerCase()) ||
+          option.name.toLowerCase().includes(filterString.toLowerCase())}
+        clearable={false}
+      />
     );
   }
 }
