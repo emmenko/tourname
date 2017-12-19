@@ -91,7 +91,6 @@ class QuickMatchCreate extends React.PureComponent {
           }}
           onSubmit={(values, actions) => {
             const { organizationKey } = values;
-            console.log('submitting', values)
             this.props
               .createQuickMatch({
                 variables: {
@@ -104,7 +103,6 @@ class QuickMatchCreate extends React.PureComponent {
               })
               .then(
                 result => {
-                  console.log('ok', result)
                   actions.setSubmitting(false);
                   const matchId = result.data.createQuickMatch.id;
                   // TODO: Notify
@@ -113,10 +111,16 @@ class QuickMatchCreate extends React.PureComponent {
                   );
                 },
                 error => {
-                  console.log('ups', error)
                   actions.setSubmitting(false);
-                  // TODO: map graphql errors to formik
-                  // actions.setErrors
+                  if (error.graphQLErrors && error.graphQLErrors.length > 0) {
+                    actions.setStatus({
+                      errorMessage: error.graphQLErrors[0].message,
+                    });
+                  } else {
+                    actions.setStatus({
+                      errorMessage: error.message,
+                    });
+                  }
                 }
               );
           }}
@@ -131,9 +135,11 @@ class QuickMatchCreate extends React.PureComponent {
             isSubmitting,
             setFieldValue,
             setFieldTouched,
+            status,
           }) => (
             <Form onSubmit={handleSubmit}>
               <label>{'Organization'}</label>
+              {status && status.errorMessage}
               <Select
                 name="organizationKey"
                 onChange={handleChange}
