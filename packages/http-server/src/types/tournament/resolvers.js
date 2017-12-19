@@ -160,6 +160,7 @@ module.exports = {
   Query: {
     tournament: (obj, args, context) =>
       context.loaders.tournaments.load(args.id),
+    match: (obj, args, context) => context.loaders.matches.load(args.id),
   },
   PlayerInfo: {
     id: obj => obj.user_id, // The `user_id` field comes from auth0

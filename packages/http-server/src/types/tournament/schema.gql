@@ -137,6 +137,7 @@ type TournamentXLarge implements Tournament {
 
 extend type Query {
   tournament(id: String!): Tournament
+  match(id: String!): Match
 }
 
 extend type Mutation {
