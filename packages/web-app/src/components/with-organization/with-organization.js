@@ -8,6 +8,15 @@ const OrganizationQuery = gql`
     organization(key: $key) {
       key
       name
+      members {
+        id
+        createdAt
+        lastModifiedAt
+        email
+        name
+        picture
+        isAdmin
+      }
     }
   }
 `;

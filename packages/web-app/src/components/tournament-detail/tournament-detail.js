@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'recompose';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { Breadcrumb, Breadcrumbs } from '../breadcrumbs';
 import Loading from '../loading';
 import TournamentDetailAddPlayersForm from '../tournament-detail-add-players-form';
+
+const flatMap = list => [].concat(...list);
 
 const TournamentDetailQuery = gql`
   query TournamentDetail($id: String!) {
@@ -24,6 +27,50 @@ const TournamentDetailQuery = gql`
           email
           name
           picture
+        }
+      }
+    }
+  }
+`;
+
+const AddPlayerToTeam = gql`
+  mutation AddPlayerToTeam(
+    $tournamentId: String!
+    $teamKey: String!
+    $playerId: String!
+  ) {
+    addPlayerToTeam(
+      tournamentId: $tournamentId
+      teamKey: $teamKey
+      playerId: $playerId
+    ) {
+      id
+      teams {
+        key
+        players {
+          id
+        }
+      }
+    }
+  }
+`;
+
+const RemovePlayerFromTeam = gql`
+  mutation RemovePlayerFromTeam(
+    $tournamentId: String!
+    $teamKey: String!
+    $playerId: String!
+  ) {
+    removePlayerFromTeam(
+      tournamentId: $tournamentId
+      teamKey: $teamKey
+      playerId: $playerId
+    ) {
+      id
+      teams {
+        key
+        players {
+          id
         }
       }
     }
@@ -52,9 +99,12 @@ class TournamentDetail extends React.PureComponent {
         teams: PropTypes.array.isRequired,
       }),
     }),
+    addPlayerToTeam: PropTypes.func.isRequired,
+    removePlayerFromTeam: PropTypes.func.isRequired,
   };
   render() {
     if (this.props.tournamentDetail.loading) return <Loading />;
+
     const { tournament } = this.props.tournamentDetail;
     return (
       <div>
@@ -71,8 +121,14 @@ class TournamentDetail extends React.PureComponent {
 
         {tournament.status === 'NEW' ? (
           <TournamentDetailAddPlayersForm
+            tournamentId={tournament.id}
             teams={tournament.teams}
             teamSize={tournament.teamSize}
+            registeredPlayers={flatMap(
+              tournament.teams.map(team => team.players)
+            ).map(player => player.id)}
+            addPlayerToTeam={this.props.addPlayerToTeam}
+            removePlayerFromTeam={this.props.removePlayerFromTeam}
           />
         ) : null}
       </div>
@@ -80,12 +136,16 @@ class TournamentDetail extends React.PureComponent {
   }
 }
 
-export default graphql(TournamentDetailQuery, {
-  alias: 'withTournament',
-  name: 'tournamentDetail',
-  options: ownProps => ({
-    variables: {
-      id: ownProps.match.params.tournamentId,
-    },
+export default compose(
+  graphql(TournamentDetailQuery, {
+    alias: 'withTournament',
+    name: 'tournamentDetail',
+    options: ownProps => ({
+      variables: {
+        id: ownProps.match.params.tournamentId,
+      },
+    }),
   }),
-})(TournamentDetail);
+  graphql(AddPlayerToTeam, { name: 'addPlayerToTeam' }),
+  graphql(RemovePlayerFromTeam, { name: 'removePlayerFromTeam' })
+)(TournamentDetail);

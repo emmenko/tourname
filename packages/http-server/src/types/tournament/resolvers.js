@@ -384,15 +384,15 @@ module.exports = {
       if (doc.status !== 'NEW')
         throw new Error('Cannot change a team once a tournament is started');
 
-      const selectedTeam = doc.teams[args.key];
+      const selectedTeam = doc.teams[args.teamKey];
       if (!selectedTeam)
-        throw new Error(`Cannot find team with key "${args.key}"`);
+        throw new Error(`Cannot find team with key "${args.teamKey}"`);
       const isPlayerInSelectedTeam = selectedTeam.find(
         playerId => playerId === args.playerId
       );
       if (!isPlayerInSelectedTeam)
         throw new Error(
-          `The player "${args.playerId}" is not part of team "${args.key}", therefore it cannot be removed`
+          `The player "${args.playerId}" is not part of team "${args.teamKey}", therefore it cannot be removed`
         );
 
       const isoDate = new Date().toISOString();
@@ -400,7 +400,7 @@ module.exports = {
         { _id: args.tournamentId },
         {
           $set: { lastModifiedAt: isoDate },
-          $pull: { [`teams.${args.key}`]: args.playerId },
+          $pull: { [`teams.${args.teamKey}`]: args.playerId },
         }
       );
       return context.loaders.tournaments

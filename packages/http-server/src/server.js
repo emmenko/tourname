@@ -6,29 +6,14 @@ const jwksRsa = require('jwks-rsa');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('graphql-server-express');
-const { createClient } = require('@commercetools/sdk-client');
-const { createHttpMiddleware } = require('@commercetools/sdk-middleware-http');
 const DataLoader = require('dataloader');
 const { MongoClient } = require('mongodb');
-const createAuthMiddleware = require('./utils/create-auth-middleware');
+const { fetchUser } = require('./api');
 const executableSchema = require('./schema');
 
 const port = process.env.HTTP_PORT;
 const mongoConnectionUrl = `${process.env.MONGO_URL}/tourname`;
 const isProd = process.env.NODE_ENV === 'production';
-
-const authMiddleware = createAuthMiddleware({
-  host: process.env.AUTH0_DOMAIN,
-  clientId: process.env.API_CLIENT_ID,
-  clientSecret: process.env.API_CLIENT_SECRET,
-});
-const httpMiddleware = createHttpMiddleware({
-  host: `${process.env.AUTH0_DOMAIN}/api/v2`,
-});
-const httpClient = createClient({
-  middlewares: [authMiddleware, httpMiddleware],
-});
-const AUTH0_USER_FIELDS = 'user_id,email,name,picture,created_at,updated_at';
 
 const checkJwt = jwt({
   // Dynamically provide a signing key based on the kid in the header and the
@@ -79,15 +64,7 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
             const queryForIds = encodeURIComponent(
               `user_id:(${ids.join(' OR ')})`
             );
-            return httpClient
-              .execute({
-                uri: `/users?include_fields=true&fields=${encodeURIComponent(
-                  AUTH0_USER_FIELDS
-                )}&q=${queryForIds}`,
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-              })
-              .then(response => response.body);
+            return fetchUser(queryForIds);
           }),
           organizations: new DataLoader(keys =>
             dbCollections.organizations
@@ -104,7 +81,6 @@ MongoClient.connect(mongoConnectionUrl, (error, db) => {
               .toArray()
           ),
         },
-        // opticsContext: OpticsAgent.context(request),
       },
     };
   });

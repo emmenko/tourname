@@ -127,7 +127,7 @@ class Dashboard extends React.PureComponent {
           <Link
             key={tournament.id}
             to={`/${this.props.match.params
-              .organizationKey}/tournaments/${tournament.id}`}
+              .organizationKey}/tournament/${tournament.id}`}
           >
             <ListItem>
               <TextPrimary>{tournament.name}</TextPrimary>
@@ -149,7 +149,7 @@ class Dashboard extends React.PureComponent {
           <Link
             key={tournament.id}
             to={`/${this.props.match.params
-              .organizationKey}/tournaments/${tournament.id}`}
+              .organizationKey}/tournament/${tournament.id}`}
           >
             <ListItem>
               <TextPrimary>{tournament.name}</TextPrimary>
