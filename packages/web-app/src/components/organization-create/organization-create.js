@@ -94,7 +94,11 @@ const KeyCheckWithFetch = withApollo(KeyCheckComponent);
 
 const OrganizationCreate = props => (
   <FormView>
-    <FormTitle>{'Create a new organization'}</FormTitle>
+    <FormTitle>
+      {
+        'Create a new organization (or ask to be invited to an existing organization)'
+      }
+    </FormTitle>
     <Formik
       initialValues={{
         name: '',
