@@ -5,7 +5,9 @@ import PlayerSearchDialog from '../player-search-dialog';
 
 const Slot = styled.div`
   display: inline-flex;
+  align-items: center;
 `;
+const SlotItem = styled.div``;
 const AvatarPlaceholder = styled.div`
   height: 36px;
   width: 36px;
@@ -25,13 +27,19 @@ class PlayerSlotEmpty extends React.Component {
   };
   render() {
     return (
-      <Slot>
-        <AvatarPlaceholder />
-        <ButtonLink
-          onClick={() => this.setState({ showPlayerSearchDialog: true })}
-        >
-          {'Add a player to this team'}
-        </ButtonLink>
+      <React.Fragment>
+        <Slot>
+          <SlotItem>
+            <AvatarPlaceholder />
+          </SlotItem>
+          <SlotItem>
+            <ButtonLink
+              onClick={() => this.setState({ showPlayerSearchDialog: true })}
+            >
+              {'Add a player to this team'}
+            </ButtonLink>
+          </SlotItem>
+        </Slot>
         {this.state.showPlayerSearchDialog && (
           <PlayerSearchDialog
             registeredPlayers={this.props.registeredPlayers}
@@ -39,7 +47,7 @@ class PlayerSlotEmpty extends React.Component {
             onClose={() => this.setState({ showPlayerSearchDialog: false })}
           />
         )}
-      </Slot>
+      </React.Fragment>
     );
   }
 }

@@ -21,15 +21,37 @@ const Dialog = styled.div`
   width: 400px;
   padding: 16px;
 `;
+const DialogHeader = styled.div`
+  border-bottom: 1px solid #ccc;
+`;
+const DialogBody = styled.div`
+  margin: 16px 0;
+`;
+const DialogFooter = styled.div`
+  border-top: 1px solid #ccc;
+`;
+const SearchResults = styled.div`
+  margin-top: 16px;
+  width: 100%;
+  > * + * {
+    margin: 4px 0 0;
+  }
+`;
 const SelectableItem = styled.div`
+  border-left: 2px solid #ccc;
   background-color: white;
   :hover {
     background-color: #eee;
   }
+
   ${props =>
     props.isActive &&
     css`
+      border-left: 2px solid #aaa;
       background-color: #ccc;
+      :hover {
+        background-color: #ccc;
+      }
     `};
 `;
 
@@ -67,32 +89,34 @@ class PlayerSearchDialog extends React.Component {
     }
 
     return (
-      <div style={{ border: '1px solid #ccc' }}>
+      <React.Fragment>
         <input
           value={this.state.searchText}
           onChange={event => this.setState({ searchText: event.target.value })}
         />
-        {availableMembers
-          .filter(
-            member =>
-              !this.state.searchText ||
-              member.name
-                .toLowerCase()
-                .includes(this.state.searchText.toLowerCase()) ||
-              member.email
-                .toLowerCase()
-                .includes(this.state.searchText.toLowerCase())
-          )
-          .map(member => (
-            <SelectableItem
-              key={member.id}
-              isActive={this.state.selectedPlayer === member}
-              onClick={() => this.setState({ selectedPlayer: member })}
-            >
-              <PlayerSlot player={member} />
-            </SelectableItem>
-          ))}
-      </div>
+        <SearchResults>
+          {availableMembers
+            .filter(
+              member =>
+                !this.state.searchText ||
+                member.name
+                  .toLowerCase()
+                  .includes(this.state.searchText.toLowerCase()) ||
+                member.email
+                  .toLowerCase()
+                  .includes(this.state.searchText.toLowerCase())
+            )
+            .map(member => (
+              <SelectableItem
+                key={member.id}
+                isActive={this.state.selectedPlayer === member}
+                onClick={() => this.setState({ selectedPlayer: member })}
+              >
+                <PlayerSlot player={member} />
+              </SelectableItem>
+            ))}
+        </SearchResults>
+      </React.Fragment>
     );
   };
   render() {
@@ -100,9 +124,11 @@ class PlayerSearchDialog extends React.Component {
       <Modal>
         <Overlay>
           <Dialog>
-            <div>{'Search and select a player to add to the team'}</div>
-            {this.renderMemberList()}
-            <div>
+            <DialogHeader>
+              {'Search and select a player to add to the team'}
+            </DialogHeader>
+            <DialogBody>{this.renderMemberList()}</DialogBody>
+            <DialogFooter>
               <button onClick={this.props.onClose}>{'Cancel'}</button>
               <button
                 disabled={!this.state.selectedPlayer}
@@ -111,7 +137,7 @@ class PlayerSearchDialog extends React.Component {
               >
                 {'Select'}
               </button>
-            </div>
+            </DialogFooter>
           </Dialog>
         </Overlay>
       </Modal>
