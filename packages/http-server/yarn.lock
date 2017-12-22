@@ -321,7 +321,7 @@ cors@2.8.4:
     object-assign "^4"
     vary "^1"
 
-"cosmiconfig@github:davidtheclark/cosmiconfig#6eb3cc85d3a435e6b9e252b341e601960312f410":
+cosmiconfig@davidtheclark/cosmiconfig#6eb3cc85d3a435e6b9e252b341e601960312f410:
   version "2.2.2"
   resolved "https://codeload.github.com/davidtheclark/cosmiconfig/tar.gz/6eb3cc85d3a435e6b9e252b341e601960312f410"
   dependencies:

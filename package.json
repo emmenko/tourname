@@ -42,7 +42,7 @@
     "lerna": "^2.2.0",
     "npm-run-all": "^4.1.1",
     "prettier": "^1.7.4",
-    "react-scripts": "^1.0.14",
+    "reason-scripts": "0.8.0",
     "validate-commit-msg": "^2.12.2"
   },
   "eslintConfig": {
@@ -105,7 +105,13 @@
           "functions": "never"
         }
       ],
-      "import/extensions": ["error", "always", { "js": "never" }],
+      "import/extensions": [
+        "error",
+        "always",
+        {
+          "js": "never"
+        }
+      ],
       "import/no-extraneous-dependencies": 0,
       "import/no-named-as-default": 0,
       "import/no-unresolved": 0,
@@ -114,7 +120,12 @@
       "jest/no-identical-title": "warn",
       "jest/no-focused-tests": 2,
       "no-underscore-dangle": 0,
-      "no-use-before-define": ["error", { "functions": false }]
+      "no-use-before-define": [
+        "error",
+        {
+          "functions": false
+        }
+      ]
     }
   },
   "config": {
