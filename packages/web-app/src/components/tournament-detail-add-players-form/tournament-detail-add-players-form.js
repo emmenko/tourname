@@ -62,12 +62,12 @@ class TeamForm extends React.Component {
             <PlayerSlotEmpty
               key={index}
               registeredPlayers={this.props.registeredPlayers}
-              onSelect={playerId => {
+              onSelect={player => {
                 this.props.addPlayerToTeam({
                   variables: {
                     tournamentId: this.props.tournamentId,
                     teamKey: this.props.team.key,
-                    playerId,
+                    playerId: player.id,
                   },
                 });
               }}

@@ -55,12 +55,14 @@ const SelectableItem = styled.div`
     `};
 `;
 
-class PlayerSearchDialog extends React.Component {
+class PlayerSearchDialog extends React.PureComponent {
   static displayName = 'PlayerSearchDialog';
   static propTypes = {
     registeredPlayers: PropTypes.arrayOf(PropTypes.string),
     onSelect: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
+    // Accepts a prop to fall back to when fetching the organization by key
+    fallbackOrganizationKey: PropTypes.string,
     // Injected
     isLoadingOrganization: PropTypes.bool.isRequired,
     organizationMembers: PropTypes.arrayOf(
@@ -132,8 +134,10 @@ class PlayerSearchDialog extends React.Component {
               <button onClick={this.props.onClose}>{'Cancel'}</button>
               <button
                 disabled={!this.state.selectedPlayer}
-                onClick={() =>
-                  this.props.onSelect(this.state.selectedPlayer.id)}
+                onClick={() => {
+                  this.props.onSelect(this.state.selectedPlayer);
+                  this.props.onClose();
+                }}
               >
                 {'Select'}
               </button>

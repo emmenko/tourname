@@ -21,6 +21,8 @@ class PlayerSlotEmpty extends React.Component {
   static propTypes = {
     registeredPlayers: PropTypes.arrayOf(PropTypes.string),
     onSelect: PropTypes.func.isRequired,
+    // Accepts a prop to fall back to when fetching the organization by key
+    fallbackOrganizationKey: PropTypes.string,
   };
   state = {
     showPlayerSearchDialog: false,
@@ -45,6 +47,7 @@ class PlayerSlotEmpty extends React.Component {
             registeredPlayers={this.props.registeredPlayers}
             onSelect={this.props.onSelect}
             onClose={() => this.setState({ showPlayerSearchDialog: false })}
+            fallbackOrganizationKey={this.props.fallbackOrganizationKey}
           />
         )}
       </React.Fragment>

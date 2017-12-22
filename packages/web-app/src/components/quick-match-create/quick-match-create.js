@@ -7,7 +7,19 @@ import { Formik } from 'formik';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import withUser from '../with-user';
+import PlayerSlot from '../player-slot';
+import PlayerSlotEmpty from '../player-slot-empty';
+import SelectTeamSize from '../select-team-size';
 
+const Columns = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
 const FormView = styled.div`
   > * + * {
     margin: 16px 0 0 0;
@@ -15,7 +27,6 @@ const FormView = styled.div`
 `;
 const FormTitle = styled.h3``;
 const Form = styled.form``;
-const Input = styled.input``;
 const Select = styled.select``;
 const SelectOption = styled.option``;
 const InputError = styled.div``;
@@ -56,6 +67,7 @@ class QuickMatchCreate extends React.PureComponent {
     ).isRequired,
     createQuickMatch: PropTypes.func.isRequired,
   };
+
   render() {
     return (
       <FormView>
@@ -76,11 +88,6 @@ class QuickMatchCreate extends React.PureComponent {
             if (!values.organizationKey) {
               errors.organizationKey = 'Required';
             }
-            if (!values.teamSize) {
-              errors.teamSize = 'Required';
-            } else if (values.teamSize < 1) {
-              errors.teamSize = 'Team size must be at least 1';
-            }
             if (values.teamLeft.length !== values.teamSize) {
               errors.teamLeft = `Each team must contain ${values.teamSize} players`;
             }
@@ -97,8 +104,8 @@ class QuickMatchCreate extends React.PureComponent {
                   organizationKey,
                   discipline: values.discipline,
                   teamSize: values.teamSize,
-                  teamLeft: values.teamLeft,
-                  teamRight: values.teamRight,
+                  teamLeft: values.teamLeft.map(player => player.id),
+                  teamRight: values.teamRight.map(player => player.id),
                 },
               })
               .then(
@@ -136,85 +143,134 @@ class QuickMatchCreate extends React.PureComponent {
             setFieldValue,
             setFieldTouched,
             status,
-          }) => (
-            <Form onSubmit={handleSubmit}>
-              <label>{'Organization'}</label>
-              {status && status.errorMessage}
-              <Select
-                name="organizationKey"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.organizationKey}
-              >
-                {this.props.availableOrganizations.map(org => (
-                  <SelectOption key={org.key} value={org.key}>
-                    {org.name}
+          }) => {
+            const registeredPlayers = values.teamLeft
+              .concat(values.teamRight)
+              .map(player => player.id);
+            return (
+              <Form onSubmit={handleSubmit}>
+                <label>{'Organization'}</label>
+                {status && status.errorMessage}
+                <Select
+                  name="organizationKey"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.organizationKey}
+                >
+                  {this.props.availableOrganizations.map(org => (
+                    <SelectOption key={org.key} value={org.key}>
+                      {org.name}
+                    </SelectOption>
+                  ))}
+                </Select>
+                <label>{'Discipline'}</label>
+                <Select
+                  name="discipline"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.discipline}
+                >
+                  <SelectOption />
+                  <SelectOption value="TABLE_TENNIS">
+                    {'Table tennis'}
                   </SelectOption>
-                ))}
-              </Select>
-              <label>{'Discipline'}</label>
-              <Select
-                name="discipline"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.discipline}
-              >
-                <SelectOption>{'Select a discipline'}</SelectOption>
-                <SelectOption value="TABLE_TENNIS">
-                  {'Table tennis'}
-                </SelectOption>
-                <SelectOption value="POOL_TABLE">{'Pool table'}</SelectOption>
-              </Select>
-              {touched.discipline &&
-                errors.discipline && (
-                  <InputError>{errors.discipline}</InputError>
-                )}
-              <label>{'Number of players in each team'}</label>
-              <Input
-                type="number"
-                name="teamSize"
-                min={1}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.teamSize}
-              />
-              {touched.teamSize &&
-                errors.teamSize && <InputError>{errors.teamSize}</InputError>}
-              <label>{'Team left players'}</label>
-              {/* TODO: use an autocomplete select to load list of players within the selected organization */}
-              <Input
-                type="text"
-                name="teamLeft"
-                onChange={event => {
-                  const { value } = event.target;
-                  setFieldValue('teamLeft', value.split(','));
-                  setFieldTouched('teamLeft', true);
-                }}
-                onBlur={handleBlur}
-                value={values.teamLeft.join(', ')}
-              />
-              {touched.teamLeft &&
-                errors.teamLeft && <InputError>{errors.teamLeft}</InputError>}
-              <label>{'Team right players'}</label>
-              {/* TODO: use an autocomplete select to load list of players within the selected organization */}
-              <Input
-                type="text"
-                name="teamRight"
-                onChange={event => {
-                  const { value } = event.target;
-                  setFieldValue('teamRight', value.split(','));
-                  setFieldTouched('teamRight', true);
-                }}
-                onBlur={handleBlur}
-                value={values.teamRight.join(', ')}
-              />
-              {touched.teamRight &&
-                errors.teamRight && <InputError>{errors.teamRight}</InputError>}
-              <SubmitButton type="submit" disabled={!isValid || isSubmitting}>
-                {'Create quick match'}
-              </SubmitButton>
-            </Form>
-          )}
+                  <SelectOption value="POOL_TABLE">{'Pool table'}</SelectOption>
+                </Select>
+                {touched.discipline &&
+                  errors.discipline && (
+                    <InputError>{errors.discipline}</InputError>
+                  )}
+                <label>{'Number of players in each team'}</label>
+                <SelectTeamSize
+                  value={values.teamSize}
+                  onChange={value => {
+                    setFieldValue('teamSize', value);
+                    setFieldTouched('teamSize', true);
+                  }}
+                />
+                <Columns>
+                  <Column>
+                    <label>{'Team left players'}</label>
+                    {Array.from(new Array(values.teamSize)).map((_, index) => {
+                      const playerForIndex = values.teamLeft[index];
+                      if (playerForIndex)
+                        return (
+                          <PlayerSlot
+                            key={playerForIndex.id}
+                            player={playerForIndex}
+                            onRemoveClick={() => {
+                              const teamWithoutPlayer = [
+                                ...values.teamLeft.slice(0, index),
+                                ...values.teamLeft.slice(index + 1),
+                              ];
+                              setFieldValue('teamLeft', teamWithoutPlayer);
+                              setFieldTouched('teamLeft', true);
+                            }}
+                          />
+                        );
+                      return (
+                        <PlayerSlotEmpty
+                          key={index}
+                          registeredPlayers={registeredPlayers}
+                          onSelect={player => {
+                            const teamWithPlayer = [
+                              ...values.teamLeft.slice(0, index),
+                              player,
+                              ...values.teamLeft.slice(index + 1),
+                            ];
+                            setFieldValue('teamLeft', teamWithPlayer);
+                            setFieldTouched('teamLeft', true);
+                          }}
+                          fallbackOrganizationKey={values.organizationKey}
+                        />
+                      );
+                    })}
+                  </Column>
+                  <Column>
+                    <label>{'Team right players'}</label>
+                    {Array.from(new Array(values.teamSize)).map((_, index) => {
+                      const playerForIndex = values.teamRight[index];
+                      if (playerForIndex)
+                        return (
+                          <PlayerSlot
+                            key={playerForIndex.id}
+                            player={playerForIndex}
+                            onRemoveClick={() => {
+                              const teamWithoutPlayer = [
+                                ...values.teamRight.slice(0, index),
+                                ...values.teamRight.slice(index + 1),
+                              ];
+                              setFieldValue('teamRight', teamWithoutPlayer);
+                              setFieldTouched('teamRight', true);
+                            }}
+                          />
+                        );
+                      return (
+                        <PlayerSlotEmpty
+                          key={index}
+                          registeredPlayers={registeredPlayers}
+                          onSelect={player => {
+                            const teamWithPlayer = [
+                              ...values.teamRight.slice(0, index),
+                              player,
+                              ...values.teamRight.slice(index + 1),
+                            ];
+                            setFieldValue('teamRight', teamWithPlayer);
+                            setFieldTouched('teamRight', true);
+                          }}
+                          fallbackOrganizationKey={values.organizationKey}
+                        />
+                      );
+                    })}
+                  </Column>
+                </Columns>
+
+                <SubmitButton type="submit" disabled={!isValid || isSubmitting}>
+                  {'Create quick match'}
+                </SubmitButton>
+              </Form>
+            );
+          }}
         />
       </FormView>
     );

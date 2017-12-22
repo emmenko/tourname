@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById('modal-root');
 
-class Modal extends React.Component {
+class Modal extends React.PureComponent {
   static displayName = 'Modal';
   static propTypes = {
     children: PropTypes.element.isRequired,

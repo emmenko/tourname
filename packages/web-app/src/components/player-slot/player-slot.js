@@ -12,7 +12,7 @@ const UserAvatar = styled.img`
   border-radius: 18px;
 `;
 
-class PlayerSlot extends React.Component {
+class PlayerSlot extends React.PureComponent {
   static displayName = 'PlayerSlot';
   static propTypes = {
     player: PropTypes.shape({

@@ -31,7 +31,9 @@ const withOrganization = mapDataToProps => Component =>
         mapDataToProps ? mapDataToProps(organization) : { organization },
       options: ownProps => ({
         variables: {
-          key: ownProps.match.params.organizationKey,
+          key:
+            ownProps.match.params.organizationKey ||
+            ownProps.fallbackOrganizationKey,
         },
       }),
     })

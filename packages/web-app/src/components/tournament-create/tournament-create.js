@@ -7,6 +7,7 @@ import { Formik } from 'formik';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import withUser from '../with-user';
+import SelectTeamSize from '../select-team-size';
 
 const FormView = styled.div`
   > * + * {
@@ -79,11 +80,6 @@ class TournamentCreate extends React.PureComponent {
             if (!values.organizationKey) {
               errors.organizationKey = 'Required';
             }
-            if (!values.teamSize) {
-              errors.teamSize = 'Required';
-            } else if (values.teamSize < 1) {
-              errors.teamSize = 'Team size must be at least 1';
-            }
             return errors;
           }}
           onSubmit={(values, actions) => {
@@ -123,6 +119,8 @@ class TournamentCreate extends React.PureComponent {
             handleBlur,
             handleSubmit,
             isSubmitting,
+            setFieldValue,
+            setFieldTouched,
           }) => (
             <Form onSubmit={handleSubmit}>
               <label>{'Organization'}</label>
@@ -173,7 +171,7 @@ class TournamentCreate extends React.PureComponent {
                 onBlur={handleBlur}
                 value={values.discipline}
               >
-                <SelectOption>{'Select a discipline'}</SelectOption>
+                <SelectOption />
                 <SelectOption value="TABLE_TENNIS">
                   {'Table tennis'}
                 </SelectOption>
@@ -184,16 +182,13 @@ class TournamentCreate extends React.PureComponent {
                   <InputError>{errors.discipline}</InputError>
                 )}
               <label>{'Number of players in each team'}</label>
-              <Input
-                type="number"
-                name="teamSize"
-                min={1}
-                onChange={handleChange}
-                onBlur={handleBlur}
+              <SelectTeamSize
                 value={values.teamSize}
+                onChange={value => {
+                  setFieldValue('teamSize', value);
+                  setFieldTouched('teamSize', true);
+                }}
               />
-              {touched.teamSize &&
-                errors.teamSize && <InputError>{errors.teamSize}</InputError>}
               <SubmitButton type="submit" disabled={!isValid || isSubmitting}>
                 {'Create tournament'}
               </SubmitButton>
