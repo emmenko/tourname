@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import auth from '../../auth';
 import withUser from '../with-user';
+import ApplicationBarActionsMenu from '../application-bar-actions-menu';
 import ApplicationBarUserMenu from '../application-bar-user-menu';
 
 const Container = styled.div`
@@ -28,6 +29,15 @@ const Button = styled.button`
     color: white;
   }
 `;
+const MenusContainer = styled.div`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  > * + * {
+    margin: 0 0 0 16px;
+  }
+`;
 const LikeLink = styled.a``;
 
 const MenuForAuthenticatedUser = withUser(data => ({
@@ -47,13 +57,14 @@ const ApplicationBar = props => (
     <div>
       <Link to="/">{'Logo'}</Link>
     </div>
-    <div>
+    <MenusContainer>
+      <ApplicationBarActionsMenu />
       {props.isUserAuthenticated ? (
         <MenuForAuthenticatedUser />
       ) : (
         <MenuForNotAuthenticatedUser />
       )}
-    </div>
+    </MenusContainer>
   </Container>
 );
 ApplicationBar.propTypes = {
