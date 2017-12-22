@@ -1,9 +1,9 @@
 import React from 'react';
-import TopNavigation from '../top-navigation';
+import ApplicationBar from '../application-bar';
 
 const ApplicationLandingPage = () => (
   <div>
-    <TopNavigation isUserAuthenticated={false} />
+    <ApplicationBar isUserAuthenticated={false} />
     {'Landing page'}
   </div>
 );

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import auth from '../../auth';
 import withUser from '../with-user';
+import ApplicationBarUserMenu from '../application-bar-user-menu';
 
 const Container = styled.div`
   display: flex;
@@ -12,29 +13,6 @@ const Container = styled.div`
   border-bottom: 1px solid #ccc;
   padding: 8px;
   height: 36px;
-`;
-const UserAvatar = styled.img`
-  height: 36px;
-  border-radius: 18px;
-`;
-const UserMenu = styled.div`
-  display: inline-flex;
-  align-items: center;
-
-  > * + * {
-    margin: 0 0 0 8px;
-  }
-`;
-const PlaceholderText = styled.div`
-  background-color: #eaeaea;
-  height: 20px;
-  width: 100px;
-`;
-const PlaceholderImage = styled.div`
-  background-color: #eaeaea;
-  border-radius: 36px;
-  height: 36px;
-  width: 36px;
 `;
 const Button = styled.button`
   border-radius: 3px;
@@ -52,37 +30,19 @@ const Button = styled.button`
 `;
 const LikeLink = styled.a``;
 
-const TopNavigationUserMenu = props => (
-  <UserMenu>
-    <div key="name">
-      {props.isUserLoading ? <PlaceholderText /> : props.fullName}
-    </div>
-    {props.isUserLoading ? (
-      <PlaceholderImage />
-    ) : (
-      <UserAvatar key="picture" alt="User avatar" src={props.pictureUrl} />
-    )}
-    <LikeLink onClick={() => auth.logout()}>{'Logout'}</LikeLink>
-  </UserMenu>
-);
-TopNavigationUserMenu.propTypes = {
-  isUserLoading: PropTypes.bool.isRequired,
-  fullName: PropTypes.string.isRequired,
-  pictureUrl: PropTypes.string.isRequired,
-};
-
 const MenuForAuthenticatedUser = withUser(data => ({
   isUserLoading: data.loading,
   fullName: data.me.name,
+  email: data.me.email,
   pictureUrl: data.me.picture,
-}))(TopNavigationUserMenu);
+}))(ApplicationBarUserMenu);
 const MenuForNotAuthenticatedUser = () => (
   <LikeLink onClick={() => auth.authorize()}>
     <Button>{'Login'}</Button>
   </LikeLink>
 );
 
-const TopNavigation = props => (
+const ApplicationBar = props => (
   <Container>
     <div>
       <Link to="/">{'Logo'}</Link>
@@ -96,8 +56,8 @@ const TopNavigation = props => (
     </div>
   </Container>
 );
-TopNavigation.propTypes = {
+ApplicationBar.propTypes = {
   isUserAuthenticated: PropTypes.bool.isRequired,
 };
 
-export default TopNavigation;
+export default ApplicationBar;

@@ -8,6 +8,7 @@ const LoggedInUserQuery = gql`
     me {
       id
       name
+      email
       picture
       availableOrganizations {
         key

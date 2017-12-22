@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import withUser from '../with-user';
 import Loading from '../loading';
 import ApplicationContent from '../application-content';
-import TopNavigation from '../top-navigation';
+import ApplicationBar from '../application-bar';
 import OrganizationCreate from '../organization-create';
 import SelectNewTournament from '../select-new-tournament';
 import SelectOrganization from '../select-organization';
@@ -15,7 +15,7 @@ const ApplicationAuthenticated = props => {
     return <Redirect to="/organizations/new" />;
   return (
     <div>
-      <TopNavigation isUserAuthenticated={true} />
+      <ApplicationBar isUserAuthenticated={true} />
       <Switch>
         <Route exact={true} path="/new" component={SelectNewTournament} />
         <Route
