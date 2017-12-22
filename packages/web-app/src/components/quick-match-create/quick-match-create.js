@@ -9,6 +9,7 @@ import { graphql } from 'react-apollo';
 import withUser from '../with-user';
 import PlayerSlot from '../player-slot';
 import PlayerSlotEmpty from '../player-slot-empty';
+import SelectDiscipline from '../select-discipline';
 import SelectTeamSize from '../select-team-size';
 
 const Columns = styled.div`
@@ -27,6 +28,7 @@ const FormView = styled.div`
 `;
 const FormTitle = styled.h3``;
 const Form = styled.form``;
+const FormField = styled.div``;
 const Select = styled.select``;
 const SelectOption = styled.option``;
 const InputError = styled.div``;
@@ -149,45 +151,43 @@ class QuickMatchCreate extends React.PureComponent {
               .map(player => player.id);
             return (
               <Form onSubmit={handleSubmit}>
-                <label>{'Organization'}</label>
                 {status && status.errorMessage}
-                <Select
-                  name="organizationKey"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.organizationKey}
-                >
-                  {this.props.availableOrganizations.map(org => (
-                    <SelectOption key={org.key} value={org.key}>
-                      {org.name}
-                    </SelectOption>
-                  ))}
-                </Select>
-                <label>{'Discipline'}</label>
-                <Select
-                  name="discipline"
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  value={values.discipline}
-                >
-                  <SelectOption />
-                  <SelectOption value="TABLE_TENNIS">
-                    {'Table tennis'}
-                  </SelectOption>
-                  <SelectOption value="POOL_TABLE">{'Pool table'}</SelectOption>
-                </Select>
-                {touched.discipline &&
-                  errors.discipline && (
-                    <InputError>{errors.discipline}</InputError>
-                  )}
-                <label>{'Number of players in each team'}</label>
-                <SelectTeamSize
-                  value={values.teamSize}
-                  onChange={value => {
-                    setFieldValue('teamSize', value);
-                    setFieldTouched('teamSize', true);
-                  }}
-                />
+                <FormField>
+                  <label>{'Organization'}</label>
+                  <Select
+                    name="organizationKey"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.organizationKey}
+                  >
+                    {this.props.availableOrganizations.map(org => (
+                      <SelectOption key={org.key} value={org.key}>
+                        {org.name}
+                      </SelectOption>
+                    ))}
+                  </Select>
+                </FormField>
+                <FormField>
+                  <label>{'Discipline'}</label>
+                  <SelectDiscipline
+                    value={values.discipline}
+                    onChange={handleChange}
+                  />
+                  {touched.discipline &&
+                    errors.discipline && (
+                      <InputError>{errors.discipline}</InputError>
+                    )}
+                </FormField>
+                <FormField>
+                  <label>{'Number of players in each team'}</label>
+                  <SelectTeamSize
+                    value={values.teamSize}
+                    onChange={value => {
+                      setFieldValue('teamSize', value);
+                      setFieldTouched('teamSize', true);
+                    }}
+                  />
+                </FormField>
                 <Columns>
                   <Column>
                     <label>{'Team left players'}</label>

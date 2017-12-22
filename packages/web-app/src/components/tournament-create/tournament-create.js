@@ -8,6 +8,8 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import withUser from '../with-user';
 import SelectTeamSize from '../select-team-size';
+import SelectDiscipline from '../select-discipline';
+import SelectTournamentSize from '../select-tournament-size';
 
 const FormView = styled.div`
   > * + * {
@@ -16,6 +18,7 @@ const FormView = styled.div`
 `;
 const FormTitle = styled.h3``;
 const Form = styled.form``;
+const FormField = styled.div``;
 const Input = styled.input``;
 const Select = styled.select``;
 const SelectOption = styled.option``;
@@ -123,72 +126,61 @@ class TournamentCreate extends React.PureComponent {
             setFieldTouched,
           }) => (
             <Form onSubmit={handleSubmit}>
-              <label>{'Organization'}</label>
-              <Select
-                name="organizationKey"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.organizationKey}
-              >
-                {this.props.availableOrganizations.map(org => (
-                  <SelectOption key={org.key} value={org.key}>
-                    {org.name}
-                  </SelectOption>
-                ))}
-              </Select>
-              <label>{'Tournament name'}</label>
-              <Input
-                type="text"
-                name="name"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.name}
-              />
-              {touched.name &&
-                errors.name && <InputError>{errors.name}</InputError>}
-              <label>{'Tournament size'}</label>
-              <Select
-                name="size"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.size}
-              >
-                <SelectOption value="SMALL">{'Small (4 players)'}</SelectOption>
-                <SelectOption value="MEDIUM">
-                  {'Medium (8 players)'}
-                </SelectOption>
-                <SelectOption value="LARGE">
-                  {'Large (16 players)'}
-                </SelectOption>
-                <SelectOption value="XLARGE">
-                  {'XLarge (32 players)'}
-                </SelectOption>
-              </Select>
-              <label>{'Discipline'}</label>
-              <Select
-                name="discipline"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.discipline}
-              >
-                <SelectOption />
-                <SelectOption value="TABLE_TENNIS">
-                  {'Table tennis'}
-                </SelectOption>
-                <SelectOption value="POOL_TABLE">{'Pool table'}</SelectOption>
-              </Select>
-              {touched.discipline &&
-                errors.discipline && (
-                  <InputError>{errors.discipline}</InputError>
-                )}
-              <label>{'Number of players in each team'}</label>
-              <SelectTeamSize
-                value={values.teamSize}
-                onChange={value => {
-                  setFieldValue('teamSize', value);
-                  setFieldTouched('teamSize', true);
-                }}
-              />
+              <FormField>
+                <label>{'Organization'}</label>
+                <Select
+                  name="organizationKey"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.organizationKey}
+                >
+                  {this.props.availableOrganizations.map(org => (
+                    <SelectOption key={org.key} value={org.key}>
+                      {org.name}
+                    </SelectOption>
+                  ))}
+                </Select>
+              </FormField>
+              <FormField>
+                <label>{'Tournament name'}</label>
+                <Input
+                  type="text"
+                  name="name"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.name}
+                />
+                {touched.name &&
+                  errors.name && <InputError>{errors.name}</InputError>}
+              </FormField>
+              <FormField>
+                <label>{'Tournament size'}</label>
+                <SelectTournamentSize
+                  value={values.size}
+                  onChange={handleChange}
+                />
+              </FormField>
+              <FormField>
+                <label>{'Discipline'}</label>
+                <SelectDiscipline
+                  value={values.discipline}
+                  onChange={handleChange}
+                />
+                {touched.discipline &&
+                  errors.discipline && (
+                    <InputError>{errors.discipline}</InputError>
+                  )}
+              </FormField>
+              <FormField>
+                <label>{'Number of players in each team'}</label>
+                <SelectTeamSize
+                  value={values.teamSize}
+                  onChange={value => {
+                    setFieldValue('teamSize', value);
+                    setFieldTouched('teamSize', true);
+                  }}
+                />
+              </FormField>
               <SubmitButton type="submit" disabled={!isValid || isSubmitting}>
                 {'Create tournament'}
               </SubmitButton>
