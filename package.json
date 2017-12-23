@@ -3,7 +3,6 @@
   "description": "",
   "version": "0.1.0",
   "private": true,
-  "main": "./lib/server.js",
   "scripts": {
     "postinstall": "check-node-version --package && lerna bootstrap",
     "lint": "npm run lint:all && npm run lint:single",
@@ -14,7 +13,7 @@
     "start:client": "lerna exec --scope web-app -- react-scripts start",
     "test":
       "check-node-version --package && echo \"Error: no test specified\" && exit 1",
-    "commitmsg": "node_modules/.bin/validate-commit-msg",
+    "commitmsg": "commitlint -e $GIT_PARAMS",
     "precommit": "./scripts/lint-staged-files.sh"
   },
   "author": "Nicola Molinari <me@emmenko.org> (http://emmenko.org)",
@@ -24,110 +23,29 @@
     "npm": ">=5"
   },
   "devDependencies": {
+    "@commitlint/cli": "^5.2.6",
+    "@commitlint/config-conventional": "^5.2.3",
+    "@commitlint/config-lerna-scopes": "^5.2.6",
     "babel-eslint": "^7.2.3",
-    "check-node-version": "^2.1.0",
-    "cz-conventional-changelog": "^2.0.0",
-    "eslint": "4.10.0",
-    "eslint-config-prettier": "2.6.0",
-    "eslint-config-react-app": "2.0.1",
-    "eslint-formatter-pretty": "1.3.0",
-    "eslint-plugin-flowtype": "2.40.1",
-    "eslint-plugin-import": "2.8.0",
-    "eslint-plugin-jest": "21.2.0",
+    "check-node-version": "^3.1.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^4.13.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-react-app": "^2.0.1",
+    "eslint-formatter-pretty": "^1.3.0",
+    "eslint-plugin-flowtype": "^2.40.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.5.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-prefer-object-spread": "1.2.1",
-    "eslint-plugin-prettier": "2.3.1",
-    "eslint-plugin-react": "7.4.0",
+    "eslint-plugin-prefer-object-spread": "^1.2.1",
+    "eslint-plugin-prettier": "^2.4.0",
+    "eslint-plugin-react": "^7.5.1",
     "husky": "^0.14.3",
-    "jest": "^21.2.1",
-    "lerna": "^2.2.0",
-    "npm-run-all": "^4.1.1",
-    "prettier": "^1.7.4",
-    "reason-scripts": "0.8.0",
-    "validate-commit-msg": "^2.12.2"
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 8,
-      "sourceType": "module"
-    },
-    "extends": [
-      "react-app",
-      "plugin:jest/recommended",
-      "plugin:react/recommended",
-      "prettier",
-      "prettier/react"
-    ],
-    "env": {
-      "browser": true,
-      "es6": true,
-      "jest": true,
-      "node": true,
-      "mocha": false
-    },
-    "plugins": [
-      "import",
-      "jest",
-      "jsx-a11y",
-      "prefer-object-spread",
-      "prettier",
-      "react"
-    ],
-    "rules": {
-      "class-methods-use-this": [
-        "error",
-        {
-          "exceptMethods": [
-            "render",
-            "getInitialState",
-            "getDefaultProps",
-            "getChildContext",
-            "componentWillMount",
-            "componentDidMount",
-            "componentWillReceiveProps",
-            "shouldComponentUpdate",
-            "componentWillUpdate",
-            "componentDidUpdate",
-            "componentWillUnmount"
-          ]
-        }
-      ],
-      "comma-dangle": [
-        "error",
-        {
-          "arrays": "always-multiline",
-          "objects": "always-multiline",
-          "imports": "never",
-          "exports": "always-multiline",
-          "functions": "never"
-        }
-      ],
-      "import/extensions": [
-        "error",
-        "always",
-        {
-          "js": "never"
-        }
-      ],
-      "import/no-extraneous-dependencies": 0,
-      "import/no-named-as-default": 0,
-      "import/no-unresolved": 0,
-      "import/first": 0,
-      "import/order": 2,
-      "jest/no-identical-title": "warn",
-      "jest/no-focused-tests": 2,
-      "no-underscore-dangle": 0,
-      "no-use-before-define": [
-        "error",
-        {
-          "functions": false
-        }
-      ]
-    }
+    "jest": "^22.0.4",
+    "lerna": "^2.5.1",
+    "npm-run-all": "^4.1.2",
+    "prettier": "^1.9.2",
+    "reason-scripts": "^0.8.0"
   },
   "config": {
     "commitizen": {

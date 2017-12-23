@@ -148,30 +148,6 @@ extend type Mutation {
     organizationKey: String!
     teamSize: Int!
   ): Tournament
-  # createSmallTournament(
-  #   name: String!
-  #   discipline: Discipline!
-  #   organizationKey: String!
-  #   teamSize: Int!
-  # ): TournamentSmall
-  # createMediumTournament(
-  #   name: String!
-  #   discipline: Discipline!
-  #   organizationKey: String!
-  #   teamSize: Int!
-  # ): TournamentMedium
-  # createLargeTournament(
-  #   name: String!
-  #   discipline: Discipline!
-  #   organizationKey: String!
-  #   teamSize: Int!
-  # ): TournamentLarge
-  # createXLargeTournament(
-  #   name: String!
-  #   discipline: Discipline!
-  #   organizationId: String!
-  #   teamSize: Int!
-  # ): TournamentXLarge
   addPlayerToTeam(
     tournamentId: String!
     teamKey: String!
