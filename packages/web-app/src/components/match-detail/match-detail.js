@@ -50,9 +50,9 @@ class MatchDetail extends React.PureComponent {
         lastModifiedAt: PropTypes.string.isRequired,
         discipline: PropTypes.string.isRequired,
         organizationKey: PropTypes.string.isRequired,
-        teamLeft: PropTypes.array.isRequired,
-        teamRight: PropTypes.array.isRequired,
-        winner: PropTypes.array.isRequired,
+        teamLeft: PropTypes.object.isRequired,
+        teamRight: PropTypes.object.isRequired,
+        winner: PropTypes.object.isRequired,
         // If the `tournamentId` is not defined, it's considered as a quick match
         tournamentId: PropTypes.string,
       }),
