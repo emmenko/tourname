@@ -47,6 +47,9 @@
     "prettier": "^1.9.2",
     "reason-scripts": "^0.8.0"
   },
+  "resolutions": {
+    "**/bs-loader": "file:../bs-loader/packages/bs-loader"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
