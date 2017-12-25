@@ -1,1 +1,1 @@
-export { default } from './select-discipline';
+export { default } from './SelectDiscipline.bs';

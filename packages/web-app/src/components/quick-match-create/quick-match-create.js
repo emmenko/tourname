@@ -91,10 +91,14 @@ class QuickMatchCreate extends React.PureComponent {
               errors.organizationKey = 'Required';
             }
             if (values.teamLeft.length !== values.teamSize) {
-              errors.teamLeft = `Each team must contain ${values.teamSize} players`;
+              errors.teamLeft = `Each team must contain ${
+                values.teamSize
+              } players`;
             }
             if (values.teamRight.length !== values.teamSize) {
-              errors.teamRight = `Each team must contain ${values.teamSize} players`;
+              errors.teamRight = `Each team must contain ${
+                values.teamSize
+              } players`;
             }
             return errors;
           }}
