@@ -6379,9 +6379,8 @@ realpath-native@^1.0.0:
   dependencies:
     util.promisify "^1.0.0"
 
-reason-scripts@^0.8.0:
+"reason-scripts@file:../reason-scripts":
   version "0.8.0"
-  resolved "https://registry.yarnpkg.com/reason-scripts/-/reason-scripts-0.8.0.tgz#1a053ae4d2f8ac5c64675abdb072fecfded9eb3d"
   dependencies:
     autoprefixer "7.1.6"
     babel-core "6.26.0"
