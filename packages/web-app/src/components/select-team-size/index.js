@@ -1,1 +1,1 @@
-export { default } from './select-team-size';
+export { default } from './SelectTeamSize.bs';
