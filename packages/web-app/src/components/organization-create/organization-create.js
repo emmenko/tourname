@@ -5,8 +5,8 @@ import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import { Formik } from 'formik';
 import gql from 'graphql-tag';
-import { graphql, withApollo } from 'react-apollo';
-import debounce from 'lodash.debounce';
+import { graphql } from 'react-apollo';
+import OrganizationKeyCheck from '../organization-key-check';
 
 const FormView = styled.div`
   > * + * {
@@ -26,71 +26,6 @@ const CreateOrganization = gql`
     }
   }
 `;
-const CheckOrganizationKey = gql`
-  query CheckOrganizationKey($key: String!) {
-    isOrganizationKeyUsed(key: $key)
-  }
-`;
-
-class KeyCheckComponent extends React.Component {
-  static displayName = 'KeyCheck';
-  static propTypes = {
-    client: PropTypes.shape({
-      query: PropTypes.func.isRequired,
-    }).isRequired,
-    value: PropTypes.string.isRequired,
-    onChange: PropTypes.func.isRequired,
-  };
-  state = {
-    isFetching: false,
-    isOrganizationKeyUsed: false,
-  };
-  componentWillReceiveProps(nextProps) {
-    if (this.props.value !== nextProps.value) {
-      this.executeQuery(nextProps.value);
-    }
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    return (
-      this.props.value !== nextProps.value ||
-      this.state.isFetching !== nextState.isFetching
-    );
-  }
-  executeQuery = debounce(
-    value => {
-      this.setState({ isFetching: true });
-      this.props.client
-        .query({
-          query: CheckOrganizationKey,
-          variables: {
-            key: value,
-          },
-        })
-        .then(result => {
-          const { isOrganizationKeyUsed } = result.data;
-          this.setState({
-            isFetching: false,
-            isOrganizationKeyUsed,
-          });
-          this.props.onChange(!isOrganizationKeyUsed);
-        })
-        .catch(error => {
-          console.error('[KeyCheck] Error while fetching', error);
-          this.setState({
-            isFetching: false,
-          });
-        });
-    },
-    300, // Number of ms to delay
-    { maxWait: 1000 }
-  );
-  render() {
-    if (!this.props.value) return null;
-    if (this.state.isFetching) return '...';
-    return this.state.isOrganizationKeyUsed ? 'NO' : 'OK';
-  }
-}
-const KeyCheckWithFetch = withApollo(KeyCheckComponent);
 
 const OrganizationCreate = props => (
   <FormView>
@@ -167,7 +102,7 @@ const OrganizationCreate = props => (
             onBlur={handleBlur}
             value={values.key}
           />
-          <KeyCheckWithFetch
+          <OrganizationKeyCheck
             onChange={isValidKey => {
               setFieldValue('isValidKey', isValidKey);
             }}
