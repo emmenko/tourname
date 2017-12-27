@@ -46,7 +46,7 @@ external apolloClient : clientOptions => ApolloClient.generatedApolloClient =
   "ApolloClient";
 
 [@bs.module "apollo-cache-inmemory"] [@bs.new]
-external inMemoryCache : inMemoryCacheConfig => 'a = "InMemoryCache";
+external inMemoryCache : option(inMemoryCacheConfig) => 'a = "InMemoryCache";
 
 [@bs.module "apollo-link-http"] [@bs.new]
 external createHttpLink : ApolloClient.linkOptions => apolloLink = "HttpLink";
@@ -66,41 +66,39 @@ external apolloLinkFrom : apolloLinkFrom = "from";
 external apolloLinkOnError : (apolloLinkErrorResponse => unit) => apolloLink =
   "onError";
 
-module Client = {
-  let httpLinkOptions: ApolloClient.linkOptions = {"uri": config##url};
-  let linkHttp = createHttpLink(httpLinkOptions);
-  let linkAuth =
-    createApolloLink((~operation, ~forward) => {
-      let token = auth##getAccessToken();
-      let headers = {
-        "headers": {
-          "authorization": {j|Bearer $token|j}
-        }
-      };
-      operation##setContext(headers);
-      forward(operation);
-    });
-  let linkError =
-    apolloLinkOnError(errorResponse =>
-      if (Js_option.isSome(errorResponse##networkError)
-          && Js_option.getExn(errorResponse##networkError)##statusCode === 401) {
-        auth##logout();
-      } else {
-        ();
-      }
-    );
-  let link = apolloLinkFrom([|linkAuth, linkError, linkHttp|]);
+module type HttpLinkConfig = {let uri: string;};
+
+module CreateHttpLink = (Config: HttpLinkConfig) => {
+  let link = createHttpLink({"uri": Config.uri});
+};
+
+module type ApolloLinkConfig = {
+  let requestHandler:
+    (~operation: apolloLinkOperation, ~forward: apolloLinkForward) =>
+    apolloLink;
+};
+
+module CreateApolloLink = (Config: ApolloLinkConfig) => {
+  let link = createApolloLink(Config.requestHandler);
+};
+
+module type ErrorLinkConfig = {
+  let errorHandler: apolloLinkErrorResponse => unit;
+};
+
+module CreateErrorLink = (Config: ErrorLinkConfig) => {
+  let link = apolloLinkOnError(Config.errorHandler);
+};
+
+module type ApolloClientConfig = {
+  let links: array(apolloLink);
+  let inMemoryCacheConfig: option(inMemoryCacheConfig);
+};
+
+module CreateClient = (Config: ApolloClientConfig) => {
   let apolloClientOptions: clientOptions = {
-    "cache":
-      inMemoryCache({
-        "dataIdFromObject": (obj: dataObject) =>
-          if (obj##__typename === "Organization") {
-            obj##key;
-          } else {
-            obj##id;
-          }
-      }),
-    "link": link
+    "cache": inMemoryCache(Config.inMemoryCacheConfig),
+    "link": apolloLinkFrom(Config.links)
   };
   let apolloClient = apolloClient(apolloClientOptions);
   module Query =
@@ -116,5 +114,61 @@ module Client = {
       }
     );
 };
+
+/* Setup client */
+module HttpLink =
+  CreateHttpLink(
+    {
+      let uri = config##url;
+    }
+  );
+
+module AuthLink =
+  CreateApolloLink(
+    {
+      let requestHandler = (~operation, ~forward) => {
+        let token = auth##getAccessToken();
+        let headers = {
+          "headers": {
+            "authorization": {j|Bearer $token|j}
+          }
+        };
+        operation##setContext(headers);
+        forward(operation);
+      };
+      ();
+    }
+  );
+
+module ErrorLink =
+  CreateErrorLink(
+    {
+      let errorHandler = errorResponse =>
+        if (Js_option.isSome(errorResponse##networkError)
+            &&
+            Js_option.getExn(errorResponse##networkError)##statusCode === 401) {
+          auth##logout();
+        } else {
+          ();
+        };
+      ();
+    }
+  );
+
+module Client =
+  CreateClient(
+    {
+      let links = [|AuthLink.link, ErrorLink.link, HttpLink.link|];
+      let inMemoryCacheConfig =
+        Some({
+          "dataIdFromObject": (obj: dataObject) =>
+            if (obj##__typename === "Organization") {
+              obj##key;
+            } else {
+              obj##id;
+            }
+        });
+    }
+  );
 
 let default = Client.apolloClient;
