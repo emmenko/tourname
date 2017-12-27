@@ -1,4 +1,38 @@
+module OrganizationKeyCheckQuery = {
+  [@bs.module] external gql : ReasonApolloTypes.gql = "graphql-tag";
+  let query =
+    [@bs]
+    gql(
+      {|
+  query CheckOrganizationKey($key: String!) {
+    isOrganizationKeyUsed(key: $key)
+  }
+|}
+    );
+  type data = {. "isOrganizationKeyUsed": bool};
+  type response = data;
+  type variables = {. "key": string};
+};
+
 module OrganizationKeyCheck = Apollo.Client.Query(OrganizationKeyCheckQuery);
+
+module KeyCheckHandler = {
+  let component = ReasonReact.statelessComponent("KeyCheckHandler");
+  let make = (~isOrganizationKeyUsed, ~onChange, _children) => {
+    ...component,
+    /* Since the Apollo query is triggered using a declarative component we need
+       to use a child component to trigger `onChange` updates each time the query
+       returns a result */
+    didUpdate: _oldAndNewSelf => {
+      onChange(! isOrganizationKeyUsed);
+      ();
+    },
+    render: _self => {
+      let hintText = if (isOrganizationKeyUsed) {"NO"} else {"OK"};
+      ReasonReact.stringToElement(hintText);
+    }
+  };
+};
 
 let component =
   ReasonReact.statelessComponentWithRetainedProps("OrganizationKeyCheck");
