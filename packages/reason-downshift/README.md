@@ -1,6 +1,6 @@
 # `reason-downshift`
 
-ReasonML bindings for `downshift`.
+[ReasonML](https://reasonml.github.io/) bindings for [`downshift`](https://github.com/paypal/downshift).
 
 ## Install and setup
 
@@ -25,8 +25,6 @@ Add `reason-downshift` to your `bs-dependencies`:
 ## Usage
 
 ```reason
-open ReasonDownshift;
-
 type listOfItems = list(string);
 
 let component = ReasonReact.statelessComponent("BasicAutocomplete");
@@ -34,7 +32,7 @@ let component = ReasonReact.statelessComponent("BasicAutocomplete");
 let make (~items: listOfItems, ~onChange, _children) => {
   ...component,
   render: _self =>
-    <Downshift
+    <ReasonDownshift.Downshift
       onChange
       render=(
         renderFunc =>
@@ -47,9 +45,9 @@ let make (~items: listOfItems, ~onChange, _children) => {
               ReasonReact.cloneElement(
                 <input />,
                 ~props=
-                  renderFunc##getInputProps({
-                    "placeholder": "Favorite color ?"
-                  }),
+                  ReasonDownshift.objToJsObj(
+                    renderFunc##getInputProps(ReactDOMRe.props(~placeholder="Favorite color ?", ()))
+                  ),
                 [||]
               )
             )
@@ -79,8 +77,7 @@ let make (~items: listOfItems, ~onChange, _children) => {
                             )
                           )
                         />,
-                        ~props=
-                          renderFunc##getItemProps({item}),
+                        ~props=(ReasonDownshift.objToJsObj(renderFunc##getItemProps({item}))),
                         [|item|]
                       )
                     },
