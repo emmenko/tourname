@@ -53,8 +53,7 @@ external createApolloLink :
   apolloLink =
   "ApolloLink";
 
-[@bs.module "apollo-link"] [@bs]
-external apolloLinkFrom : apolloLinkFrom = "from";
+[@bs.module "apollo-link"] external apolloLinkFrom : apolloLinkFrom = "from";
 
 [@bs.module "apollo-link-error"]
 external apolloLinkOnError : (apolloLinkErrorResponse => unit) => apolloLink =
