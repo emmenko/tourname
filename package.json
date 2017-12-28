@@ -5,16 +5,14 @@
   "private": true,
   "scripts": {
     "postinstall": "check-node-version --package && lerna bootstrap",
-    "lint": "npm run lint:all && npm run lint:single",
-    "lint:all": "./scripts/lint.sh 'packages/**/src/**'",
-    "lint:single": "lerna run lint",
+    "lint": "./scripts/lint.sh 'packages/**/src/**'",
     "start": "npm-run-all --parallel start:server start:client",
     "start:server": "lerna exec --scope http-server -- node src/server.js",
     "start:client": "lerna exec --scope web-app -- react-scripts start",
     "test":
       "check-node-version --package && echo \"Error: no test specified\" && exit 1",
     "commitmsg": "commitlint -e $GIT_PARAMS",
-    "precommit": "./scripts/lint-staged-files.sh"
+    "precommit": "lint-staged"
   },
   "author": "Nicola Molinari <me@emmenko.org> (http://emmenko.org)",
   "license": "BSD-3-Clause",
@@ -27,7 +25,6 @@
     "@commitlint/config-conventional": "^5.2.3",
     "babel-eslint": "^7.2.3",
     "check-node-version": "^3.1.1",
-    "cz-conventional-changelog": "^2.1.0",
     "eslint": "^4.13.1",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-react-app": "^2.0.1",
@@ -42,6 +39,7 @@
     "husky": "^0.14.3",
     "jest": "^22.0.4",
     "lerna": "^2.5.1",
+    "lint-staged": "^6.0.0",
     "npm-run-all": "^4.1.2",
     "prettier": "^1.9.2",
     "reason-scripts": "file:../reason-scripts"
@@ -49,10 +47,8 @@
   "resolutions": {
     "**/bs-loader": "file:../bs-loader/packages/bs-loader"
   },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
+  "lint-staged": {
+    "*.js": ["./scripts/lint.sh"]
   },
   "jest": {
     "testEnvironment": "node",
