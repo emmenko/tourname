@@ -49,7 +49,9 @@ let make = (~isUserLoading, ~fullName, ~email, ~pictureUrl, _children) => {
               <div
                 onClick=(
                   _event =>
-                    renderFunc##toggleMenu(ReasonDownshift.getToggleObj())
+                    renderFunc##toggleMenu(
+                      ReasonDownshift.getActionFunctionOptions()
+                    )
                 )>
                 <img
                   className=Styles.avatar
