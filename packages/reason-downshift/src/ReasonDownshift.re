@@ -3,8 +3,7 @@ type any;
 
 type actionFuncParams;
 
-type obj = Js.Dict.t(string);
-
+type obj;
 
 type noop = unit => unit;
 
@@ -21,6 +20,8 @@ external getActionFunctionOptions :
   (~index: int=?, ~item: any=?, ~otherStateToSet: obj=?, ~cb: noop=?, unit) =>
   actionFuncParams =
   "";
+
+external objToJsObj : obj => Js.t({..}) = "%identity";
 
 /* Types for Downshift API */
 type itemToString = any => string;
