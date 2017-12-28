@@ -28,6 +28,7 @@
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "reason-apollo": "0.5.7",
+    "reason-downshift": "*",
     "reason-react": "0.3.0",
     "recompose": "0.26.0",
     "styled-components": "2.3.3"
