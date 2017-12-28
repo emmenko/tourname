@@ -5,7 +5,8 @@
   "license": "MIT",
   "author": "Nicola Molinari <me@emmenko.org> (http://emmenko.org)",
   "scripts": {
-    "test:ci": "bsb -make-world"
+    "build": "bsb -make-world",
+    "build:watch": "bsb -make-world -w"
   },
   "peerDependencies": {
     "bs-platform": "^2.1.0",
