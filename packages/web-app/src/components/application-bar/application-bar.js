@@ -33,7 +33,7 @@ const MenusContainer = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  
+
   > * + * {
     margin: 0 0 0 16px;
   }

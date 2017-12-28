@@ -6,7 +6,7 @@
       "subdirs": true
     }
   ],
-  "bs-dependencies": ["reason-apollo", "reason-react", "bs-jest"],
+  "bs-dependencies": ["reason-apollo", "reason-react", "bs-glamor", "bs-jest"],
   "reason": {
     "react-jsx": 2
   },

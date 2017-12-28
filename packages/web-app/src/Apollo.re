@@ -7,12 +7,6 @@ type dataObject = {
   "key": string
 };
 
-type authShape = {
-  .
-  "getAccessToken": [@bs.meth] (unit => string),
-  "logout": [@bs.meth] (unit => unit)
-};
-
 type inMemoryCacheConfig = {. "dataIdFromObject": dataObject => string};
 
 type apolloLink;
@@ -39,7 +33,7 @@ type clientOptions = {
 
 [@bs.module "./config.js"] external config : graphqlConfig = "GRAPHQL_CONFIG";
 
-[@bs.module "./auth"] external auth : authShape = "default";
+[@bs.module "./auth"] external auth : Auth.authShape = "default";
 
 [@bs.module "apollo-client"] [@bs.new]
 external apolloClient : clientOptions => ApolloClient.generatedApolloClient =
@@ -136,7 +130,6 @@ module AuthLink =
         operation##setContext(headers);
         forward(operation);
       };
-      ();
     }
   );
 
@@ -151,7 +144,6 @@ module ErrorLink =
         } else {
           ();
         };
-      ();
     }
   );
 
