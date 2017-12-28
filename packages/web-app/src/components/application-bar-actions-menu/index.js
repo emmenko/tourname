@@ -1,1 +1,1 @@
-export { default } from './application-bar-actions-menu';
+export { default } from './ApplicationBarActionsMenu.bs';
