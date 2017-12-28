@@ -33,7 +33,7 @@ type clientOptions = {
 
 [@bs.module "./config.js"] external config : graphqlConfig = "GRAPHQL_CONFIG";
 
-[@bs.module "./auth"] external auth : Auth.authShape = "default";
+[@bs.module "./auth"] external auth : ReasonAuth.authShape = "default";
 
 [@bs.module "apollo-client"] [@bs.new]
 external apolloClient : clientOptions => ApolloClient.generatedApolloClient =

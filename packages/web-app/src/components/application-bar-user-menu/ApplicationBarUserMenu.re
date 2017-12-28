@@ -1,6 +1,6 @@
 open Glamor;
 
-[@bs.module "../../auth"] external auth : Auth.authShape = "default";
+[@bs.module "../../auth"] external auth : ReasonAuth.authShape = "default";
 
 module Styles = {
   let placeholder =
