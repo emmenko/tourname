@@ -1269,7 +1269,7 @@ browserslist@^2.1.2, browserslist@^2.5.1:
     caniuse-lite "^1.0.30000780"
     electron-to-chromium "^1.3.28"
 
-bs-loader@^1.8.0, "bs-loader@file:../bs-loader/packages/bs-loader":
+bs-loader@^1.8.0, "bs-loader@file:./packages/bs-loader/packages/bs-loader":
   version "2.0.0"
   dependencies:
     bsb-js "^1.0.0"
@@ -6553,7 +6553,7 @@ realpath-native@^1.0.0:
   dependencies:
     util.promisify "^1.0.0"
 
-"reason-scripts@file:../reason-scripts":
+"reason-scripts@file:./packages/reason-scripts":
   version "0.8.0"
   dependencies:
     autoprefixer "7.1.6"
