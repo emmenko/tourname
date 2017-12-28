@@ -5,8 +5,7 @@
   "license": "MIT",
   "author": "Nicola Molinari <me@emmenko.org> (http://emmenko.org)",
   "scripts": {
-    "test:ci": "bsb -make-world",
-    "prepare": "npm link bs-platform"
+    "test:ci": "bsb -make-world"
   },
   "peerDependencies": {
     "bs-platform": "^2.1.0",
