@@ -1,19 +1,17 @@
-type toggleObj;
+type toggleMenuObj;
 
-[@bs.obj] external getToggleObj : unit => toggleObj = "";
+type noop = unit => unit;
+
+[@bs.obj]
+external getToggleObj :
+  (~otherStateToSet: Js.t({..})=?, ~cb: noop=?, unit) => toggleMenuObj =
+  "";
 
 type renderFunc =
   {
     .
-    /* Getters */
-    /* "getButtonProps": [@bs.meth] (Js.Dict.t(string) => Js.Dict.t(string)),
-       "getInputProps": [@bs.meth] (Js.Dict.t(string) => Js.Dict.t(string)),
-       "getItemProps": [@bs.meth] (Js.Dict.t(string) => Js.Dict.t(string)),
-       "getLabelProps": [@bs.meth] (Js.Dict.t(string) => Js.Dict.t(string)),
-       "getRootProps":
-         [@bs.meth] ((Js.Dict.t(string), Js.Dict.t(string)) => Js.Dict.t(string)), */
     "isOpen": bool,
-    "toggleMenu": [@bs.meth] (toggleObj => unit)
+    "toggleMenu": [@bs.meth] (toggleMenuObj => unit)
   } =>
   ReasonReact.reactElement;
 
