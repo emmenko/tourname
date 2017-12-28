@@ -1,21 +1,25 @@
 /* Common types */
 type any;
 
+type actionFuncParams;
+
 type obj = Js.Dict.t(string);
+
 
 type noop = unit => unit;
 
-let optionToBool = optional =>
-  switch optional {
-  | Some(_) => true
-  | _ => false
+/* Helpers */
+let optionBoolToOptionJsBoolean = opt =>
+  switch opt {
+  | Some(true) => Some(Js.true_)
+  | Some(false) => Some(Js.false_)
+  | None => None
   };
 
-/* Helpers */
 [@bs.obj]
 external getActionFunctionOptions :
   (~index: int=?, ~item: any=?, ~otherStateToSet: obj=?, ~cb: noop=?, unit) =>
-  obj =
+  actionFuncParams =
   "";
 
 /* Types for Downshift API */
@@ -63,15 +67,15 @@ type renderFunc =
     "getInputProps": [@bs.meth] (ReactDOMRe.reactDOMProps => obj),
     "getItemProps": [@bs.meth] (itemPropsOptions => obj),
     /* Actions */
-    "openMenu": [@bs.meth] (obj => unit),
-    "closeMenu": [@bs.meth] (obj => unit),
-    "toggleMenu": [@bs.meth] (obj => unit),
-    "reset": [@bs.meth] (obj => unit),
-    "selectItem": [@bs.meth] (obj => unit),
-    "selectItemAtIndex": [@bs.meth] (obj => unit),
-    "selectHighlightedItem": [@bs.meth] (obj => unit),
-    "setHighlightedIndex": [@bs.meth] (obj => unit),
-    "clearSelection": [@bs.meth] (obj => unit),
+    "openMenu": [@bs.meth] (actionFuncParams => unit),
+    "closeMenu": [@bs.meth] (actionFuncParams => unit),
+    "toggleMenu": [@bs.meth] (actionFuncParams => unit),
+    "reset": [@bs.meth] (actionFuncParams => unit),
+    "selectItem": [@bs.meth] (actionFuncParams => unit),
+    "selectItemAtIndex": [@bs.meth] (actionFuncParams => unit),
+    "selectHighlightedItem": [@bs.meth] (actionFuncParams => unit),
+    "setHighlightedIndex": [@bs.meth] (actionFuncParams => unit),
+    "clearSelection": [@bs.meth] (actionFuncParams => unit),
     "clearItems": [@bs.meth] (unit => unit),
     "itemToString": [@bs.meth] (any => unit),
     /* State */
@@ -116,7 +120,10 @@ module Downshift = {
         "defaultHighlightedIndex":
           Js.Null_undefined.from_opt(defaultHighlightedIndex),
         "defaultInputValue": Js.Null_undefined.from_opt(defaultInputValue),
-        "defaultIsOpen": Js.Boolean.to_js_boolean(optionToBool(defaultIsOpen)),
+        "defaultIsOpen":
+          Js.Null_undefined.from_opt(
+            optionBoolToOptionJsBoolean(defaultIsOpen)
+          ),
         "itemToString": Js.Null_undefined.from_opt(itemToString),
         "selectedItemChanged": Js.Null_undefined.from_opt(selectedItemChanged),
         "getA11yStatusMessage":
@@ -128,7 +135,8 @@ module Downshift = {
         "itemCount": Js.Null_undefined.from_opt(itemCount),
         "highlightedIndex": Js.Null_undefined.from_opt(highlightedIndex),
         "inputValue": Js.Null_undefined.from_opt(inputValue),
-        "isOpen": Js.Boolean.to_js_boolean(optionToBool(isOpen)),
+        "isOpen":
+          Js.Null_undefined.from_opt(optionBoolToOptionJsBoolean(isOpen)),
         "selectedItem": Js.Null_undefined.from_opt(selectedItem),
         "render": render,
         "id": Js.Null_undefined.from_opt(id),
