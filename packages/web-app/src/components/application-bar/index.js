@@ -1,1 +1,1 @@
-export { default } from './application-bar';
+export { default } from './ApplicationBar.bs';
