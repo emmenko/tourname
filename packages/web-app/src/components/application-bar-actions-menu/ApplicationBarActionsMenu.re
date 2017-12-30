@@ -22,17 +22,11 @@ let component = ReasonReact.statelessComponent("ApplicationBarActionsMenu");
 let make = _children => {
   ...component,
   render: _self =>
-    <ReasonDownshift.Downshift
+    <Downshift
       render=(
         renderFunc =>
           <div>
-            <div
-              onClick=(
-                _event =>
-                  renderFunc##toggleMenu(
-                    ReasonDownshift.getActionFunctionOptions()
-                  )
-              )>
+            <div onClick=(_event => renderFunc##toggleMenu())>
               (ReasonReact.stringToElement("New"))
             </div>
             (
@@ -40,13 +34,7 @@ let make = _children => {
                 <div className=Styles.menuContainer>
                   <div className=Styles.menu>
                     <div>
-                      <span
-                        onClick=(
-                          _event =>
-                            renderFunc##closeMenu(
-                              ReasonDownshift.getActionFunctionOptions()
-                            )
-                        )>
+                      <span onClick=(_event => renderFunc##closeMenu())>
                         <Link to_="/new">
                           (
                             ReasonReact.stringToElement(
@@ -57,13 +45,7 @@ let make = _children => {
                       </span>
                     </div>
                     <div>
-                      <span
-                        onClick=(
-                          _event =>
-                            renderFunc##closeMenu(
-                              ReasonDownshift.getActionFunctionOptions()
-                            )
-                        )>
+                      <span onClick=(_event => renderFunc##closeMenu())>
                         <Link to_="/organizations/new">
                           (ReasonReact.stringToElement("New organization"))
                         </Link>
