@@ -32,17 +32,11 @@ let component = ReasonReact.statelessComponent("ApplicationBarUserMenu");
 let make = (~fullName, ~email, ~pictureUrl, _children) => {
   ...component,
   render: _self =>
-    <ReasonDownshift.Downshift
+    <Downshift
       render=(
         renderFunc =>
           <div>
-            <div
-              onClick=(
-                _event =>
-                  renderFunc##toggleMenu(
-                    ReasonDownshift.getActionFunctionOptions()
-                  )
-              )>
+            <div onClick=(_event => renderFunc##toggleMenu())>
               <img
                 className=Styles.avatar
                 key="picture"
