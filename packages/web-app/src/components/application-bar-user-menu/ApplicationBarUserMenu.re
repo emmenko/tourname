@@ -34,9 +34,12 @@ let make = (~fullName, ~email, ~pictureUrl, _children) => {
   render: _self =>
     <Downshift
       render=(
-        renderFunc =>
+        t =>
           <div>
-            <div onClick=(_event => renderFunc##toggleMenu())>
+            <div
+              onClick=(
+                _event => Downshift.ControllerStateAndHelpers.toggleMenu(t, ())
+              )>
               <img
                 className=Styles.avatar
                 key="picture"
@@ -45,7 +48,7 @@ let make = (~fullName, ~email, ~pictureUrl, _children) => {
               />
             </div>
             (
-              if (renderFunc##isOpen) {
+              if (Downshift.ControllerStateAndHelpers.isOpen(t)) {
                 <div className=Styles.menuContainer>
                   <div className=Styles.menu>
                     <div className=Styles.menuHeadline>

@@ -1,3 +1,8 @@
+[submodule "packages/bs-downshift"]
+	path = packages/bs-downshift
+	url = https://github.com/reasonml-community/bs-downshift.git
+	branch = bindings
+	ignore = dirty
 [submodule "packages/bs-loader"]
 	path = packages/bs-loader
 	url = https://github.com/emmenko/bs-loader.git

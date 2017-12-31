@@ -24,17 +24,27 @@ let make = _children => {
   render: _self =>
     <Downshift
       render=(
-        renderFunc =>
+        t =>
           <div>
-            <div onClick=(_event => renderFunc##toggleMenu())>
+            <div
+              onClick=(
+                _event => Downshift.ControllerStateAndHelpers.toggleMenu(t, ())
+              )>
               (ReasonReact.stringToElement("New"))
             </div>
             (
-              if (renderFunc##isOpen) {
+              if (Downshift.ControllerStateAndHelpers.isOpen(t)) {
                 <div className=Styles.menuContainer>
                   <div className=Styles.menu>
                     <div>
-                      <span onClick=(_event => renderFunc##closeMenu())>
+                      <span
+                        onClick=(
+                          _event =>
+                            Downshift.ControllerStateAndHelpers.closeMenu(
+                              t,
+                              ()
+                            )
+                        )>
                         <Link to_="/new">
                           (
                             ReasonReact.stringToElement(
@@ -45,7 +55,14 @@ let make = _children => {
                       </span>
                     </div>
                     <div>
-                      <span onClick=(_event => renderFunc##closeMenu())>
+                      <span
+                        onClick=(
+                          _event =>
+                            Downshift.ControllerStateAndHelpers.closeMenu(
+                              t,
+                              ()
+                            )
+                        )>
                         <Link to_="/organizations/new">
                           (ReasonReact.stringToElement("New organization"))
                         </Link>

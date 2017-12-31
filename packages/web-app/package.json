@@ -14,6 +14,7 @@
     "apollo-link-error": "1.0.3",
     "apollo-link-http": "1.3.2",
     "auth0-js": "9.0.0",
+    "bs-downshift": "*",
     "bs-glamor": "0.1.3",
     "downshift": "1.22.5",
     "formik": "0.10.5",
@@ -28,7 +29,6 @@
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
     "reason-apollo": "0.5.7",
-    "reason-downshift": "*",
     "reason-react": "0.3.0",
     "recompose": "0.26.0",
     "styled-components": "2.3.3"
