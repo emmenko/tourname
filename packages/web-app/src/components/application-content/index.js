@@ -1,1 +1,1 @@
-export { default } from './application-content';
+export { default } from './ApplicationContent.bs';
