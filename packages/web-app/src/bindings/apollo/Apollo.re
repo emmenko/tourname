@@ -31,9 +31,8 @@ type clientOptions = {
   "link": apolloLink
 };
 
-[@bs.module "./config.js"] external config : graphqlConfig = "GRAPHQL_CONFIG";
-
-[@bs.module "./auth"] external auth : ReasonAuth.authShape = "default";
+[@bs.module "../../config.js"]
+external config : graphqlConfig = "GRAPHQL_CONFIG";
 
 [@bs.module "apollo-client"] [@bs.new]
 external apolloClient : clientOptions => ApolloClient.generatedApolloClient =
@@ -120,7 +119,7 @@ module AuthLink =
   CreateApolloLink(
     {
       let requestHandler = (~operation, ~forward) => {
-        let token = auth##getAccessToken();
+        let token = ReasonAuth.getAccessToken();
         let headers = {
           "headers": {
             "authorization": {j|Bearer $token|j}
@@ -139,7 +138,7 @@ module ErrorLink =
         if (Js_option.isSome(errorResponse##networkError)
             &&
             Js_option.getExn(errorResponse##networkError)##statusCode === 401) {
-          auth##logout();
+          ReasonAuth.logout();
         } else {
           ();
         };

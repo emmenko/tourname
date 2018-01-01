@@ -2,8 +2,6 @@ open Glamor;
 
 open ReasonReactRouterDom;
 
-[@bs.module "../../auth"] external auth : ReasonAuth.authShape = "default";
-
 module Styles = {
   let container =
     css([
@@ -70,7 +68,7 @@ let make = (~isUserAuthenticated, _children) => {
               )
             </FetchUser>;
           } else {
-            <a onClick=(_event => auth##authorize())>
+            <a onClick=(_event => ReasonAuth.authorize())>
               <div className=Styles.button>
                 (ReasonReact.stringToElement("Login"))
               </div>

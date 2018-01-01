@@ -1,5 +1,3 @@
-[@bs.module "../../auth"] external auth : ReasonAuth.authShape = "default";
-
 type callbackErrorTypes =
   | NoHashParam
   | General(string);
@@ -22,11 +20,7 @@ let make = (~history: history, _children) => {
       ReasonReact.Update({errorType: Some(errorType_)})
     },
   didMount: self => {
-    auth##parseHash(
-      (
-        error_: Js.Nullable.t(ReasonAuth.callbackError),
-        authResult_: Js.Nullable.t(ReasonAuth.callbackAuthResult)
-      ) => {
+    ReasonAuth.parseHash((~error as error_, ~authResult as authResult_) => {
       let error = Js.Nullable.to_opt(error_);
       let authResult = Js.Nullable.to_opt(authResult_);
       switch (error, authResult) {
@@ -37,8 +31,8 @@ let make = (~history: history, _children) => {
         /* NOTE: we assume that following fields are defined:
            - authResult##accessToken
            - authResult##idToken */
-        auth##storeSession(r);
-        auth##scheduleSessionRenewal();
+        ReasonAuth.storeSession(r);
+        ReasonAuth.scheduleSessionRenewal();
         /* Redirect to main page */
         history##replace("/");
         ();
@@ -65,7 +59,7 @@ let make = (~history: history, _children) => {
               <p> (ReasonReact.stringToElement(description)) </p>
               <p>
                 <span> (ReasonReact.stringToElement("Please ")) </span>
-                <a onClick=(_event => auth##authorize())>
+                <a onClick=(_event => ReasonAuth.authorize())>
                   (ReasonReact.stringToElement("Log in"))
                 </a>
                 <span> (ReasonReact.stringToElement(" again")) </span>
@@ -77,3 +71,8 @@ let make = (~history: history, _children) => {
       )
     </div>
 };
+
+let default =
+  ReasonReact.wrapReasonForJs(~component, jsProps =>
+    make(~history=jsProps##history, [||])
+  );

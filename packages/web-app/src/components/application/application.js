@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ApolloProvider } from 'react-apollo';
 import { Redirect } from 'react-router-dom';
-import apolloClient from '../../Apollo.bs';
+import apolloClient from '../../bindings/apollo';
 import auth from '../../auth';
 import ApplicationAuthenticated from '../application-authenticated';
 import ApplicationLandingPage from '../application-landing-page';

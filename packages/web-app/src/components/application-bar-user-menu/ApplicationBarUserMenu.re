@@ -1,7 +1,5 @@
 open Glamor;
 
-[@bs.module "../../auth"] external auth : ReasonAuth.authShape = "default";
-
 module Styles = {
   let avatar = css([height("36px"), borderRadius("18px")]);
   let menuContainer = css([position("relative")]);
@@ -59,7 +57,7 @@ let make = (~fullName, ~email, ~pictureUrl, _children) => {
                     </div>
                     <a
                       className=Styles.likeLink
-                      onClick=(_event => auth##logout())>
+                      onClick=(_event => ReasonAuth.logout())>
                       (ReasonReact.stringToElement("Logout"))
                     </a>
                   </div>
