@@ -1,5 +1,10 @@
+# parcel
+.cache
+dist
+
 # bucklescript
 /lib
 /types
 .merlin
+.bsb.lock
 *.bs.js
