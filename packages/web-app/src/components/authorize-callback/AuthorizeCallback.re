@@ -59,7 +59,10 @@ let make = (~history: history, _children) => {
               <p> (ReasonReact.stringToElement(description)) </p>
               <p>
                 <span> (ReasonReact.stringToElement("Please ")) </span>
-                <a onClick=(_event => ReasonAuth.authorize())>
+                <a
+                  onClick=(
+                    _event => ReasonAuth.authorize(Js_null_undefined.undefined)
+                  )>
                   (ReasonReact.stringToElement("Log in"))
                 </a>
                 <span> (ReasonReact.stringToElement(" again")) </span>

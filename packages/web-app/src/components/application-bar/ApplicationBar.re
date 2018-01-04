@@ -68,7 +68,10 @@ let make = (~isUserAuthenticated, _children) => {
               )
             </FetchUser>;
           } else {
-            <a onClick=(_event => ReasonAuth.authorize())>
+            <a
+              onClick=(
+                _event => ReasonAuth.authorize(Js_null_undefined.undefined)
+              )>
               <div className=Styles.button>
                 (ReasonReact.stringToElement("Login"))
               </div>
