@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "build": "react-scripts build",
-    "prepare": "bsb -make-world"
+    "prepare": "bsb -make-world",
+    "start": "react-scripts start"
   },
   "dependencies": {
     "apollo-cache-inmemory": "1.1.4",
