@@ -1,1 +1,1 @@
-export { default } from './select-organization';
+export { default } from './SelectOrganization.bs';

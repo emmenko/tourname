@@ -1,11 +1,12 @@
 /* (almost) copied from https://github.com/reasonml-community/bs-react-router/blob/master/src/reactRouter.re */
+type match = {. "params": Js.Dict.t(string)};
 
 type renderFunc =
   {
     .
     /* Use name mangling notation prefix `_` to circumvent reserved names clashing.
        https://bucklescript.github.io/docs/en/object.html#invalid-field-names */
-    "_match": {. "params": Js.Dict.t(string)},
+    "_match": match,
     "history": History.History.t,
     "location": History.History.Location.t
   } =>
@@ -31,6 +32,13 @@ module BrowserRouter = {
 module Link = {
   [@bs.module "react-router-dom"]
   external reactClass : ReasonReact.reactClass = "Link";
+  let make = (~to_: string, children) =>
+    ReasonReact.wrapJsForReason(~reactClass, ~props={"to": to_}, children);
+};
+
+module Redirect = {
+  [@bs.module "react-router-dom"]
+  external reactClass : ReasonReact.reactClass = "Redirect";
   let make = (~to_: string, children) =>
     ReasonReact.wrapJsForReason(~reactClass, ~props={"to": to_}, children);
 };

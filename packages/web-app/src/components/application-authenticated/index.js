@@ -1,1 +1,1 @@
-export { default } from './application-authenticated';
+export { default } from './ApplicationAuthenticated.bs';
