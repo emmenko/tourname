@@ -1,5 +1,5 @@
 module OrganizationQuery = {
-  [@bs.module] external gql : ReasonApolloTypes.gql = "graphql-tag";
+  [@bs.module "graphql-tag"] external gql : ReasonApolloTypes.gql = "default";
   let query =
     [@bs]
     gql(
