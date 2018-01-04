@@ -1,1 +1,1 @@
-export { default } from './application-landing-page';
+export { default } from './ApplicationLandingPage.bs';
