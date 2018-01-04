@@ -9,9 +9,7 @@
   "scripts": {
     "postinstall": "check-node-version --package --print && lerna run prepare",
     "lint": "./scripts/lint.sh 'packages/**/src/**'",
-    "start": "npm-run-all --parallel start:server start:client",
-    "start:server": "lerna exec --scope http-server -- node src/server.js",
-    "start:client": "lerna exec --scope web-app -- react-scripts start",
+    "start": "lerna run --parallel --scope \"{http-server,web-app}\" start",
     "test":
       "check-node-version --package && echo \"Error: no test specified\" && exit 1",
     "commitmsg": "commitlint -e $GIT_PARAMS",
@@ -42,7 +40,6 @@
     "jest": "^22.0.4",
     "lerna": "^2.5.1",
     "lint-staged": "^6.0.0",
-    "npm-run-all": "^4.1.2",
     "prettier": "^1.9.2",
     "reason-scripts": "file:./packages/reason-scripts"
   },
