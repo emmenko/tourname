@@ -9,7 +9,7 @@
     "start": "react-scripts start"
   },
   "dependencies": {
-    "apollo-cache-inmemory": "1.1.4",
+    "apollo-cache-inmemory": "1.1.5",
     "apollo-client": "2.1.0",
     "apollo-link": "1.0.7",
     "apollo-link-context": "1.0.3",
