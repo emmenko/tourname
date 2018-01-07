@@ -36,7 +36,7 @@
     "styled-components": "2.3.3"
   },
   "devDependencies": {
-    "bs-platform": "^2.1.0",
-    "bs-jest": "^0.3.1"
+    "bs-platform": "2.1.0",
+    "bs-jest": "0.3.2"
   }
 }
