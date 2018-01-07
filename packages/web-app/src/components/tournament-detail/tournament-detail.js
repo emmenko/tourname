@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { compose } from 'recompose';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import { Breadcrumb, Breadcrumbs } from '../breadcrumbs';
+import Breadcrumb from '../breadcrumb';
+import Breadcrumbs from '../breadcrumbs';
 import Loading from '../loading';
 import TournamentDetailAddPlayersForm from '../tournament-detail-add-players-form';
 

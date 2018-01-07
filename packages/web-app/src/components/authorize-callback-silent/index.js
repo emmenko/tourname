@@ -1,1 +1,1 @@
-export { default } from './authorize-callback-silent';
+export { default } from './AuthorizeCallbackSilent.bs';
