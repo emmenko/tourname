@@ -36,7 +36,7 @@ module LoggedInUserQuery = {
   type variables;
 };
 
-module FetchLoggedInUser = Apollo.Client.Query(LoggedInUserQuery);
+module FetchLoggedInUser = ConfigureApollo.Client.Query(LoggedInUserQuery);
 
 let component = FetchLoggedInUser.component;
 

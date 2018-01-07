@@ -14,7 +14,8 @@ module OrganizationKeyCheckQuery = {
   type variables = {. "key": string};
 };
 
-module OrganizationKeyCheck = Apollo.Client.Query(OrganizationKeyCheckQuery);
+module OrganizationKeyCheck =
+  ConfigureApollo.Client.Query(OrganizationKeyCheckQuery);
 
 module KeyCheckHandler = {
   let component = ReasonReact.statelessComponent("KeyCheckHandler");

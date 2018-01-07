@@ -1,104 +1,80 @@
-type graphqlConfig = {. "url": string};
+open ApolloTypes;
 
-type dataObject = {
-  .
-  "__typename": string,
-  "id": string,
-  "key": string
+/**
+ * CreateInMemoryCache
+ * https://github.com/apollographql/apollo-client/tree/master/packages/apollo-cache-inmemory
+ */
+module type ApolloInMemoryCacheConfig = {
+  /**
+   * Describe your data object shape. Usually you have following keys:
+   * - "__typename": string
+   * - "id": string
+   */
+  type dataObject;
+  /**
+   * Define the object to pass to the InMemoryCache constructor.
+   * If you don't want to pass any object, simply return `Js_null_undefined.undefined`.
+   */
+  let inMemoryCacheObject:
+    /* TODO: define missing fields */
+    Js.Nullable.t({. "dataIdFromObject": dataObject => string});
 };
 
-type inMemoryCacheConfig = {. "dataIdFromObject": dataObject => string};
-
-type apolloLink;
-
-type authorization = {. "authorization": string};
-
-type headers = {. "headers": authorization};
-
-type apolloLinkOperation = {. "setContext": [@bs.meth] (headers => unit)};
-
-type apolloLinkForward = apolloLinkOperation => apolloLink;
-
-type apolloLinkFrom = array(apolloLink) => apolloLink;
-
-type networkError = {. "statusCode": int};
-
-type apolloLinkErrorResponse = {. "networkError": option(networkError)};
-
-type clientOptions = {
-  .
-  "cache": unit,
-  "link": apolloLink
+module CreateInMemoryCache = (Config: ApolloInMemoryCacheConfig) => {
+  /* Define the type of the object to pas to the InMemoryCache constructor */
+  type inMemoryCacheObject =
+    Js.Nullable.t({. "dataIdFromObject": Config.dataObject => string});
+  /* Bind the InMemoryCache class */
+  [@bs.module "apollo-cache-inmemory"] [@bs.new]
+  external createInMemoryCache : inMemoryCacheObject => apolloCache =
+    "InMemoryCache";
+  /* Instanciate a new cache object */
+  let cache = createInMemoryCache(Config.inMemoryCacheObject);
 };
 
-[@bs.module "../../config.js"]
-external config : graphqlConfig = "GRAPHQL_CONFIG";
-
-[@bs.module "apollo-client"] [@bs.new]
-external apolloClient : clientOptions => ApolloClient.generatedApolloClient =
-  "ApolloClient";
-
-[@bs.module "apollo-cache-inmemory"] [@bs.new]
-external inMemoryCache : option(inMemoryCacheConfig) => 'a = "InMemoryCache";
-
-[@bs.module "apollo-link-http"] [@bs.new]
-external createHttpLink : ApolloClient.linkOptions => apolloLink = "HttpLink";
-
-[@bs.module "apollo-link"] [@bs.new]
-external createApolloLink :
-  (
-    (~operation: apolloLinkOperation, ~forward: apolloLinkForward) => apolloLink
-  ) =>
-  apolloLink =
-  "ApolloLink";
-
-[@bs.module "apollo-link"] external apolloLinkFrom : apolloLinkFrom = "from";
-
-[@bs.module "apollo-link-error"]
-external apolloLinkOnError : (apolloLinkErrorResponse => unit) => apolloLink =
-  "onError";
-
-module type HttpLinkConfig = {let uri: string;};
-
-module CreateHttpLink = (Config: HttpLinkConfig) => {
-  let link = createHttpLink({"uri": Config.uri});
-};
-
-module type ApolloLinkConfig = {
-  let requestHandler:
-    (~operation: apolloLinkOperation, ~forward: apolloLinkForward) =>
-    apolloLink;
-};
-
-module CreateApolloLink = (Config: ApolloLinkConfig) => {
-  let link = createApolloLink(Config.requestHandler);
-};
-
-module type ErrorLinkConfig = {
-  let errorHandler: apolloLinkErrorResponse => unit;
-};
-
-module CreateErrorLink = (Config: ErrorLinkConfig) => {
-  let link = apolloLinkOnError(Config.errorHandler);
-};
-
+/**
+ * CreateClient
+ * https://github.com/apollographql/apollo-client
+ */
 module type ApolloClientConfig = {
+  /**
+   * An array of links, each one constructed with one of the available
+   * modules in ApolloLinks
+   */
   let links: array(apolloLink);
-  let inMemoryCacheConfig: option(inMemoryCacheConfig);
+  /**
+   * A cache object, usually an instance of InMemoryCache
+   */
+  let cache: apolloCache;
 };
 
 module CreateClient = (Config: ApolloClientConfig) => {
-  let apolloClientOptions: clientOptions = {
-    "cache": inMemoryCache(Config.inMemoryCacheConfig),
-    "link": apolloLinkFrom(Config.links)
-  };
-  let apolloClient = apolloClient(apolloClientOptions);
+  /* Bind the ApolloClient class */
+  [@bs.module "apollo-client"] [@bs.new]
+  external createApolloClient :
+    clientOptions => ApolloClient.generatedApolloClient =
+    "ApolloClient";
+  /* Bind the method `from`, used to compose links together */
+  [@bs.module "apollo-link"]
+  external createApolloLinkFrom : array(apolloLink) => apolloLink = "from";
+  /*Instanciate a new client object */
+  let apolloClient =
+    createApolloClient({
+      "cache": Config.cache,
+      "link": createApolloLinkFrom(Config.links)
+    });
+  /**
+   * Expose a module to perform "query" operations for the given client
+   */
   module Query =
     ReasonApolloQuery.QueryFactory(
       {
         let apolloClient = apolloClient;
       }
     );
+  /**
+   * Expose a module to perform "mutation" operations for the given client
+   */
   module Mutation =
     ReasonApolloMutation.MutationFactory(
       {
@@ -106,59 +82,3 @@ module CreateClient = (Config: ApolloClientConfig) => {
       }
     );
 };
-
-/* Setup client */
-module HttpLink =
-  CreateHttpLink(
-    {
-      let uri = config##url;
-    }
-  );
-
-module AuthLink =
-  CreateApolloLink(
-    {
-      let requestHandler = (~operation, ~forward) => {
-        let token = ReasonAuth.getAccessToken();
-        let headers = {
-          "headers": {
-            "authorization": {j|Bearer $token|j}
-          }
-        };
-        operation##setContext(headers);
-        forward(operation);
-      };
-    }
-  );
-
-module ErrorLink =
-  CreateErrorLink(
-    {
-      let errorHandler = errorResponse =>
-        if (Js_option.isSome(errorResponse##networkError)
-            &&
-            Js_option.getExn(errorResponse##networkError)##statusCode === 401) {
-          ReasonAuth.logout();
-        } else {
-          ();
-        };
-    }
-  );
-
-module Client =
-  CreateClient(
-    {
-      let links = [|AuthLink.link, ErrorLink.link, HttpLink.link|];
-      let inMemoryCacheConfig =
-        Some({
-          "dataIdFromObject": (obj: dataObject) =>
-            if (obj##__typename === "Organization") {
-              obj##key;
-            } else {
-              obj##id;
-            }
-        });
-    }
-  );
-
-let default = Client.apolloClient;

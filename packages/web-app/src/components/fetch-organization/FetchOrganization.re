@@ -38,10 +38,10 @@ module OrganizationQuery = {
   };
   type data = {. "organization": organization};
   type response = data;
-  type variables = {. "key": string };
+  type variables = {. "key": string};
 };
 
-module FetchOrganization = Apollo.Client.Query(OrganizationQuery);
+module FetchOrganization = ConfigureApollo.Client.Query(OrganizationQuery);
 
 let component = FetchOrganization.component;
 

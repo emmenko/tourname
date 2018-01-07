@@ -29,7 +29,7 @@ let make = (~location: History.History.Location.t, _children) => {
   },
   render: _self =>
     if (ReasonAuth.getIsAccessTokenValid()) {
-      <ApolloProvider client=Apollo.Client.apolloClient>
+      <ApolloProvider client=ConfigureApollo.Client.apolloClient>
         <ApplicationAuthenticated />
       </ApolloProvider>;
     } else if (History.History.Location.pathname(location) != "/") {
