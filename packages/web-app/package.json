@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "npm-run-all --parallel start:bsb start:app",
-    "start:app": "react-scripts start",
+    "start:app": "parcel -p 4000 public/index.html",
     "start:bsb": "bsb -make-world -w",
     "clean": "bsb -clean-world",
     "prepare": "bsb -make-world"
@@ -38,7 +38,10 @@
     "styled-components": "2.3.3"
   },
   "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-preset-react-app": "^3.1.0",
     "bs-platform": "^2.1.0",
-    "bs-jest": "^0.3.1"
+    "bs-jest": "^0.3.1",
+    "parcel-bundler": "1.2.1"
   }
 }
