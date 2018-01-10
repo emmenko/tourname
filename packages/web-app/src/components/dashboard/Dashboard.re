@@ -62,7 +62,7 @@ module ActiveTournamentsQuery = {
   };
 };
 
-module ActiveTournaments =
+module FetchActiveTournaments =
   ConfigureApollo.Client.Query(ActiveTournamentsQuery);
 
 module FinishedTournamentsQuery = {
@@ -107,7 +107,7 @@ module FinishedTournamentsQuery = {
   };
 };
 
-module FinishedTournaments =
+module FetchFinishedTournaments =
   ConfigureApollo.Client.Query(FinishedTournamentsQuery);
 
 let component = ReasonReact.statelessComponent("Dashboard");
@@ -171,7 +171,7 @@ let make = (~match: match, _children) => {
           <div className=Styles.section>
             <div className=Styles.sectionBlock>
               <h3> (ReasonReact.stringToElement("Active tournaments")) </h3>
-              <ActiveTournaments
+              <FetchActiveTournaments
                 variables={"key": orgKey, "page": 1, "perPage": 20}>
                 (
                   response =>
@@ -190,11 +190,11 @@ let make = (~match: match, _children) => {
                       );
                     }
                 )
-              </ActiveTournaments>
+              </FetchActiveTournaments>
             </div>
             <div className=Styles.sectionBlock>
               <h3> (ReasonReact.stringToElement("Finished tournaments")) </h3>
-              <FinishedTournaments
+              <FetchFinishedTournaments
                 variables={"key": orgKey, "page": 1, "perPage": 20}>
                 (
                   response =>
@@ -213,7 +213,7 @@ let make = (~match: match, _children) => {
                       );
                     }
                 )
-              </FinishedTournaments>
+              </FetchFinishedTournaments>
             </div>
           </div>
           <div className=Styles.section>

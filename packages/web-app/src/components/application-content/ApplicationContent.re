@@ -6,9 +6,6 @@ external tournamentsList : ReasonReact.reactClass = "default";
 [@bs.module "../tournament-detail"]
 external tournamentDetail : ReasonReact.reactClass = "default";
 
-[@bs.module "../match-detail"]
-external matchDetail : ReasonReact.reactClass = "default";
-
 module NotFound = {
   let component = ReasonReact.statelessComponent("NotFound");
   let make = _children => {
@@ -78,7 +75,7 @@ let make = (~match: match, _children) => {
                     <Route
                       exact=true
                       path="/:organizationKey/match/:matchId"
-                      component=matchDetail
+                      component=MatchDetail.default
                     />
                   </Switch>
                 </div>

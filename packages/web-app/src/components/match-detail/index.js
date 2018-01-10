@@ -1,1 +1,1 @@
-export { default } from './match-detail';
+export { default } from './MatchDetail.bs';

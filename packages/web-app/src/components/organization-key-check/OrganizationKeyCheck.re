@@ -14,7 +14,7 @@ module OrganizationKeyCheckQuery = {
   type variables = {. "key": string};
 };
 
-module OrganizationKeyCheck =
+module FetchOrganizationKeyCheck =
   ConfigureApollo.Client.Query(OrganizationKeyCheckQuery);
 
 module KeyCheckHandler = {
@@ -46,7 +46,7 @@ let make = (~value, ~onChange, _children) => {
     /* Only re-render if the value changed, to prevent infinite re-renders */
     shouldUpdate: ({oldSelf}) => oldSelf.retainedProps !== value,
     render: _self =>
-      <OrganizationKeyCheck variables>
+      <FetchOrganizationKeyCheck variables>
         (
           response =>
             switch response {
@@ -59,7 +59,7 @@ let make = (~value, ~onChange, _children) => {
               <KeyCheckHandler isOrganizationKeyUsed onChange />;
             }
         )
-      </OrganizationKeyCheck>
+      </FetchOrganizationKeyCheck>
   };
 };
 
