@@ -1,8 +1,5 @@
 open ReasonReactRouterDom;
 
-[@bs.module "../dashboard"]
-external dashboard : ReasonReact.reactClass = "default";
-
 [@bs.module "../tournaments-list"]
 external tournamentsList : ReasonReact.reactClass = "default";
 
@@ -66,7 +63,7 @@ let make = (~match: match, _children) => {
                     <Route
                       exact=true
                       path="/:organizationKey"
-                      component=dashboard
+                      component=Dashboard.default
                     />
                     <Route
                       exact=true

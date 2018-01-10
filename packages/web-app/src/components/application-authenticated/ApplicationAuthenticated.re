@@ -6,9 +6,6 @@ external organizationCreate : ReasonReact.reactClass = "default";
 [@bs.module "../select-new-tournament"]
 external selectNewTournament : ReasonReact.reactClass = "default";
 
-[@bs.module "../select-organization"]
-external selectOrganization : ReasonReact.reactClass = "default";
-
 [@bs.scope "localStorage"] [@bs.val] [@bs.return nullable]
 external getItem : string => option(string) = "";
 
@@ -61,10 +58,7 @@ let make = _children => {
                     />
                     <Route
                       path="/:organizationKey"
-                      render=(
-                        renderProps =>
-                          <ApplicationContent match=renderProps##_match />
-                      )
+                      component=ApplicationContent.default
                     />
                   </Switch>
                 </div>;
