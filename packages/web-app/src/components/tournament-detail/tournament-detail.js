@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import Breadcrumb from '../breadcrumb';
 import Breadcrumbs from '../breadcrumbs';
-import Loading from '../loading';
+import Loading from '../loading-spinner';
 import TournamentDetailAddPlayersForm from '../tournament-detail-add-players-form';
 
 const flatMap = list => [].concat(...list);

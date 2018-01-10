@@ -34,7 +34,7 @@ module OrganizationQuery = {
     .
     "key": string,
     "name": string,
-    "members": list(member)
+    "members": array(member)
   };
   type data = {. "organization": organization};
   type response = data;

@@ -29,7 +29,7 @@ module LoggedInUserQuery = {
     "name": string,
     "email": string,
     "picture": string,
-    "availableOrganizations": list(availableOrganizations)
+    "availableOrganizations": array(availableOrganizations)
   };
   type data = {. "me": user};
   type response = data;

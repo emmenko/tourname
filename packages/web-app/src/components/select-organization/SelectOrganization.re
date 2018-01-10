@@ -89,9 +89,7 @@ let make = _children => {
                 | Loaded(result) =>
                   <SelectOrganization
                     history=renderProps##history
-                    availableOrganizations=(
-                      Array.of_list(result##me##availableOrganizations)
-                    )
+                    availableOrganizations=result##me##availableOrganizations
                   />
                 }
             )
