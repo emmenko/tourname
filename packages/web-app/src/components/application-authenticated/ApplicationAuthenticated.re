@@ -28,7 +28,7 @@ let make = _children => {
               ReasonReact.nullElement;
             | Loaded(result) =>
               let shouldForceToCreateAnOrganization =
-                List.length(result##me##availableOrganizations) == 0;
+                Array.length(result##me##availableOrganizations) == 0;
               if (shouldForceToCreateAnOrganization) {
                 <Redirect to_="/organizations/new" />;
               } else {
