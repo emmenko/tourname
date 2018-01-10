@@ -1,4 +1,14 @@
 {
   "extends": ["config:base", ":preserveSemverRanges"],
-  "ignoreDeps": ["babel-eslint", "eslint-plugin-jsx-a11y"]
+  "ignoreDeps": ["babel-eslint", "eslint-plugin-jsx-a11y"],
+  "packageRules": [
+    {
+      "groupName": "http-server",
+      "packagePatterns": ["http-server"]
+    },
+    {
+      "groupName": "web-app",
+      "packagePatterns": ["web-app"]
+    }
+  ]
 }
