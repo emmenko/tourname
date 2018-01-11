@@ -3,3 +3,4 @@
 /types
 .merlin
 *.bs.js
+.bsb.lock

@@ -67,47 +67,44 @@ module MatchDetailQuery = {
 
 module FetchMatchDetail = ConfigureApollo.Client.Query(MatchDetailQuery);
 
+module RouterMatch =
+  SpecifyRouterMatch(
+    {
+      type params = {
+        .
+        "organizationKey": string,
+        "matchId": string
+      };
+    }
+  );
+
 let component = ReasonReact.statelessComponent("Dashboard");
 
-let make = (~match: match, _children) => {
-  let organizationKey = Js.Dict.get(match##params, "organizationKey");
-  let matchId = Js.Dict.get(match##params, "matchId");
+let make = (~match: RouterMatch.match, _children) => {
+  /* let organizationKey = match##params##organizationKey; */
+  let matchId = match##params##matchId;
   {
     ...component,
     render: _self =>
-      switch organizationKey {
-      | None =>
-        Js.log("Error: organizationKey param is not defined!");
-        /* Throw an error? */
-        ReasonReact.nullElement;
-      | Some(_orgKey) =>
-        switch matchId {
-        | None =>
-          Js.log("Error: organizationKey param is not defined!");
-          /* Throw an error? */
-          ReasonReact.nullElement;
-        | Some(id) =>
-          <FetchMatchDetail variables={"id": id}>
-            (
-              response =>
-                switch response {
-                | Loading => <LoadingSpinner />
-                | Failed(error) =>
-                  Js.log(error);
-                  ReasonReact.nullElement;
-                | Loaded(_result) =>
-                  <span>
-                    (
-                      ReasonReact.stringToElement(
-                        {j|Detail page of match $id|j}
-                      )
-                    )
-                  </span>
-                }
-            )
-          </FetchMatchDetail>
-        }
-      }
+      <FetchMatchDetail variables={"id": matchId}>
+        (
+          response =>
+            switch response {
+            | Loading => <LoadingSpinner />
+            | Failed(error) =>
+              Js.log(error);
+              ReasonReact.nullElement;
+            | Loaded(_result) =>
+              <span>
+                (
+                  ReasonReact.stringToElement(
+                    {j|Detail page of match $matchId|j}
+                  )
+                )
+              </span>
+            }
+        )
+      </FetchMatchDetail>
   };
 };
 

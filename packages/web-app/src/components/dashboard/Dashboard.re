@@ -110,10 +110,17 @@ module FinishedTournamentsQuery = {
 module FetchFinishedTournaments =
   ConfigureApollo.Client.Query(FinishedTournamentsQuery);
 
+module RouterMatch =
+  SpecifyRouterMatch(
+    {
+      type params = {. "organizationKey": string};
+    }
+  );
+
 let component = ReasonReact.statelessComponent("Dashboard");
 
-let make = (~match: match, _children) => {
-  let organizationKey = Js.Dict.get(match##params, "organizationKey");
+let make = (~match: RouterMatch.match, _children) => {
+  let organizationKey = match##params##organizationKey;
   let renderTournamentsList =
       (~tournaments: array(tournamentShape), ~organizationKey, ~labelEmptyList) =>
     if (Array.length(tournaments) == 0) {
@@ -147,82 +154,75 @@ let make = (~match: match, _children) => {
   {
     ...component,
     render: _self =>
-      switch organizationKey {
-      | None =>
-        Js.log("Error: organizationKey param is not defined!");
-        /* Throw an error? */
-        ReasonReact.nullElement;
-      | Some(orgKey) =>
-        <div className=Styles.view>
-          <div className=Styles.section>
-            <FetchUser>
+      <div className=Styles.view>
+        <div className=Styles.section>
+          <FetchUser>
+            (
+              response =>
+                switch response {
+                | Loading => <Welcome />
+                | Failed(error) =>
+                  Js.log(error);
+                  ReasonReact.nullElement;
+                | Loaded(result) => <Welcome name=result##me##name />
+                }
+            )
+          </FetchUser>
+        </div>
+        <div className=Styles.section>
+          <div className=Styles.sectionBlock>
+            <h3> (ReasonReact.stringToElement("Active tournaments")) </h3>
+            <FetchActiveTournaments
+              variables={"key": organizationKey, "page": 1, "perPage": 20}>
               (
                 response =>
                   switch response {
-                  | Loading => <Welcome />
+                  | Loading => <LoadingSpinner />
                   | Failed(error) =>
                     Js.log(error);
                     ReasonReact.nullElement;
-                  | Loaded(result) => <Welcome name=result##me##name />
+                  | Loaded(result) =>
+                    let tournaments = result##organization##tournaments;
+                    renderTournamentsList(
+                      ~labelEmptyList=
+                        "There are no active tournaments at the moment",
+                      ~tournaments,
+                      ~organizationKey
+                    );
                   }
               )
-            </FetchUser>
+            </FetchActiveTournaments>
           </div>
-          <div className=Styles.section>
-            <div className=Styles.sectionBlock>
-              <h3> (ReasonReact.stringToElement("Active tournaments")) </h3>
-              <FetchActiveTournaments
-                variables={"key": orgKey, "page": 1, "perPage": 20}>
-                (
-                  response =>
-                    switch response {
-                    | Loading => <LoadingSpinner />
-                    | Failed(error) =>
-                      Js.log(error);
-                      ReasonReact.nullElement;
-                    | Loaded(result) =>
-                      let tournaments = result##organization##tournaments;
-                      renderTournamentsList(
-                        ~labelEmptyList=
-                          "There are no active tournaments at the moment",
-                        ~tournaments,
-                        ~organizationKey=orgKey
-                      );
-                    }
-                )
-              </FetchActiveTournaments>
-            </div>
-            <div className=Styles.sectionBlock>
-              <h3> (ReasonReact.stringToElement("Finished tournaments")) </h3>
-              <FetchFinishedTournaments
-                variables={"key": orgKey, "page": 1, "perPage": 20}>
-                (
-                  response =>
-                    switch response {
-                    | Loading => <LoadingSpinner />
-                    | Failed(error) =>
-                      Js.log(error);
-                      ReasonReact.nullElement;
-                    | Loaded(result) =>
-                      let tournaments = result##organization##tournaments;
-                      renderTournamentsList(
-                        ~labelEmptyList=
-                          "There are no active tournaments at the moment",
-                        ~tournaments,
-                        ~organizationKey=orgKey
-                      );
-                    }
-                )
-              </FetchFinishedTournaments>
-            </div>
-          </div>
-          <div className=Styles.section>
-            <Link to_="/new">
-              (ReasonReact.stringToElement("Create new tournament"))
-            </Link>
+          <div className=Styles.sectionBlock>
+            <h3> (ReasonReact.stringToElement("Finished tournaments")) </h3>
+            <FetchFinishedTournaments
+              variables={"key": organizationKey, "page": 1, "perPage": 20}>
+              (
+                response =>
+                  switch response {
+                  | Loading => <LoadingSpinner />
+                  | Failed(error) =>
+                    Js.log(error);
+                    ReasonReact.nullElement;
+                  | Loaded(result) =>
+                    let tournaments = result##organization##tournaments;
+                    renderTournamentsList(
+                      ~labelEmptyList=
+                        "There are no active tournaments at the moment",
+                      ~tournaments,
+                      ~organizationKey
+                    );
+                  }
+              )
+            </FetchFinishedTournaments>
           </div>
         </div>
-      }
+        <div className=Styles.section>
+          <Link to_="/new">
+            (ReasonReact.stringToElement("Create new tournament"))
+          </Link>
+        </div>
+      </div>
   };
 };
 

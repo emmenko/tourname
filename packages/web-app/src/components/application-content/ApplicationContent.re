@@ -18,71 +18,63 @@ module NotFound = {
 [@bs.scope "localStorage"] [@bs.val]
 external setItem : (string, string) => unit = "";
 
+module RouterMatch =
+  SpecifyRouterMatch(
+    {
+      type params = {. "organizationKey": string};
+    }
+  );
+
 let component = ReasonReact.statelessComponent("ApplicationContent");
 
-let make = (~match: match, _children) => {
-  let organizationKey = Js.Dict.get(match##params, "organizationKey");
+let make = (~match: RouterMatch.match, _children) => {
+  let organizationKey = match##params##organizationKey;
   {
     ...component,
     render: _self =>
-      switch organizationKey {
-      | None =>
-        Js.log("Error: organizationKey param is not defined!");
-        /* Throw an error? */
-        ReasonReact.nullElement;
-      | Some(orgKey) =>
-        <FetchOrganization variables={"key": orgKey}>
-          (
-            response =>
-              switch response {
-              | Loading => ReasonReact.stringToElement("Loading...")
-              | Failed(_error) => <NotFound />
-              | Loaded(_result) =>
-                <div>
+      <FetchOrganization variables={"key": organizationKey}>
+        (
+          response =>
+            switch response {
+            | Loading => ReasonReact.stringToElement("Loading...")
+            | Failed(_error) => <NotFound />
+            | Loaded(_result) =>
+              <div>
+                <Route
+                  path="/:organizationKey"
+                  render=(
+                    _renderFunc => {
+                      setItem("organizationKey", organizationKey);
+                      ReasonReact.nullElement;
+                    }
+                  )
+                />
+                <Switch>
                   <Route
+                    exact=true
                     path="/:organizationKey"
-                    render=(
-                      renderFunc => {
-                        let orgKey =
-                          Js.Dict.get(
-                            renderFunc##_match##params,
-                            "organizationKey"
-                          );
-                        switch orgKey {
-                        | Some(key) => setItem("organizationKey", key)
-                        | None => ()
-                        };
-                        ReasonReact.nullElement;
-                      }
-                    )
+                    component=Dashboard.default
                   />
-                  <Switch>
-                    <Route
-                      exact=true
-                      path="/:organizationKey"
-                      component=Dashboard.default
-                    />
-                    <Route
-                      exact=true
-                      path="/:organizationKey/tournaments"
-                      component=tournamentsList
-                    />
-                    <Route
-                      exact=true
-                      path="/:organizationKey/tournament/:tournamentId"
-                      component=tournamentDetail
-                    />
-                    <Route
-                      exact=true
-                      path="/:organizationKey/match/:matchId"
-                      component=MatchDetail.default
-                    />
-                  </Switch>
-                </div>
-              }
-          )
-        </FetchOrganization>
-      }
+                  <Route
+                    exact=true
+                    path="/:organizationKey/tournaments"
+                    component=tournamentsList
+                  />
+                  <Route
+                    exact=true
+                    path="/:organizationKey/tournament/:tournamentId"
+                    component=tournamentDetail
+                  />
+                  <Route
+                    exact=true
+                    path="/:organizationKey/match/:matchId"
+                    component=MatchDetail.default
+                  />
+                </Switch>
+              </div>
+            }
+        )
+      </FetchOrganization>
   };
 };
 

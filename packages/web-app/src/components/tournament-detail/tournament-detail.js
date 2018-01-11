@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import Breadcrumb from '../breadcrumb';
 import Breadcrumbs from '../breadcrumbs';
-import Loading from '../loading-spinner';
+import LoadingSpinner from '../loading-spinner';
 import TournamentDetailAddPlayersForm from '../tournament-detail-add-players-form';
 
 const flatMap = list => [].concat(...list);
@@ -104,7 +104,7 @@ class TournamentDetail extends React.PureComponent {
     removePlayerFromTeam: PropTypes.func.isRequired,
   };
   render() {
-    if (this.props.tournamentDetail.loading) return <Loading />;
+    if (this.props.tournamentDetail.loading) return <LoadingSpinner />;
 
     const { tournament } = this.props.tournamentDetail;
     return (

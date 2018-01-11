@@ -1,12 +1,16 @@
 /* (almost) copied from https://github.com/reasonml-community/bs-react-router/blob/master/src/reactRouter.re */
-type match = {. "params": Js.Dict.t(string)};
+module type RouteMatchParams = {type params;};
+
+module SpecifyRouterMatch = (Config: RouteMatchParams) => {
+  type match = {. "params": Config.params};
+};
 
 type renderFunc =
   {
     .
     /* Use name mangling notation prefix `_` to circumvent reserved names clashing.
        https://bucklescript.github.io/docs/en/object.html#invalid-field-names */
-    "_match": match,
+    "_match": {. "params": Js.Dict.t(string)},
     "history": History.History.t,
     "location": History.History.Location.t
   } =>
