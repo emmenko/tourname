@@ -1,0 +1,5 @@
+[build]
+  YARN_VERSION = "1.3.2"
+  YARN_FLAGS = "--pure-lockfile"
+  command = "yarn build"
+  publish = "packages/web-app/build"
