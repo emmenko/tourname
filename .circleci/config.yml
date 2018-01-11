@@ -16,11 +16,9 @@ jobs:
   lint_and_test:
     working_directory: *working_directory
     docker:
-      # specify the version you desire here
       - image: circleci/node:8
     steps:
       - checkout
-      # Download and cache dependencies
       - restore_cache: *restore_yarn_cache
       - run:
           name: Install dependencies
@@ -29,17 +27,6 @@ jobs:
       - run:
           name: Run linters
           command: yarn lint
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            # Include the entire project folder
-            - tourname
-  build:
-    - attach_workspace:
-        at: *working_directory
-    - run:
-        name: Building production bundles
-        command: yarn build
 
 workflows:
   version: 2
