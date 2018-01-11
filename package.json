@@ -8,6 +8,7 @@
   "license": "BSD-3-Clause",
   "scripts": {
     "postinstall": "check-node-version --package --print && lerna run prepare",
+    "build": "lerna run --parallel --scope \"{http-server,web-app}\" build",
     "lint": "./scripts/lint.sh 'packages/**/src/**'",
     "start": "lerna run --parallel --scope \"{http-server,web-app}\" start",
     "test":

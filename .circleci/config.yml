@@ -1,39 +1,45 @@
+aliases:
+  - &working_directory ~/tourname
+
+  - &restore_yarn_cache
+    keys:
+      - v1-yarn-cache-{{ checksum "yarn.lock" }}
+      - v1-yarn-cache
+
+  - &save_yarn_cache
+    key: v1-yarn-cache-{{ checksum "yarn.lock" }}
+    paths:
+      - node_modules
+
 version: 2
 jobs:
   lint_and_test:
-    working_directory: ~/tourname
+    working_directory: *working_directory
     docker:
       # specify the version you desire here
       - image: circleci/node:8
     steps:
       - checkout
-      - run: git submodule sync
-      - run: git submodule update --init
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - yarn-cache-{{ checksum "yarn.lock" }}
-          # fallback to using the latest cache if no exact match is found
-          - yarn-cache-
-      - run:
-          name: Install greenkeeper-lockfile-update
-          command: yarn global add greenkeeper-lockfile@1 --prefix ~/.yarn
+      - restore_cache: *restore_yarn_cache
       - run:
           name: Install dependencies
           command: yarn install --pure-lockfile
-      - save_cache:
-          key: yarn-cache-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-      - run:
-          name: Update greenkeeper-lockfile
-          command: ~/.yarn/bin/greenkeeper-lockfile-update
+      - save_cache: *save_yarn_cache
       - run:
           name: Run linters
           command: yarn lint
-      - run:
-          name: Upload greenkeeper-lockfile
-          command: ~/.yarn/bin/greenkeeper-lockfile-upload
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            # Include the entire project folder
+            - tourname
+  build:
+    - attach_workspace:
+        at: *working_directory
+    - run:
+        name: Building production bundles
+        command: yarn build
 
 workflows:
   version: 2

@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "build": "react-scripts build",
     "start": "npm-run-all --parallel start:bsb start:app",
     "start:app": "react-scripts start",
     "start:bsb": "bsb -make-world -w",
