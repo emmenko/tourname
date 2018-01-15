@@ -1,1 +1,1 @@
-export { default } from './organization-create';
+export { default } from './OrganizationCreate.bs';
