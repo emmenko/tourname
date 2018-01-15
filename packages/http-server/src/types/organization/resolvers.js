@@ -30,8 +30,7 @@ module.exports = {
       );
     },
     tournaments: (obj, args, context) => {
-      // TODO: find a way to use dataloader: one key -> to many results
-      const queryConditions = [{ 'organizations._id': { $eq: obj.key } }];
+      const queryConditions = [{ organizationKey: { $eq: obj._id } }];
       if (args.status && args.status.length > 0)
         queryConditions.push({ $or: args.status.map(status => ({ status })) });
 
@@ -48,17 +47,11 @@ module.exports = {
      * Args:
      * - key
      * - name
-     * - memberId
      */
     createOrganization: async (obj, args, context) => {
-      // TODO: find a better way to check if the user exists in auth0
-      const userDoc = await context.loaders.users.load(args.memberId);
-      if (!userDoc)
-        throw new Error(`Cannot find member with id "${args.memberId}"`);
-
-      const existingOrgForGivenKey = await context.db.organizations.load(
-        args.key
-      );
+      const existingOrgForGivenKey = await context.db.organizations.findOne({
+        _id: args.key,
+      });
       if (existingOrgForGivenKey)
         throw new Error(`An organization for key "${args.key}" already exist`);
 
@@ -77,7 +70,7 @@ module.exports = {
     // removeOrganization
     /**
      * Only admin members can set other members as admin.
-     * 
+     *
      * Args:
      * - organizationKey
      * - memberId
@@ -85,7 +78,9 @@ module.exports = {
     setMemberAsAdmin: async (obj, args, context) => {
       if (context.userId === args.memberId)
         throw new Error(
-          `You cannot set yourself admin of the organization "${args.organizationKey}"`
+          `You cannot set yourself admin of the organization "${
+            args.organizationKey
+          }"`
         );
 
       // Check that the user has access to the given organization
@@ -101,14 +96,18 @@ module.exports = {
       );
       if (!userSelfInOrg.isAdmin)
         throw new Error(
-          `You are not an admin of the organization "${args.organizationKey}". Only admins can promote users to admin`
+          `You are not an admin of the organization "${
+            args.organizationKey
+          }". Only admins can promote users to admin`
         );
 
       // TODO: find a better way to check if the user exists in auth0
       const targetUserDoc = await context.loaders.users.load(args.memberId);
       if (!targetUserDoc)
         throw new Error(
-          `The member "${args.memberId}" that you are trying to promote to admin does not exist`
+          `The member "${
+            args.memberId
+          }" that you are trying to promote to admin does not exist`
         );
 
       const isoDate = new Date().toISOString();
@@ -140,7 +139,9 @@ module.exports = {
       const targetUserDoc = await context.loaders.users.load(args.memberId);
       if (!targetUserDoc)
         throw new Error(
-          `The member "${args.memberId}" that you are trying to add does not exist`
+          `The member "${
+            args.memberId
+          }" that you are trying to add does not exist`
         );
 
       const isoDate = new Date().toISOString();
@@ -157,7 +158,7 @@ module.exports = {
     },
     /**
      * Only admin members can remove members from an organization.
-     * 
+     *
      * Args:
      * - organizationKey
      * - memberId
@@ -168,7 +169,9 @@ module.exports = {
       // TODO: current user cannot remove itself, instead the org should be removed
       if (context.userId === args.memberId)
         throw new Error(
-          `You cannot remove yourself from the organization "${args.organizationKey}"`
+          `You cannot remove yourself from the organization "${
+            args.organizationKey
+          }"`
         );
 
       // Check that the user has access to the given organization
@@ -184,7 +187,9 @@ module.exports = {
       );
       if (!userSelfInOrg.isAdmin)
         throw new Error(
-          `You are not an admin of the organization "${args.organizationKey}". Only admins can remove members`
+          `You are not an admin of the organization "${
+            args.organizationKey
+          }". Only admins can remove members`
         );
 
       const isoDate = new Date().toISOString();
