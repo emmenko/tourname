@@ -1,3 +1,13 @@
+type member = {
+  .
+  "id": string,
+  "createdAt": string,
+  "email": string,
+  "name": string,
+  "picture": string,
+  "isAdmin": bool
+};
+
 module OrganizationQuery = {
   [@bs.module "graphql-tag"] external gql : ReasonApolloTypes.gql = "default";
   let query =
@@ -21,15 +31,6 @@ module OrganizationQuery = {
       }
     |}
     );
-  type member = {
-    .
-    "id": string,
-    "createdAt": string,
-    "email": string,
-    "name": string,
-    "picture": string,
-    "isAdmin": bool
-  };
   type organization = {
     .
     "key": string,
