@@ -36,7 +36,7 @@
     "reason-apollo": "0.5.7",
     "reason-react": "0.3.1",
     "recompose": "0.26.0",
-    "styled-components": "2.3.3"
+    "styled-components": "2.4.0"
   },
   "devDependencies": {
     "bs-platform": "^2.1.0",
