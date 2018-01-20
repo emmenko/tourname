@@ -1,1 +1,1 @@
-export { default } from './player-slot-empty';
+export { default } from './PlayerSlotEmpty.bs';

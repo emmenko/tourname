@@ -1,1 +1,1 @@
-export { default } from './player-search-dialog';
+export { default } from './PlayerSearchDialog.bs';
