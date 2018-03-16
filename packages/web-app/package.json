@@ -24,7 +24,7 @@
     "downshift": "1.23.2",
     "formik": "0.10.5",
     "glamor": "2.20.40",
-    "graphql": "0.12.3",
+    "graphql": "0.13.2",
     "graphql-tag": "2.6.1",
     "history": "4.7.2",
     "prop-types": "15.6.0",
