@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "config:base",
+    ":preserveSemverRanges",
+    ":pinOnlyDevDependencies",
+    "group:monorepos",
+    "schedule:weekly"
+  ],
+  "ignoreDeps": ["babel-eslint", "eslint-plugin-jsx-a11y"]
+}
