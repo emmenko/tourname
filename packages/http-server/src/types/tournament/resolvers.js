@@ -1,3 +1,4 @@
+/* eslint-disable prefer-object-spread/prefer-object-spread */
 const uuid = require('uuid/v4');
 const shuffle = require('lodash.shuffle');
 
@@ -349,7 +350,9 @@ module.exports = {
       const hasSelectedTeamAvailableSlots = selectedTeam.length < doc.teamSize;
       if (!hasSelectedTeamAvailableSlots)
         throw new Error(
-          `Cannot add a new player to the team "${args.teamKey}" as the team is already full of players`
+          `Cannot add a new player to the team "${
+            args.teamKey
+          }" as the team is already full of players`
         );
 
       // TODO: find a better way to check if the user exists in auth0
@@ -392,7 +395,9 @@ module.exports = {
       );
       if (!isPlayerInSelectedTeam)
         throw new Error(
-          `The player "${args.playerId}" is not part of team "${args.teamKey}", therefore it cannot be removed`
+          `The player "${args.playerId}" is not part of team "${
+            args.teamKey
+          }", therefore it cannot be removed`
         );
 
       const isoDate = new Date().toISOString();
@@ -414,7 +419,7 @@ module.exports = {
      * successive match (`nextMatchId`) to define the next match to play for the match
      * winner. In case a match does not have a `nextMatchId`, it's considered the
      * "final" match of the tournament.
-     * 
+     *
      * Args:
      * - tournamentId
      */
@@ -434,7 +439,9 @@ module.exports = {
       );
       if (!areAllTeamsReadyToPlay)
         throw new Error(
-          `A tournament can be started once all teams have enough number of players (team size: ${doc.teamSize})`
+          `A tournament can be started once all teams have enough number of players (team size: ${
+            doc.teamSize
+          })`
         );
 
       const teamsKeys = Object.keys(doc.teams);
@@ -525,7 +532,7 @@ module.exports = {
      * Given a match and the winner team, sets the winner of the current match
      * and put it into the successive match. If there is no `nextMatchId`, the
      * tournament will end, as this was the last match of it.
-     * 
+     *
      * Args:
      * - tournamentId
      * - matchId
@@ -537,14 +544,18 @@ module.exports = {
       // Check that the match had both players set in order to set the winner
       if (!doc.teamLeft || !doc.teamRight)
         throw new Error(
-          `The match "${args.matchId}" does not have two teams yet, therefore is not possible to set a winner`
+          `The match "${
+            args.matchId
+          }" does not have two teams yet, therefore is not possible to set a winner`
         );
 
       const teamWinner =
         doc.teamLeft[args.teamKey] || doc.teamRight[args.teamKey];
       if (!teamWinner)
         throw new Error(
-          `Cannot set a winner as there is no team matching the key "${args.teamKey}"`
+          `Cannot set a winner as there is no team matching the key "${
+            args.teamKey
+          }"`
         );
 
       // Set the winner for the match
@@ -606,13 +617,15 @@ module.exports = {
 
       if (args.teamLeft.length !== args.teamSize)
         throw new Error(
-          `Team left has ${args.teamLeft
-            .length} players, expected ${args.teamSize}`
+          `Team left has ${args.teamLeft.length} players, expected ${
+            args.teamSize
+          }`
         );
       if (args.teamRight.length !== args.teamSize)
         throw new Error(
-          `Team right has ${args.teamRight
-            .length} players, expected ${args.teamSize}`
+          `Team right has ${args.teamRight.length} players, expected ${
+            args.teamSize
+          }`
         );
 
       const playerIds = args.teamLeft.concat(args.teamRight);
@@ -628,7 +641,9 @@ module.exports = {
       );
       if (!organizationDocForGivenPlayers)
         throw new Error(
-          `Some of the given players are not members of the organization "${args.organizationKey}"`
+          `Some of the given players are not members of the organization "${
+            args.organizationKey
+          }"`
         );
 
       const isoDate = new Date().toISOString();

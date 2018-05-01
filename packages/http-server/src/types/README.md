@@ -1,9 +1,11 @@
 # Types
+
 This folder contains the different GraphQL types with their schemas.
 
 The DB documents however are slightly different from the GraphQL types.
 
 ### User
+
 > We don't directly store users, instead we fetch user information from Auth0 Management API
 
 ### Organization
