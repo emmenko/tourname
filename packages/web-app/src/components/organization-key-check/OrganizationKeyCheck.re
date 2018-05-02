@@ -1,21 +1,13 @@
-module OrganizationKeyCheckQuery = {
-  [@bs.module "graphql-tag"] external gql : ReasonApolloTypes.gql = "default";
-  let query =
-    [@bs]
-    gql(
-      {|
+module OrganizationKeyCheckQuery = [%graphql
+  {|
   query CheckOrganizationKey($key: String!) {
     isOrganizationKeyUsed(key: $key)
   }
 |}
-    );
-  type data = {. "isOrganizationKeyUsed": bool};
-  type response = data;
-  type variables = {. "key": string};
-};
+];
 
 module FetchOrganizationKeyCheck =
-  ConfigureApollo.Client.Query(OrganizationKeyCheckQuery);
+  ReasonApollo.CreateQuery(OrganizationKeyCheckQuery);
 
 module KeyCheckHandler = {
   let component = ReasonReact.statelessComponent("KeyCheckHandler");
@@ -31,7 +23,7 @@ module KeyCheckHandler = {
     render: _self => {
       let hintText = if (isOrganizationKeyUsed) {"NO"} else {"OK"};
       ReasonReact.stringToElement(hintText);
-    }
+    },
   };
 };
 
@@ -39,28 +31,32 @@ let component =
   ReasonReact.statelessComponentWithRetainedProps("OrganizationKeyCheck");
 
 let make = (~value, ~onChange, _children) => {
-  let variables = {"key": value};
-  {
-    ...component,
-    retainedProps: value,
-    /* Only re-render if the value changed, to prevent infinite re-renders */
-    shouldUpdate: ({oldSelf}) => oldSelf.retainedProps !== value,
-    render: _self =>
-      <FetchOrganizationKeyCheck variables>
-        (
-          response =>
-            switch response {
-            | Loading => ReasonReact.stringToElement("...")
-            | Failed(error) =>
-              Js.log2("[KeyCheck] Error while fetching", error);
-              ReasonReact.nullElement;
-            | Loaded(result) =>
-              let isOrganizationKeyUsed = result##isOrganizationKeyUsed;
-              <KeyCheckHandler isOrganizationKeyUsed onChange />;
-            }
-        )
-      </FetchOrganizationKeyCheck>
-  };
+  ...component,
+  retainedProps: value,
+  /* Only re-render if the value changed, to prevent infinite re-renders */
+  shouldUpdate: ({oldSelf}) => oldSelf.retainedProps !== value,
+  render: _self => {
+    let organizationKeyCheckQuery =
+      OrganizationKeyCheckQuery.make(~key=value, ());
+    <FetchOrganizationKeyCheck variables=organizationKeyCheckQuery##variables>
+      ...(
+           ({result}) =>
+             switch (result) {
+             | NoData => ReasonReact.stringToElement("NoData")
+             | Loading => ReasonReact.stringToElement("...")
+             | Error(error) =>
+               Js.log2("[KeyCheck] Error while fetching", error);
+               ReasonReact.nullElement;
+             | Data(response) =>
+               let isOrganizationKeyUsed = response##isOrganizationKeyUsed;
+               <KeyCheckHandler
+                 isOrganizationKeyUsed=(Js.to_bool(isOrganizationKeyUsed))
+                 onChange
+               />;
+             }
+         )
+    </FetchOrganizationKeyCheck>;
+  },
 };
 
 let default =

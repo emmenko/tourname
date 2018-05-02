@@ -5,45 +5,31 @@ type member = {
   "email": string,
   "name": string,
   "picture": string,
-  "isAdmin": bool
+  "isAdmin": bool,
 };
 
-module OrganizationQuery = {
-  [@bs.module "graphql-tag"] external gql : ReasonApolloTypes.gql = "default";
-  let query =
-    [@bs]
-    gql(
-      {|
-      query OrganizationQuery($key: String!) {
-        organization(key: $key) {
-          key
-          name
-          members {
-            id
-            createdAt
-            lastModifiedAt
-            email
-            name
-            picture
-            isAdmin
-          }
-        }
+module OrganizationQuery = [%graphql
+  {|
+  query OrganizationQuery($key: String!) {
+    organization(key: $key) {
+      key
+      name
+      members {
+        id
+        createdAt
+        lastModifiedAt
+        email
+        name
+        picture
+        isAdmin
       }
-    |}
-    );
-  type organization = {
-    .
-    "key": string,
-    "name": string,
-    "members": array(member)
-  };
-  type data = {. "organization": organization};
-  type response = data;
-  type variables = {. "key": string};
-};
+    }
+  }
+|}
+];
 
-module FetchOrganization = ConfigureApollo.Client.Query(OrganizationQuery);
+module FetchOrganization = ReasonApollo.CreateQuery(OrganizationQuery);
 
-let component = FetchOrganization.component;
+let component = ReasonReact.statelessComponent("FetchOrganization");
 
 let make = FetchOrganization.make;

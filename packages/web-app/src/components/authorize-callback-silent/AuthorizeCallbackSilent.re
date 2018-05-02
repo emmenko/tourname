@@ -21,9 +21,9 @@ let make = _children => {
       | (_, Some(r)) => postMessage(r, config##url)
       };
     });
-    ReasonReact.NoUpdate;
+    ();
   },
-  render: _self => ReasonReact.nullElement
+  render: _self => ReasonReact.nullElement,
 };
 
 let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

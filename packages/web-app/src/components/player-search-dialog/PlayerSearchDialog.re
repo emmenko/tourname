@@ -13,7 +13,7 @@ module Styles = {
       right("0"),
       display("flex"),
       alignItems("center"),
-      justifyContent("center")
+      justifyContent("center"),
     ]);
   let dialog =
     css([backgroundColor("white"), width("400px"), padding("16px")]);
@@ -24,19 +24,19 @@ module Styles = {
     css([
       marginTop("16px"),
       width("100%"),
-      Selector("> * + *", [margin("4px 0 0")])
+      Selector("> * + *", [margin("4px 0 0")]),
     ]);
   let selectableItem =
     css([
       borderLeft("2px solid #ccc"),
       backgroundColor("white"),
-      Selector(":hover", [backgroundColor("#eee")])
+      Selector(":hover", [backgroundColor("#eee")]),
     ]);
   let activeSelectableItem =
     css([
       borderLeft("2px solid #aaa"),
       backgroundColor("#ccc"),
-      Selector(":hover", [backgroundColor("#ccc")])
+      Selector(":hover", [backgroundColor("#ccc")]),
     ]);
 };
 
@@ -49,11 +49,11 @@ module Modal = {
 
 module PlayerSearchDialog = {
   let getEventValue = event => ReactDOMRe.domElementToObj(
-                                 ReactEventRe.Form.target(event)
+                                 ReactEventRe.Form.target(event),
                                )##value;
   type state = {
     searchText: string,
-    selectedPlayer: option(FetchOrganization.member)
+    selectedPlayer: option(FetchOrganization.member),
   };
   type action =
     | SetSearchText(string)
@@ -64,20 +64,22 @@ module PlayerSearchDialog = {
     ...component,
     initialState: () => {searchText: "", selectedPlayer: None},
     reducer: (action, state) =>
-      switch action {
+      switch (action) {
       | SetSearchText(value) =>
         ReasonReact.Update({...state, searchText: value})
       | SetSelectedPlayer(player) =>
         ReasonReact.Update({...state, selectedPlayer: Some(player)})
       },
-    render: self =>
+    render: self => {
+      let organizationQuery =
+        FetchOrganization.OrganizationQuery.make(~key=organizationKey, ());
       <Modal>
         <div className=Styles.overlay>
           <div className=Styles.dialog>
             <div className=Styles.dialogHeader>
               (
                 ReasonReact.stringToElement(
-                  "Search and select a player to add to the team"
+                  "Search and select a player to add to the team",
                 )
               )
             </div>
@@ -85,82 +87,96 @@ module PlayerSearchDialog = {
               <input
                 value=self.state.searchText
                 onChange=(
-                  event =>
-                    self.reduce(() => SetSearchText(getEventValue(event)), ())
+                  event => self.send(SetSearchText(getEventValue(event)))
                 )
               />
               <div className=Styles.searchResults>
-                <FetchOrganization variables={"key": organizationKey}>
-                  (
-                    response =>
-                      switch response {
-                      | Loading => <LoadingSpinner />
-                      | Loaded(result) =>
-                        /* We need to convert it to a list to perform some basic
-                           operations like `filter` and `exists` because `Array` does
-                           not support it. */
-                        let filteredList =
-                          List.filter(
-                            member =>
-                              List.exists(
-                                id => id != member##id,
-                                registeredPlayers
-                              ),
-                            Array.to_list(result##organization##members)
-                          );
-                        if (List.length(filteredList) == 0) {
-                          ReasonReact.stringToElement(
-                            "No more members available"
-                          );
-                        } else {
-                          let availableMembers =
-                            List.filter(
-                              member =>
-                                self.state.searchText == ""
-                                || Js.String.includes(
-                                     String.lowercase(self.state.searchText),
-                                     String.lowercase(member##name)
-                                   )
-                                || Js.String.includes(
-                                     String.lowercase(self.state.searchText),
-                                     String.lowercase(member##email)
+                <FetchOrganization variables=organizationQuery##variables>
+                  ...(
+                       ({result}) =>
+                         switch (result) {
+                         | NoData => ReasonReact.stringToElement("No data...")
+                         | Loading => <LoadingSpinner />
+                         | Data(response) =>
+                           let filteredList =
+                             switch (response##organization) {
+                             | Some(org) =>
+                               List.filter(
+                                 member =>
+                                   List.exists(
+                                     id => id != member##id,
+                                     registeredPlayers,
                                    ),
-                              filteredList
-                            );
-                          ReasonReact.arrayToElement(
-                            Array.map(
-                              member =>
-                                <div
-                                  className=(
-                                    switch self.state.selectedPlayer {
-                                    | Some(player) =>
-                                      if (player##id == member##id) {
-                                        Styles.activeSelectableItem;
-                                      } else {
-                                        Styles.selectableItem;
-                                      }
-                                    | None => Styles.selectableItem
-                                    }
-                                  )
-                                  key=member##id
-                                  onClick=(
-                                    _event =>
-                                      self.reduce(
-                                        () => SetSelectedPlayer(member),
-                                        ()
+                                 Array.to_list(org##members),
+                               )
+                             | None => []
+                             };
+                           /* We need to convert it to a list to perform some basic
+                              operations like `filter` and `exists` because `Array` does
+                              not support it. */
+                           /* let filteredList =
+                              List.filter(
+                                member =>
+                                  List.exists(
+                                    id => id != member##id,
+                                    registeredPlayers,
+                                  ),
+                                members,
+                              ); */
+                           if (List.length(filteredList) == 0) {
+                             ReasonReact.stringToElement(
+                               "No more members available",
+                             );
+                           } else {
+                             let availableMembers =
+                               List.filter(
+                                 member =>
+                                   self.state.searchText == ""
+                                   || Js.String.includes(
+                                        String.lowercase(
+                                          self.state.searchText,
+                                        ),
+                                        String.lowercase(member##name),
                                       )
-                                  )>
-                                  <PlayerSlot player=member />
-                                </div>,
-                              Array.of_list(availableMembers)
-                            )
-                          );
-                        };
-                      | Failed(error) =>
-                        Js.log(error);
-                        ReasonReact.nullElement;
-                      }
-                  )
+                                   || Js.String.includes(
+                                        String.lowercase(
+                                          self.state.searchText,
+                                        ),
+                                        String.lowercase(member##email),
+                                      ),
+                                 filteredList,
+                               );
+                             ReasonReact.arrayToElement(
+                               Array.map(
+                                 member =>
+                                   <div
+                                     className=(
+                                       switch (self.state.selectedPlayer) {
+                                       | Some(player) =>
+                                         if (player##id == member##id) {
+                                           Styles.activeSelectableItem;
+                                         } else {
+                                           Styles.selectableItem;
+                                         }
+                                       | None => Styles.selectableItem
+                                       }
+                                     )
+                                     key=member##id
+                                     onClick=(
+                                       _event =>
+                                         self.send(SetSelectedPlayer(member))
+                                     )>
+                                     <PlayerSlot player=member />
+                                   </div>,
+                                 Array.of_list(availableMembers),
+                               ),
+                             );
+                           };
+                         | Error(error) =>
+                           Js.log(error);
+                           ReasonReact.nullElement;
+                         }
+                     )
                 </FetchOrganization>
               </div>
             </div>
@@ -169,10 +185,10 @@ module PlayerSearchDialog = {
                 (ReasonReact.stringToElement("Cancel"))
               </button>
               (
-                switch self.state.selectedPlayer {
+                switch (self.state.selectedPlayer) {
                 | Some(player) =>
                   <button
-                    disabled=Js.false_
+                    disabled=false
                     onClick=(
                       event => {
                         onSelect(player);
@@ -182,7 +198,7 @@ module PlayerSearchDialog = {
                     (ReasonReact.stringToElement("Select"))
                   </button>
                 | None =>
-                  <button disabled=Js.true_>
+                  <button disabled=true>
                     (ReasonReact.stringToElement("Select"))
                   </button>
                 }
@@ -190,7 +206,8 @@ module PlayerSearchDialog = {
             </div>
           </div>
         </div>
-      </Modal>
+      </Modal>;
+    },
   };
 };
 
@@ -202,7 +219,7 @@ let make =
       ~onSelect,
       ~onClose,
       ~fallbackOrganizationKey,
-      _children
+      _children,
     ) => {
   ...component,
   render: _self =>
@@ -223,7 +240,7 @@ let make =
             )
           />
       )
-    />
+    />,
 };
 
 let default =
@@ -233,6 +250,6 @@ let default =
       ~onSelect=jsProps##onSelect,
       ~onClose=jsProps##onClose,
       ~fallbackOrganizationKey=jsProps##fallbackOrganizationKey,
-      [||]
+      [||],
     )
   );

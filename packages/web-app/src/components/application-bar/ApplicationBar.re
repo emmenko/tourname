@@ -10,14 +10,14 @@ module Styles = {
       justifyContent("space-between"),
       borderBottom("1px solid #ccc"),
       padding("8px"),
-      height("36px")
+      height("36px"),
     ]);
   let placeholder =
     css([
       backgroundColor("#eaeaea"),
       borderRadius("36px"),
       height("36px"),
-      width("36px")
+      width("36px"),
     ]);
   let button =
     css([
@@ -28,14 +28,14 @@ module Styles = {
       color("#0074d9"),
       border("2px solid #0074d9"),
       cursor("pointer"),
-      Selector(":hover", [backgroundColor("#0074d9"), color("white")])
+      Selector(":hover", [backgroundColor("#0074d9"), color("white")]),
     ]);
   let menusContainer =
     css([
       display("inline-flex"),
       alignItems("center"),
       justifyContent("center"),
-      Selector("> * + *", [margin("0 0 0 16px")])
+      Selector("> * + *", [margin("0 0 0 16px")]),
     ]);
 };
 
@@ -51,21 +51,22 @@ let make = (~isUserAuthenticated, _children) => {
         (
           if (isUserAuthenticated) {
             <FetchUser>
-              (
-                response =>
-                  switch response {
-                  | Loading => <div className=Styles.placeholder />
-                  | Loaded(result) =>
-                    <ApplicationBarUserMenu
-                      fullName=result##me##name
-                      email=result##me##email
-                      pictureUrl=result##me##picture
-                    />
-                  | Failed(error) =>
-                    Js.log2("[KeyCheck] Error while fetching", error);
-                    ReasonReact.nullElement;
-                  }
-              )
+              ...(
+                   ({result}) =>
+                     switch (result) {
+                     | NoData => ReasonReact.stringToElement("No data...")
+                     | Loading => <div className=Styles.placeholder />
+                     | Data(response) =>
+                       <ApplicationBarUserMenu
+                         fullName=response##me##name
+                         email=response##me##email
+                         pictureUrl=response##me##picture
+                       />
+                     | Error(error) =>
+                       Js.log2("[KeyCheck] Error while fetching", error);
+                       ReasonReact.nullElement;
+                     }
+                 )
             </FetchUser>;
           } else {
             <a
@@ -79,7 +80,7 @@ let make = (~isUserAuthenticated, _children) => {
           }
         )
       </div>
-    </div>
+    </div>,
 };
 
 let default =

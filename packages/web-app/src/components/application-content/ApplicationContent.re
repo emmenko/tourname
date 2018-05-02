@@ -11,7 +11,7 @@ module NotFound = {
   let make = _children => {
     ...component,
     render: _self =>
-      <div> (ReasonReact.stringToElement("404 Not Found")) </div>
+      <div> (ReasonReact.stringToElement("404 Not Found")) </div>,
   };
 };
 
@@ -22,7 +22,7 @@ module RouterMatch =
   SpecifyRouterMatch(
     {
       type params = {. "organizationKey": string};
-    }
+    },
   );
 
 let component = ReasonReact.statelessComponent("ApplicationContent");
@@ -31,50 +31,54 @@ let make = (~match: RouterMatch.match, _children) => {
   let organizationKey = match##params##organizationKey;
   {
     ...component,
-    render: _self =>
-      <FetchOrganization variables={"key": organizationKey}>
-        (
-          response =>
-            switch response {
-            | Loading => ReasonReact.stringToElement("Loading...")
-            | Failed(_error) => <NotFound />
-            | Loaded(_result) =>
-              <div>
-                <Route
-                  path="/:organizationKey"
-                  render=(
-                    _renderFunc => {
-                      setItem("organizationKey", organizationKey);
-                      ReasonReact.nullElement;
-                    }
-                  )
-                />
-                <Switch>
-                  <Route
-                    exact=true
-                    path="/:organizationKey"
-                    component=Dashboard.default
-                  />
-                  <Route
-                    exact=true
-                    path="/:organizationKey/tournaments"
-                    component=tournamentsList
-                  />
-                  <Route
-                    exact=true
-                    path="/:organizationKey/tournament/:tournamentId"
-                    component=tournamentDetail
-                  />
-                  <Route
-                    exact=true
-                    path="/:organizationKey/match/:matchId"
-                    component=MatchDetail.default
-                  />
-                </Switch>
-              </div>
-            }
-        )
-      </FetchOrganization>
+    render: _self => {
+      let organizationQuery =
+        FetchOrganization(OrganizationQuery.make(~key=organizationKey, ()));
+      <FetchOrganization variables=organizationQuery##variables>
+        ...(
+             ({result}) =>
+               switch (result) {
+               | NoData => ReasonReact.stringToElement("No data...")
+               | Loading => ReasonReact.stringToElement("Loading...")
+               | Error(_error) => <NotFound />
+               | Data(_response) =>
+                 <div>
+                   <Route
+                     path="/:organizationKey"
+                     render=(
+                       _renderFunc => {
+                         setItem("organizationKey", organizationKey);
+                         ReasonReact.nullElement;
+                       }
+                     )
+                   />
+                   <Switch>
+                     <Route
+                       exact=true
+                       path="/:organizationKey"
+                       component=Dashboard.default
+                     />
+                     <Route
+                       exact=true
+                       path="/:organizationKey/tournaments"
+                       component=tournamentsList
+                     />
+                     <Route
+                       exact=true
+                       path="/:organizationKey/tournament/:tournamentId"
+                       component=tournamentDetail
+                     />
+                     <Route
+                       exact=true
+                       path="/:organizationKey/match/:matchId"
+                       component=MatchDetail.default
+                     />
+                   </Switch>
+                 </div>
+               }
+           )
+      </FetchOrganization>;
+    },
   };
 };
 

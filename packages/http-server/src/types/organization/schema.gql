@@ -18,7 +18,7 @@ type Organization {
   lastModifiedAt: String!
   key: String! # unique identifier
   name: String!
-  members: [MemberInfo]!
+  members: [MemberInfo!]!
   tournaments(
     status: [TournamentStatus!] # `or` condition
     sort: SortBy!
