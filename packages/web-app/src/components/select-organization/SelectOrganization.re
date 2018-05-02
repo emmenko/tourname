@@ -9,11 +9,11 @@ module Styles = {
 type organization = {
   .
   "key": string,
-  "name": string
+  "name": string,
 };
 
 let getEventValue = event => ReactDOMRe.domElementToObj(
-                               ReactEventRe.Form.target(event)
+                               ReactEventRe.Form.target(event),
                              )##value;
 
 module SelectOrganization = {
@@ -23,7 +23,7 @@ module SelectOrganization = {
       (
         ~history: History.History.t,
         ~availableOrganizations: array(organization),
-        _children
+        _children,
       ) => {
     ...component,
     retainedProps: availableOrganizations,
@@ -35,7 +35,9 @@ module SelectOrganization = {
     render: _self =>
       <div className=Styles.view>
         <h2>
-          (ReasonReact.stringToElement("Select an organization from the list"))
+          (
+            ReasonReact.stringToElement("Select an organization from the list")
+          )
         </h2>
         <select
           onChange=(
@@ -52,17 +54,17 @@ module SelectOrganization = {
                     <option key=org##key value=org##key>
                       (ReasonReact.stringToElement(org##name))
                     </option>,
-                  availableOrganizations
-                )
+                  availableOrganizations,
+                ),
               );
             } else {
-              <option disabled=Js.true_>
+              <option disabled=true>
                 (ReasonReact.stringToElement("Loading..."))
               </option>;
             }
           )
         </select>
-      </div>
+      </div>,
   };
 };
 
@@ -75,27 +77,28 @@ let make = _children => {
       render=(
         renderProps =>
           <FetchUser>
-            (
-              response =>
-                switch response {
-                | Loading =>
-                  <SelectOrganization
-                    history=renderProps##history
-                    availableOrganizations=[||]
-                  />
-                | Failed(error) =>
-                  Js.log(error);
-                  ReasonReact.nullElement;
-                | Loaded(result) =>
-                  <SelectOrganization
-                    history=renderProps##history
-                    availableOrganizations=result##me##availableOrganizations
-                  />
-                }
-            )
+            ...(
+                 ({result}) =>
+                   switch (result) {
+                   | NoData => ReasonReact.stringToElement("No data...")
+                   | Loading =>
+                     <SelectOrganization
+                       history=renderProps##history
+                       availableOrganizations=[||]
+                     />
+                   | Error(error) =>
+                     Js.log(error);
+                     ReasonReact.nullElement;
+                   | Data(response) =>
+                     <SelectOrganization
+                       history=renderProps##history
+                       availableOrganizations=response##me##availableOrganizations
+                     />
+                   }
+               )
           </FetchUser>
       )
-    />
+    />,
 };
 
 let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

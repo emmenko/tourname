@@ -17,15 +17,11 @@ type tournamentShape = {
   "name": string,
   "status": string,
   "size": int,
-  "teamSize": int
+  "teamSize": int,
 };
 
-module ActiveTournamentsQuery = {
-  [@bs.module "graphql-tag"] external gql : ReasonApolloTypes.gql = "default";
-  let query =
-    [@bs]
-    gql(
-      {|
+module ActiveTournamentsQuery = [%graphql
+  {|
   query ActiveTournaments($key: String!, $page: Int!, $perPage: Int!) {
     organization(key: $key) {
       key
@@ -45,32 +41,13 @@ module ActiveTournamentsQuery = {
     }
   }
 |}
-    );
-  type tournament = tournamentShape;
-  type organization = {
-    .
-    "key": string,
-    "tournaments": array(tournament)
-  };
-  type data = {. "organization": organization};
-  type response = data;
-  type variables = {
-    .
-    "key": string,
-    "page": int,
-    "perPage": int
-  };
-};
+];
 
 module FetchActiveTournaments =
-  ConfigureApollo.Client.Query(ActiveTournamentsQuery);
+  ReasonApollo.CreateQuery(ActiveTournamentsQuery);
 
-module FinishedTournamentsQuery = {
-  [@bs.module "graphql-tag"] external gql : ReasonApolloTypes.gql = "default";
-  let query =
-    [@bs]
-    gql(
-      {|
+module FinishedTournamentsQuery = [%graphql
+  {|
   query FinishedTournaments($key: String!, $page: Int!, $perPage: Int!) {
     organization(key: $key) {
       key
@@ -90,31 +67,16 @@ module FinishedTournamentsQuery = {
     }
   }
 |}
-    );
-  type tournament = tournamentShape;
-  type organization = {
-    .
-    "key": string,
-    "tournaments": array(tournament)
-  };
-  type data = {. "organization": organization};
-  type response = data;
-  type variables = {
-    .
-    "key": string,
-    "page": int,
-    "perPage": int
-  };
-};
+];
 
 module FetchFinishedTournaments =
-  ConfigureApollo.Client.Query(FinishedTournamentsQuery);
+  ReasonApollo.CreateQuery(FinishedTournamentsQuery);
 
 module RouterMatch =
   SpecifyRouterMatch(
     {
       type params = {. "organizationKey": string};
-    }
+    },
   );
 
 let component = ReasonReact.statelessComponent("Dashboard");
@@ -122,7 +84,11 @@ let component = ReasonReact.statelessComponent("Dashboard");
 let make = (~match: RouterMatch.match, _children) => {
   let organizationKey = match##params##organizationKey;
   let renderTournamentsList =
-      (~tournaments: array(tournamentShape), ~organizationKey, ~labelEmptyList) =>
+      (
+        ~tournaments: array(tournamentShape),
+        ~organizationKey,
+        ~labelEmptyList,
+      ) =>
     if (Array.length(tournaments) == 0) {
       <div> (ReasonReact.stringToElement(labelEmptyList)) </div>;
     } else {
@@ -145,75 +111,92 @@ let make = (~match: RouterMatch.match, _children) => {
                   </li>
                 </Link>;
               },
-              tournaments
-            )
+              tournaments,
+            ),
           )
         )
       </ul>;
     };
   {
     ...component,
-    render: _self =>
+    render: _self => {
+      let activeTournamentsQuery =
+        ActiveTournamentsQuery.make(
+          ~key=organizationKey,
+          ~page=1,
+          ~perPage=20,
+          (),
+        );
+      let finishedTournamentsQuery =
+        FinishedTournamentsQuery.make(
+          ~key=organizationKey,
+          ~page=1,
+          ~perPage=20,
+          (),
+        );
       <div className=Styles.view>
         <div className=Styles.section>
           <FetchUser>
-            (
-              response =>
-                switch response {
-                | Loading => <Welcome />
-                | Failed(error) =>
-                  Js.log(error);
-                  ReasonReact.nullElement;
-                | Loaded(result) => <Welcome name=result##me##name />
-                }
-            )
+            ...(
+                 ({result}) =>
+                   switch (result) {
+                   | NoData => ReasonReact.stringToElement("No data...")
+                   | Loading => <Welcome />
+                   | Error(error) =>
+                     Js.log(error);
+                     ReasonReact.nullElement;
+                   | Data(response) => <Welcome name=response##me##name />
+                   }
+               )
           </FetchUser>
         </div>
         <div className=Styles.section>
           <div className=Styles.sectionBlock>
             <h3> (ReasonReact.stringToElement("Active tournaments")) </h3>
             <FetchActiveTournaments
-              variables={"key": organizationKey, "page": 1, "perPage": 20}>
-              (
-                response =>
-                  switch response {
-                  | Loading => <LoadingSpinner />
-                  | Failed(error) =>
-                    Js.log(error);
-                    ReasonReact.nullElement;
-                  | Loaded(result) =>
-                    let tournaments = result##organization##tournaments;
-                    renderTournamentsList(
-                      ~labelEmptyList=
-                        "There are no active tournaments at the moment",
-                      ~tournaments,
-                      ~organizationKey
-                    );
-                  }
-              )
+              variables=activeTournamentsQuery##variables>
+              ...(
+                   ({result}) =>
+                     switch (result) {
+                     | NoData => ReasonReact.stringToElement("No data...")
+                     | Loading => <LoadingSpinner />
+                     | Error(error) =>
+                       Js.log(error);
+                       ReasonReact.nullElement;
+                     | Data(response) =>
+                       let tournaments = response##organization##tournaments;
+                       renderTournamentsList(
+                         ~labelEmptyList=
+                           "There are no active tournaments at the moment",
+                         ~tournaments,
+                         ~organizationKey,
+                       );
+                     }
+                 )
             </FetchActiveTournaments>
           </div>
           <div className=Styles.sectionBlock>
             <h3> (ReasonReact.stringToElement("Finished tournaments")) </h3>
             <FetchFinishedTournaments
-              variables={"key": organizationKey, "page": 1, "perPage": 20}>
-              (
-                response =>
-                  switch response {
-                  | Loading => <LoadingSpinner />
-                  | Failed(error) =>
-                    Js.log(error);
-                    ReasonReact.nullElement;
-                  | Loaded(result) =>
-                    let tournaments = result##organization##tournaments;
-                    renderTournamentsList(
-                      ~labelEmptyList=
-                        "There are no active tournaments at the moment",
-                      ~tournaments,
-                      ~organizationKey
-                    );
-                  }
-              )
+              variables=finishedTournamentsQuery##variables>
+              ...(
+                   ({result}) =>
+                     switch (result) {
+                     | NoData => ReasonReact.stringToElement("No data...")
+                     | Loading => <LoadingSpinner />
+                     | Error(error) =>
+                       Js.log(error);
+                       ReasonReact.nullElement;
+                     | Data(response) =>
+                       let tournaments = response##organization##tournaments;
+                       renderTournamentsList(
+                         ~labelEmptyList=
+                           "There are no active tournaments at the moment",
+                         ~tournaments,
+                         ~organizationKey,
+                       );
+                     }
+                 )
             </FetchFinishedTournaments>
           </div>
         </div>
@@ -222,7 +205,8 @@ let make = (~match: RouterMatch.match, _children) => {
             (ReasonReact.stringToElement("Create new tournament"))
           </Link>
         </div>
-      </div>
+      </div>;
+    },
   };
 };
 

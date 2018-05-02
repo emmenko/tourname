@@ -22,6 +22,7 @@
     "bs-downshift": "0.2.0",
     "downshift": "1.25.0",
     "formik": "0.11.11",
+    "glamor": "2.20.40",
     "graphql": "0.13.2",
     "graphql-tag": "2.9.2",
     "history": "4.7.2",
@@ -40,6 +41,7 @@
     "@glennsl/bs-jest": "^0.4.2",
     "babel-preset-env": "^1.6.1",
     "bs-platform": "^2.2.3",
+    "graphql_ppx": "^0.2.1",
     "parcel-bundler": "^1.7.1"
   }
 }

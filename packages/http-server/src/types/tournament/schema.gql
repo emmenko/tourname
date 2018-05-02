@@ -51,7 +51,7 @@ interface Tournament {
   status: TournamentStatus!
   # At least 1 player
   teamSize: Int!
-  teams: [Team]!
+  teams: [Team!]!
 }
 
 type TournamentInfo {
@@ -76,8 +76,8 @@ type TournamentSmall implements Tournament {
   # At least 1 player
   teamSize: Int!
   # Small: 4 teams
-  teams: [Team]!
-  matchesLeg1: [Match]! # 2 matches
+  teams: [Team!]!
+  matchesLeg1: [Match!]! # 2 matches
   matchesLeg2: Match # 1 match
 }
 
@@ -92,9 +92,9 @@ type TournamentMedium implements Tournament {
   # At least 1 player
   teamSize: Int!
   # Medium: 8 players
-  teams: [Team]!
-  matchesLeg1: [Match]! # 4 matches
-  matchesLeg2: [Match]! # 2 matches
+  teams: [Team!]!
+  matchesLeg1: [Match!]! # 4 matches
+  matchesLeg2: [Match!]! # 2 matches
   matchesLeg3: Match # 1 match
 }
 
@@ -109,10 +109,10 @@ type TournamentLarge implements Tournament {
   # At least 1 player
   teamSize: Int!
   # Large: 16 players
-  teams: [Team]!
-  matchesLeg1: [Match]! # 8 matches
-  matchesLeg2: [Match]! # 4 matches
-  matchesLeg3: [Match]! # 2 matches
+  teams: [Team!]!
+  matchesLeg1: [Match!]! # 8 matches
+  matchesLeg2: [Match!]! # 4 matches
+  matchesLeg3: [Match!]! # 2 matches
   matchesLeg4: Match # 1 match
 }
 
@@ -127,11 +127,11 @@ type TournamentXLarge implements Tournament {
   # At least 1 player
   teamSize: Int!
   # XLarge: 32 players
-  teams: [Team]!
-  matchesLeg1: [Match]! # 16 matches
-  matchesLeg2: [Match]! # 8 matches
-  matchesLeg3: [Match]! # 4 matches
-  matchesLeg4: [Match]! # 2 matches
+  teams: [Team!]!
+  matchesLeg1: [Match!]! # 16 matches
+  matchesLeg2: [Match!]! # 8 matches
+  matchesLeg3: [Match!]! # 4 matches
+  matchesLeg4: [Match!]! # 2 matches
   matchesLeg5: Match # 1 match
 }
 

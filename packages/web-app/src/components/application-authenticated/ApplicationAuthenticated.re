@@ -16,57 +16,58 @@ let make = _children => {
   render: _self =>
     <div>
       <FetchUser>
-        (
-          response =>
-            switch response {
-            | Loading => ReasonReact.stringToElement("Loading...")
-            | Failed(error) =>
-              Js.log(error);
-              ReasonReact.nullElement;
-            | Loaded(result) =>
-              let shouldForceToCreateAnOrganization =
-                Array.length(result##me##availableOrganizations) == 0;
-              if (shouldForceToCreateAnOrganization) {
-                <Redirect to_="/organizations/new" />;
-              } else {
-                <div>
-                  <ApplicationBar isUserAuthenticated=true />
-                  <Switch>
-                    <Route
-                      exact=true
-                      path="/new"
-                      component=selectNewTournament
-                    />
-                    <Route
-                      exact=true
-                      path="/organizations/new"
-                      component=organizationCreate
-                    />
-                    <Route
-                      exact=true
-                      path="/"
-                      render=(
-                        _renderFunc => {
-                          let cachedOrganizationKey =
-                            getItem("organizationKey");
-                          switch cachedOrganizationKey {
-                          | Some(orgKey) => <Redirect to_={j|/$orgKey|j} />
-                          | None => <SelectOrganization />
-                          };
-                        }
-                      )
-                    />
-                    <Route
-                      path="/:organizationKey"
-                      component=ApplicationContent.default
-                    />
-                  </Switch>
-                </div>;
-              };
-            }
-        )
+        ...(
+             ({result}) =>
+               switch (result) {
+               | NoData => ReasonReact.stringToElement("No data")
+               | Loading => ReasonReact.stringToElement("Loading...")
+               | Error(error) =>
+                 Js.log(error);
+                 ReasonReact.nullElement;
+               | Data(response) =>
+                 let shouldForceToCreateAnOrganization =
+                   Array.length(response##me##availableOrganizations) == 0;
+                 if (shouldForceToCreateAnOrganization) {
+                   <Redirect to_="/organizations/new" />;
+                 } else {
+                   <div>
+                     <ApplicationBar isUserAuthenticated=true />
+                     <Switch>
+                       <Route
+                         exact=true
+                         path="/new"
+                         component=selectNewTournament
+                       />
+                       <Route
+                         exact=true
+                         path="/organizations/new"
+                         component=organizationCreate
+                       />
+                       <Route
+                         exact=true
+                         path="/"
+                         render=(
+                           _renderFunc => {
+                             let cachedOrganizationKey =
+                               getItem("organizationKey");
+                             switch (cachedOrganizationKey) {
+                             | Some(orgKey) => <Redirect to_={j|/$orgKey|j} />
+                             | None => <SelectOrganization />
+                             };
+                           }
+                         )
+                       />
+                       <Route
+                         path="/:organizationKey"
+                         component=ApplicationContent.default
+                       />
+                     </Switch>
+                   </div>;
+                 };
+               }
+           )
       </FetchUser>
-    </div>
+    </div>,
 };
 
 let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

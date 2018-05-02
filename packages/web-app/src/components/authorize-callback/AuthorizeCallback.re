@@ -15,7 +15,7 @@ let make = (~history: history, _children) => {
   ...component,
   initialState: () => {errorType: None},
   reducer: (action, _state) =>
-    switch action {
+    switch (action) {
     | AuthError(errorType_) =>
       ReasonReact.Update({errorType: Some(errorType_)})
     },
@@ -25,7 +25,7 @@ let make = (~history: history, _children) => {
       let authResult = Js.Nullable.to_opt(authResult_);
       switch (error, authResult) {
       | (None, None) =>
-        self.reduce(() => AuthError(NoHashParam), ());
+        self.send(AuthError(NoHashParam));
         ();
       | (_, Some(r)) =>
         /* NOTE: we assume that following fields are defined:
@@ -38,21 +38,21 @@ let make = (~history: history, _children) => {
         ();
       | (Some(e), _) =>
         Js.log(e);
-        self.reduce(() => AuthError(General(e##errorDescription)), ());
+        self.send(AuthError(General(e##errorDescription)));
         ();
       };
     });
-    ReasonReact.NoUpdate;
+    ();
   },
   render: self =>
     <div>
       (
-        switch self.state.errorType {
+        switch (self.state.errorType) {
         | Some(type_) =>
-          switch type_ {
+          switch (type_) {
           | NoHashParam =>
             ReasonReact.stringToElement(
-              "This route has been called without any hash parameter. Please ensure that this route is called by Auth0 for handling authentication requests."
+              "This route has been called without any hash parameter. Please ensure that this route is called by Auth0 for handling authentication requests.",
             )
           | General(description) =>
             <div>
@@ -61,7 +61,8 @@ let make = (~history: history, _children) => {
                 <span> (ReasonReact.stringToElement("Please ")) </span>
                 <a
                   onClick=(
-                    _event => ReasonAuth.authorize(Js_null_undefined.undefined)
+                    _event =>
+                      ReasonAuth.authorize(Js_null_undefined.undefined)
                   )>
                   (ReasonReact.stringToElement("Log in"))
                 </a>
@@ -72,7 +73,7 @@ let make = (~history: history, _children) => {
         | None => ReasonReact.stringToElement("Loading")
         }
       )
-    </div>
+    </div>,
 };
 
 let default =

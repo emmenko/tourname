@@ -1,11 +1,7 @@
 open ReasonReactRouterDom;
 
-module MatchDetailQuery = {
-  [@bs.module "graphql-tag"] external gql : ReasonApolloTypes.gql = "default";
-  let query =
-    [@bs]
-    gql(
-      {|
+module MatchDetailQuery = [%graphql
+  {|
   query MatchDetail($id: String!) {
     match(id: $id) {
       id
@@ -15,57 +11,38 @@ module MatchDetailQuery = {
       organizationKey
       tournamentId
       teamLeft {
-        ...TeamInfo
+        key
+        players {
+          id
+          email
+          name
+          picture
+        }
       }
       teamRight {
-        ...TeamInfo
+        key
+        players {
+          id
+          email
+          name
+          picture
+        }
       }
       winner {
-        ...TeamInfo
+        key
+        players {
+          id
+          email
+          name
+          picture
+        }
       }
-    }
-  }
-  fragment TeamInfo on Team {
-    key
-    players {
-      id
-      email
-      name
-      picture
     }
   }
 |}
-    );
-  type players = {
-    .
-    "id": string,
-    "email": string,
-    "name": string,
-    "picture": string
-  };
-  type team = {
-    .
-    "key": string,
-    "players": array(players)
-  };
-  type matchShape = {
-    .
-    "id": string,
-    "createdAt": string,
-    "lastModifiedAt": string,
-    "discipline": string,
-    "organizationKey": string,
-    "tournamentId": string,
-    "teamLeft": team,
-    "teamRight": team,
-    "winner": team
-  };
-  type data = {. "match": matchShape};
-  type response = data;
-  type variables = {. "id": string};
-};
+];
 
-module FetchMatchDetail = ConfigureApollo.Client.Query(MatchDetailQuery);
+module FetchMatchDetail = ReasonApollo.CreateQuery(MatchDetailQuery);
 
 module RouterMatch =
   SpecifyRouterMatch(
@@ -73,9 +50,9 @@ module RouterMatch =
       type params = {
         .
         "organizationKey": string,
-        "matchId": string
+        "matchId": string,
       };
-    }
+    },
   );
 
 let component = ReasonReact.statelessComponent("Dashboard");
@@ -85,26 +62,29 @@ let make = (~match: RouterMatch.match, _children) => {
   let matchId = match##params##matchId;
   {
     ...component,
-    render: _self =>
-      <FetchMatchDetail variables={"id": matchId}>
-        (
-          response =>
-            switch response {
-            | Loading => <LoadingSpinner />
-            | Failed(error) =>
-              Js.log(error);
-              ReasonReact.nullElement;
-            | Loaded(_result) =>
-              <span>
-                (
-                  ReasonReact.stringToElement(
-                    {j|Detail page of match $matchId|j}
-                  )
-                )
-              </span>
-            }
-        )
-      </FetchMatchDetail>
+    render: _self => {
+      let matchDetailQuery = MatchDetailQuery.make(~id=matchId, ());
+      <FetchMatchDetail variables=matchDetailQuery##variables>
+        ...(
+             ({result}) =>
+               switch (result) {
+               | NoData => ReasonReact.stringToElement("No data...")
+               | Loading => <LoadingSpinner />
+               | Error(error) =>
+                 Js.log(error);
+                 ReasonReact.nullElement;
+               | Data(_response) =>
+                 <span>
+                   (
+                     ReasonReact.stringToElement(
+                       {j|Detail page of match $matchId|j},
+                     )
+                   )
+                 </span>
+               }
+           )
+      </FetchMatchDetail>;
+    },
   };
 };
 

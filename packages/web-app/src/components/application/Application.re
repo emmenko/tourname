@@ -1,16 +1,5 @@
 open ReasonReactRouterDom;
 
-module ApolloProvider = {
-  [@bs.module "react-apollo"]
-  external reactClass : ReasonReact.reactClass = "ApolloProvider";
-  let make = (~client: ApolloClient.generatedApolloClient, children) =>
-    ReasonReact.wrapJsForReason(
-      ~reactClass,
-      ~props={"client": client},
-      children
-    );
-};
-
 let component = ReasonReact.statelessComponent("Application");
 
 let make = (~location: History.History.Location.t, _children) => {
@@ -21,22 +10,22 @@ let make = (~location: History.History.Location.t, _children) => {
     } else if (ReasonAuth.hasLoginCredentials()) {
       ReasonAuth.authorize(
         Js_null_undefined.return(
-          ReasonAuth.Auth.makeAuthorizeOptions(~prompt=`none, ())
-        )
+          ReasonAuth.Auth.makeAuthorizeOptions(~prompt=`none, ()),
+        ),
       );
     };
-    ReasonReact.NoUpdate;
+    ();
   },
   render: _self =>
     if (ReasonAuth.getIsAccessTokenValid()) {
-      <ApolloProvider client=ConfigureApollo.Client.apolloClient>
+      <ReasonApollo.Provider client=Client.instance>
         <ApplicationAuthenticated />
-      </ApolloProvider>;
+      </ReasonApollo.Provider>;
     } else if (History.History.Location.pathname(location) != "/") {
       <Redirect to_="/" />;
     } else {
       <ApplicationLandingPage />;
-    }
+    },
 };
 
 let default =
