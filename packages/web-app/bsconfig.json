@@ -7,16 +7,19 @@
     }
   ],
   "bs-dependencies": [
-    "reason-apollo",
-    "reason-react",
+    "@glennsl/bs-jest",
     "bs-downshift",
-    "bs-glamor",
-    "bs-jest"
+    "reason-apollo",
+    "reason-react"
   ],
   "reason": {
     "react-jsx": 2
   },
   "bsc-flags": ["-bs-super-errors"],
+  "warnings": {
+    "number": "-3-103",
+    "error": "+101"
+  },
   "refmt": 3,
   "package-specs": [
     {
