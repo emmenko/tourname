@@ -588,8 +588,9 @@ module.exports = {
         );
         // Clear the cache for the updated match
         context.loaders.matches.clear(args.nextMatchId);
-      } else
-        // End the tournament
+      }
+      // End the tournament
+      else
         await context.db.tournaments.updateOne(
           { _id: args.tournamentId },
           {
