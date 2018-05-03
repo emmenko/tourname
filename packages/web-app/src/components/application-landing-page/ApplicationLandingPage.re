@@ -4,9 +4,9 @@ let make = _children => {
   ...component,
   render: _self =>
     <div>
-      <ApplicationBar isUserAuthenticated=false />
+      <ApplicationBar.Unauthenticated />
       (ReasonReact.stringToElement("Landing page"))
-    </div>
+    </div>,
 };
 
 let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));
