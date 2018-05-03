@@ -12,13 +12,6 @@ module Styles = {
       padding("8px"),
       height("36px"),
     ]);
-  let placeholder =
-    css([
-      backgroundColor("#eaeaea"),
-      borderRadius("36px"),
-      height("36px"),
-      width("36px"),
-    ]);
   let button =
     css([
       borderRadius("3px"),
@@ -39,51 +32,60 @@ module Styles = {
     ]);
 };
 
-let component = ReasonReact.statelessComponent("ApplicationBar");
-
-let make = (~isUserAuthenticated, _children) => {
-  ...component,
-  render: _self =>
-    <div className=Styles.container>
-      <Link to_="/"> (ReasonReact.stringToElement("Logo")) </Link>
-      <div className=Styles.menusContainer>
-        <ApplicationBarActionsMenu />
-        (
-          if (isUserAuthenticated) {
-            <FetchUser>
-              ...(
-                   ({result}) =>
-                     switch (result) {
-                     | NoData => ReasonReact.stringToElement("No data...")
-                     | Loading => <div className=Styles.placeholder />
-                     | Data(response) =>
-                       <ApplicationBarUserMenu
-                         fullName=response##me##name
-                         email=response##me##email
-                         pictureUrl=response##me##picture
-                       />
-                     | Error(error) =>
-                       Js.log2("[KeyCheck] Error while fetching", error);
-                       ReasonReact.nullElement;
-                     }
-                 )
-            </FetchUser>;
-          } else {
-            <a
-              onClick=(
-                _event => ReasonAuth.authorize(Js_null_undefined.undefined)
-              )>
-              <div className=Styles.button>
-                (ReasonReact.stringToElement("Login"))
-              </div>
-            </a>;
-          }
-        )
-      </div>
-    </div>,
+module Fragment = {
+  [@bs.module "react"]
+  external reactClass : ReasonReact.reactClass = "Fragment";
+  let make = children =>
+    ReasonReact.wrapJsForReason(~reactClass, ~props=Js.Obj.empty(), children);
 };
 
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(~isUserAuthenticated=jsProps##isUserAuthenticated, [||])
-  );
+module ApplicationBarContainer = {
+  let component = ReasonReact.statelessComponent("ApplicationBarContainer");
+  let make = children => {
+    ...component,
+    render: _self =>
+      <div className=Styles.container>
+        <Link to_="/"> (ReasonReact.stringToElement("Logo")) </Link>
+        (
+          /* See https://reasonml.github.io/reason-react/docs/en/children.html#pitfall */
+          ReasonReact.createDomElement(
+            "div",
+            ~props={"className": Styles.menusContainer},
+            children,
+          )
+        )
+      </div>,
+  };
+};
+
+module Authenticated = {
+  let component =
+    ReasonReact.statelessComponent("ApplicationBarAuthenticated");
+  let make = _children => {
+    ...component,
+    render: _self =>
+      <ApplicationBarContainer>
+        <ApplicationBarActionsMenu />
+        <ApplicationBarUserMenu />
+      </ApplicationBarContainer>,
+  };
+};
+
+module Unauthenticated = {
+  let component =
+    ReasonReact.statelessComponent("ApplicationBarUnauthenticated");
+  let make = _children => {
+    ...component,
+    render: _self =>
+      <ApplicationBarContainer>
+        <a
+          onClick=(
+            _event => ReasonAuth.authorize(Js_null_undefined.undefined)
+          )>
+          <div className=Styles.button>
+            (ReasonReact.stringToElement("Login"))
+          </div>
+        </a>
+      </ApplicationBarContainer>,
+  };
+};
