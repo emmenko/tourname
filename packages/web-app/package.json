@@ -4,12 +4,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "react-scripts build",
-    "start": "npm-run-all --parallel start:bsb start:app",
-    "start:app": "react-scripts start",
-    "start:bsb": "bsb -make-world -w",
+    "build": "parcel build src/index.re",
+    "start": "parcel public/index.html --port 4000",
     "clean": "bsb -clean-world",
-    "prepare": "bsb -make-world"
+    "prepare": "bsb -make-world",
+    "get-schema": "send-introspection-query http://localhost:3999/graphql"
   },
   "dependencies": {
     "apollo-cache-inmemory": "1.1.12",
@@ -39,8 +38,10 @@
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "bs-platform": "^3.0.0",
+    "bsb-js": "^1.0.2",
     "graphql_ppx": "^0.2.1",
     "parcel-bundler": "^1.7.1"
   }
