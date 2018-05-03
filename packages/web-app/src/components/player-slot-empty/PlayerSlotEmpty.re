@@ -7,7 +7,7 @@ module Styles = {
       height("36px"),
       width("36px"),
       border("1px dashed #ccc"),
-      borderRadius("36px")
+      borderRadius("36px"),
     ]);
 };
 
@@ -26,11 +26,12 @@ type action =
 
 let component = ReasonReact.reducerComponent("PlayerSlotEmpty");
 
-let make = (~registeredPlayers, ~onSelect, ~fallbackOrganizationKey, _children) => {
+let make =
+    (~registeredPlayers, ~onSelect, ~fallbackOrganizationKey, _children) => {
   ...component,
   initialState: () => {showPlayerSearchDialog: false},
   reducer: (action, _state) =>
-    switch action {
+    switch (action) {
     | ShowPlayerSearchDialog =>
       ReasonReact.Update({showPlayerSearchDialog: true})
     | HidePlayerSearchDialog =>
@@ -41,8 +42,7 @@ let make = (~registeredPlayers, ~onSelect, ~fallbackOrganizationKey, _children) 
       <div className=Styles.slot>
         <div> <div className=Styles.avatarPlaceholder /> </div>
         <div>
-          <button
-            onClick=(_event => self.reduce(() => ShowPlayerSearchDialog, ()))>
+          <button onClick=(_event => self.send(ShowPlayerSearchDialog))>
             (ReasonReact.stringToElement("Add a player to this team"))
           </button>
         </div>
@@ -52,12 +52,12 @@ let make = (~registeredPlayers, ~onSelect, ~fallbackOrganizationKey, _children) 
           <PlayerSearchDialog
             registeredPlayers
             onSelect
-            onClose=(_event => self.reduce(() => HidePlayerSearchDialog, ()))
+            onClose=(_event => self.send(HidePlayerSearchDialog))
             fallbackOrganizationKey
           /> :
           ReasonReact.nullElement
       )
-    </Fragment>
+    </Fragment>,
 };
 
 let default =
@@ -66,6 +66,6 @@ let default =
       ~registeredPlayers=jsProps##registeredPlayers,
       ~onSelect=jsProps##onSelect,
       ~fallbackOrganizationKey=jsProps##fallbackOrganizationKey,
-      [||]
+      [||],
     )
   );

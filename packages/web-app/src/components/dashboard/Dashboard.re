@@ -10,15 +10,12 @@ module Styles = {
   let textDetail = css([fontSize("0.9rem"), color("#aaa")]);
 };
 
-type tournamentShape = {
-  .
-  "id": string,
-  "discipline": string,
-  "name": string,
-  "status": string,
-  "size": int,
-  "teamSize": int,
-};
+/**
+ * Convert polymorphic variant to JS string
+ * https://bucklescript.github.io/docs/en/generate-converters-accessors.html#convert-between-js-string-enum-and-bs-polymorphic-variant
+ */
+[@bs.deriving jsConverter]
+type discipline = [ | `POOL_TABLE | `TABLE_TENNIS];
 
 module ActiveTournamentsQuery = [%graphql
   {|
@@ -84,38 +81,39 @@ let component = ReasonReact.statelessComponent("Dashboard");
 let make = (~match: RouterMatch.match, _children) => {
   let organizationKey = match##params##organizationKey;
   let renderTournamentsList =
-      (
-        ~tournaments: array(tournamentShape),
-        ~organizationKey,
-        ~labelEmptyList,
-      ) =>
-    if (Array.length(tournaments) == 0) {
-      <div> (ReasonReact.stringToElement(labelEmptyList)) </div>;
-    } else {
-      <ul>
-        (
-          ReasonReact.arrayToElement(
-            Array.map(
-              tournament => {
-                let tournamentId = tournament##id;
-                <Link
-                  key=tournament##id
-                  to_={j|/$organizationKey/tournament/$tournamentId|j}>
-                  <li>
-                    <div className=Styles.textPrimary>
-                      (ReasonReact.stringToElement(tournament##name))
-                    </div>
-                    <div className=Styles.textDetail>
-                      (ReasonReact.stringToElement(tournament##discipline))
-                    </div>
-                  </li>
-                </Link>;
-              },
-              tournaments,
-            ),
+      (~tournaments=?, ~organizationKey, ~labelEmptyList, ()) =>
+    switch (tournaments) {
+    | None => <div> (ReasonReact.stringToElement(labelEmptyList)) </div>
+    | Some(listOfTournaments) =>
+      if (Js.Array.length(listOfTournaments) == 0) {
+        <div> (ReasonReact.stringToElement(labelEmptyList)) </div>;
+      } else {
+        <ul>
+          (
+            listOfTournaments
+            |> Js.Array.map(tournament => {
+                 let tournamentId = tournament##id;
+                 <Link
+                   key=tournament##id
+                   to_={j|/$organizationKey/tournament/$tournamentId|j}>
+                   <li>
+                     <div className=Styles.textPrimary>
+                       (ReasonReact.stringToElement(tournament##name))
+                     </div>
+                     <div className=Styles.textDetail>
+                       (
+                         ReasonReact.stringToElement(
+                           disciplineToJs(tournament##discipline),
+                         )
+                       )
+                     </div>
+                   </li>
+                 </Link>;
+               })
+            |> ReasonReact.arrayToElement
           )
-        )
-      </ul>;
+        </ul>;
+      }
     };
   {
     ...component,
@@ -164,13 +162,23 @@ let make = (~match: RouterMatch.match, _children) => {
                        Js.log(error);
                        ReasonReact.nullElement;
                      | Data(response) =>
-                       let tournaments = response##organization##tournaments;
-                       renderTournamentsList(
-                         ~labelEmptyList=
-                           "There are no active tournaments at the moment",
-                         ~tournaments,
-                         ~organizationKey,
-                       );
+                       switch (response##organization) {
+                       | None =>
+                         renderTournamentsList(
+                           ~labelEmptyList=
+                             "There are no active tournaments at the moment",
+                           ~organizationKey,
+                           (),
+                         )
+                       | Some(org) =>
+                         renderTournamentsList(
+                           ~labelEmptyList=
+                             "There are no active tournaments at the moment",
+                           ~tournaments=org##tournaments,
+                           ~organizationKey,
+                           (),
+                         )
+                       }
                      }
                  )
             </FetchActiveTournaments>
@@ -188,13 +196,23 @@ let make = (~match: RouterMatch.match, _children) => {
                        Js.log(error);
                        ReasonReact.nullElement;
                      | Data(response) =>
-                       let tournaments = response##organization##tournaments;
-                       renderTournamentsList(
-                         ~labelEmptyList=
-                           "There are no active tournaments at the moment",
-                         ~tournaments,
-                         ~organizationKey,
-                       );
+                       switch (response##organization) {
+                       | None =>
+                         renderTournamentsList(
+                           ~labelEmptyList=
+                             "There are no active tournaments at the moment",
+                           ~organizationKey,
+                           (),
+                         )
+                       | Some(org) =>
+                         renderTournamentsList(
+                           ~labelEmptyList=
+                             "There are no active tournaments at the moment",
+                           ~tournaments=org##tournaments,
+                           ~organizationKey,
+                           (),
+                         )
+                       }
                      }
                  )
             </FetchFinishedTournaments>

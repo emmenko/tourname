@@ -33,7 +33,7 @@ let make = (~match: RouterMatch.match, _children) => {
     ...component,
     render: _self => {
       let organizationQuery =
-        FetchOrganization(OrganizationQuery.make(~key=organizationKey, ()));
+        FetchOrganization.OrganizationQuery.make(~key=organizationKey, ());
       <FetchOrganization variables=organizationQuery##variables>
         ...(
              ({result}) =>

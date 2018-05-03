@@ -1,11 +1,12 @@
 type member = {
   .
-  "id": string,
   "createdAt": string,
   "email": string,
+  "id": string,
+  "isAdmin": Js.boolean,
+  "lastModifiedAt": string,
   "name": string,
   "picture": string,
-  "isAdmin": bool,
 };
 
 module OrganizationQuery = [%graphql

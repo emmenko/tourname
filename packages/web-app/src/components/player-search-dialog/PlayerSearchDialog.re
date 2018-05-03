@@ -98,79 +98,66 @@ module PlayerSearchDialog = {
                          | NoData => ReasonReact.stringToElement("No data...")
                          | Loading => <LoadingSpinner />
                          | Data(response) =>
-                           let filteredList =
-                             switch (response##organization) {
-                             | Some(org) =>
-                               List.filter(
-                                 member =>
-                                   List.exists(
-                                     id => id != member##id,
-                                     registeredPlayers,
-                                   ),
-                                 Array.to_list(org##members),
-                               )
-                             | None => []
-                             };
                            /* We need to convert it to a list to perform some basic
                               operations like `filter` and `exists` because `Array` does
                               not support it. */
-                           /* let filteredList =
-                              List.filter(
-                                member =>
-                                  List.exists(
-                                    id => id != member##id,
-                                    registeredPlayers,
-                                  ),
-                                members,
-                              ); */
-                           if (List.length(filteredList) == 0) {
+                           let filteredList =
+                             switch (response##organization) {
+                             | Some(org) =>
+                               org##members
+                               |> Js.Array.filter(member =>
+                                    List.exists(
+                                      id => id != member##id,
+                                      registeredPlayers,
+                                    )
+                                  )
+                             | None => [||]
+                             };
+                           if (Js.Array.length(filteredList) == 0) {
                              ReasonReact.stringToElement(
                                "No more members available",
                              );
                            } else {
-                             let availableMembers =
-                               List.filter(
-                                 member =>
-                                   self.state.searchText == ""
-                                   || Js.String.includes(
-                                        String.lowercase(
-                                          self.state.searchText,
-                                        ),
-                                        String.lowercase(member##name),
-                                      )
-                                   || Js.String.includes(
-                                        String.lowercase(
-                                          self.state.searchText,
-                                        ),
-                                        String.lowercase(member##email),
-                                      ),
-                                 filteredList,
-                               );
-                             ReasonReact.arrayToElement(
-                               Array.map(
-                                 member =>
-                                   <div
-                                     className=(
-                                       switch (self.state.selectedPlayer) {
-                                       | Some(player) =>
-                                         if (player##id == member##id) {
-                                           Styles.activeSelectableItem;
-                                         } else {
-                                           Styles.selectableItem;
-                                         }
-                                       | None => Styles.selectableItem
-                                       }
+                             /* Filter our members already in use,
+                                then render the list of available members */
+                             filteredList
+                             |> Js.Array.filter(member =>
+                                  self.state.searchText == ""
+                                  || Js.String.includes(
+                                       String.lowercase(
+                                         self.state.searchText,
+                                       ),
+                                       String.lowercase(member##name),
                                      )
-                                     key=member##id
-                                     onClick=(
-                                       _event =>
-                                         self.send(SetSelectedPlayer(member))
-                                     )>
-                                     <PlayerSlot player=member />
-                                   </div>,
-                                 Array.of_list(availableMembers),
-                               ),
-                             );
+                                  || Js.String.includes(
+                                       String.lowercase(
+                                         self.state.searchText,
+                                       ),
+                                       String.lowercase(member##email),
+                                     )
+                                )
+                             |> Js.Array.map(member =>
+                                  <div
+                                    className=(
+                                      switch (self.state.selectedPlayer) {
+                                      | Some(player) =>
+                                        if (player##id == member##id) {
+                                          Styles.activeSelectableItem;
+                                        } else {
+                                          Styles.selectableItem;
+                                        }
+                                      | None => Styles.selectableItem
+                                      }
+                                    )
+                                    key=member##id
+                                    onClick=(
+                                      _event =>
+                                        self.send(SetSelectedPlayer(member))
+                                    )>
+                                    <PlayerSlot player=member />
+                                  </div>
+                                )
+                             |> ReasonReact.arrayToElement;
                            };
                          | Error(error) =>
                            Js.log(error);
