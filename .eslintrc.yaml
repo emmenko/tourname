@@ -6,11 +6,11 @@ parserOptions:
   ecmaVersion: 8
   sourceType: module
 extends:
+- airbnb-base
 - plugin:jest/recommended
 - plugin:react/recommended
 - prettier
 - prettier/react
-- react-app
 env:
   browser: true
   es6: true
@@ -21,7 +21,6 @@ plugins:
 - import
 - jest
 - jsx-a11y
-- prefer-object-spread
 - prettier
 - react
 rules:
@@ -68,7 +67,6 @@ rules:
   react/display-name:
   - 1
   - ignoreTranspilerName: true
-  prefer-object-spread/prefer-object-spread: 2
   prefer-destructuring: 0
   prefer-promise-reject-errors: warn
 overrides:

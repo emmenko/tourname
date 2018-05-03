@@ -93,12 +93,12 @@
     to-fast-properties "^2.0.0"
 
 "@commercetools/sdk-client@^1.5.5":
-  version "1.5.5"
-  resolved "https://registry.yarnpkg.com/@commercetools/sdk-client/-/sdk-client-1.5.5.tgz#6186521a28d00aac10b1c3caf0c9237a7fba97b3"
+  version "1.5.6"
+  resolved "https://registry.yarnpkg.com/@commercetools/sdk-client/-/sdk-client-1.5.6.tgz#dee49e825d13eda6646de325444490f3116c0a2a"
 
 "@commercetools/sdk-middleware-http@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@commercetools/sdk-middleware-http/-/sdk-middleware-http-3.0.0.tgz#9791c6443c9c9e3a8e3c2ff29ea1664c3db268cb"
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@commercetools/sdk-middleware-http/-/sdk-middleware-http-3.0.1.tgz#5f7bfb81f7bf8ffda6afb64f8cf8e2e903e1b379"
   dependencies:
     isomorphic-fetch "2.2.1"
 
@@ -296,12 +296,12 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
 
 "@types/node@*":
-  version "10.0.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.2.tgz#180046ebbc37de8b64777765c2486ebecb59448e"
+  version "10.0.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.3.tgz#1f89840c7aac2406cc43a2ecad98fc02a8e130e4"
 
 "@types/node@^9.4.6":
-  version "9.6.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.8.tgz#32e3d3ef9ea285caeec70a05ab157847920a3fe4"
+  version "9.6.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.9.tgz#1fa47c22fdc357a808535edd522b3d34facfa419"
 
 "@types/serve-static@*":
   version "1.13.2"
@@ -445,10 +445,10 @@ apollo-cache-inmemory@1.1.12:
     graphql-anywhere "^4.1.8"
 
 apollo-cache@^1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/apollo-cache/-/apollo-cache-1.1.7.tgz#5817018a2fbfc05a21ba319bd17a3e7538110cc5"
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/apollo-cache/-/apollo-cache-1.1.8.tgz#b078d33dec876d52b5a81a325d3c254d4e362d3c"
   dependencies:
-    apollo-utilities "^1.0.11"
+    apollo-utilities "^1.0.12"
 
 apollo-client@2.2.8:
   version "2.2.8"
@@ -536,9 +536,9 @@ apollo-tracing@^0.1.0:
   dependencies:
     graphql-extensions "~0.0.9"
 
-apollo-utilities@^1.0.0, apollo-utilities@^1.0.1, apollo-utilities@^1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.11.tgz#cd36bfa6e5c04eea2caf0c204a0f38a0ad550802"
+apollo-utilities@^1.0.0, apollo-utilities@^1.0.1, apollo-utilities@^1.0.11, apollo-utilities@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.12.tgz#9e2b2a34cf89f3bf0d73a664effd8c1bb5d1b7f7"
 
 app-root-path@^2.0.1:
   version "2.0.1"
@@ -3610,10 +3610,10 @@ grapheme-breaker@^0.3.2:
     unicode-trie "^0.3.1"
 
 graphql-anywhere@^4.1.8:
-  version "4.1.8"
-  resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-4.1.8.tgz#23882e6a16ec824febbe5bca40937cdd76c5acdc"
+  version "4.1.9"
+  resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-4.1.9.tgz#831bbf2c4972bd104a60175ba107ab3ae65008d1"
   dependencies:
-    apollo-utilities "^1.0.11"
+    apollo-utilities "^1.0.12"
 
 graphql-extensions@^0.0.x, graphql-extensions@~0.0.9:
   version "0.0.10"
