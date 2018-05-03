@@ -24,7 +24,7 @@ type Organization {
     sort: SortBy!
     page: Int!
     perPage: Int!
-  ): [TournamentInfo]!
+  ): [TournamentInfo!]!
 }
 
 extend type Query {
