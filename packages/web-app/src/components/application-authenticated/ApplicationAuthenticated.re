@@ -25,8 +25,12 @@ let make = _children => {
                  Js.log(error);
                  ReasonReact.nullElement;
                | Data(response) =>
+                 let shouldForceToCreateAnOrganization =
+                   Array.length(response##me##availableOrganizations) == 0;
                  <div>
-                   <ApplicationBar.Authenticated />
+                   <ApplicationBar.Authenticated
+                     showActionsMenu=(! shouldForceToCreateAnOrganization)
+                   />
                    <Switch>
                      <Route
                        exact=true
@@ -40,12 +44,7 @@ let make = _children => {
                      />
                      <Route
                        render=(
-                         _renderProps => {
-                           let shouldForceToCreateAnOrganization =
-                             Array.length(
-                               response##me##availableOrganizations,
-                             )
-                             == 0;
+                         _renderProps =>
                            if (shouldForceToCreateAnOrganization) {
                              <Redirect to_="/organizations/new" />;
                            } else {
@@ -70,12 +69,11 @@ let make = _children => {
                                  component=ApplicationContent.default
                                />
                              </Switch>;
-                           };
-                         }
+                           }
                        )
                      />
                    </Switch>
-                 </div>
+                 </div>;
                }
            )
       </FetchUser>
