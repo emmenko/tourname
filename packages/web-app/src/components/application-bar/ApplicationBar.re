@@ -61,11 +61,14 @@ module ApplicationBarContainer = {
 module Authenticated = {
   let component =
     ReasonReact.statelessComponent("ApplicationBarAuthenticated");
-  let make = _children => {
+  let make = (~showActionsMenu, _children) => {
     ...component,
     render: _self =>
       <ApplicationBarContainer>
-        <ApplicationBarActionsMenu />
+        (
+          showActionsMenu ?
+            <ApplicationBarActionsMenu /> : ReasonReact.nullElement
+        )
         <ApplicationBarUserMenu />
       </ApplicationBarContainer>,
   };
