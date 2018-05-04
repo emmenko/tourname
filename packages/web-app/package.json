@@ -18,7 +18,7 @@
     "apollo-link-error": "1.0.9",
     "apollo-link-http": "1.5.4",
     "auth0-js": "9.5.1",
-    "bs-downshift": "0.2.0",
+    "bs-downshift": "1.0.0",
     "downshift": "1.25.0",
     "formik": "0.11.11",
     "glamor": "2.20.40",
