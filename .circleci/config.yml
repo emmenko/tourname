@@ -3,12 +3,13 @@ aliases:
 
   - &restore_yarn_cache
     keys:
-      - v1-yarn-cache-{{ checksum "yarn.lock" }}
-      - v1-yarn-cache
+      - v2-yarn-cache-{{ checksum "yarn.lock" }}
+      - v2-yarn-cache
 
   - &save_yarn_cache
-    key: v1-yarn-cache-{{ checksum "yarn.lock" }}
+    key: v2-yarn-cache-{{ checksum "yarn.lock" }}
     paths:
+      - ~/.cache/yarn
       - node_modules
 
 version: 2
