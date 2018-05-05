@@ -31,7 +31,7 @@
     "react-dom": "16.3.2",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
-    "reason-apollo": "0.7.4",
+    "reason-apollo": "emmenko/reason-apollo#pending-patches",
     "reason-react": "0.4.1",
     "recompose": "0.27.0",
     "styled-components": "2.3.3"
