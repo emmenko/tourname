@@ -1,0 +1,149 @@
+enum Role {
+  Admin
+  Member
+}
+
+enum TournamentSize {
+  Small
+  Medium
+  Large
+  XLarge
+}
+
+enum TournamentStatus {
+  New
+  InProgress
+  Finished
+}
+
+enum Discipline {
+  PoolTable
+  TableTennis
+}
+
+# The user information is stored in Auth0
+type UserRef {
+  auth0Id: String! @unique
+  role: Role!
+}
+
+type Organization {
+  key: String! @unique
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  name: String!
+  users: [UserRef!]!
+  tournaments: [Tournament!]!
+  tournamentMatches: [MatchTournament!]!
+  singleMatches: [MatchSingle!]!
+}
+
+type Tournament {
+  id: ID! @unique
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  name: String!
+  size: TournamentSize!
+  status: TournamentStatus!
+  discipline: Discipline!
+  organization: Organization!
+  teamSize: Int!
+  # The number of teams depends on the size of the tournament
+  teams: [Team!]!
+  roundLastSixteen: RoundLastSixteen
+  roundQuarterfinals: RoundQuarterfinals
+  roundSemifinals: RoundSemifinals
+  roundFinal: RoundFinal
+  matches: [MatchTournament!]!
+}
+
+type Team {
+  key: ID! @unique
+  players: [UserRef!]!
+  # 👇 List all relation fields
+  # See https://github.com/graphcool/prisma/issues/1907
+  matchTournamentTeamLeft: MatchTournament @relation(name: "TeamLeftMatchTournament")
+  matchTournamentTeamRight: MatchTournament @relation(name: "TeamRightMatchTournament")
+  matchTournamentTeamWinner: MatchTournament @relation(name: "TeamWinnerMatchTournament")
+  matchSingleTeamLeft: MatchSingle @relation(name: "TeamLeftMatchSingle")
+  matchSingleTeamRight: MatchSingle @relation(name: "TeamRightMatchSingle")
+  matchSingleTeamWinner: MatchSingle @relation(name: "TeamWinnerMatchSingle")
+}
+
+type RoundLastSixteen {
+  matchA: MatchTournament! @relation(name: "MatchAOfRoundLastSixteen")
+  matchB: MatchTournament! @relation(name: "MatchBOfRoundLastSixteen")
+  matchC: MatchTournament! @relation(name: "MatchCOfRoundLastSixteen")
+  matchD: MatchTournament! @relation(name: "MatchDOfRoundLastSixteen")
+  matchE: MatchTournament! @relation(name: "MatchEOfRoundLastSixteen")
+  matchF: MatchTournament! @relation(name: "MatchFOfRoundLastSixteen")
+  matchG: MatchTournament! @relation(name: "MatchGOfRoundLastSixteen")
+  matchH: MatchTournament! @relation(name: "MatchHOfRoundLastSixteen")
+  tournament: Tournament!
+}
+
+type RoundQuarterfinals {
+  matchA: MatchTournament! @relation(name: "MatchAOfRoundQuarterfinals")
+  matchB: MatchTournament! @relation(name: "MatchBOfRoundQuarterfinals")
+  matchC: MatchTournament! @relation(name: "MatchCOfRoundQuarterfinals")
+  matchD: MatchTournament! @relation(name: "MatchDOfRoundQuarterfinals")
+  tournament: Tournament!
+}
+
+type RoundSemifinals {
+  matchA: MatchTournament! @relation(name: "MatchAOfRoundSemifinals")
+  matchB: MatchTournament! @relation(name: "MatchBOfRoundSemifinals")
+  tournament: Tournament!
+}
+
+type RoundFinal {
+  match: MatchTournament! @relation(name: "MatchOfRoundFinal")
+  tournament: Tournament!
+}
+
+# A tournament match does not require teams to be defined
+# when creating the tournament. Teams will be added while
+# configuring the tournament. However, a tournament cannot
+# be started without all the teams in place.
+type MatchTournament {
+  id: ID! @unique
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  organization: Organization!
+  tournament: Tournament!
+  discipline: Discipline!
+  teamLeft: Team @relation(name: "TeamLeftMatchTournament")
+  teamRight: Team @relation(name: "TeamRightMatchTournament")
+  winner: Team @relation(name: "TeamWinnerMatchTournament")
+  nextMatch: MatchTournament
+  # 👇 List all relation fields
+  # See https://github.com/graphcool/prisma/issues/1907
+  roundLastSixteenMatchA: RoundLastSixteen @relation(name: "MatchAOfRoundLastSixteen")
+  roundLastSixteenMatchB: RoundLastSixteen @relation(name: "MatchBOfRoundLastSixteen")
+  roundLastSixteenMatchC: RoundLastSixteen @relation(name: "MatchCOfRoundLastSixteen")
+  roundLastSixteenMatchD: RoundLastSixteen @relation(name: "MatchDOfRoundLastSixteen")
+  roundLastSixteenMatchE: RoundLastSixteen @relation(name: "MatchEOfRoundLastSixteen")
+  roundLastSixteenMatchF: RoundLastSixteen @relation(name: "MatchFOfRoundLastSixteen")
+  roundLastSixteenMatchG: RoundLastSixteen @relation(name: "MatchGOfRoundLastSixteen")
+  roundLastSixteenMatchH: RoundLastSixteen @relation(name: "MatchHOfRoundLastSixteen")
+  roundQuarterfinalsMatchA: RoundQuarterfinals @relation(name: "MatchAOfRoundQuarterfinals")
+  roundQuarterfinalsMatchB: RoundQuarterfinals @relation(name: "MatchBOfRoundQuarterfinals")
+  roundQuarterfinalsMatchC: RoundQuarterfinals @relation(name: "MatchCOfRoundQuarterfinals")
+  roundQuarterfinalsMatchD: RoundQuarterfinals @relation(name: "MatchDOfRoundQuarterfinals")
+  roundSemifinalsMatchA: RoundSemifinals @relation(name: "MatchAOfRoundSemifinals")
+  roundSemifinalsMatchB: RoundSemifinals @relation(name: "MatchBOfRoundSemifinals")
+  roundFinalMatch: RoundFinal @relation(name: "MatchOfRoundFinal")
+}
+
+# A single match requires both teams to be defined
+# when creating the match.
+type MatchSingle {
+  id: ID! @unique
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  organization: Organization!
+  discipline: Discipline!
+  teamLeft: Team! @relation(name: "TeamLeftMatchSingle")
+  teamRight: Team! @relation(name: "TeamRightMatchSingle")
+  winner: Team @relation(name: "TeamWinnerMatchSingle")
+}

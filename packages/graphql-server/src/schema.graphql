@@ -1,0 +1,81 @@
+# import Role,Discipline,TournamentStatus,TournamentSize from "./generated/prisma.graphql"
+
+type Query {
+  me: Member!
+  isOrganizationKeyUsed(key: String!): Boolean!
+  organization(key: String!): Organization
+}
+
+# type Mutation {
+#   createUser(user: UserDraft!): User
+# }
+
+interface User {
+  id: String!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  email: String!
+  name: String!
+  picture: String!
+}
+
+type MemberInfo implements User {
+  id: String!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  email: String!
+  name: String!
+  picture: String!
+  role: Role!
+}
+
+type Member implements User {
+  id: String!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  email: String!
+  name: String!
+  picture: String!
+  role: Role!
+  availableOrganizations: [OrganizationInfo!]!
+}
+
+enum SortOrder {
+  Asc
+  Desc
+}
+
+input SortBy {
+  key: String!
+  order: SortOrder!
+}
+
+type OrganizationInfo {
+  key: String! # unique identifier
+  name: String!
+}
+
+type Organization {
+  key: String! # unique identifier
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  name: String!
+  members: [MemberInfo!]!
+  tournaments(
+    status: [TournamentStatus!] # `or` condition
+    sort: SortBy!
+    page: Int!
+    perPage: Int!
+  ): [TournamentInfo!]!
+}
+
+type TournamentInfo {
+  id: ID!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  name: String!
+  discipline: Discipline!
+  status: TournamentStatus!
+  size: TournamentSize!
+  teamSize: Int!
+}
