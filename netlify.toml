@@ -1,3 +1,3 @@
 [build]
   command = "yarn build"
-  publish = "packages/web-app/build"
+  publish = "packages/web-app/dist"
