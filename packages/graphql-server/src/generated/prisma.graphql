@@ -1,0 +1,4988 @@
+# source: http://192.168.99.100:4466
+# timestamp: Sat May 05 2018 23:24:55 GMT+0200 (CEST)
+
+type AggregateMatchSingle {
+  count: Int!
+}
+
+type AggregateMatchTournament {
+  count: Int!
+}
+
+type AggregateOrganization {
+  count: Int!
+}
+
+type AggregateRoundFinal {
+  count: Int!
+}
+
+type AggregateRoundLastSixteen {
+  count: Int!
+}
+
+type AggregateRoundQuarterfinals {
+  count: Int!
+}
+
+type AggregateRoundSemifinals {
+  count: Int!
+}
+
+type AggregateTeam {
+  count: Int!
+}
+
+type AggregateTournament {
+  count: Int!
+}
+
+type AggregateUserRef {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+scalar DateTime
+
+enum Discipline {
+  PoolTable
+  TableTennis
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type MatchSingle implements Node {
+  id: ID!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  organization(where: OrganizationWhereInput): Organization!
+  discipline: Discipline!
+  teamLeft(where: TeamWhereInput): Team!
+  teamRight(where: TeamWhereInput): Team!
+  winner(where: TeamWhereInput): Team
+}
+
+"""A connection to a list of items."""
+type MatchSingleConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MatchSingleEdge]!
+  aggregate: AggregateMatchSingle!
+}
+
+input MatchSingleCreateInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutSingleMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchSingleTeamLeftInput!
+  teamRight: TeamCreateOneWithoutMatchSingleTeamRightInput!
+  winner: TeamCreateOneWithoutMatchSingleTeamWinnerInput
+}
+
+input MatchSingleCreateManyWithoutOrganizationInput {
+  create: [MatchSingleCreateWithoutOrganizationInput!]
+  connect: [MatchSingleWhereUniqueInput!]
+}
+
+input MatchSingleCreateOneWithoutTeamLeftInput {
+  create: MatchSingleCreateWithoutTeamLeftInput
+  connect: MatchSingleWhereUniqueInput
+}
+
+input MatchSingleCreateOneWithoutTeamRightInput {
+  create: MatchSingleCreateWithoutTeamRightInput
+  connect: MatchSingleWhereUniqueInput
+}
+
+input MatchSingleCreateOneWithoutWinnerInput {
+  create: MatchSingleCreateWithoutWinnerInput
+  connect: MatchSingleWhereUniqueInput
+}
+
+input MatchSingleCreateWithoutOrganizationInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  teamLeft: TeamCreateOneWithoutMatchSingleTeamLeftInput!
+  teamRight: TeamCreateOneWithoutMatchSingleTeamRightInput!
+  winner: TeamCreateOneWithoutMatchSingleTeamWinnerInput
+}
+
+input MatchSingleCreateWithoutTeamLeftInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutSingleMatchesInput!
+  teamRight: TeamCreateOneWithoutMatchSingleTeamRightInput!
+  winner: TeamCreateOneWithoutMatchSingleTeamWinnerInput
+}
+
+input MatchSingleCreateWithoutTeamRightInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutSingleMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchSingleTeamLeftInput!
+  winner: TeamCreateOneWithoutMatchSingleTeamWinnerInput
+}
+
+input MatchSingleCreateWithoutWinnerInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutSingleMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchSingleTeamLeftInput!
+  teamRight: TeamCreateOneWithoutMatchSingleTeamRightInput!
+}
+
+"""An edge in a connection."""
+type MatchSingleEdge {
+  """The item at the end of the edge."""
+  node: MatchSingle!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum MatchSingleOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  lastModifiedAt_ASC
+  lastModifiedAt_DESC
+  discipline_ASC
+  discipline_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type MatchSinglePreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+}
+
+type MatchSingleSubscriptionPayload {
+  mutation: MutationType!
+  node: MatchSingle
+  updatedFields: [String!]
+  previousValues: MatchSinglePreviousValues
+}
+
+input MatchSingleSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MatchSingleSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MatchSingleSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MatchSingleSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: MatchSingleWhereInput
+}
+
+input MatchSingleUpdateInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutSingleMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchSingleTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchSingleTeamRightInput
+  winner: TeamUpdateOneWithoutMatchSingleTeamWinnerInput
+}
+
+input MatchSingleUpdateManyWithoutOrganizationInput {
+  create: [MatchSingleCreateWithoutOrganizationInput!]
+  connect: [MatchSingleWhereUniqueInput!]
+  disconnect: [MatchSingleWhereUniqueInput!]
+  delete: [MatchSingleWhereUniqueInput!]
+  update: [MatchSingleUpdateWithWhereUniqueWithoutOrganizationInput!]
+  upsert: [MatchSingleUpsertWithWhereUniqueWithoutOrganizationInput!]
+}
+
+input MatchSingleUpdateOneWithoutTeamLeftInput {
+  create: MatchSingleCreateWithoutTeamLeftInput
+  connect: MatchSingleWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: MatchSingleUpdateWithoutTeamLeftDataInput
+  upsert: MatchSingleUpsertWithoutTeamLeftInput
+}
+
+input MatchSingleUpdateOneWithoutTeamRightInput {
+  create: MatchSingleCreateWithoutTeamRightInput
+  connect: MatchSingleWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: MatchSingleUpdateWithoutTeamRightDataInput
+  upsert: MatchSingleUpsertWithoutTeamRightInput
+}
+
+input MatchSingleUpdateOneWithoutWinnerInput {
+  create: MatchSingleCreateWithoutWinnerInput
+  connect: MatchSingleWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: MatchSingleUpdateWithoutWinnerDataInput
+  upsert: MatchSingleUpsertWithoutWinnerInput
+}
+
+input MatchSingleUpdateWithoutOrganizationDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  teamLeft: TeamUpdateOneWithoutMatchSingleTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchSingleTeamRightInput
+  winner: TeamUpdateOneWithoutMatchSingleTeamWinnerInput
+}
+
+input MatchSingleUpdateWithoutTeamLeftDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutSingleMatchesInput
+  teamRight: TeamUpdateOneWithoutMatchSingleTeamRightInput
+  winner: TeamUpdateOneWithoutMatchSingleTeamWinnerInput
+}
+
+input MatchSingleUpdateWithoutTeamRightDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutSingleMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchSingleTeamLeftInput
+  winner: TeamUpdateOneWithoutMatchSingleTeamWinnerInput
+}
+
+input MatchSingleUpdateWithoutWinnerDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutSingleMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchSingleTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchSingleTeamRightInput
+}
+
+input MatchSingleUpdateWithWhereUniqueWithoutOrganizationInput {
+  where: MatchSingleWhereUniqueInput!
+  data: MatchSingleUpdateWithoutOrganizationDataInput!
+}
+
+input MatchSingleUpsertWithoutTeamLeftInput {
+  update: MatchSingleUpdateWithoutTeamLeftDataInput!
+  create: MatchSingleCreateWithoutTeamLeftInput!
+}
+
+input MatchSingleUpsertWithoutTeamRightInput {
+  update: MatchSingleUpdateWithoutTeamRightDataInput!
+  create: MatchSingleCreateWithoutTeamRightInput!
+}
+
+input MatchSingleUpsertWithoutWinnerInput {
+  update: MatchSingleUpdateWithoutWinnerDataInput!
+  create: MatchSingleCreateWithoutWinnerInput!
+}
+
+input MatchSingleUpsertWithWhereUniqueWithoutOrganizationInput {
+  where: MatchSingleWhereUniqueInput!
+  update: MatchSingleUpdateWithoutOrganizationDataInput!
+  create: MatchSingleCreateWithoutOrganizationInput!
+}
+
+input MatchSingleWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MatchSingleWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MatchSingleWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MatchSingleWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  lastModifiedAt: DateTime
+
+  """All values that are not equal to given value."""
+  lastModifiedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  lastModifiedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  lastModifiedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  lastModifiedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  lastModifiedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  lastModifiedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  lastModifiedAt_gte: DateTime
+  discipline: Discipline
+
+  """All values that are not equal to given value."""
+  discipline_not: Discipline
+
+  """All values that are contained in given list."""
+  discipline_in: [Discipline!]
+
+  """All values that are not contained in given list."""
+  discipline_not_in: [Discipline!]
+  organization: OrganizationWhereInput
+  teamLeft: TeamWhereInput
+  teamRight: TeamWhereInput
+  winner: TeamWhereInput
+}
+
+input MatchSingleWhereUniqueInput {
+  id: ID
+}
+
+type MatchTournament implements Node {
+  id: ID!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  organization(where: OrganizationWhereInput): Organization!
+  tournament(where: TournamentWhereInput): Tournament!
+  discipline: Discipline!
+  teamLeft(where: TeamWhereInput): Team
+  teamRight(where: TeamWhereInput): Team
+  winner(where: TeamWhereInput): Team
+  nextMatch(where: MatchTournamentWhereInput): MatchTournament
+  roundLastSixteenMatchA(where: RoundLastSixteenWhereInput): RoundLastSixteen
+  roundLastSixteenMatchB(where: RoundLastSixteenWhereInput): RoundLastSixteen
+  roundLastSixteenMatchC(where: RoundLastSixteenWhereInput): RoundLastSixteen
+  roundLastSixteenMatchD(where: RoundLastSixteenWhereInput): RoundLastSixteen
+  roundLastSixteenMatchE(where: RoundLastSixteenWhereInput): RoundLastSixteen
+  roundLastSixteenMatchF(where: RoundLastSixteenWhereInput): RoundLastSixteen
+  roundLastSixteenMatchG(where: RoundLastSixteenWhereInput): RoundLastSixteen
+  roundLastSixteenMatchH(where: RoundLastSixteenWhereInput): RoundLastSixteen
+  roundQuarterfinalsMatchA(where: RoundQuarterfinalsWhereInput): RoundQuarterfinals
+  roundQuarterfinalsMatchB(where: RoundQuarterfinalsWhereInput): RoundQuarterfinals
+  roundQuarterfinalsMatchC(where: RoundQuarterfinalsWhereInput): RoundQuarterfinals
+  roundQuarterfinalsMatchD(where: RoundQuarterfinalsWhereInput): RoundQuarterfinals
+  roundSemifinalsMatchA(where: RoundSemifinalsWhereInput): RoundSemifinals
+  roundSemifinalsMatchB(where: RoundSemifinalsWhereInput): RoundSemifinals
+  roundFinalMatch(where: RoundFinalWhereInput): RoundFinal
+}
+
+"""A connection to a list of items."""
+type MatchTournamentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MatchTournamentEdge]!
+  aggregate: AggregateMatchTournament!
+}
+
+input MatchTournamentCreateInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateManyWithoutOrganizationInput {
+  create: [MatchTournamentCreateWithoutOrganizationInput!]
+  connect: [MatchTournamentWhereUniqueInput!]
+}
+
+input MatchTournamentCreateManyWithoutTournamentInput {
+  create: [MatchTournamentCreateWithoutTournamentInput!]
+  connect: [MatchTournamentWhereUniqueInput!]
+}
+
+input MatchTournamentCreateOneInput {
+  create: MatchTournamentCreateInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundFinalMatchInput {
+  create: MatchTournamentCreateWithoutRoundFinalMatchInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchAInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchBInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchCInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchDInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchEInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchFInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchGInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchHInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput {
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput {
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput {
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput {
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundSemifinalsMatchAInput {
+  create: MatchTournamentCreateWithoutRoundSemifinalsMatchAInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutRoundSemifinalsMatchBInput {
+  create: MatchTournamentCreateWithoutRoundSemifinalsMatchBInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutTeamLeftInput {
+  create: MatchTournamentCreateWithoutTeamLeftInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutTeamRightInput {
+  create: MatchTournamentCreateWithoutTeamRightInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateOneWithoutWinnerInput {
+  create: MatchTournamentCreateWithoutWinnerInput
+  connect: MatchTournamentWhereUniqueInput
+}
+
+input MatchTournamentCreateWithoutOrganizationInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundFinalMatchInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+}
+
+input MatchTournamentCreateWithoutRoundLastSixteenMatchAInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundLastSixteenMatchBInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundLastSixteenMatchCInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundLastSixteenMatchDInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundLastSixteenMatchEInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundLastSixteenMatchFInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundLastSixteenMatchGInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundLastSixteenMatchHInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundSemifinalsMatchAInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutRoundSemifinalsMatchBInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutTeamLeftInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutTeamRightInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutTournamentInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+input MatchTournamentCreateWithoutWinnerInput {
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  tournament: TournamentCreateOneWithoutMatchesInput!
+  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
+  nextMatch: MatchTournamentCreateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
+}
+
+"""An edge in a connection."""
+type MatchTournamentEdge {
+  """The item at the end of the edge."""
+  node: MatchTournament!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum MatchTournamentOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  lastModifiedAt_ASC
+  lastModifiedAt_DESC
+  discipline_ASC
+  discipline_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type MatchTournamentPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  discipline: Discipline!
+}
+
+type MatchTournamentSubscriptionPayload {
+  mutation: MutationType!
+  node: MatchTournament
+  updatedFields: [String!]
+  previousValues: MatchTournamentPreviousValues
+}
+
+input MatchTournamentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MatchTournamentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MatchTournamentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MatchTournamentSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: MatchTournamentWhereInput
+}
+
+input MatchTournamentUpdateDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateManyWithoutOrganizationInput {
+  create: [MatchTournamentCreateWithoutOrganizationInput!]
+  connect: [MatchTournamentWhereUniqueInput!]
+  disconnect: [MatchTournamentWhereUniqueInput!]
+  delete: [MatchTournamentWhereUniqueInput!]
+  update: [MatchTournamentUpdateWithWhereUniqueWithoutOrganizationInput!]
+  upsert: [MatchTournamentUpsertWithWhereUniqueWithoutOrganizationInput!]
+}
+
+input MatchTournamentUpdateManyWithoutTournamentInput {
+  create: [MatchTournamentCreateWithoutTournamentInput!]
+  connect: [MatchTournamentWhereUniqueInput!]
+  disconnect: [MatchTournamentWhereUniqueInput!]
+  delete: [MatchTournamentWhereUniqueInput!]
+  update: [MatchTournamentUpdateWithWhereUniqueWithoutTournamentInput!]
+  upsert: [MatchTournamentUpsertWithWhereUniqueWithoutTournamentInput!]
+}
+
+input MatchTournamentUpdateOneInput {
+  create: MatchTournamentCreateInput
+  connect: MatchTournamentWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: MatchTournamentUpdateDataInput
+  upsert: MatchTournamentUpsertNestedInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundFinalMatchInput {
+  create: MatchTournamentCreateWithoutRoundFinalMatchInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundFinalMatchDataInput
+  upsert: MatchTournamentUpsertWithoutRoundFinalMatchInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchAInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchADataInput
+  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchAInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchBInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchBDataInput
+  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchBInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchCInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchCDataInput
+  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchCInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchDInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchDDataInput
+  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchDInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchEInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchEDataInput
+  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchEInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchFInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchFDataInput
+  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchFInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchGInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchGDataInput
+  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchGInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput {
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchHInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchHDataInput
+  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchHInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput {
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchADataInput
+  upsert: MatchTournamentUpsertWithoutRoundQuarterfinalsMatchAInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput {
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchBDataInput
+  upsert: MatchTournamentUpsertWithoutRoundQuarterfinalsMatchBInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput {
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchCDataInput
+  upsert: MatchTournamentUpsertWithoutRoundQuarterfinalsMatchCInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput {
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchDDataInput
+  upsert: MatchTournamentUpsertWithoutRoundQuarterfinalsMatchDInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundSemifinalsMatchAInput {
+  create: MatchTournamentCreateWithoutRoundSemifinalsMatchAInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundSemifinalsMatchADataInput
+  upsert: MatchTournamentUpsertWithoutRoundSemifinalsMatchAInput
+}
+
+input MatchTournamentUpdateOneWithoutRoundSemifinalsMatchBInput {
+  create: MatchTournamentCreateWithoutRoundSemifinalsMatchBInput
+  connect: MatchTournamentWhereUniqueInput
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutRoundSemifinalsMatchBDataInput
+  upsert: MatchTournamentUpsertWithoutRoundSemifinalsMatchBInput
+}
+
+input MatchTournamentUpdateOneWithoutTeamLeftInput {
+  create: MatchTournamentCreateWithoutTeamLeftInput
+  connect: MatchTournamentWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutTeamLeftDataInput
+  upsert: MatchTournamentUpsertWithoutTeamLeftInput
+}
+
+input MatchTournamentUpdateOneWithoutTeamRightInput {
+  create: MatchTournamentCreateWithoutTeamRightInput
+  connect: MatchTournamentWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutTeamRightDataInput
+  upsert: MatchTournamentUpsertWithoutTeamRightInput
+}
+
+input MatchTournamentUpdateOneWithoutWinnerInput {
+  create: MatchTournamentCreateWithoutWinnerInput
+  connect: MatchTournamentWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: MatchTournamentUpdateWithoutWinnerDataInput
+  upsert: MatchTournamentUpsertWithoutWinnerInput
+}
+
+input MatchTournamentUpdateWithoutOrganizationDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundFinalMatchDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+}
+
+input MatchTournamentUpdateWithoutRoundLastSixteenMatchADataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundLastSixteenMatchBDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundLastSixteenMatchCDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundLastSixteenMatchDDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundLastSixteenMatchEDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundLastSixteenMatchFDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundLastSixteenMatchGDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundLastSixteenMatchHDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchADataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchBDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchCDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchDDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundSemifinalsMatchADataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutRoundSemifinalsMatchBDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutTeamLeftDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutTeamRightDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutTournamentDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithoutWinnerDataInput {
+  lastModifiedAt: DateTime
+  discipline: Discipline
+  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  tournament: TournamentUpdateOneWithoutMatchesInput
+  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
+  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
+  nextMatch: MatchTournamentUpdateOneInput
+  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
+  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
+  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
+  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
+  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
+  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
+  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
+  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
+  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
+  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
+  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
+}
+
+input MatchTournamentUpdateWithWhereUniqueWithoutOrganizationInput {
+  where: MatchTournamentWhereUniqueInput!
+  data: MatchTournamentUpdateWithoutOrganizationDataInput!
+}
+
+input MatchTournamentUpdateWithWhereUniqueWithoutTournamentInput {
+  where: MatchTournamentWhereUniqueInput!
+  data: MatchTournamentUpdateWithoutTournamentDataInput!
+}
+
+input MatchTournamentUpsertNestedInput {
+  update: MatchTournamentUpdateDataInput!
+  create: MatchTournamentCreateInput!
+}
+
+input MatchTournamentUpsertWithoutRoundFinalMatchInput {
+  update: MatchTournamentUpdateWithoutRoundFinalMatchDataInput!
+  create: MatchTournamentCreateWithoutRoundFinalMatchInput!
+}
+
+input MatchTournamentUpsertWithoutRoundLastSixteenMatchAInput {
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchADataInput!
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchAInput!
+}
+
+input MatchTournamentUpsertWithoutRoundLastSixteenMatchBInput {
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchBDataInput!
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchBInput!
+}
+
+input MatchTournamentUpsertWithoutRoundLastSixteenMatchCInput {
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchCDataInput!
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchCInput!
+}
+
+input MatchTournamentUpsertWithoutRoundLastSixteenMatchDInput {
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchDDataInput!
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchDInput!
+}
+
+input MatchTournamentUpsertWithoutRoundLastSixteenMatchEInput {
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchEDataInput!
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchEInput!
+}
+
+input MatchTournamentUpsertWithoutRoundLastSixteenMatchFInput {
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchFDataInput!
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchFInput!
+}
+
+input MatchTournamentUpsertWithoutRoundLastSixteenMatchGInput {
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchGDataInput!
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchGInput!
+}
+
+input MatchTournamentUpsertWithoutRoundLastSixteenMatchHInput {
+  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchHDataInput!
+  create: MatchTournamentCreateWithoutRoundLastSixteenMatchHInput!
+}
+
+input MatchTournamentUpsertWithoutRoundQuarterfinalsMatchAInput {
+  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchADataInput!
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput!
+}
+
+input MatchTournamentUpsertWithoutRoundQuarterfinalsMatchBInput {
+  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchBDataInput!
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput!
+}
+
+input MatchTournamentUpsertWithoutRoundQuarterfinalsMatchCInput {
+  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchCDataInput!
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput!
+}
+
+input MatchTournamentUpsertWithoutRoundQuarterfinalsMatchDInput {
+  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchDDataInput!
+  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput!
+}
+
+input MatchTournamentUpsertWithoutRoundSemifinalsMatchAInput {
+  update: MatchTournamentUpdateWithoutRoundSemifinalsMatchADataInput!
+  create: MatchTournamentCreateWithoutRoundSemifinalsMatchAInput!
+}
+
+input MatchTournamentUpsertWithoutRoundSemifinalsMatchBInput {
+  update: MatchTournamentUpdateWithoutRoundSemifinalsMatchBDataInput!
+  create: MatchTournamentCreateWithoutRoundSemifinalsMatchBInput!
+}
+
+input MatchTournamentUpsertWithoutTeamLeftInput {
+  update: MatchTournamentUpdateWithoutTeamLeftDataInput!
+  create: MatchTournamentCreateWithoutTeamLeftInput!
+}
+
+input MatchTournamentUpsertWithoutTeamRightInput {
+  update: MatchTournamentUpdateWithoutTeamRightDataInput!
+  create: MatchTournamentCreateWithoutTeamRightInput!
+}
+
+input MatchTournamentUpsertWithoutWinnerInput {
+  update: MatchTournamentUpdateWithoutWinnerDataInput!
+  create: MatchTournamentCreateWithoutWinnerInput!
+}
+
+input MatchTournamentUpsertWithWhereUniqueWithoutOrganizationInput {
+  where: MatchTournamentWhereUniqueInput!
+  update: MatchTournamentUpdateWithoutOrganizationDataInput!
+  create: MatchTournamentCreateWithoutOrganizationInput!
+}
+
+input MatchTournamentUpsertWithWhereUniqueWithoutTournamentInput {
+  where: MatchTournamentWhereUniqueInput!
+  update: MatchTournamentUpdateWithoutTournamentDataInput!
+  create: MatchTournamentCreateWithoutTournamentInput!
+}
+
+input MatchTournamentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MatchTournamentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MatchTournamentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MatchTournamentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  lastModifiedAt: DateTime
+
+  """All values that are not equal to given value."""
+  lastModifiedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  lastModifiedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  lastModifiedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  lastModifiedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  lastModifiedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  lastModifiedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  lastModifiedAt_gte: DateTime
+  discipline: Discipline
+
+  """All values that are not equal to given value."""
+  discipline_not: Discipline
+
+  """All values that are contained in given list."""
+  discipline_in: [Discipline!]
+
+  """All values that are not contained in given list."""
+  discipline_not_in: [Discipline!]
+  organization: OrganizationWhereInput
+  tournament: TournamentWhereInput
+  teamLeft: TeamWhereInput
+  teamRight: TeamWhereInput
+  winner: TeamWhereInput
+  nextMatch: MatchTournamentWhereInput
+  roundLastSixteenMatchA: RoundLastSixteenWhereInput
+  roundLastSixteenMatchB: RoundLastSixteenWhereInput
+  roundLastSixteenMatchC: RoundLastSixteenWhereInput
+  roundLastSixteenMatchD: RoundLastSixteenWhereInput
+  roundLastSixteenMatchE: RoundLastSixteenWhereInput
+  roundLastSixteenMatchF: RoundLastSixteenWhereInput
+  roundLastSixteenMatchG: RoundLastSixteenWhereInput
+  roundLastSixteenMatchH: RoundLastSixteenWhereInput
+  roundQuarterfinalsMatchA: RoundQuarterfinalsWhereInput
+  roundQuarterfinalsMatchB: RoundQuarterfinalsWhereInput
+  roundQuarterfinalsMatchC: RoundQuarterfinalsWhereInput
+  roundQuarterfinalsMatchD: RoundQuarterfinalsWhereInput
+  roundSemifinalsMatchA: RoundSemifinalsWhereInput
+  roundSemifinalsMatchB: RoundSemifinalsWhereInput
+  roundFinalMatch: RoundFinalWhereInput
+}
+
+input MatchTournamentWhereUniqueInput {
+  id: ID
+}
+
+type Mutation {
+  createUserRef(data: UserRefCreateInput!): UserRef!
+  createOrganization(data: OrganizationCreateInput!): Organization!
+  createTournament(data: TournamentCreateInput!): Tournament!
+  createTeam(data: TeamCreateInput!): Team!
+  createRoundLastSixteen(data: RoundLastSixteenCreateInput!): RoundLastSixteen!
+  createRoundQuarterfinals(data: RoundQuarterfinalsCreateInput!): RoundQuarterfinals!
+  createRoundSemifinals(data: RoundSemifinalsCreateInput!): RoundSemifinals!
+  createRoundFinal(data: RoundFinalCreateInput!): RoundFinal!
+  createMatchTournament(data: MatchTournamentCreateInput!): MatchTournament!
+  createMatchSingle(data: MatchSingleCreateInput!): MatchSingle!
+  updateUserRef(data: UserRefUpdateInput!, where: UserRefWhereUniqueInput!): UserRef
+  updateOrganization(data: OrganizationUpdateInput!, where: OrganizationWhereUniqueInput!): Organization
+  updateTournament(data: TournamentUpdateInput!, where: TournamentWhereUniqueInput!): Tournament
+  updateTeam(data: TeamUpdateInput!, where: TeamWhereUniqueInput!): Team
+  updateMatchTournament(data: MatchTournamentUpdateInput!, where: MatchTournamentWhereUniqueInput!): MatchTournament
+  updateMatchSingle(data: MatchSingleUpdateInput!, where: MatchSingleWhereUniqueInput!): MatchSingle
+  deleteUserRef(where: UserRefWhereUniqueInput!): UserRef
+  deleteOrganization(where: OrganizationWhereUniqueInput!): Organization
+  deleteTournament(where: TournamentWhereUniqueInput!): Tournament
+  deleteTeam(where: TeamWhereUniqueInput!): Team
+  deleteMatchTournament(where: MatchTournamentWhereUniqueInput!): MatchTournament
+  deleteMatchSingle(where: MatchSingleWhereUniqueInput!): MatchSingle
+  upsertUserRef(where: UserRefWhereUniqueInput!, create: UserRefCreateInput!, update: UserRefUpdateInput!): UserRef!
+  upsertOrganization(where: OrganizationWhereUniqueInput!, create: OrganizationCreateInput!, update: OrganizationUpdateInput!): Organization!
+  upsertTournament(where: TournamentWhereUniqueInput!, create: TournamentCreateInput!, update: TournamentUpdateInput!): Tournament!
+  upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
+  upsertMatchTournament(where: MatchTournamentWhereUniqueInput!, create: MatchTournamentCreateInput!, update: MatchTournamentUpdateInput!): MatchTournament!
+  upsertMatchSingle(where: MatchSingleWhereUniqueInput!, create: MatchSingleCreateInput!, update: MatchSingleUpdateInput!): MatchSingle!
+  updateManyUserRefs(data: UserRefUpdateInput!, where: UserRefWhereInput): BatchPayload!
+  updateManyOrganizations(data: OrganizationUpdateInput!, where: OrganizationWhereInput): BatchPayload!
+  updateManyTournaments(data: TournamentUpdateInput!, where: TournamentWhereInput): BatchPayload!
+  updateManyTeams(data: TeamUpdateInput!, where: TeamWhereInput): BatchPayload!
+  updateManyRoundLastSixteens(data: RoundLastSixteenUpdateInput!, where: RoundLastSixteenWhereInput): BatchPayload!
+  updateManyRoundQuarterfinalses(data: RoundQuarterfinalsUpdateInput!, where: RoundQuarterfinalsWhereInput): BatchPayload!
+  updateManyRoundSemifinalses(data: RoundSemifinalsUpdateInput!, where: RoundSemifinalsWhereInput): BatchPayload!
+  updateManyRoundFinals(data: RoundFinalUpdateInput!, where: RoundFinalWhereInput): BatchPayload!
+  updateManyMatchTournaments(data: MatchTournamentUpdateInput!, where: MatchTournamentWhereInput): BatchPayload!
+  updateManyMatchSingles(data: MatchSingleUpdateInput!, where: MatchSingleWhereInput): BatchPayload!
+  deleteManyUserRefs(where: UserRefWhereInput): BatchPayload!
+  deleteManyOrganizations(where: OrganizationWhereInput): BatchPayload!
+  deleteManyTournaments(where: TournamentWhereInput): BatchPayload!
+  deleteManyTeams(where: TeamWhereInput): BatchPayload!
+  deleteManyRoundLastSixteens(where: RoundLastSixteenWhereInput): BatchPayload!
+  deleteManyRoundQuarterfinalses(where: RoundQuarterfinalsWhereInput): BatchPayload!
+  deleteManyRoundSemifinalses(where: RoundSemifinalsWhereInput): BatchPayload!
+  deleteManyRoundFinals(where: RoundFinalWhereInput): BatchPayload!
+  deleteManyMatchTournaments(where: MatchTournamentWhereInput): BatchPayload!
+  deleteManyMatchSingles(where: MatchSingleWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+type Organization {
+  key: String!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  name: String!
+  users(where: UserRefWhereInput, orderBy: UserRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserRef!]
+  tournaments(where: TournamentWhereInput, orderBy: TournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tournament!]
+  tournamentMatches(where: MatchTournamentWhereInput, orderBy: MatchTournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchTournament!]
+  singleMatches(where: MatchSingleWhereInput, orderBy: MatchSingleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchSingle!]
+}
+
+"""A connection to a list of items."""
+type OrganizationConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [OrganizationEdge]!
+  aggregate: AggregateOrganization!
+}
+
+input OrganizationCreateInput {
+  key: String!
+  lastModifiedAt: DateTime!
+  name: String!
+  users: UserRefCreateManyInput
+  tournaments: TournamentCreateManyWithoutOrganizationInput
+  tournamentMatches: MatchTournamentCreateManyWithoutOrganizationInput
+  singleMatches: MatchSingleCreateManyWithoutOrganizationInput
+}
+
+input OrganizationCreateOneWithoutSingleMatchesInput {
+  create: OrganizationCreateWithoutSingleMatchesInput
+  connect: OrganizationWhereUniqueInput
+}
+
+input OrganizationCreateOneWithoutTournamentMatchesInput {
+  create: OrganizationCreateWithoutTournamentMatchesInput
+  connect: OrganizationWhereUniqueInput
+}
+
+input OrganizationCreateOneWithoutTournamentsInput {
+  create: OrganizationCreateWithoutTournamentsInput
+  connect: OrganizationWhereUniqueInput
+}
+
+input OrganizationCreateWithoutSingleMatchesInput {
+  key: String!
+  lastModifiedAt: DateTime!
+  name: String!
+  users: UserRefCreateManyInput
+  tournaments: TournamentCreateManyWithoutOrganizationInput
+  tournamentMatches: MatchTournamentCreateManyWithoutOrganizationInput
+}
+
+input OrganizationCreateWithoutTournamentMatchesInput {
+  key: String!
+  lastModifiedAt: DateTime!
+  name: String!
+  users: UserRefCreateManyInput
+  tournaments: TournamentCreateManyWithoutOrganizationInput
+  singleMatches: MatchSingleCreateManyWithoutOrganizationInput
+}
+
+input OrganizationCreateWithoutTournamentsInput {
+  key: String!
+  lastModifiedAt: DateTime!
+  name: String!
+  users: UserRefCreateManyInput
+  tournamentMatches: MatchTournamentCreateManyWithoutOrganizationInput
+  singleMatches: MatchSingleCreateManyWithoutOrganizationInput
+}
+
+"""An edge in a connection."""
+type OrganizationEdge {
+  """The item at the end of the edge."""
+  node: Organization!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum OrganizationOrderByInput {
+  key_ASC
+  key_DESC
+  createdAt_ASC
+  createdAt_DESC
+  lastModifiedAt_ASC
+  lastModifiedAt_DESC
+  name_ASC
+  name_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type OrganizationPreviousValues {
+  key: String!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  name: String!
+}
+
+type OrganizationSubscriptionPayload {
+  mutation: MutationType!
+  node: Organization
+  updatedFields: [String!]
+  previousValues: OrganizationPreviousValues
+}
+
+input OrganizationSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OrganizationSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OrganizationSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OrganizationSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: OrganizationWhereInput
+}
+
+input OrganizationUpdateInput {
+  key: String
+  lastModifiedAt: DateTime
+  name: String
+  users: UserRefUpdateManyInput
+  tournaments: TournamentUpdateManyWithoutOrganizationInput
+  tournamentMatches: MatchTournamentUpdateManyWithoutOrganizationInput
+  singleMatches: MatchSingleUpdateManyWithoutOrganizationInput
+}
+
+input OrganizationUpdateOneWithoutSingleMatchesInput {
+  create: OrganizationCreateWithoutSingleMatchesInput
+  connect: OrganizationWhereUniqueInput
+  delete: Boolean
+  update: OrganizationUpdateWithoutSingleMatchesDataInput
+  upsert: OrganizationUpsertWithoutSingleMatchesInput
+}
+
+input OrganizationUpdateOneWithoutTournamentMatchesInput {
+  create: OrganizationCreateWithoutTournamentMatchesInput
+  connect: OrganizationWhereUniqueInput
+  delete: Boolean
+  update: OrganizationUpdateWithoutTournamentMatchesDataInput
+  upsert: OrganizationUpsertWithoutTournamentMatchesInput
+}
+
+input OrganizationUpdateOneWithoutTournamentsInput {
+  create: OrganizationCreateWithoutTournamentsInput
+  connect: OrganizationWhereUniqueInput
+  delete: Boolean
+  update: OrganizationUpdateWithoutTournamentsDataInput
+  upsert: OrganizationUpsertWithoutTournamentsInput
+}
+
+input OrganizationUpdateWithoutSingleMatchesDataInput {
+  key: String
+  lastModifiedAt: DateTime
+  name: String
+  users: UserRefUpdateManyInput
+  tournaments: TournamentUpdateManyWithoutOrganizationInput
+  tournamentMatches: MatchTournamentUpdateManyWithoutOrganizationInput
+}
+
+input OrganizationUpdateWithoutTournamentMatchesDataInput {
+  key: String
+  lastModifiedAt: DateTime
+  name: String
+  users: UserRefUpdateManyInput
+  tournaments: TournamentUpdateManyWithoutOrganizationInput
+  singleMatches: MatchSingleUpdateManyWithoutOrganizationInput
+}
+
+input OrganizationUpdateWithoutTournamentsDataInput {
+  key: String
+  lastModifiedAt: DateTime
+  name: String
+  users: UserRefUpdateManyInput
+  tournamentMatches: MatchTournamentUpdateManyWithoutOrganizationInput
+  singleMatches: MatchSingleUpdateManyWithoutOrganizationInput
+}
+
+input OrganizationUpsertWithoutSingleMatchesInput {
+  update: OrganizationUpdateWithoutSingleMatchesDataInput!
+  create: OrganizationCreateWithoutSingleMatchesInput!
+}
+
+input OrganizationUpsertWithoutTournamentMatchesInput {
+  update: OrganizationUpdateWithoutTournamentMatchesDataInput!
+  create: OrganizationCreateWithoutTournamentMatchesInput!
+}
+
+input OrganizationUpsertWithoutTournamentsInput {
+  update: OrganizationUpdateWithoutTournamentsDataInput!
+  create: OrganizationCreateWithoutTournamentsInput!
+}
+
+input OrganizationWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OrganizationWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OrganizationWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OrganizationWhereInput!]
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  lastModifiedAt: DateTime
+
+  """All values that are not equal to given value."""
+  lastModifiedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  lastModifiedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  lastModifiedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  lastModifiedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  lastModifiedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  lastModifiedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  lastModifiedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  users_every: UserRefWhereInput
+  users_some: UserRefWhereInput
+  users_none: UserRefWhereInput
+  tournaments_every: TournamentWhereInput
+  tournaments_some: TournamentWhereInput
+  tournaments_none: TournamentWhereInput
+  tournamentMatches_every: MatchTournamentWhereInput
+  tournamentMatches_some: MatchTournamentWhereInput
+  tournamentMatches_none: MatchTournamentWhereInput
+  singleMatches_every: MatchSingleWhereInput
+  singleMatches_some: MatchSingleWhereInput
+  singleMatches_none: MatchSingleWhereInput
+}
+
+input OrganizationWhereUniqueInput {
+  key: String
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  userRefs(where: UserRefWhereInput, orderBy: UserRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserRef]!
+  organizations(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organization]!
+  tournaments(where: TournamentWhereInput, orderBy: TournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tournament]!
+  teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
+  roundLastSixteens(where: RoundLastSixteenWhereInput, orderBy: RoundLastSixteenOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoundLastSixteen]!
+  roundQuarterfinalses(where: RoundQuarterfinalsWhereInput, orderBy: RoundQuarterfinalsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoundQuarterfinals]!
+  roundSemifinalses(where: RoundSemifinalsWhereInput, orderBy: RoundSemifinalsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoundSemifinals]!
+  roundFinals(where: RoundFinalWhereInput, orderBy: RoundFinalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoundFinal]!
+  matchTournaments(where: MatchTournamentWhereInput, orderBy: MatchTournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchTournament]!
+  matchSingles(where: MatchSingleWhereInput, orderBy: MatchSingleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchSingle]!
+  userRef(where: UserRefWhereUniqueInput!): UserRef
+  organization(where: OrganizationWhereUniqueInput!): Organization
+  tournament(where: TournamentWhereUniqueInput!): Tournament
+  team(where: TeamWhereUniqueInput!): Team
+  matchTournament(where: MatchTournamentWhereUniqueInput!): MatchTournament
+  matchSingle(where: MatchSingleWhereUniqueInput!): MatchSingle
+  userRefsConnection(where: UserRefWhereInput, orderBy: UserRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserRefConnection!
+  organizationsConnection(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganizationConnection!
+  tournamentsConnection(where: TournamentWhereInput, orderBy: TournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TournamentConnection!
+  teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
+  roundLastSixteensConnection(where: RoundLastSixteenWhereInput, orderBy: RoundLastSixteenOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoundLastSixteenConnection!
+  roundQuarterfinalsesConnection(where: RoundQuarterfinalsWhereInput, orderBy: RoundQuarterfinalsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoundQuarterfinalsConnection!
+  roundSemifinalsesConnection(where: RoundSemifinalsWhereInput, orderBy: RoundSemifinalsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoundSemifinalsConnection!
+  roundFinalsConnection(where: RoundFinalWhereInput, orderBy: RoundFinalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RoundFinalConnection!
+  matchTournamentsConnection(where: MatchTournamentWhereInput, orderBy: MatchTournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MatchTournamentConnection!
+  matchSinglesConnection(where: MatchSingleWhereInput, orderBy: MatchSingleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MatchSingleConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+enum Role {
+  Admin
+  Member
+}
+
+type RoundFinal {
+  match(where: MatchTournamentWhereInput): MatchTournament!
+  tournament(where: TournamentWhereInput): Tournament!
+}
+
+"""A connection to a list of items."""
+type RoundFinalConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RoundFinalEdge]!
+  aggregate: AggregateRoundFinal!
+}
+
+input RoundFinalCreateInput {
+  match: MatchTournamentCreateOneWithoutRoundFinalMatchInput!
+  tournament: TournamentCreateOneWithoutRoundFinalInput!
+}
+
+input RoundFinalCreateOneWithoutMatchInput {
+  create: RoundFinalCreateWithoutMatchInput
+}
+
+input RoundFinalCreateOneWithoutTournamentInput {
+  create: RoundFinalCreateWithoutTournamentInput
+}
+
+input RoundFinalCreateWithoutMatchInput {
+  tournament: TournamentCreateOneWithoutRoundFinalInput!
+}
+
+input RoundFinalCreateWithoutTournamentInput {
+  match: MatchTournamentCreateOneWithoutRoundFinalMatchInput!
+}
+
+"""An edge in a connection."""
+type RoundFinalEdge {
+  """The item at the end of the edge."""
+  node: RoundFinal!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RoundFinalOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type RoundFinalPreviousValues {
+
+}
+
+type RoundFinalSubscriptionPayload {
+  mutation: MutationType!
+  node: RoundFinal
+  updatedFields: [String!]
+  previousValues: RoundFinalPreviousValues
+}
+
+input RoundFinalSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoundFinalSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoundFinalSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoundFinalSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RoundFinalWhereInput
+}
+
+input RoundFinalUpdateInput {
+  match: MatchTournamentUpdateOneWithoutRoundFinalMatchInput
+  tournament: TournamentUpdateOneWithoutRoundFinalInput
+}
+
+input RoundFinalUpdateOneWithoutMatchInput {
+  create: RoundFinalCreateWithoutMatchInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundFinalUpdateWithoutMatchDataInput
+  upsert: RoundFinalUpsertWithoutMatchInput
+}
+
+input RoundFinalUpdateOneWithoutTournamentInput {
+  create: RoundFinalCreateWithoutTournamentInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundFinalUpdateWithoutTournamentDataInput
+  upsert: RoundFinalUpsertWithoutTournamentInput
+}
+
+input RoundFinalUpdateWithoutMatchDataInput {
+  tournament: TournamentUpdateOneWithoutRoundFinalInput
+}
+
+input RoundFinalUpdateWithoutTournamentDataInput {
+  match: MatchTournamentUpdateOneWithoutRoundFinalMatchInput
+}
+
+input RoundFinalUpsertWithoutMatchInput {
+  update: RoundFinalUpdateWithoutMatchDataInput!
+  create: RoundFinalCreateWithoutMatchInput!
+}
+
+input RoundFinalUpsertWithoutTournamentInput {
+  update: RoundFinalUpdateWithoutTournamentDataInput!
+  create: RoundFinalCreateWithoutTournamentInput!
+}
+
+input RoundFinalWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoundFinalWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoundFinalWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoundFinalWhereInput!]
+  match: MatchTournamentWhereInput
+  tournament: TournamentWhereInput
+}
+
+type RoundLastSixteen {
+  matchA(where: MatchTournamentWhereInput): MatchTournament!
+  matchB(where: MatchTournamentWhereInput): MatchTournament!
+  matchC(where: MatchTournamentWhereInput): MatchTournament!
+  matchD(where: MatchTournamentWhereInput): MatchTournament!
+  matchE(where: MatchTournamentWhereInput): MatchTournament!
+  matchF(where: MatchTournamentWhereInput): MatchTournament!
+  matchG(where: MatchTournamentWhereInput): MatchTournament!
+  matchH(where: MatchTournamentWhereInput): MatchTournament!
+  tournament(where: TournamentWhereInput): Tournament!
+}
+
+"""A connection to a list of items."""
+type RoundLastSixteenConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RoundLastSixteenEdge]!
+  aggregate: AggregateRoundLastSixteen!
+}
+
+input RoundLastSixteenCreateInput {
+  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
+  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
+  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
+  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
+  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
+  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
+}
+
+input RoundLastSixteenCreateOneWithoutMatchAInput {
+  create: RoundLastSixteenCreateWithoutMatchAInput
+}
+
+input RoundLastSixteenCreateOneWithoutMatchBInput {
+  create: RoundLastSixteenCreateWithoutMatchBInput
+}
+
+input RoundLastSixteenCreateOneWithoutMatchCInput {
+  create: RoundLastSixteenCreateWithoutMatchCInput
+}
+
+input RoundLastSixteenCreateOneWithoutMatchDInput {
+  create: RoundLastSixteenCreateWithoutMatchDInput
+}
+
+input RoundLastSixteenCreateOneWithoutMatchEInput {
+  create: RoundLastSixteenCreateWithoutMatchEInput
+}
+
+input RoundLastSixteenCreateOneWithoutMatchFInput {
+  create: RoundLastSixteenCreateWithoutMatchFInput
+}
+
+input RoundLastSixteenCreateOneWithoutMatchGInput {
+  create: RoundLastSixteenCreateWithoutMatchGInput
+}
+
+input RoundLastSixteenCreateOneWithoutMatchHInput {
+  create: RoundLastSixteenCreateWithoutMatchHInput
+}
+
+input RoundLastSixteenCreateOneWithoutTournamentInput {
+  create: RoundLastSixteenCreateWithoutTournamentInput
+}
+
+input RoundLastSixteenCreateWithoutMatchAInput {
+  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
+  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
+  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
+  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
+  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
+  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
+}
+
+input RoundLastSixteenCreateWithoutMatchBInput {
+  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
+  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
+  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
+  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
+  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
+  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
+  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
+}
+
+input RoundLastSixteenCreateWithoutMatchCInput {
+  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
+  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
+  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
+  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
+  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
+  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
+  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
+}
+
+input RoundLastSixteenCreateWithoutMatchDInput {
+  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
+  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
+  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
+  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
+  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
+  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
+}
+
+input RoundLastSixteenCreateWithoutMatchEInput {
+  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
+  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
+  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
+  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
+  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
+}
+
+input RoundLastSixteenCreateWithoutMatchFInput {
+  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
+  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
+  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
+  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
+  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
+}
+
+input RoundLastSixteenCreateWithoutMatchGInput {
+  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
+  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
+  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
+  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
+  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
+}
+
+input RoundLastSixteenCreateWithoutMatchHInput {
+  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
+  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
+  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
+  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
+  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
+}
+
+input RoundLastSixteenCreateWithoutTournamentInput {
+  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
+  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
+  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
+  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
+  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
+}
+
+"""An edge in a connection."""
+type RoundLastSixteenEdge {
+  """The item at the end of the edge."""
+  node: RoundLastSixteen!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RoundLastSixteenOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type RoundLastSixteenPreviousValues {
+
+}
+
+type RoundLastSixteenSubscriptionPayload {
+  mutation: MutationType!
+  node: RoundLastSixteen
+  updatedFields: [String!]
+  previousValues: RoundLastSixteenPreviousValues
+}
+
+input RoundLastSixteenSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoundLastSixteenSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoundLastSixteenSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoundLastSixteenSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RoundLastSixteenWhereInput
+}
+
+input RoundLastSixteenUpdateInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
+  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
+  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
+  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
+  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
+  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
+}
+
+input RoundLastSixteenUpdateOneWithoutMatchAInput {
+  create: RoundLastSixteenCreateWithoutMatchAInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundLastSixteenUpdateWithoutMatchADataInput
+  upsert: RoundLastSixteenUpsertWithoutMatchAInput
+}
+
+input RoundLastSixteenUpdateOneWithoutMatchBInput {
+  create: RoundLastSixteenCreateWithoutMatchBInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundLastSixteenUpdateWithoutMatchBDataInput
+  upsert: RoundLastSixteenUpsertWithoutMatchBInput
+}
+
+input RoundLastSixteenUpdateOneWithoutMatchCInput {
+  create: RoundLastSixteenCreateWithoutMatchCInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundLastSixteenUpdateWithoutMatchCDataInput
+  upsert: RoundLastSixteenUpsertWithoutMatchCInput
+}
+
+input RoundLastSixteenUpdateOneWithoutMatchDInput {
+  create: RoundLastSixteenCreateWithoutMatchDInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundLastSixteenUpdateWithoutMatchDDataInput
+  upsert: RoundLastSixteenUpsertWithoutMatchDInput
+}
+
+input RoundLastSixteenUpdateOneWithoutMatchEInput {
+  create: RoundLastSixteenCreateWithoutMatchEInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundLastSixteenUpdateWithoutMatchEDataInput
+  upsert: RoundLastSixteenUpsertWithoutMatchEInput
+}
+
+input RoundLastSixteenUpdateOneWithoutMatchFInput {
+  create: RoundLastSixteenCreateWithoutMatchFInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundLastSixteenUpdateWithoutMatchFDataInput
+  upsert: RoundLastSixteenUpsertWithoutMatchFInput
+}
+
+input RoundLastSixteenUpdateOneWithoutMatchGInput {
+  create: RoundLastSixteenCreateWithoutMatchGInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundLastSixteenUpdateWithoutMatchGDataInput
+  upsert: RoundLastSixteenUpsertWithoutMatchGInput
+}
+
+input RoundLastSixteenUpdateOneWithoutMatchHInput {
+  create: RoundLastSixteenCreateWithoutMatchHInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundLastSixteenUpdateWithoutMatchHDataInput
+  upsert: RoundLastSixteenUpsertWithoutMatchHInput
+}
+
+input RoundLastSixteenUpdateOneWithoutTournamentInput {
+  create: RoundLastSixteenCreateWithoutTournamentInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundLastSixteenUpdateWithoutTournamentDataInput
+  upsert: RoundLastSixteenUpsertWithoutTournamentInput
+}
+
+input RoundLastSixteenUpdateWithoutMatchADataInput {
+  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
+  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
+  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
+  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
+  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
+  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
+}
+
+input RoundLastSixteenUpdateWithoutMatchBDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
+  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
+  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
+  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
+  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
+  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
+  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
+}
+
+input RoundLastSixteenUpdateWithoutMatchCDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
+  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
+  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
+  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
+  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
+  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
+  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
+}
+
+input RoundLastSixteenUpdateWithoutMatchDDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
+  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
+  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
+  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
+  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
+  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
+}
+
+input RoundLastSixteenUpdateWithoutMatchEDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
+  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
+  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
+  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
+  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
+}
+
+input RoundLastSixteenUpdateWithoutMatchFDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
+  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
+  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
+  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
+  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
+}
+
+input RoundLastSixteenUpdateWithoutMatchGDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
+  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
+  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
+  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
+  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
+}
+
+input RoundLastSixteenUpdateWithoutMatchHDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
+  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
+  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
+  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
+  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
+}
+
+input RoundLastSixteenUpdateWithoutTournamentDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
+  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
+  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
+  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
+  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
+}
+
+input RoundLastSixteenUpsertWithoutMatchAInput {
+  update: RoundLastSixteenUpdateWithoutMatchADataInput!
+  create: RoundLastSixteenCreateWithoutMatchAInput!
+}
+
+input RoundLastSixteenUpsertWithoutMatchBInput {
+  update: RoundLastSixteenUpdateWithoutMatchBDataInput!
+  create: RoundLastSixteenCreateWithoutMatchBInput!
+}
+
+input RoundLastSixteenUpsertWithoutMatchCInput {
+  update: RoundLastSixteenUpdateWithoutMatchCDataInput!
+  create: RoundLastSixteenCreateWithoutMatchCInput!
+}
+
+input RoundLastSixteenUpsertWithoutMatchDInput {
+  update: RoundLastSixteenUpdateWithoutMatchDDataInput!
+  create: RoundLastSixteenCreateWithoutMatchDInput!
+}
+
+input RoundLastSixteenUpsertWithoutMatchEInput {
+  update: RoundLastSixteenUpdateWithoutMatchEDataInput!
+  create: RoundLastSixteenCreateWithoutMatchEInput!
+}
+
+input RoundLastSixteenUpsertWithoutMatchFInput {
+  update: RoundLastSixteenUpdateWithoutMatchFDataInput!
+  create: RoundLastSixteenCreateWithoutMatchFInput!
+}
+
+input RoundLastSixteenUpsertWithoutMatchGInput {
+  update: RoundLastSixteenUpdateWithoutMatchGDataInput!
+  create: RoundLastSixteenCreateWithoutMatchGInput!
+}
+
+input RoundLastSixteenUpsertWithoutMatchHInput {
+  update: RoundLastSixteenUpdateWithoutMatchHDataInput!
+  create: RoundLastSixteenCreateWithoutMatchHInput!
+}
+
+input RoundLastSixteenUpsertWithoutTournamentInput {
+  update: RoundLastSixteenUpdateWithoutTournamentDataInput!
+  create: RoundLastSixteenCreateWithoutTournamentInput!
+}
+
+input RoundLastSixteenWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoundLastSixteenWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoundLastSixteenWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoundLastSixteenWhereInput!]
+  matchA: MatchTournamentWhereInput
+  matchB: MatchTournamentWhereInput
+  matchC: MatchTournamentWhereInput
+  matchD: MatchTournamentWhereInput
+  matchE: MatchTournamentWhereInput
+  matchF: MatchTournamentWhereInput
+  matchG: MatchTournamentWhereInput
+  matchH: MatchTournamentWhereInput
+  tournament: TournamentWhereInput
+}
+
+type RoundQuarterfinals {
+  matchA(where: MatchTournamentWhereInput): MatchTournament!
+  matchB(where: MatchTournamentWhereInput): MatchTournament!
+  matchC(where: MatchTournamentWhereInput): MatchTournament!
+  matchD(where: MatchTournamentWhereInput): MatchTournament!
+  tournament(where: TournamentWhereInput): Tournament!
+}
+
+"""A connection to a list of items."""
+type RoundQuarterfinalsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RoundQuarterfinalsEdge]!
+  aggregate: AggregateRoundQuarterfinals!
+}
+
+input RoundQuarterfinalsCreateInput {
+  matchA: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput!
+  tournament: TournamentCreateOneWithoutRoundQuarterfinalsInput!
+}
+
+input RoundQuarterfinalsCreateOneWithoutMatchAInput {
+  create: RoundQuarterfinalsCreateWithoutMatchAInput
+}
+
+input RoundQuarterfinalsCreateOneWithoutMatchBInput {
+  create: RoundQuarterfinalsCreateWithoutMatchBInput
+}
+
+input RoundQuarterfinalsCreateOneWithoutMatchCInput {
+  create: RoundQuarterfinalsCreateWithoutMatchCInput
+}
+
+input RoundQuarterfinalsCreateOneWithoutMatchDInput {
+  create: RoundQuarterfinalsCreateWithoutMatchDInput
+}
+
+input RoundQuarterfinalsCreateOneWithoutTournamentInput {
+  create: RoundQuarterfinalsCreateWithoutTournamentInput
+}
+
+input RoundQuarterfinalsCreateWithoutMatchAInput {
+  matchB: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput!
+  tournament: TournamentCreateOneWithoutRoundQuarterfinalsInput!
+}
+
+input RoundQuarterfinalsCreateWithoutMatchBInput {
+  matchA: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput!
+  matchC: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput!
+  tournament: TournamentCreateOneWithoutRoundQuarterfinalsInput!
+}
+
+input RoundQuarterfinalsCreateWithoutMatchCInput {
+  matchA: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput!
+  matchD: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput!
+  tournament: TournamentCreateOneWithoutRoundQuarterfinalsInput!
+}
+
+input RoundQuarterfinalsCreateWithoutMatchDInput {
+  matchA: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput!
+  tournament: TournamentCreateOneWithoutRoundQuarterfinalsInput!
+}
+
+input RoundQuarterfinalsCreateWithoutTournamentInput {
+  matchA: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput!
+  matchC: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput!
+  matchD: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput!
+}
+
+"""An edge in a connection."""
+type RoundQuarterfinalsEdge {
+  """The item at the end of the edge."""
+  node: RoundQuarterfinals!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RoundQuarterfinalsOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type RoundQuarterfinalsPreviousValues {
+
+}
+
+type RoundQuarterfinalsSubscriptionPayload {
+  mutation: MutationType!
+  node: RoundQuarterfinals
+  updatedFields: [String!]
+  previousValues: RoundQuarterfinalsPreviousValues
+}
+
+input RoundQuarterfinalsSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoundQuarterfinalsSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoundQuarterfinalsSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoundQuarterfinalsSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RoundQuarterfinalsWhereInput
+}
+
+input RoundQuarterfinalsUpdateInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput
+  tournament: TournamentUpdateOneWithoutRoundQuarterfinalsInput
+}
+
+input RoundQuarterfinalsUpdateOneWithoutMatchAInput {
+  create: RoundQuarterfinalsCreateWithoutMatchAInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundQuarterfinalsUpdateWithoutMatchADataInput
+  upsert: RoundQuarterfinalsUpsertWithoutMatchAInput
+}
+
+input RoundQuarterfinalsUpdateOneWithoutMatchBInput {
+  create: RoundQuarterfinalsCreateWithoutMatchBInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundQuarterfinalsUpdateWithoutMatchBDataInput
+  upsert: RoundQuarterfinalsUpsertWithoutMatchBInput
+}
+
+input RoundQuarterfinalsUpdateOneWithoutMatchCInput {
+  create: RoundQuarterfinalsCreateWithoutMatchCInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundQuarterfinalsUpdateWithoutMatchCDataInput
+  upsert: RoundQuarterfinalsUpsertWithoutMatchCInput
+}
+
+input RoundQuarterfinalsUpdateOneWithoutMatchDInput {
+  create: RoundQuarterfinalsCreateWithoutMatchDInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundQuarterfinalsUpdateWithoutMatchDDataInput
+  upsert: RoundQuarterfinalsUpsertWithoutMatchDInput
+}
+
+input RoundQuarterfinalsUpdateOneWithoutTournamentInput {
+  create: RoundQuarterfinalsCreateWithoutTournamentInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundQuarterfinalsUpdateWithoutTournamentDataInput
+  upsert: RoundQuarterfinalsUpsertWithoutTournamentInput
+}
+
+input RoundQuarterfinalsUpdateWithoutMatchADataInput {
+  matchB: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput
+  tournament: TournamentUpdateOneWithoutRoundQuarterfinalsInput
+}
+
+input RoundQuarterfinalsUpdateWithoutMatchBDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput
+  matchC: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput
+  tournament: TournamentUpdateOneWithoutRoundQuarterfinalsInput
+}
+
+input RoundQuarterfinalsUpdateWithoutMatchCDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput
+  matchD: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput
+  tournament: TournamentUpdateOneWithoutRoundQuarterfinalsInput
+}
+
+input RoundQuarterfinalsUpdateWithoutMatchDDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput
+  tournament: TournamentUpdateOneWithoutRoundQuarterfinalsInput
+}
+
+input RoundQuarterfinalsUpdateWithoutTournamentDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput
+  matchC: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput
+  matchD: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput
+}
+
+input RoundQuarterfinalsUpsertWithoutMatchAInput {
+  update: RoundQuarterfinalsUpdateWithoutMatchADataInput!
+  create: RoundQuarterfinalsCreateWithoutMatchAInput!
+}
+
+input RoundQuarterfinalsUpsertWithoutMatchBInput {
+  update: RoundQuarterfinalsUpdateWithoutMatchBDataInput!
+  create: RoundQuarterfinalsCreateWithoutMatchBInput!
+}
+
+input RoundQuarterfinalsUpsertWithoutMatchCInput {
+  update: RoundQuarterfinalsUpdateWithoutMatchCDataInput!
+  create: RoundQuarterfinalsCreateWithoutMatchCInput!
+}
+
+input RoundQuarterfinalsUpsertWithoutMatchDInput {
+  update: RoundQuarterfinalsUpdateWithoutMatchDDataInput!
+  create: RoundQuarterfinalsCreateWithoutMatchDInput!
+}
+
+input RoundQuarterfinalsUpsertWithoutTournamentInput {
+  update: RoundQuarterfinalsUpdateWithoutTournamentDataInput!
+  create: RoundQuarterfinalsCreateWithoutTournamentInput!
+}
+
+input RoundQuarterfinalsWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoundQuarterfinalsWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoundQuarterfinalsWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoundQuarterfinalsWhereInput!]
+  matchA: MatchTournamentWhereInput
+  matchB: MatchTournamentWhereInput
+  matchC: MatchTournamentWhereInput
+  matchD: MatchTournamentWhereInput
+  tournament: TournamentWhereInput
+}
+
+type RoundSemifinals {
+  matchA(where: MatchTournamentWhereInput): MatchTournament!
+  matchB(where: MatchTournamentWhereInput): MatchTournament!
+  tournament(where: TournamentWhereInput): Tournament!
+}
+
+"""A connection to a list of items."""
+type RoundSemifinalsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RoundSemifinalsEdge]!
+  aggregate: AggregateRoundSemifinals!
+}
+
+input RoundSemifinalsCreateInput {
+  matchA: MatchTournamentCreateOneWithoutRoundSemifinalsMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundSemifinalsMatchBInput!
+  tournament: TournamentCreateOneWithoutRoundSemifinalsInput!
+}
+
+input RoundSemifinalsCreateOneWithoutMatchAInput {
+  create: RoundSemifinalsCreateWithoutMatchAInput
+}
+
+input RoundSemifinalsCreateOneWithoutMatchBInput {
+  create: RoundSemifinalsCreateWithoutMatchBInput
+}
+
+input RoundSemifinalsCreateOneWithoutTournamentInput {
+  create: RoundSemifinalsCreateWithoutTournamentInput
+}
+
+input RoundSemifinalsCreateWithoutMatchAInput {
+  matchB: MatchTournamentCreateOneWithoutRoundSemifinalsMatchBInput!
+  tournament: TournamentCreateOneWithoutRoundSemifinalsInput!
+}
+
+input RoundSemifinalsCreateWithoutMatchBInput {
+  matchA: MatchTournamentCreateOneWithoutRoundSemifinalsMatchAInput!
+  tournament: TournamentCreateOneWithoutRoundSemifinalsInput!
+}
+
+input RoundSemifinalsCreateWithoutTournamentInput {
+  matchA: MatchTournamentCreateOneWithoutRoundSemifinalsMatchAInput!
+  matchB: MatchTournamentCreateOneWithoutRoundSemifinalsMatchBInput!
+}
+
+"""An edge in a connection."""
+type RoundSemifinalsEdge {
+  """The item at the end of the edge."""
+  node: RoundSemifinals!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RoundSemifinalsOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type RoundSemifinalsPreviousValues {
+
+}
+
+type RoundSemifinalsSubscriptionPayload {
+  mutation: MutationType!
+  node: RoundSemifinals
+  updatedFields: [String!]
+  previousValues: RoundSemifinalsPreviousValues
+}
+
+input RoundSemifinalsSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoundSemifinalsSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoundSemifinalsSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoundSemifinalsSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RoundSemifinalsWhereInput
+}
+
+input RoundSemifinalsUpdateInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchBInput
+  tournament: TournamentUpdateOneWithoutRoundSemifinalsInput
+}
+
+input RoundSemifinalsUpdateOneWithoutMatchAInput {
+  create: RoundSemifinalsCreateWithoutMatchAInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundSemifinalsUpdateWithoutMatchADataInput
+  upsert: RoundSemifinalsUpsertWithoutMatchAInput
+}
+
+input RoundSemifinalsUpdateOneWithoutMatchBInput {
+  create: RoundSemifinalsCreateWithoutMatchBInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundSemifinalsUpdateWithoutMatchBDataInput
+  upsert: RoundSemifinalsUpsertWithoutMatchBInput
+}
+
+input RoundSemifinalsUpdateOneWithoutTournamentInput {
+  create: RoundSemifinalsCreateWithoutTournamentInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RoundSemifinalsUpdateWithoutTournamentDataInput
+  upsert: RoundSemifinalsUpsertWithoutTournamentInput
+}
+
+input RoundSemifinalsUpdateWithoutMatchADataInput {
+  matchB: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchBInput
+  tournament: TournamentUpdateOneWithoutRoundSemifinalsInput
+}
+
+input RoundSemifinalsUpdateWithoutMatchBDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchAInput
+  tournament: TournamentUpdateOneWithoutRoundSemifinalsInput
+}
+
+input RoundSemifinalsUpdateWithoutTournamentDataInput {
+  matchA: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchAInput
+  matchB: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchBInput
+}
+
+input RoundSemifinalsUpsertWithoutMatchAInput {
+  update: RoundSemifinalsUpdateWithoutMatchADataInput!
+  create: RoundSemifinalsCreateWithoutMatchAInput!
+}
+
+input RoundSemifinalsUpsertWithoutMatchBInput {
+  update: RoundSemifinalsUpdateWithoutMatchBDataInput!
+  create: RoundSemifinalsCreateWithoutMatchBInput!
+}
+
+input RoundSemifinalsUpsertWithoutTournamentInput {
+  update: RoundSemifinalsUpdateWithoutTournamentDataInput!
+  create: RoundSemifinalsCreateWithoutTournamentInput!
+}
+
+input RoundSemifinalsWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RoundSemifinalsWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RoundSemifinalsWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RoundSemifinalsWhereInput!]
+  matchA: MatchTournamentWhereInput
+  matchB: MatchTournamentWhereInput
+  tournament: TournamentWhereInput
+}
+
+type Subscription {
+  userRef(where: UserRefSubscriptionWhereInput): UserRefSubscriptionPayload
+  organization(where: OrganizationSubscriptionWhereInput): OrganizationSubscriptionPayload
+  tournament(where: TournamentSubscriptionWhereInput): TournamentSubscriptionPayload
+  team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
+  roundLastSixteen(where: RoundLastSixteenSubscriptionWhereInput): RoundLastSixteenSubscriptionPayload
+  roundQuarterfinals(where: RoundQuarterfinalsSubscriptionWhereInput): RoundQuarterfinalsSubscriptionPayload
+  roundSemifinals(where: RoundSemifinalsSubscriptionWhereInput): RoundSemifinalsSubscriptionPayload
+  roundFinal(where: RoundFinalSubscriptionWhereInput): RoundFinalSubscriptionPayload
+  matchTournament(where: MatchTournamentSubscriptionWhereInput): MatchTournamentSubscriptionPayload
+  matchSingle(where: MatchSingleSubscriptionWhereInput): MatchSingleSubscriptionPayload
+}
+
+type Team {
+  key: ID!
+  players(where: UserRefWhereInput, orderBy: UserRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserRef!]
+  matchTournamentTeamLeft(where: MatchTournamentWhereInput): MatchTournament
+  matchTournamentTeamRight(where: MatchTournamentWhereInput): MatchTournament
+  matchTournamentTeamWinner(where: MatchTournamentWhereInput): MatchTournament
+  matchSingleTeamLeft(where: MatchSingleWhereInput): MatchSingle
+  matchSingleTeamRight(where: MatchSingleWhereInput): MatchSingle
+  matchSingleTeamWinner(where: MatchSingleWhereInput): MatchSingle
+}
+
+"""A connection to a list of items."""
+type TeamConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TeamEdge]!
+  aggregate: AggregateTeam!
+}
+
+input TeamCreateInput {
+  key: ID!
+  players: UserRefCreateManyInput
+  matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
+  matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
+  matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
+  matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
+  matchSingleTeamRight: MatchSingleCreateOneWithoutTeamRightInput
+  matchSingleTeamWinner: MatchSingleCreateOneWithoutWinnerInput
+}
+
+input TeamCreateManyInput {
+  create: [TeamCreateInput!]
+  connect: [TeamWhereUniqueInput!]
+}
+
+input TeamCreateOneWithoutMatchSingleTeamLeftInput {
+  create: TeamCreateWithoutMatchSingleTeamLeftInput
+  connect: TeamWhereUniqueInput
+}
+
+input TeamCreateOneWithoutMatchSingleTeamRightInput {
+  create: TeamCreateWithoutMatchSingleTeamRightInput
+  connect: TeamWhereUniqueInput
+}
+
+input TeamCreateOneWithoutMatchSingleTeamWinnerInput {
+  create: TeamCreateWithoutMatchSingleTeamWinnerInput
+  connect: TeamWhereUniqueInput
+}
+
+input TeamCreateOneWithoutMatchTournamentTeamLeftInput {
+  create: TeamCreateWithoutMatchTournamentTeamLeftInput
+  connect: TeamWhereUniqueInput
+}
+
+input TeamCreateOneWithoutMatchTournamentTeamRightInput {
+  create: TeamCreateWithoutMatchTournamentTeamRightInput
+  connect: TeamWhereUniqueInput
+}
+
+input TeamCreateOneWithoutMatchTournamentTeamWinnerInput {
+  create: TeamCreateWithoutMatchTournamentTeamWinnerInput
+  connect: TeamWhereUniqueInput
+}
+
+input TeamCreateWithoutMatchSingleTeamLeftInput {
+  key: ID!
+  players: UserRefCreateManyInput
+  matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
+  matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
+  matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
+  matchSingleTeamRight: MatchSingleCreateOneWithoutTeamRightInput
+  matchSingleTeamWinner: MatchSingleCreateOneWithoutWinnerInput
+}
+
+input TeamCreateWithoutMatchSingleTeamRightInput {
+  key: ID!
+  players: UserRefCreateManyInput
+  matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
+  matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
+  matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
+  matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
+  matchSingleTeamWinner: MatchSingleCreateOneWithoutWinnerInput
+}
+
+input TeamCreateWithoutMatchSingleTeamWinnerInput {
+  key: ID!
+  players: UserRefCreateManyInput
+  matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
+  matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
+  matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
+  matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
+  matchSingleTeamRight: MatchSingleCreateOneWithoutTeamRightInput
+}
+
+input TeamCreateWithoutMatchTournamentTeamLeftInput {
+  key: ID!
+  players: UserRefCreateManyInput
+  matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
+  matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
+  matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
+  matchSingleTeamRight: MatchSingleCreateOneWithoutTeamRightInput
+  matchSingleTeamWinner: MatchSingleCreateOneWithoutWinnerInput
+}
+
+input TeamCreateWithoutMatchTournamentTeamRightInput {
+  key: ID!
+  players: UserRefCreateManyInput
+  matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
+  matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
+  matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
+  matchSingleTeamRight: MatchSingleCreateOneWithoutTeamRightInput
+  matchSingleTeamWinner: MatchSingleCreateOneWithoutWinnerInput
+}
+
+input TeamCreateWithoutMatchTournamentTeamWinnerInput {
+  key: ID!
+  players: UserRefCreateManyInput
+  matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
+  matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
+  matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
+  matchSingleTeamRight: MatchSingleCreateOneWithoutTeamRightInput
+  matchSingleTeamWinner: MatchSingleCreateOneWithoutWinnerInput
+}
+
+"""An edge in a connection."""
+type TeamEdge {
+  """The item at the end of the edge."""
+  node: Team!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TeamOrderByInput {
+  key_ASC
+  key_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TeamPreviousValues {
+  key: ID!
+}
+
+type TeamSubscriptionPayload {
+  mutation: MutationType!
+  node: Team
+  updatedFields: [String!]
+  previousValues: TeamPreviousValues
+}
+
+input TeamSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TeamSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TeamSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TeamSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TeamWhereInput
+}
+
+input TeamUpdateDataInput {
+  key: ID
+  players: UserRefUpdateManyInput
+  matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
+  matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
+  matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
+  matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
+  matchSingleTeamRight: MatchSingleUpdateOneWithoutTeamRightInput
+  matchSingleTeamWinner: MatchSingleUpdateOneWithoutWinnerInput
+}
+
+input TeamUpdateInput {
+  key: ID
+  players: UserRefUpdateManyInput
+  matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
+  matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
+  matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
+  matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
+  matchSingleTeamRight: MatchSingleUpdateOneWithoutTeamRightInput
+  matchSingleTeamWinner: MatchSingleUpdateOneWithoutWinnerInput
+}
+
+input TeamUpdateManyInput {
+  create: [TeamCreateInput!]
+  connect: [TeamWhereUniqueInput!]
+  disconnect: [TeamWhereUniqueInput!]
+  delete: [TeamWhereUniqueInput!]
+  update: [TeamUpdateWithWhereUniqueNestedInput!]
+  upsert: [TeamUpsertWithWhereUniqueNestedInput!]
+}
+
+input TeamUpdateOneWithoutMatchSingleTeamLeftInput {
+  create: TeamCreateWithoutMatchSingleTeamLeftInput
+  connect: TeamWhereUniqueInput
+  delete: Boolean
+  update: TeamUpdateWithoutMatchSingleTeamLeftDataInput
+  upsert: TeamUpsertWithoutMatchSingleTeamLeftInput
+}
+
+input TeamUpdateOneWithoutMatchSingleTeamRightInput {
+  create: TeamCreateWithoutMatchSingleTeamRightInput
+  connect: TeamWhereUniqueInput
+  delete: Boolean
+  update: TeamUpdateWithoutMatchSingleTeamRightDataInput
+  upsert: TeamUpsertWithoutMatchSingleTeamRightInput
+}
+
+input TeamUpdateOneWithoutMatchSingleTeamWinnerInput {
+  create: TeamCreateWithoutMatchSingleTeamWinnerInput
+  connect: TeamWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: TeamUpdateWithoutMatchSingleTeamWinnerDataInput
+  upsert: TeamUpsertWithoutMatchSingleTeamWinnerInput
+}
+
+input TeamUpdateOneWithoutMatchTournamentTeamLeftInput {
+  create: TeamCreateWithoutMatchTournamentTeamLeftInput
+  connect: TeamWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: TeamUpdateWithoutMatchTournamentTeamLeftDataInput
+  upsert: TeamUpsertWithoutMatchTournamentTeamLeftInput
+}
+
+input TeamUpdateOneWithoutMatchTournamentTeamRightInput {
+  create: TeamCreateWithoutMatchTournamentTeamRightInput
+  connect: TeamWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: TeamUpdateWithoutMatchTournamentTeamRightDataInput
+  upsert: TeamUpsertWithoutMatchTournamentTeamRightInput
+}
+
+input TeamUpdateOneWithoutMatchTournamentTeamWinnerInput {
+  create: TeamCreateWithoutMatchTournamentTeamWinnerInput
+  connect: TeamWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: TeamUpdateWithoutMatchTournamentTeamWinnerDataInput
+  upsert: TeamUpsertWithoutMatchTournamentTeamWinnerInput
+}
+
+input TeamUpdateWithoutMatchSingleTeamLeftDataInput {
+  key: ID
+  players: UserRefUpdateManyInput
+  matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
+  matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
+  matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
+  matchSingleTeamRight: MatchSingleUpdateOneWithoutTeamRightInput
+  matchSingleTeamWinner: MatchSingleUpdateOneWithoutWinnerInput
+}
+
+input TeamUpdateWithoutMatchSingleTeamRightDataInput {
+  key: ID
+  players: UserRefUpdateManyInput
+  matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
+  matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
+  matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
+  matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
+  matchSingleTeamWinner: MatchSingleUpdateOneWithoutWinnerInput
+}
+
+input TeamUpdateWithoutMatchSingleTeamWinnerDataInput {
+  key: ID
+  players: UserRefUpdateManyInput
+  matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
+  matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
+  matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
+  matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
+  matchSingleTeamRight: MatchSingleUpdateOneWithoutTeamRightInput
+}
+
+input TeamUpdateWithoutMatchTournamentTeamLeftDataInput {
+  key: ID
+  players: UserRefUpdateManyInput
+  matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
+  matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
+  matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
+  matchSingleTeamRight: MatchSingleUpdateOneWithoutTeamRightInput
+  matchSingleTeamWinner: MatchSingleUpdateOneWithoutWinnerInput
+}
+
+input TeamUpdateWithoutMatchTournamentTeamRightDataInput {
+  key: ID
+  players: UserRefUpdateManyInput
+  matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
+  matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
+  matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
+  matchSingleTeamRight: MatchSingleUpdateOneWithoutTeamRightInput
+  matchSingleTeamWinner: MatchSingleUpdateOneWithoutWinnerInput
+}
+
+input TeamUpdateWithoutMatchTournamentTeamWinnerDataInput {
+  key: ID
+  players: UserRefUpdateManyInput
+  matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
+  matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
+  matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
+  matchSingleTeamRight: MatchSingleUpdateOneWithoutTeamRightInput
+  matchSingleTeamWinner: MatchSingleUpdateOneWithoutWinnerInput
+}
+
+input TeamUpdateWithWhereUniqueNestedInput {
+  where: TeamWhereUniqueInput!
+  data: TeamUpdateDataInput!
+}
+
+input TeamUpsertWithoutMatchSingleTeamLeftInput {
+  update: TeamUpdateWithoutMatchSingleTeamLeftDataInput!
+  create: TeamCreateWithoutMatchSingleTeamLeftInput!
+}
+
+input TeamUpsertWithoutMatchSingleTeamRightInput {
+  update: TeamUpdateWithoutMatchSingleTeamRightDataInput!
+  create: TeamCreateWithoutMatchSingleTeamRightInput!
+}
+
+input TeamUpsertWithoutMatchSingleTeamWinnerInput {
+  update: TeamUpdateWithoutMatchSingleTeamWinnerDataInput!
+  create: TeamCreateWithoutMatchSingleTeamWinnerInput!
+}
+
+input TeamUpsertWithoutMatchTournamentTeamLeftInput {
+  update: TeamUpdateWithoutMatchTournamentTeamLeftDataInput!
+  create: TeamCreateWithoutMatchTournamentTeamLeftInput!
+}
+
+input TeamUpsertWithoutMatchTournamentTeamRightInput {
+  update: TeamUpdateWithoutMatchTournamentTeamRightDataInput!
+  create: TeamCreateWithoutMatchTournamentTeamRightInput!
+}
+
+input TeamUpsertWithoutMatchTournamentTeamWinnerInput {
+  update: TeamUpdateWithoutMatchTournamentTeamWinnerDataInput!
+  create: TeamCreateWithoutMatchTournamentTeamWinnerInput!
+}
+
+input TeamUpsertWithWhereUniqueNestedInput {
+  where: TeamWhereUniqueInput!
+  update: TeamUpdateDataInput!
+  create: TeamCreateInput!
+}
+
+input TeamWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TeamWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TeamWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TeamWhereInput!]
+  key: ID
+
+  """All values that are not equal to given value."""
+  key_not: ID
+
+  """All values that are contained in given list."""
+  key_in: [ID!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [ID!]
+
+  """All values less than the given value."""
+  key_lt: ID
+
+  """All values less than or equal the given value."""
+  key_lte: ID
+
+  """All values greater than the given value."""
+  key_gt: ID
+
+  """All values greater than or equal the given value."""
+  key_gte: ID
+
+  """All values containing the given string."""
+  key_contains: ID
+
+  """All values not containing the given string."""
+  key_not_contains: ID
+
+  """All values starting with the given string."""
+  key_starts_with: ID
+
+  """All values not starting with the given string."""
+  key_not_starts_with: ID
+
+  """All values ending with the given string."""
+  key_ends_with: ID
+
+  """All values not ending with the given string."""
+  key_not_ends_with: ID
+  players_every: UserRefWhereInput
+  players_some: UserRefWhereInput
+  players_none: UserRefWhereInput
+  matchTournamentTeamLeft: MatchTournamentWhereInput
+  matchTournamentTeamRight: MatchTournamentWhereInput
+  matchTournamentTeamWinner: MatchTournamentWhereInput
+  matchSingleTeamLeft: MatchSingleWhereInput
+  matchSingleTeamRight: MatchSingleWhereInput
+  matchSingleTeamWinner: MatchSingleWhereInput
+}
+
+input TeamWhereUniqueInput {
+  key: ID
+}
+
+type Tournament implements Node {
+  id: ID!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  name: String!
+  size: TournamentSize!
+  status: TournamentStatus!
+  discipline: Discipline!
+  organization(where: OrganizationWhereInput): Organization!
+  teamSize: Int!
+  teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team!]
+  roundLastSixteen(where: RoundLastSixteenWhereInput): RoundLastSixteen
+  roundQuarterfinals(where: RoundQuarterfinalsWhereInput): RoundQuarterfinals
+  roundSemifinals(where: RoundSemifinalsWhereInput): RoundSemifinals
+  roundFinal(where: RoundFinalWhereInput): RoundFinal
+  matches(where: MatchTournamentWhereInput, orderBy: MatchTournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchTournament!]
+}
+
+"""A connection to a list of items."""
+type TournamentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TournamentEdge]!
+  aggregate: AggregateTournament!
+}
+
+input TournamentCreateInput {
+  lastModifiedAt: DateTime!
+  name: String!
+  size: TournamentSize!
+  status: TournamentStatus!
+  discipline: Discipline!
+  teamSize: Int!
+  organization: OrganizationCreateOneWithoutTournamentsInput!
+  teams: TeamCreateManyInput
+  roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
+  roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsCreateOneWithoutTournamentInput
+  roundFinal: RoundFinalCreateOneWithoutTournamentInput
+  matches: MatchTournamentCreateManyWithoutTournamentInput
+}
+
+input TournamentCreateManyWithoutOrganizationInput {
+  create: [TournamentCreateWithoutOrganizationInput!]
+  connect: [TournamentWhereUniqueInput!]
+}
+
+input TournamentCreateOneWithoutMatchesInput {
+  create: TournamentCreateWithoutMatchesInput
+  connect: TournamentWhereUniqueInput
+}
+
+input TournamentCreateOneWithoutRoundFinalInput {
+  create: TournamentCreateWithoutRoundFinalInput
+  connect: TournamentWhereUniqueInput
+}
+
+input TournamentCreateOneWithoutRoundLastSixteenInput {
+  create: TournamentCreateWithoutRoundLastSixteenInput
+  connect: TournamentWhereUniqueInput
+}
+
+input TournamentCreateOneWithoutRoundQuarterfinalsInput {
+  create: TournamentCreateWithoutRoundQuarterfinalsInput
+  connect: TournamentWhereUniqueInput
+}
+
+input TournamentCreateOneWithoutRoundSemifinalsInput {
+  create: TournamentCreateWithoutRoundSemifinalsInput
+  connect: TournamentWhereUniqueInput
+}
+
+input TournamentCreateWithoutMatchesInput {
+  lastModifiedAt: DateTime!
+  name: String!
+  size: TournamentSize!
+  status: TournamentStatus!
+  discipline: Discipline!
+  teamSize: Int!
+  organization: OrganizationCreateOneWithoutTournamentsInput!
+  teams: TeamCreateManyInput
+  roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
+  roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsCreateOneWithoutTournamentInput
+  roundFinal: RoundFinalCreateOneWithoutTournamentInput
+}
+
+input TournamentCreateWithoutOrganizationInput {
+  lastModifiedAt: DateTime!
+  name: String!
+  size: TournamentSize!
+  status: TournamentStatus!
+  discipline: Discipline!
+  teamSize: Int!
+  teams: TeamCreateManyInput
+  roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
+  roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsCreateOneWithoutTournamentInput
+  roundFinal: RoundFinalCreateOneWithoutTournamentInput
+  matches: MatchTournamentCreateManyWithoutTournamentInput
+}
+
+input TournamentCreateWithoutRoundFinalInput {
+  lastModifiedAt: DateTime!
+  name: String!
+  size: TournamentSize!
+  status: TournamentStatus!
+  discipline: Discipline!
+  teamSize: Int!
+  organization: OrganizationCreateOneWithoutTournamentsInput!
+  teams: TeamCreateManyInput
+  roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
+  roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsCreateOneWithoutTournamentInput
+  matches: MatchTournamentCreateManyWithoutTournamentInput
+}
+
+input TournamentCreateWithoutRoundLastSixteenInput {
+  lastModifiedAt: DateTime!
+  name: String!
+  size: TournamentSize!
+  status: TournamentStatus!
+  discipline: Discipline!
+  teamSize: Int!
+  organization: OrganizationCreateOneWithoutTournamentsInput!
+  teams: TeamCreateManyInput
+  roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsCreateOneWithoutTournamentInput
+  roundFinal: RoundFinalCreateOneWithoutTournamentInput
+  matches: MatchTournamentCreateManyWithoutTournamentInput
+}
+
+input TournamentCreateWithoutRoundQuarterfinalsInput {
+  lastModifiedAt: DateTime!
+  name: String!
+  size: TournamentSize!
+  status: TournamentStatus!
+  discipline: Discipline!
+  teamSize: Int!
+  organization: OrganizationCreateOneWithoutTournamentsInput!
+  teams: TeamCreateManyInput
+  roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsCreateOneWithoutTournamentInput
+  roundFinal: RoundFinalCreateOneWithoutTournamentInput
+  matches: MatchTournamentCreateManyWithoutTournamentInput
+}
+
+input TournamentCreateWithoutRoundSemifinalsInput {
+  lastModifiedAt: DateTime!
+  name: String!
+  size: TournamentSize!
+  status: TournamentStatus!
+  discipline: Discipline!
+  teamSize: Int!
+  organization: OrganizationCreateOneWithoutTournamentsInput!
+  teams: TeamCreateManyInput
+  roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
+  roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
+  roundFinal: RoundFinalCreateOneWithoutTournamentInput
+  matches: MatchTournamentCreateManyWithoutTournamentInput
+}
+
+"""An edge in a connection."""
+type TournamentEdge {
+  """The item at the end of the edge."""
+  node: Tournament!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TournamentOrderByInput {
+  id_ASC
+  id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  lastModifiedAt_ASC
+  lastModifiedAt_DESC
+  name_ASC
+  name_DESC
+  size_ASC
+  size_DESC
+  status_ASC
+  status_DESC
+  discipline_ASC
+  discipline_DESC
+  teamSize_ASC
+  teamSize_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type TournamentPreviousValues {
+  id: ID!
+  createdAt: DateTime!
+  lastModifiedAt: DateTime!
+  name: String!
+  size: TournamentSize!
+  status: TournamentStatus!
+  discipline: Discipline!
+  teamSize: Int!
+}
+
+enum TournamentSize {
+  Small
+  Medium
+  Large
+  XLarge
+}
+
+enum TournamentStatus {
+  New
+  InProgress
+  Finished
+}
+
+type TournamentSubscriptionPayload {
+  mutation: MutationType!
+  node: Tournament
+  updatedFields: [String!]
+  previousValues: TournamentPreviousValues
+}
+
+input TournamentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TournamentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TournamentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TournamentSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TournamentWhereInput
+}
+
+input TournamentUpdateInput {
+  lastModifiedAt: DateTime
+  name: String
+  size: TournamentSize
+  status: TournamentStatus
+  discipline: Discipline
+  teamSize: Int
+  organization: OrganizationUpdateOneWithoutTournamentsInput
+  teams: TeamUpdateManyInput
+  roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
+  roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsUpdateOneWithoutTournamentInput
+  roundFinal: RoundFinalUpdateOneWithoutTournamentInput
+  matches: MatchTournamentUpdateManyWithoutTournamentInput
+}
+
+input TournamentUpdateManyWithoutOrganizationInput {
+  create: [TournamentCreateWithoutOrganizationInput!]
+  connect: [TournamentWhereUniqueInput!]
+  disconnect: [TournamentWhereUniqueInput!]
+  delete: [TournamentWhereUniqueInput!]
+  update: [TournamentUpdateWithWhereUniqueWithoutOrganizationInput!]
+  upsert: [TournamentUpsertWithWhereUniqueWithoutOrganizationInput!]
+}
+
+input TournamentUpdateOneWithoutMatchesInput {
+  create: TournamentCreateWithoutMatchesInput
+  connect: TournamentWhereUniqueInput
+  delete: Boolean
+  update: TournamentUpdateWithoutMatchesDataInput
+  upsert: TournamentUpsertWithoutMatchesInput
+}
+
+input TournamentUpdateOneWithoutRoundFinalInput {
+  create: TournamentCreateWithoutRoundFinalInput
+  connect: TournamentWhereUniqueInput
+  delete: Boolean
+  update: TournamentUpdateWithoutRoundFinalDataInput
+  upsert: TournamentUpsertWithoutRoundFinalInput
+}
+
+input TournamentUpdateOneWithoutRoundLastSixteenInput {
+  create: TournamentCreateWithoutRoundLastSixteenInput
+  connect: TournamentWhereUniqueInput
+  delete: Boolean
+  update: TournamentUpdateWithoutRoundLastSixteenDataInput
+  upsert: TournamentUpsertWithoutRoundLastSixteenInput
+}
+
+input TournamentUpdateOneWithoutRoundQuarterfinalsInput {
+  create: TournamentCreateWithoutRoundQuarterfinalsInput
+  connect: TournamentWhereUniqueInput
+  delete: Boolean
+  update: TournamentUpdateWithoutRoundQuarterfinalsDataInput
+  upsert: TournamentUpsertWithoutRoundQuarterfinalsInput
+}
+
+input TournamentUpdateOneWithoutRoundSemifinalsInput {
+  create: TournamentCreateWithoutRoundSemifinalsInput
+  connect: TournamentWhereUniqueInput
+  delete: Boolean
+  update: TournamentUpdateWithoutRoundSemifinalsDataInput
+  upsert: TournamentUpsertWithoutRoundSemifinalsInput
+}
+
+input TournamentUpdateWithoutMatchesDataInput {
+  lastModifiedAt: DateTime
+  name: String
+  size: TournamentSize
+  status: TournamentStatus
+  discipline: Discipline
+  teamSize: Int
+  organization: OrganizationUpdateOneWithoutTournamentsInput
+  teams: TeamUpdateManyInput
+  roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
+  roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsUpdateOneWithoutTournamentInput
+  roundFinal: RoundFinalUpdateOneWithoutTournamentInput
+}
+
+input TournamentUpdateWithoutOrganizationDataInput {
+  lastModifiedAt: DateTime
+  name: String
+  size: TournamentSize
+  status: TournamentStatus
+  discipline: Discipline
+  teamSize: Int
+  teams: TeamUpdateManyInput
+  roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
+  roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsUpdateOneWithoutTournamentInput
+  roundFinal: RoundFinalUpdateOneWithoutTournamentInput
+  matches: MatchTournamentUpdateManyWithoutTournamentInput
+}
+
+input TournamentUpdateWithoutRoundFinalDataInput {
+  lastModifiedAt: DateTime
+  name: String
+  size: TournamentSize
+  status: TournamentStatus
+  discipline: Discipline
+  teamSize: Int
+  organization: OrganizationUpdateOneWithoutTournamentsInput
+  teams: TeamUpdateManyInput
+  roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
+  roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsUpdateOneWithoutTournamentInput
+  matches: MatchTournamentUpdateManyWithoutTournamentInput
+}
+
+input TournamentUpdateWithoutRoundLastSixteenDataInput {
+  lastModifiedAt: DateTime
+  name: String
+  size: TournamentSize
+  status: TournamentStatus
+  discipline: Discipline
+  teamSize: Int
+  organization: OrganizationUpdateOneWithoutTournamentsInput
+  teams: TeamUpdateManyInput
+  roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsUpdateOneWithoutTournamentInput
+  roundFinal: RoundFinalUpdateOneWithoutTournamentInput
+  matches: MatchTournamentUpdateManyWithoutTournamentInput
+}
+
+input TournamentUpdateWithoutRoundQuarterfinalsDataInput {
+  lastModifiedAt: DateTime
+  name: String
+  size: TournamentSize
+  status: TournamentStatus
+  discipline: Discipline
+  teamSize: Int
+  organization: OrganizationUpdateOneWithoutTournamentsInput
+  teams: TeamUpdateManyInput
+  roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
+  roundSemifinals: RoundSemifinalsUpdateOneWithoutTournamentInput
+  roundFinal: RoundFinalUpdateOneWithoutTournamentInput
+  matches: MatchTournamentUpdateManyWithoutTournamentInput
+}
+
+input TournamentUpdateWithoutRoundSemifinalsDataInput {
+  lastModifiedAt: DateTime
+  name: String
+  size: TournamentSize
+  status: TournamentStatus
+  discipline: Discipline
+  teamSize: Int
+  organization: OrganizationUpdateOneWithoutTournamentsInput
+  teams: TeamUpdateManyInput
+  roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
+  roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
+  roundFinal: RoundFinalUpdateOneWithoutTournamentInput
+  matches: MatchTournamentUpdateManyWithoutTournamentInput
+}
+
+input TournamentUpdateWithWhereUniqueWithoutOrganizationInput {
+  where: TournamentWhereUniqueInput!
+  data: TournamentUpdateWithoutOrganizationDataInput!
+}
+
+input TournamentUpsertWithoutMatchesInput {
+  update: TournamentUpdateWithoutMatchesDataInput!
+  create: TournamentCreateWithoutMatchesInput!
+}
+
+input TournamentUpsertWithoutRoundFinalInput {
+  update: TournamentUpdateWithoutRoundFinalDataInput!
+  create: TournamentCreateWithoutRoundFinalInput!
+}
+
+input TournamentUpsertWithoutRoundLastSixteenInput {
+  update: TournamentUpdateWithoutRoundLastSixteenDataInput!
+  create: TournamentCreateWithoutRoundLastSixteenInput!
+}
+
+input TournamentUpsertWithoutRoundQuarterfinalsInput {
+  update: TournamentUpdateWithoutRoundQuarterfinalsDataInput!
+  create: TournamentCreateWithoutRoundQuarterfinalsInput!
+}
+
+input TournamentUpsertWithoutRoundSemifinalsInput {
+  update: TournamentUpdateWithoutRoundSemifinalsDataInput!
+  create: TournamentCreateWithoutRoundSemifinalsInput!
+}
+
+input TournamentUpsertWithWhereUniqueWithoutOrganizationInput {
+  where: TournamentWhereUniqueInput!
+  update: TournamentUpdateWithoutOrganizationDataInput!
+  create: TournamentCreateWithoutOrganizationInput!
+}
+
+input TournamentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TournamentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TournamentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TournamentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  lastModifiedAt: DateTime
+
+  """All values that are not equal to given value."""
+  lastModifiedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  lastModifiedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  lastModifiedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  lastModifiedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  lastModifiedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  lastModifiedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  lastModifiedAt_gte: DateTime
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  size: TournamentSize
+
+  """All values that are not equal to given value."""
+  size_not: TournamentSize
+
+  """All values that are contained in given list."""
+  size_in: [TournamentSize!]
+
+  """All values that are not contained in given list."""
+  size_not_in: [TournamentSize!]
+  status: TournamentStatus
+
+  """All values that are not equal to given value."""
+  status_not: TournamentStatus
+
+  """All values that are contained in given list."""
+  status_in: [TournamentStatus!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [TournamentStatus!]
+  discipline: Discipline
+
+  """All values that are not equal to given value."""
+  discipline_not: Discipline
+
+  """All values that are contained in given list."""
+  discipline_in: [Discipline!]
+
+  """All values that are not contained in given list."""
+  discipline_not_in: [Discipline!]
+  teamSize: Int
+
+  """All values that are not equal to given value."""
+  teamSize_not: Int
+
+  """All values that are contained in given list."""
+  teamSize_in: [Int!]
+
+  """All values that are not contained in given list."""
+  teamSize_not_in: [Int!]
+
+  """All values less than the given value."""
+  teamSize_lt: Int
+
+  """All values less than or equal the given value."""
+  teamSize_lte: Int
+
+  """All values greater than the given value."""
+  teamSize_gt: Int
+
+  """All values greater than or equal the given value."""
+  teamSize_gte: Int
+  organization: OrganizationWhereInput
+  teams_every: TeamWhereInput
+  teams_some: TeamWhereInput
+  teams_none: TeamWhereInput
+  roundLastSixteen: RoundLastSixteenWhereInput
+  roundQuarterfinals: RoundQuarterfinalsWhereInput
+  roundSemifinals: RoundSemifinalsWhereInput
+  roundFinal: RoundFinalWhereInput
+  matches_every: MatchTournamentWhereInput
+  matches_some: MatchTournamentWhereInput
+  matches_none: MatchTournamentWhereInput
+}
+
+input TournamentWhereUniqueInput {
+  id: ID
+}
+
+type UserRef {
+  auth0Id: String!
+  role: Role!
+}
+
+"""A connection to a list of items."""
+type UserRefConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserRefEdge]!
+  aggregate: AggregateUserRef!
+}
+
+input UserRefCreateInput {
+  auth0Id: String!
+  role: Role!
+}
+
+input UserRefCreateManyInput {
+  create: [UserRefCreateInput!]
+  connect: [UserRefWhereUniqueInput!]
+}
+
+"""An edge in a connection."""
+type UserRefEdge {
+  """The item at the end of the edge."""
+  node: UserRef!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserRefOrderByInput {
+  auth0Id_ASC
+  auth0Id_DESC
+  role_ASC
+  role_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type UserRefPreviousValues {
+  auth0Id: String!
+  role: Role!
+}
+
+type UserRefSubscriptionPayload {
+  mutation: MutationType!
+  node: UserRef
+  updatedFields: [String!]
+  previousValues: UserRefPreviousValues
+}
+
+input UserRefSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserRefSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserRefSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserRefSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserRefWhereInput
+}
+
+input UserRefUpdateDataInput {
+  auth0Id: String
+  role: Role
+}
+
+input UserRefUpdateInput {
+  auth0Id: String
+  role: Role
+}
+
+input UserRefUpdateManyInput {
+  create: [UserRefCreateInput!]
+  connect: [UserRefWhereUniqueInput!]
+  disconnect: [UserRefWhereUniqueInput!]
+  delete: [UserRefWhereUniqueInput!]
+  update: [UserRefUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserRefUpsertWithWhereUniqueNestedInput!]
+}
+
+input UserRefUpdateWithWhereUniqueNestedInput {
+  where: UserRefWhereUniqueInput!
+  data: UserRefUpdateDataInput!
+}
+
+input UserRefUpsertWithWhereUniqueNestedInput {
+  where: UserRefWhereUniqueInput!
+  update: UserRefUpdateDataInput!
+  create: UserRefCreateInput!
+}
+
+input UserRefWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserRefWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserRefWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserRefWhereInput!]
+  auth0Id: String
+
+  """All values that are not equal to given value."""
+  auth0Id_not: String
+
+  """All values that are contained in given list."""
+  auth0Id_in: [String!]
+
+  """All values that are not contained in given list."""
+  auth0Id_not_in: [String!]
+
+  """All values less than the given value."""
+  auth0Id_lt: String
+
+  """All values less than or equal the given value."""
+  auth0Id_lte: String
+
+  """All values greater than the given value."""
+  auth0Id_gt: String
+
+  """All values greater than or equal the given value."""
+  auth0Id_gte: String
+
+  """All values containing the given string."""
+  auth0Id_contains: String
+
+  """All values not containing the given string."""
+  auth0Id_not_contains: String
+
+  """All values starting with the given string."""
+  auth0Id_starts_with: String
+
+  """All values not starting with the given string."""
+  auth0Id_not_starts_with: String
+
+  """All values ending with the given string."""
+  auth0Id_ends_with: String
+
+  """All values not ending with the given string."""
+  auth0Id_not_ends_with: String
+  role: Role
+
+  """All values that are not equal to given value."""
+  role_not: Role
+
+  """All values that are contained in given list."""
+  role_in: [Role!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [Role!]
+}
+
+input UserRefWhereUniqueInput {
+  auth0Id: String
+}
