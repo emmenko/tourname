@@ -4,7 +4,7 @@
       "schemaPath": "src/schema.graphql",
       "extensions": {
         "endpoints": {
-          "default": "http://localhost:${env:APP_PORT}"
+          "dev": "http://localhost:${env:APP_PORT}/graphql"
         }
       }
     },
