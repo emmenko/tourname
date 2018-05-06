@@ -25,6 +25,7 @@ enum Discipline {
 type UserRef {
   auth0Id: String! @unique
   role: Role!
+  dummy: String
 }
 
 type Organization {
@@ -36,6 +37,7 @@ type Organization {
   tournaments: [Tournament!]!
   tournamentMatches: [MatchTournament!]!
   singleMatches: [MatchSingle!]!
+  dummy: String
 }
 
 type Tournament {
@@ -55,6 +57,7 @@ type Tournament {
   roundSemifinals: RoundSemifinals
   roundFinal: RoundFinal
   matches: [MatchTournament!]!
+  dummy: String
 }
 
 type Team {
@@ -68,6 +71,7 @@ type Team {
   matchSingleTeamLeft: MatchSingle @relation(name: "TeamLeftMatchSingle")
   matchSingleTeamRight: MatchSingle @relation(name: "TeamRightMatchSingle")
   matchSingleTeamWinner: MatchSingle @relation(name: "TeamWinnerMatchSingle")
+  dummy: String
 }
 
 type RoundLastSixteen {
@@ -80,6 +84,7 @@ type RoundLastSixteen {
   matchG: MatchTournament! @relation(name: "MatchGOfRoundLastSixteen")
   matchH: MatchTournament! @relation(name: "MatchHOfRoundLastSixteen")
   tournament: Tournament!
+  dummy: String
 }
 
 type RoundQuarterfinals {
@@ -88,17 +93,20 @@ type RoundQuarterfinals {
   matchC: MatchTournament! @relation(name: "MatchCOfRoundQuarterfinals")
   matchD: MatchTournament! @relation(name: "MatchDOfRoundQuarterfinals")
   tournament: Tournament!
+  dummy: String
 }
 
 type RoundSemifinals {
   matchA: MatchTournament! @relation(name: "MatchAOfRoundSemifinals")
   matchB: MatchTournament! @relation(name: "MatchBOfRoundSemifinals")
   tournament: Tournament!
+  dummy: String
 }
 
 type RoundFinal {
   match: MatchTournament! @relation(name: "MatchOfRoundFinal")
   tournament: Tournament!
+  dummy: String
 }
 
 # A tournament match does not require teams to be defined
@@ -133,6 +141,7 @@ type MatchTournament {
   roundSemifinalsMatchA: RoundSemifinals @relation(name: "MatchAOfRoundSemifinals")
   roundSemifinalsMatchB: RoundSemifinals @relation(name: "MatchBOfRoundSemifinals")
   roundFinalMatch: RoundFinal @relation(name: "MatchOfRoundFinal")
+  dummy: String
 }
 
 # A single match requires both teams to be defined
@@ -146,4 +155,5 @@ type MatchSingle {
   teamLeft: Team! @relation(name: "TeamLeftMatchSingle")
   teamRight: Team! @relation(name: "TeamRightMatchSingle")
   winner: Team @relation(name: "TeamWinnerMatchSingle")
+  dummy: String
 }
