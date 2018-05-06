@@ -10,8 +10,14 @@
     "prisma": "prisma"
   },
   "dependencies": {
+    "@commercetools/sdk-client": "1.5.6",
+    "@commercetools/sdk-middleware-http": "3.0.1",
+    "cors": "2.8.4",
+    "dataloader": "1.4.0",
     "dotenv": "5.0.1",
+    "express-jwt": "5.3.1",
     "graphql-yoga": "1.13.1",
+    "jwks-rsa": "1.2.1",
     "prisma-binding": "1.5.18"
   },
   "devDependencies": {

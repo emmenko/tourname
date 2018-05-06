@@ -31,7 +31,7 @@ type UserRef {
 type Organization {
   key: String! @unique
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   users: [UserRef!]!
   tournaments: [Tournament!]!
@@ -43,7 +43,7 @@ type Organization {
 type Tournament {
   id: ID! @unique
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   size: TournamentSize!
   status: TournamentStatus!
@@ -116,7 +116,7 @@ type RoundFinal {
 type MatchTournament {
   id: ID! @unique
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   organization: Organization!
   tournament: Tournament!
   discipline: Discipline!
@@ -149,7 +149,7 @@ type MatchTournament {
 type MatchSingle {
   id: ID! @unique
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   organization: Organization!
   discipline: Discipline!
   teamLeft: Team! @relation(name: "TeamLeftMatchSingle")
