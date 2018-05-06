@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466
-# timestamp: Sun May 06 2018 01:32:33 GMT+0200 (CEST)
+# timestamp: Sun May 06 2018 19:05:35 GMT+0200 (CEST)
 
 type AggregateMatchSingle {
   count: Int!
@@ -62,7 +62,7 @@ scalar Long
 type MatchSingle implements Node {
   id: ID!
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   organization(where: OrganizationWhereInput): Organization!
   discipline: Discipline!
   teamLeft(where: TeamWhereInput): Team!
@@ -82,7 +82,6 @@ type MatchSingleConnection {
 }
 
 input MatchSingleCreateInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutSingleMatchesInput!
@@ -112,7 +111,6 @@ input MatchSingleCreateOneWithoutWinnerInput {
 }
 
 input MatchSingleCreateWithoutOrganizationInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   teamLeft: TeamCreateOneWithoutMatchSingleTeamLeftInput!
@@ -121,7 +119,6 @@ input MatchSingleCreateWithoutOrganizationInput {
 }
 
 input MatchSingleCreateWithoutTeamLeftInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutSingleMatchesInput!
@@ -130,7 +127,6 @@ input MatchSingleCreateWithoutTeamLeftInput {
 }
 
 input MatchSingleCreateWithoutTeamRightInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutSingleMatchesInput!
@@ -139,7 +135,6 @@ input MatchSingleCreateWithoutTeamRightInput {
 }
 
 input MatchSingleCreateWithoutWinnerInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutSingleMatchesInput!
@@ -161,20 +156,18 @@ enum MatchSingleOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  lastModifiedAt_ASC
-  lastModifiedAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   discipline_ASC
   discipline_DESC
   dummy_ASC
   dummy_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type MatchSinglePreviousValues {
   id: ID!
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   discipline: Discipline!
   dummy: String
 }
@@ -219,7 +212,6 @@ input MatchSingleSubscriptionWhereInput {
 }
 
 input MatchSingleUpdateInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutSingleMatchesInput
@@ -265,7 +257,6 @@ input MatchSingleUpdateOneWithoutWinnerInput {
 }
 
 input MatchSingleUpdateWithoutOrganizationDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   teamLeft: TeamUpdateOneWithoutMatchSingleTeamLeftInput
@@ -274,7 +265,6 @@ input MatchSingleUpdateWithoutOrganizationDataInput {
 }
 
 input MatchSingleUpdateWithoutTeamLeftDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutSingleMatchesInput
@@ -283,7 +273,6 @@ input MatchSingleUpdateWithoutTeamLeftDataInput {
 }
 
 input MatchSingleUpdateWithoutTeamRightDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutSingleMatchesInput
@@ -292,7 +281,6 @@ input MatchSingleUpdateWithoutTeamRightDataInput {
 }
 
 input MatchSingleUpdateWithoutWinnerDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutSingleMatchesInput
@@ -397,28 +385,28 @@ input MatchSingleWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
-  lastModifiedAt: DateTime
+  updatedAt: DateTime
 
   """All values that are not equal to given value."""
-  lastModifiedAt_not: DateTime
+  updatedAt_not: DateTime
 
   """All values that are contained in given list."""
-  lastModifiedAt_in: [DateTime!]
+  updatedAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  lastModifiedAt_not_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  lastModifiedAt_lt: DateTime
+  updatedAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  lastModifiedAt_lte: DateTime
+  updatedAt_lte: DateTime
 
   """All values greater than the given value."""
-  lastModifiedAt_gt: DateTime
+  updatedAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  lastModifiedAt_gte: DateTime
+  updatedAt_gte: DateTime
   discipline: Discipline
 
   """All values that are not equal to given value."""
@@ -482,7 +470,7 @@ input MatchSingleWhereUniqueInput {
 type MatchTournament implements Node {
   id: ID!
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   organization(where: OrganizationWhereInput): Organization!
   tournament(where: TournamentWhereInput): Tournament!
   discipline: Discipline!
@@ -519,7 +507,6 @@ type MatchTournamentConnection {
 }
 
 input MatchTournamentCreateInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -651,7 +638,6 @@ input MatchTournamentCreateOneWithoutWinnerInput {
 }
 
 input MatchTournamentCreateWithoutOrganizationInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   tournament: TournamentCreateOneWithoutMatchesInput!
@@ -677,7 +663,6 @@ input MatchTournamentCreateWithoutOrganizationInput {
 }
 
 input MatchTournamentCreateWithoutRoundFinalMatchInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -703,7 +688,6 @@ input MatchTournamentCreateWithoutRoundFinalMatchInput {
 }
 
 input MatchTournamentCreateWithoutRoundLastSixteenMatchAInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -729,7 +713,6 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchAInput {
 }
 
 input MatchTournamentCreateWithoutRoundLastSixteenMatchBInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -755,7 +738,6 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchBInput {
 }
 
 input MatchTournamentCreateWithoutRoundLastSixteenMatchCInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -781,7 +763,6 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchCInput {
 }
 
 input MatchTournamentCreateWithoutRoundLastSixteenMatchDInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -807,7 +788,6 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchDInput {
 }
 
 input MatchTournamentCreateWithoutRoundLastSixteenMatchEInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -833,7 +813,6 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchEInput {
 }
 
 input MatchTournamentCreateWithoutRoundLastSixteenMatchFInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -859,7 +838,6 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchFInput {
 }
 
 input MatchTournamentCreateWithoutRoundLastSixteenMatchGInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -885,7 +863,6 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchGInput {
 }
 
 input MatchTournamentCreateWithoutRoundLastSixteenMatchHInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -911,7 +888,6 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchHInput {
 }
 
 input MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -937,7 +913,6 @@ input MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput {
 }
 
 input MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -963,7 +938,6 @@ input MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput {
 }
 
 input MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -989,7 +963,6 @@ input MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput {
 }
 
 input MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -1015,7 +988,6 @@ input MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput {
 }
 
 input MatchTournamentCreateWithoutRoundSemifinalsMatchAInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -1041,7 +1013,6 @@ input MatchTournamentCreateWithoutRoundSemifinalsMatchAInput {
 }
 
 input MatchTournamentCreateWithoutRoundSemifinalsMatchBInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -1067,7 +1038,6 @@ input MatchTournamentCreateWithoutRoundSemifinalsMatchBInput {
 }
 
 input MatchTournamentCreateWithoutTeamLeftInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -1093,7 +1063,6 @@ input MatchTournamentCreateWithoutTeamLeftInput {
 }
 
 input MatchTournamentCreateWithoutTeamRightInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -1119,7 +1088,6 @@ input MatchTournamentCreateWithoutTeamRightInput {
 }
 
 input MatchTournamentCreateWithoutTournamentInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -1145,7 +1113,6 @@ input MatchTournamentCreateWithoutTournamentInput {
 }
 
 input MatchTournamentCreateWithoutWinnerInput {
-  lastModifiedAt: DateTime!
   discipline: Discipline!
   dummy: String
   organization: OrganizationCreateOneWithoutTournamentMatchesInput!
@@ -1184,20 +1151,18 @@ enum MatchTournamentOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  lastModifiedAt_ASC
-  lastModifiedAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   discipline_ASC
   discipline_DESC
   dummy_ASC
   dummy_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type MatchTournamentPreviousValues {
   id: ID!
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   discipline: Discipline!
   dummy: String
 }
@@ -1242,7 +1207,6 @@ input MatchTournamentSubscriptionWhereInput {
 }
 
 input MatchTournamentUpdateDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1269,7 +1233,6 @@ input MatchTournamentUpdateDataInput {
 }
 
 input MatchTournamentUpdateInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1470,7 +1433,6 @@ input MatchTournamentUpdateOneWithoutWinnerInput {
 }
 
 input MatchTournamentUpdateWithoutOrganizationDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   tournament: TournamentUpdateOneWithoutMatchesInput
@@ -1496,7 +1458,6 @@ input MatchTournamentUpdateWithoutOrganizationDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundFinalMatchDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1522,7 +1483,6 @@ input MatchTournamentUpdateWithoutRoundFinalMatchDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchADataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1548,7 +1508,6 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchADataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchBDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1574,7 +1533,6 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchBDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchCDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1600,7 +1558,6 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchCDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchDDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1626,7 +1583,6 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchDDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchEDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1652,7 +1608,6 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchEDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchFDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1678,7 +1633,6 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchFDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchGDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1704,7 +1658,6 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchGDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchHDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1730,7 +1683,6 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchHDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchADataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1756,7 +1708,6 @@ input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchADataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchBDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1782,7 +1733,6 @@ input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchBDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchCDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1808,7 +1758,6 @@ input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchCDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchDDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1834,7 +1783,6 @@ input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchDDataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundSemifinalsMatchADataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1860,7 +1808,6 @@ input MatchTournamentUpdateWithoutRoundSemifinalsMatchADataInput {
 }
 
 input MatchTournamentUpdateWithoutRoundSemifinalsMatchBDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1886,7 +1833,6 @@ input MatchTournamentUpdateWithoutRoundSemifinalsMatchBDataInput {
 }
 
 input MatchTournamentUpdateWithoutTeamLeftDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1912,7 +1858,6 @@ input MatchTournamentUpdateWithoutTeamLeftDataInput {
 }
 
 input MatchTournamentUpdateWithoutTeamRightDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1938,7 +1883,6 @@ input MatchTournamentUpdateWithoutTeamRightDataInput {
 }
 
 input MatchTournamentUpdateWithoutTournamentDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -1964,7 +1908,6 @@ input MatchTournamentUpdateWithoutTournamentDataInput {
 }
 
 input MatchTournamentUpdateWithoutWinnerDataInput {
-  lastModifiedAt: DateTime
   discipline: Discipline
   dummy: String
   organization: OrganizationUpdateOneWithoutTournamentMatchesInput
@@ -2177,28 +2120,28 @@ input MatchTournamentWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
-  lastModifiedAt: DateTime
+  updatedAt: DateTime
 
   """All values that are not equal to given value."""
-  lastModifiedAt_not: DateTime
+  updatedAt_not: DateTime
 
   """All values that are contained in given list."""
-  lastModifiedAt_in: [DateTime!]
+  updatedAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  lastModifiedAt_not_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  lastModifiedAt_lt: DateTime
+  updatedAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  lastModifiedAt_lte: DateTime
+  updatedAt_lte: DateTime
 
   """All values greater than the given value."""
-  lastModifiedAt_gt: DateTime
+  updatedAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  lastModifiedAt_gte: DateTime
+  updatedAt_gte: DateTime
   discipline: Discipline
 
   """All values that are not equal to given value."""
@@ -2342,7 +2285,7 @@ interface Node {
 type Organization {
   key: String!
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   users(where: UserRefWhereInput, orderBy: UserRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserRef!]
   tournaments(where: TournamentWhereInput, orderBy: TournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tournament!]
@@ -2363,7 +2306,6 @@ type OrganizationConnection {
 
 input OrganizationCreateInput {
   key: String!
-  lastModifiedAt: DateTime!
   name: String!
   dummy: String
   users: UserRefCreateManyInput
@@ -2389,7 +2331,6 @@ input OrganizationCreateOneWithoutTournamentsInput {
 
 input OrganizationCreateWithoutSingleMatchesInput {
   key: String!
-  lastModifiedAt: DateTime!
   name: String!
   dummy: String
   users: UserRefCreateManyInput
@@ -2399,7 +2340,6 @@ input OrganizationCreateWithoutSingleMatchesInput {
 
 input OrganizationCreateWithoutTournamentMatchesInput {
   key: String!
-  lastModifiedAt: DateTime!
   name: String!
   dummy: String
   users: UserRefCreateManyInput
@@ -2409,7 +2349,6 @@ input OrganizationCreateWithoutTournamentMatchesInput {
 
 input OrganizationCreateWithoutTournamentsInput {
   key: String!
-  lastModifiedAt: DateTime!
   name: String!
   dummy: String
   users: UserRefCreateManyInput
@@ -2431,22 +2370,20 @@ enum OrganizationOrderByInput {
   key_DESC
   createdAt_ASC
   createdAt_DESC
-  lastModifiedAt_ASC
-  lastModifiedAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   name_ASC
   name_DESC
   dummy_ASC
   dummy_DESC
   id_ASC
   id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type OrganizationPreviousValues {
   key: String!
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   dummy: String
 }
@@ -2492,7 +2429,6 @@ input OrganizationSubscriptionWhereInput {
 
 input OrganizationUpdateInput {
   key: String
-  lastModifiedAt: DateTime
   name: String
   dummy: String
   users: UserRefUpdateManyInput
@@ -2527,7 +2463,6 @@ input OrganizationUpdateOneWithoutTournamentsInput {
 
 input OrganizationUpdateWithoutSingleMatchesDataInput {
   key: String
-  lastModifiedAt: DateTime
   name: String
   dummy: String
   users: UserRefUpdateManyInput
@@ -2537,7 +2472,6 @@ input OrganizationUpdateWithoutSingleMatchesDataInput {
 
 input OrganizationUpdateWithoutTournamentMatchesDataInput {
   key: String
-  lastModifiedAt: DateTime
   name: String
   dummy: String
   users: UserRefUpdateManyInput
@@ -2547,7 +2481,6 @@ input OrganizationUpdateWithoutTournamentMatchesDataInput {
 
 input OrganizationUpdateWithoutTournamentsDataInput {
   key: String
-  lastModifiedAt: DateTime
   name: String
   dummy: String
   users: UserRefUpdateManyInput
@@ -2641,28 +2574,28 @@ input OrganizationWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
-  lastModifiedAt: DateTime
+  updatedAt: DateTime
 
   """All values that are not equal to given value."""
-  lastModifiedAt_not: DateTime
+  updatedAt_not: DateTime
 
   """All values that are contained in given list."""
-  lastModifiedAt_in: [DateTime!]
+  updatedAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  lastModifiedAt_not_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  lastModifiedAt_lt: DateTime
+  updatedAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  lastModifiedAt_lte: DateTime
+  updatedAt_lte: DateTime
 
   """All values greater than the given value."""
-  lastModifiedAt_gt: DateTime
+  updatedAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  lastModifiedAt_gte: DateTime
+  updatedAt_gte: DateTime
   name: String
 
   """All values that are not equal to given value."""
@@ -4624,7 +4557,7 @@ input TeamWhereUniqueInput {
 type Tournament implements Node {
   id: ID!
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   size: TournamentSize!
   status: TournamentStatus!
@@ -4651,7 +4584,6 @@ type TournamentConnection {
 }
 
 input TournamentCreateInput {
-  lastModifiedAt: DateTime!
   name: String!
   size: TournamentSize!
   status: TournamentStatus!
@@ -4698,7 +4630,6 @@ input TournamentCreateOneWithoutRoundSemifinalsInput {
 }
 
 input TournamentCreateWithoutMatchesInput {
-  lastModifiedAt: DateTime!
   name: String!
   size: TournamentSize!
   status: TournamentStatus!
@@ -4714,7 +4645,6 @@ input TournamentCreateWithoutMatchesInput {
 }
 
 input TournamentCreateWithoutOrganizationInput {
-  lastModifiedAt: DateTime!
   name: String!
   size: TournamentSize!
   status: TournamentStatus!
@@ -4730,7 +4660,6 @@ input TournamentCreateWithoutOrganizationInput {
 }
 
 input TournamentCreateWithoutRoundFinalInput {
-  lastModifiedAt: DateTime!
   name: String!
   size: TournamentSize!
   status: TournamentStatus!
@@ -4746,7 +4675,6 @@ input TournamentCreateWithoutRoundFinalInput {
 }
 
 input TournamentCreateWithoutRoundLastSixteenInput {
-  lastModifiedAt: DateTime!
   name: String!
   size: TournamentSize!
   status: TournamentStatus!
@@ -4762,7 +4690,6 @@ input TournamentCreateWithoutRoundLastSixteenInput {
 }
 
 input TournamentCreateWithoutRoundQuarterfinalsInput {
-  lastModifiedAt: DateTime!
   name: String!
   size: TournamentSize!
   status: TournamentStatus!
@@ -4778,7 +4705,6 @@ input TournamentCreateWithoutRoundQuarterfinalsInput {
 }
 
 input TournamentCreateWithoutRoundSemifinalsInput {
-  lastModifiedAt: DateTime!
   name: String!
   size: TournamentSize!
   status: TournamentStatus!
@@ -4807,8 +4733,8 @@ enum TournamentOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  lastModifiedAt_ASC
-  lastModifiedAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   name_ASC
   name_DESC
   size_ASC
@@ -4821,14 +4747,12 @@ enum TournamentOrderByInput {
   teamSize_DESC
   dummy_ASC
   dummy_DESC
-  updatedAt_ASC
-  updatedAt_DESC
 }
 
 type TournamentPreviousValues {
   id: ID!
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   size: TournamentSize!
   status: TournamentStatus!
@@ -4890,7 +4814,6 @@ input TournamentSubscriptionWhereInput {
 }
 
 input TournamentUpdateInput {
-  lastModifiedAt: DateTime
   name: String
   size: TournamentSize
   status: TournamentStatus
@@ -4956,7 +4879,6 @@ input TournamentUpdateOneWithoutRoundSemifinalsInput {
 }
 
 input TournamentUpdateWithoutMatchesDataInput {
-  lastModifiedAt: DateTime
   name: String
   size: TournamentSize
   status: TournamentStatus
@@ -4972,7 +4894,6 @@ input TournamentUpdateWithoutMatchesDataInput {
 }
 
 input TournamentUpdateWithoutOrganizationDataInput {
-  lastModifiedAt: DateTime
   name: String
   size: TournamentSize
   status: TournamentStatus
@@ -4988,7 +4909,6 @@ input TournamentUpdateWithoutOrganizationDataInput {
 }
 
 input TournamentUpdateWithoutRoundFinalDataInput {
-  lastModifiedAt: DateTime
   name: String
   size: TournamentSize
   status: TournamentStatus
@@ -5004,7 +4924,6 @@ input TournamentUpdateWithoutRoundFinalDataInput {
 }
 
 input TournamentUpdateWithoutRoundLastSixteenDataInput {
-  lastModifiedAt: DateTime
   name: String
   size: TournamentSize
   status: TournamentStatus
@@ -5020,7 +4939,6 @@ input TournamentUpdateWithoutRoundLastSixteenDataInput {
 }
 
 input TournamentUpdateWithoutRoundQuarterfinalsDataInput {
-  lastModifiedAt: DateTime
   name: String
   size: TournamentSize
   status: TournamentStatus
@@ -5036,7 +4954,6 @@ input TournamentUpdateWithoutRoundQuarterfinalsDataInput {
 }
 
 input TournamentUpdateWithoutRoundSemifinalsDataInput {
-  lastModifiedAt: DateTime
   name: String
   size: TournamentSize
   status: TournamentStatus
@@ -5158,28 +5075,28 @@ input TournamentWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
-  lastModifiedAt: DateTime
+  updatedAt: DateTime
 
   """All values that are not equal to given value."""
-  lastModifiedAt_not: DateTime
+  updatedAt_not: DateTime
 
   """All values that are contained in given list."""
-  lastModifiedAt_in: [DateTime!]
+  updatedAt_in: [DateTime!]
 
   """All values that are not contained in given list."""
-  lastModifiedAt_not_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
 
   """All values less than the given value."""
-  lastModifiedAt_lt: DateTime
+  updatedAt_lt: DateTime
 
   """All values less than or equal the given value."""
-  lastModifiedAt_lte: DateTime
+  updatedAt_lte: DateTime
 
   """All values greater than the given value."""
-  lastModifiedAt_gt: DateTime
+  updatedAt_gt: DateTime
 
   """All values greater than or equal the given value."""
-  lastModifiedAt_gte: DateTime
+  updatedAt_gte: DateTime
   name: String
 
   """All values that are not equal to given value."""

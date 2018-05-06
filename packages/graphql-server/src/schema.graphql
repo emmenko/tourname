@@ -1,7 +1,7 @@
 # import Role,Discipline,TournamentStatus,TournamentSize from "./generated/prisma.graphql"
 
 type Query {
-  # me: Member!
+  me: User!
   isOrganizationKeyUsed(key: String!): Boolean!
   organization(key: String!): Organization
 }
@@ -10,35 +10,16 @@ type Query {
 #   createUser(user: UserDraft!): User
 # }
 
-# interface User {
-#   id: String!
-#   createdAt: DateTime!
-#   lastModifiedAt: DateTime!
-#   email: String!
-#   name: String!
-#   picture: String!
-# }
-
-# type MemberInfo implements User {
-#   id: String!
-#   createdAt: DateTime!
-#   lastModifiedAt: DateTime!
-#   email: String!
-#   name: String!
-#   picture: String!
-#   role: Role!
-# }
-
-# type Member implements User {
-#   id: String!
-#   createdAt: DateTime!
-#   lastModifiedAt: DateTime!
-#   email: String!
-#   name: String!
-#   picture: String!
-#   role: Role!
-#   availableOrganizations: [OrganizationInfo!]!
-# }
+type User {
+  id: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
+  name: String!
+  picture: String!
+  role: Role!
+  availableOrganizations: [OrganizationInfo!]!
+}
 
 enum SortOrder {
   Asc
@@ -58,9 +39,9 @@ type OrganizationInfo {
 type Organization {
   key: String! # unique identifier
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   name: String!
-  # members: [MemberInfo!]!
+  users: [User!]!
   tournaments(
     status: [TournamentStatus!] # `or` condition
     sort: SortBy!
@@ -72,7 +53,7 @@ type Organization {
 type TournamentInfo {
   id: ID!
   createdAt: DateTime!
-  lastModifiedAt: DateTime!
+  updatedAt: DateTime!
   name: String!
   discipline: Discipline!
   status: TournamentStatus!

@@ -99,11 +99,11 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@commercetools/sdk-client@^1.5.5":
+"@commercetools/sdk-client@1.5.6", "@commercetools/sdk-client@^1.5.5":
   version "1.5.6"
   resolved "https://registry.yarnpkg.com/@commercetools/sdk-client/-/sdk-client-1.5.6.tgz#dee49e825d13eda6646de325444490f3116c0a2a"
 
-"@commercetools/sdk-middleware-http@^3.0.0":
+"@commercetools/sdk-middleware-http@3.0.1", "@commercetools/sdk-middleware-http@^3.0.0":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@commercetools/sdk-middleware-http/-/sdk-middleware-http-3.0.1.tgz#5f7bfb81f7bf8ffda6afb64f8cf8e2e903e1b379"
   dependencies:
@@ -2504,7 +2504,7 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
-cors@^2.8.4:
+cors@2.8.4, cors@^2.8.4:
   version "2.8.4"
   resolved "https://registry.yarnpkg.com/cors/-/cors-2.8.4.tgz#2bd381f2eb201020105cd50ea59da63090694686"
   dependencies:
@@ -2788,7 +2788,7 @@ data-urls@^1.0.0:
     whatwg-mimetype "^2.0.0"
     whatwg-url "^6.4.0"
 
-dataloader@^1.4.0:
+dataloader@1.4.0, dataloader@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/dataloader/-/dataloader-1.4.0.tgz#bca11d867f5d3f1b9ed9f737bd15970c65dff5c8"
 
@@ -3603,7 +3603,7 @@ expect@^22.4.3:
     jest-message-util "^22.4.3"
     jest-regex-util "^22.4.3"
 
-express-jwt@^5.3.1:
+express-jwt@5.3.1, express-jwt@^5.3.1:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/express-jwt/-/express-jwt-5.3.1.tgz#66f05c7dddb5409c037346a98b88965bb10ea4ae"
   dependencies:
@@ -5964,7 +5964,7 @@ jwa@^1.1.4:
     ecdsa-sig-formatter "1.0.9"
     safe-buffer "^5.0.1"
 
-jwks-rsa@^1.2.1:
+jwks-rsa@1.2.1, jwks-rsa@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/jwks-rsa/-/jwks-rsa-1.2.1.tgz#9949100f5643821107787de2947d46f875f6ab5a"
   dependencies:
