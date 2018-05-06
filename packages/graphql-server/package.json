@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node -r dotenv/config src/index.js",
     "dev": "npm-run-all --parallel start playground",
     "playground": "graphql playground",
     "prisma": "prisma"
