@@ -21,11 +21,12 @@ enum Discipline {
   TableTennis
 }
 
-# The user information is stored in Auth0
-type UserRef {
-  auth0Id: String! @unique
+type MemberRef {
+  # Users are only stored in Auth0, therefore we only
+  # need a reference to them.
+  auth0Id: String!,
   role: Role!
-  dummy: String
+  organization: Organization!
 }
 
 type Organization {
@@ -33,11 +34,10 @@ type Organization {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
-  users: [UserRef!]!
+  memberRefs: [MemberRef!]!
   tournaments: [Tournament!]!
   tournamentMatches: [MatchTournament!]!
   singleMatches: [MatchSingle!]!
-  dummy: String
 }
 
 type Tournament {
@@ -57,12 +57,11 @@ type Tournament {
   roundSemifinals: RoundSemifinals
   roundFinal: RoundFinal
   matches: [MatchTournament!]!
-  dummy: String
 }
 
 type Team {
   key: ID! @unique
-  players: [UserRef!]!
+  playerRefs: [MemberRef!]!
   # 👇 List all relation fields
   # See https://github.com/graphcool/prisma/issues/1907
   matchTournamentTeamLeft: MatchTournament @relation(name: "TeamLeftMatchTournament")

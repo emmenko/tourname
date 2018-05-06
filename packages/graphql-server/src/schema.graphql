@@ -6,19 +6,26 @@ type Query {
   organization(key: String!): Organization
 }
 
-# type Mutation {
-#   createUser(user: UserDraft!): User
-# }
+type Mutation {
+  # TODO: add mutation to save userRef (auth0Id)
 
-type User {
-  id: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  email: String!
-  name: String!
-  picture: String!
-  role: Role!
-  availableOrganizations: [OrganizationInfo!]!
+  # Every user can create an organization
+  createOrganization(
+    key: String! # unique identifier
+    name: String!
+  ): Organization
+  # Promote a member to admin
+  promoteMemberToAdmin(organizationKey: String!, memberId: String!): Organization
+  # # Every user can add new members to the organization
+  # addMemberToOrganization(
+  #   organizationKey: String!
+  #   memberId: String!
+  # ): Organization
+  # # Only admin members can remove users from the organization
+  # removeMemberFromOrganization(
+  #   organizationKey: String!
+  #   memberId: String!
+  # ): Organization
 }
 
 enum SortOrder {
@@ -31,9 +38,14 @@ input SortBy {
   order: SortOrder!
 }
 
-type OrganizationInfo {
-  key: String! # unique identifier
+type User {
+  id: String! # the auth0 id
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
   name: String!
+  picture: String!
+  availableOrganizations: [OrganizationInfo!]!
 }
 
 type Organization {
@@ -41,13 +53,29 @@ type Organization {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
-  users: [User!]!
+  members: [Member!]!
   tournaments(
     status: [TournamentStatus!] # `or` condition
     sort: SortBy!
     page: Int!
     perPage: Int!
   ): [TournamentInfo!]!
+  singleMatches: [MatchSingleInfo!]!
+}
+
+# A `Member` contains basic user profile data plus
+# specific fields related to the organization (e.g. role)
+type Member {
+  id: String! # the auth0 id
+  email: String!
+  name: String!
+  picture: String!
+  role: Role!
+}
+
+type OrganizationInfo {
+  key: String! # unique identifier
+  name: String!
 }
 
 type TournamentInfo {
@@ -59,4 +87,11 @@ type TournamentInfo {
   status: TournamentStatus!
   size: TournamentSize!
   teamSize: Int!
+}
+
+type MatchSingleInfo {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  discipline: Discipline!
 }

@@ -1,11 +1,15 @@
 # source: http://192.168.99.100:4466
-# timestamp: Sun May 06 2018 19:05:35 GMT+0200 (CEST)
+# timestamp: Sun May 06 2018 21:47:04 GMT+0200 (CEST)
 
 type AggregateMatchSingle {
   count: Int!
 }
 
 type AggregateMatchTournament {
+  count: Int!
+}
+
+type AggregateMemberRef {
   count: Int!
 }
 
@@ -34,10 +38,6 @@ type AggregateTeam {
 }
 
 type AggregateTournament {
-  count: Int!
-}
-
-type AggregateUserRef {
   count: Int!
 }
 
@@ -2219,8 +2219,185 @@ input MatchTournamentWhereUniqueInput {
   id: ID
 }
 
+type MemberRef {
+  auth0Id: String!
+  role: Role!
+  organization(where: OrganizationWhereInput): Organization!
+}
+
+"""A connection to a list of items."""
+type MemberRefConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MemberRefEdge]!
+  aggregate: AggregateMemberRef!
+}
+
+input MemberRefCreateInput {
+  auth0Id: String!
+  role: Role!
+  organization: OrganizationCreateOneWithoutMemberRefsInput!
+}
+
+input MemberRefCreateManyInput {
+  create: [MemberRefCreateInput!]
+}
+
+input MemberRefCreateManyWithoutOrganizationInput {
+  create: [MemberRefCreateWithoutOrganizationInput!]
+}
+
+input MemberRefCreateWithoutOrganizationInput {
+  auth0Id: String!
+  role: Role!
+}
+
+"""An edge in a connection."""
+type MemberRefEdge {
+  """The item at the end of the edge."""
+  node: MemberRef!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum MemberRefOrderByInput {
+  auth0Id_ASC
+  auth0Id_DESC
+  role_ASC
+  role_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type MemberRefPreviousValues {
+  auth0Id: String!
+  role: Role!
+}
+
+type MemberRefSubscriptionPayload {
+  mutation: MutationType!
+  node: MemberRef
+  updatedFields: [String!]
+  previousValues: MemberRefPreviousValues
+}
+
+input MemberRefSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MemberRefSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MemberRefSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MemberRefSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: MemberRefWhereInput
+}
+
+input MemberRefUpdateInput {
+  auth0Id: String
+  role: Role
+  organization: OrganizationUpdateOneWithoutMemberRefsInput
+}
+
+input MemberRefUpdateManyInput {
+  create: [MemberRefCreateInput!]
+}
+
+input MemberRefUpdateManyWithoutOrganizationInput {
+  create: [MemberRefCreateWithoutOrganizationInput!]
+}
+
+input MemberRefWhereInput {
+  """Logical AND on all given filters."""
+  AND: [MemberRefWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [MemberRefWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [MemberRefWhereInput!]
+  auth0Id: String
+
+  """All values that are not equal to given value."""
+  auth0Id_not: String
+
+  """All values that are contained in given list."""
+  auth0Id_in: [String!]
+
+  """All values that are not contained in given list."""
+  auth0Id_not_in: [String!]
+
+  """All values less than the given value."""
+  auth0Id_lt: String
+
+  """All values less than or equal the given value."""
+  auth0Id_lte: String
+
+  """All values greater than the given value."""
+  auth0Id_gt: String
+
+  """All values greater than or equal the given value."""
+  auth0Id_gte: String
+
+  """All values containing the given string."""
+  auth0Id_contains: String
+
+  """All values not containing the given string."""
+  auth0Id_not_contains: String
+
+  """All values starting with the given string."""
+  auth0Id_starts_with: String
+
+  """All values not starting with the given string."""
+  auth0Id_not_starts_with: String
+
+  """All values ending with the given string."""
+  auth0Id_ends_with: String
+
+  """All values not ending with the given string."""
+  auth0Id_not_ends_with: String
+  role: Role
+
+  """All values that are not equal to given value."""
+  role_not: Role
+
+  """All values that are contained in given list."""
+  role_in: [Role!]
+
+  """All values that are not contained in given list."""
+  role_not_in: [Role!]
+  organization: OrganizationWhereInput
+}
+
 type Mutation {
-  createUserRef(data: UserRefCreateInput!): UserRef!
+  createMemberRef(data: MemberRefCreateInput!): MemberRef!
   createOrganization(data: OrganizationCreateInput!): Organization!
   createTournament(data: TournamentCreateInput!): Tournament!
   createTeam(data: TeamCreateInput!): Team!
@@ -2230,25 +2407,22 @@ type Mutation {
   createRoundFinal(data: RoundFinalCreateInput!): RoundFinal!
   createMatchTournament(data: MatchTournamentCreateInput!): MatchTournament!
   createMatchSingle(data: MatchSingleCreateInput!): MatchSingle!
-  updateUserRef(data: UserRefUpdateInput!, where: UserRefWhereUniqueInput!): UserRef
   updateOrganization(data: OrganizationUpdateInput!, where: OrganizationWhereUniqueInput!): Organization
   updateTournament(data: TournamentUpdateInput!, where: TournamentWhereUniqueInput!): Tournament
   updateTeam(data: TeamUpdateInput!, where: TeamWhereUniqueInput!): Team
   updateMatchTournament(data: MatchTournamentUpdateInput!, where: MatchTournamentWhereUniqueInput!): MatchTournament
   updateMatchSingle(data: MatchSingleUpdateInput!, where: MatchSingleWhereUniqueInput!): MatchSingle
-  deleteUserRef(where: UserRefWhereUniqueInput!): UserRef
   deleteOrganization(where: OrganizationWhereUniqueInput!): Organization
   deleteTournament(where: TournamentWhereUniqueInput!): Tournament
   deleteTeam(where: TeamWhereUniqueInput!): Team
   deleteMatchTournament(where: MatchTournamentWhereUniqueInput!): MatchTournament
   deleteMatchSingle(where: MatchSingleWhereUniqueInput!): MatchSingle
-  upsertUserRef(where: UserRefWhereUniqueInput!, create: UserRefCreateInput!, update: UserRefUpdateInput!): UserRef!
   upsertOrganization(where: OrganizationWhereUniqueInput!, create: OrganizationCreateInput!, update: OrganizationUpdateInput!): Organization!
   upsertTournament(where: TournamentWhereUniqueInput!, create: TournamentCreateInput!, update: TournamentUpdateInput!): Tournament!
   upsertTeam(where: TeamWhereUniqueInput!, create: TeamCreateInput!, update: TeamUpdateInput!): Team!
   upsertMatchTournament(where: MatchTournamentWhereUniqueInput!, create: MatchTournamentCreateInput!, update: MatchTournamentUpdateInput!): MatchTournament!
   upsertMatchSingle(where: MatchSingleWhereUniqueInput!, create: MatchSingleCreateInput!, update: MatchSingleUpdateInput!): MatchSingle!
-  updateManyUserRefs(data: UserRefUpdateInput!, where: UserRefWhereInput): BatchPayload!
+  updateManyMemberRefs(data: MemberRefUpdateInput!, where: MemberRefWhereInput): BatchPayload!
   updateManyOrganizations(data: OrganizationUpdateInput!, where: OrganizationWhereInput): BatchPayload!
   updateManyTournaments(data: TournamentUpdateInput!, where: TournamentWhereInput): BatchPayload!
   updateManyTeams(data: TeamUpdateInput!, where: TeamWhereInput): BatchPayload!
@@ -2258,7 +2432,7 @@ type Mutation {
   updateManyRoundFinals(data: RoundFinalUpdateInput!, where: RoundFinalWhereInput): BatchPayload!
   updateManyMatchTournaments(data: MatchTournamentUpdateInput!, where: MatchTournamentWhereInput): BatchPayload!
   updateManyMatchSingles(data: MatchSingleUpdateInput!, where: MatchSingleWhereInput): BatchPayload!
-  deleteManyUserRefs(where: UserRefWhereInput): BatchPayload!
+  deleteManyMemberRefs(where: MemberRefWhereInput): BatchPayload!
   deleteManyOrganizations(where: OrganizationWhereInput): BatchPayload!
   deleteManyTournaments(where: TournamentWhereInput): BatchPayload!
   deleteManyTeams(where: TeamWhereInput): BatchPayload!
@@ -2287,11 +2461,10 @@ type Organization {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
-  users(where: UserRefWhereInput, orderBy: UserRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserRef!]
+  memberRefs(where: MemberRefWhereInput, orderBy: MemberRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MemberRef!]
   tournaments(where: TournamentWhereInput, orderBy: TournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tournament!]
   tournamentMatches(where: MatchTournamentWhereInput, orderBy: MatchTournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchTournament!]
   singleMatches(where: MatchSingleWhereInput, orderBy: MatchSingleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchSingle!]
-  dummy: String
 }
 
 """A connection to a list of items."""
@@ -2307,11 +2480,15 @@ type OrganizationConnection {
 input OrganizationCreateInput {
   key: String!
   name: String!
-  dummy: String
-  users: UserRefCreateManyInput
+  memberRefs: MemberRefCreateManyWithoutOrganizationInput
   tournaments: TournamentCreateManyWithoutOrganizationInput
   tournamentMatches: MatchTournamentCreateManyWithoutOrganizationInput
   singleMatches: MatchSingleCreateManyWithoutOrganizationInput
+}
+
+input OrganizationCreateOneWithoutMemberRefsInput {
+  create: OrganizationCreateWithoutMemberRefsInput
+  connect: OrganizationWhereUniqueInput
 }
 
 input OrganizationCreateOneWithoutSingleMatchesInput {
@@ -2329,11 +2506,18 @@ input OrganizationCreateOneWithoutTournamentsInput {
   connect: OrganizationWhereUniqueInput
 }
 
+input OrganizationCreateWithoutMemberRefsInput {
+  key: String!
+  name: String!
+  tournaments: TournamentCreateManyWithoutOrganizationInput
+  tournamentMatches: MatchTournamentCreateManyWithoutOrganizationInput
+  singleMatches: MatchSingleCreateManyWithoutOrganizationInput
+}
+
 input OrganizationCreateWithoutSingleMatchesInput {
   key: String!
   name: String!
-  dummy: String
-  users: UserRefCreateManyInput
+  memberRefs: MemberRefCreateManyWithoutOrganizationInput
   tournaments: TournamentCreateManyWithoutOrganizationInput
   tournamentMatches: MatchTournamentCreateManyWithoutOrganizationInput
 }
@@ -2341,8 +2525,7 @@ input OrganizationCreateWithoutSingleMatchesInput {
 input OrganizationCreateWithoutTournamentMatchesInput {
   key: String!
   name: String!
-  dummy: String
-  users: UserRefCreateManyInput
+  memberRefs: MemberRefCreateManyWithoutOrganizationInput
   tournaments: TournamentCreateManyWithoutOrganizationInput
   singleMatches: MatchSingleCreateManyWithoutOrganizationInput
 }
@@ -2350,8 +2533,7 @@ input OrganizationCreateWithoutTournamentMatchesInput {
 input OrganizationCreateWithoutTournamentsInput {
   key: String!
   name: String!
-  dummy: String
-  users: UserRefCreateManyInput
+  memberRefs: MemberRefCreateManyWithoutOrganizationInput
   tournamentMatches: MatchTournamentCreateManyWithoutOrganizationInput
   singleMatches: MatchSingleCreateManyWithoutOrganizationInput
 }
@@ -2374,8 +2556,6 @@ enum OrganizationOrderByInput {
   updatedAt_DESC
   name_ASC
   name_DESC
-  dummy_ASC
-  dummy_DESC
   id_ASC
   id_DESC
 }
@@ -2385,7 +2565,6 @@ type OrganizationPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
-  dummy: String
 }
 
 type OrganizationSubscriptionPayload {
@@ -2430,11 +2609,18 @@ input OrganizationSubscriptionWhereInput {
 input OrganizationUpdateInput {
   key: String
   name: String
-  dummy: String
-  users: UserRefUpdateManyInput
+  memberRefs: MemberRefUpdateManyWithoutOrganizationInput
   tournaments: TournamentUpdateManyWithoutOrganizationInput
   tournamentMatches: MatchTournamentUpdateManyWithoutOrganizationInput
   singleMatches: MatchSingleUpdateManyWithoutOrganizationInput
+}
+
+input OrganizationUpdateOneWithoutMemberRefsInput {
+  create: OrganizationCreateWithoutMemberRefsInput
+  connect: OrganizationWhereUniqueInput
+  delete: Boolean
+  update: OrganizationUpdateWithoutMemberRefsDataInput
+  upsert: OrganizationUpsertWithoutMemberRefsInput
 }
 
 input OrganizationUpdateOneWithoutSingleMatchesInput {
@@ -2461,11 +2647,18 @@ input OrganizationUpdateOneWithoutTournamentsInput {
   upsert: OrganizationUpsertWithoutTournamentsInput
 }
 
+input OrganizationUpdateWithoutMemberRefsDataInput {
+  key: String
+  name: String
+  tournaments: TournamentUpdateManyWithoutOrganizationInput
+  tournamentMatches: MatchTournamentUpdateManyWithoutOrganizationInput
+  singleMatches: MatchSingleUpdateManyWithoutOrganizationInput
+}
+
 input OrganizationUpdateWithoutSingleMatchesDataInput {
   key: String
   name: String
-  dummy: String
-  users: UserRefUpdateManyInput
+  memberRefs: MemberRefUpdateManyWithoutOrganizationInput
   tournaments: TournamentUpdateManyWithoutOrganizationInput
   tournamentMatches: MatchTournamentUpdateManyWithoutOrganizationInput
 }
@@ -2473,8 +2666,7 @@ input OrganizationUpdateWithoutSingleMatchesDataInput {
 input OrganizationUpdateWithoutTournamentMatchesDataInput {
   key: String
   name: String
-  dummy: String
-  users: UserRefUpdateManyInput
+  memberRefs: MemberRefUpdateManyWithoutOrganizationInput
   tournaments: TournamentUpdateManyWithoutOrganizationInput
   singleMatches: MatchSingleUpdateManyWithoutOrganizationInput
 }
@@ -2482,10 +2674,14 @@ input OrganizationUpdateWithoutTournamentMatchesDataInput {
 input OrganizationUpdateWithoutTournamentsDataInput {
   key: String
   name: String
-  dummy: String
-  users: UserRefUpdateManyInput
+  memberRefs: MemberRefUpdateManyWithoutOrganizationInput
   tournamentMatches: MatchTournamentUpdateManyWithoutOrganizationInput
   singleMatches: MatchSingleUpdateManyWithoutOrganizationInput
+}
+
+input OrganizationUpsertWithoutMemberRefsInput {
+  update: OrganizationUpdateWithoutMemberRefsDataInput!
+  create: OrganizationCreateWithoutMemberRefsInput!
 }
 
 input OrganizationUpsertWithoutSingleMatchesInput {
@@ -2636,49 +2832,9 @@ input OrganizationWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  dummy: String
-
-  """All values that are not equal to given value."""
-  dummy_not: String
-
-  """All values that are contained in given list."""
-  dummy_in: [String!]
-
-  """All values that are not contained in given list."""
-  dummy_not_in: [String!]
-
-  """All values less than the given value."""
-  dummy_lt: String
-
-  """All values less than or equal the given value."""
-  dummy_lte: String
-
-  """All values greater than the given value."""
-  dummy_gt: String
-
-  """All values greater than or equal the given value."""
-  dummy_gte: String
-
-  """All values containing the given string."""
-  dummy_contains: String
-
-  """All values not containing the given string."""
-  dummy_not_contains: String
-
-  """All values starting with the given string."""
-  dummy_starts_with: String
-
-  """All values not starting with the given string."""
-  dummy_not_starts_with: String
-
-  """All values ending with the given string."""
-  dummy_ends_with: String
-
-  """All values not ending with the given string."""
-  dummy_not_ends_with: String
-  users_every: UserRefWhereInput
-  users_some: UserRefWhereInput
-  users_none: UserRefWhereInput
+  memberRefs_every: MemberRefWhereInput
+  memberRefs_some: MemberRefWhereInput
+  memberRefs_none: MemberRefWhereInput
   tournaments_every: TournamentWhereInput
   tournaments_some: TournamentWhereInput
   tournaments_none: TournamentWhereInput
@@ -2710,7 +2866,7 @@ type PageInfo {
 }
 
 type Query {
-  userRefs(where: UserRefWhereInput, orderBy: UserRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserRef]!
+  memberRefs(where: MemberRefWhereInput, orderBy: MemberRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MemberRef]!
   organizations(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Organization]!
   tournaments(where: TournamentWhereInput, orderBy: TournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tournament]!
   teams(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Team]!
@@ -2720,13 +2876,12 @@ type Query {
   roundFinals(where: RoundFinalWhereInput, orderBy: RoundFinalOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RoundFinal]!
   matchTournaments(where: MatchTournamentWhereInput, orderBy: MatchTournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchTournament]!
   matchSingles(where: MatchSingleWhereInput, orderBy: MatchSingleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchSingle]!
-  userRef(where: UserRefWhereUniqueInput!): UserRef
   organization(where: OrganizationWhereUniqueInput!): Organization
   tournament(where: TournamentWhereUniqueInput!): Tournament
   team(where: TeamWhereUniqueInput!): Team
   matchTournament(where: MatchTournamentWhereUniqueInput!): MatchTournament
   matchSingle(where: MatchSingleWhereUniqueInput!): MatchSingle
-  userRefsConnection(where: UserRefWhereInput, orderBy: UserRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserRefConnection!
+  memberRefsConnection(where: MemberRefWhereInput, orderBy: MemberRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): MemberRefConnection!
   organizationsConnection(where: OrganizationWhereInput, orderBy: OrganizationOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrganizationConnection!
   tournamentsConnection(where: TournamentWhereInput, orderBy: TournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TournamentConnection!
   teamsConnection(where: TeamWhereInput, orderBy: TeamOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TeamConnection!
@@ -4045,7 +4200,7 @@ input RoundSemifinalsWhereInput {
 }
 
 type Subscription {
-  userRef(where: UserRefSubscriptionWhereInput): UserRefSubscriptionPayload
+  memberRef(where: MemberRefSubscriptionWhereInput): MemberRefSubscriptionPayload
   organization(where: OrganizationSubscriptionWhereInput): OrganizationSubscriptionPayload
   tournament(where: TournamentSubscriptionWhereInput): TournamentSubscriptionPayload
   team(where: TeamSubscriptionWhereInput): TeamSubscriptionPayload
@@ -4059,7 +4214,7 @@ type Subscription {
 
 type Team {
   key: ID!
-  players(where: UserRefWhereInput, orderBy: UserRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [UserRef!]
+  playerRefs(where: MemberRefWhereInput, orderBy: MemberRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MemberRef!]
   matchTournamentTeamLeft(where: MatchTournamentWhereInput): MatchTournament
   matchTournamentTeamRight(where: MatchTournamentWhereInput): MatchTournament
   matchTournamentTeamWinner(where: MatchTournamentWhereInput): MatchTournament
@@ -4082,7 +4237,7 @@ type TeamConnection {
 input TeamCreateInput {
   key: ID!
   dummy: String
-  players: UserRefCreateManyInput
+  playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
   matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
   matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
@@ -4129,7 +4284,7 @@ input TeamCreateOneWithoutMatchTournamentTeamWinnerInput {
 input TeamCreateWithoutMatchSingleTeamLeftInput {
   key: ID!
   dummy: String
-  players: UserRefCreateManyInput
+  playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
   matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
   matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
@@ -4140,7 +4295,7 @@ input TeamCreateWithoutMatchSingleTeamLeftInput {
 input TeamCreateWithoutMatchSingleTeamRightInput {
   key: ID!
   dummy: String
-  players: UserRefCreateManyInput
+  playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
   matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
   matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
@@ -4151,7 +4306,7 @@ input TeamCreateWithoutMatchSingleTeamRightInput {
 input TeamCreateWithoutMatchSingleTeamWinnerInput {
   key: ID!
   dummy: String
-  players: UserRefCreateManyInput
+  playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
   matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
   matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
@@ -4162,7 +4317,7 @@ input TeamCreateWithoutMatchSingleTeamWinnerInput {
 input TeamCreateWithoutMatchTournamentTeamLeftInput {
   key: ID!
   dummy: String
-  players: UserRefCreateManyInput
+  playerRefs: MemberRefCreateManyInput
   matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
   matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
   matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
@@ -4173,7 +4328,7 @@ input TeamCreateWithoutMatchTournamentTeamLeftInput {
 input TeamCreateWithoutMatchTournamentTeamRightInput {
   key: ID!
   dummy: String
-  players: UserRefCreateManyInput
+  playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
   matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
   matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
@@ -4184,7 +4339,7 @@ input TeamCreateWithoutMatchTournamentTeamRightInput {
 input TeamCreateWithoutMatchTournamentTeamWinnerInput {
   key: ID!
   dummy: String
-  players: UserRefCreateManyInput
+  playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
   matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
   matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
@@ -4261,7 +4416,7 @@ input TeamSubscriptionWhereInput {
 input TeamUpdateDataInput {
   key: ID
   dummy: String
-  players: UserRefUpdateManyInput
+  playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
   matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
   matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
@@ -4273,7 +4428,7 @@ input TeamUpdateDataInput {
 input TeamUpdateInput {
   key: ID
   dummy: String
-  players: UserRefUpdateManyInput
+  playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
   matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
   matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
@@ -4346,7 +4501,7 @@ input TeamUpdateOneWithoutMatchTournamentTeamWinnerInput {
 input TeamUpdateWithoutMatchSingleTeamLeftDataInput {
   key: ID
   dummy: String
-  players: UserRefUpdateManyInput
+  playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
   matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
   matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
@@ -4357,7 +4512,7 @@ input TeamUpdateWithoutMatchSingleTeamLeftDataInput {
 input TeamUpdateWithoutMatchSingleTeamRightDataInput {
   key: ID
   dummy: String
-  players: UserRefUpdateManyInput
+  playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
   matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
   matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
@@ -4368,7 +4523,7 @@ input TeamUpdateWithoutMatchSingleTeamRightDataInput {
 input TeamUpdateWithoutMatchSingleTeamWinnerDataInput {
   key: ID
   dummy: String
-  players: UserRefUpdateManyInput
+  playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
   matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
   matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
@@ -4379,7 +4534,7 @@ input TeamUpdateWithoutMatchSingleTeamWinnerDataInput {
 input TeamUpdateWithoutMatchTournamentTeamLeftDataInput {
   key: ID
   dummy: String
-  players: UserRefUpdateManyInput
+  playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
   matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
   matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
@@ -4390,7 +4545,7 @@ input TeamUpdateWithoutMatchTournamentTeamLeftDataInput {
 input TeamUpdateWithoutMatchTournamentTeamRightDataInput {
   key: ID
   dummy: String
-  players: UserRefUpdateManyInput
+  playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
   matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
   matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
@@ -4401,7 +4556,7 @@ input TeamUpdateWithoutMatchTournamentTeamRightDataInput {
 input TeamUpdateWithoutMatchTournamentTeamWinnerDataInput {
   key: ID
   dummy: String
-  players: UserRefUpdateManyInput
+  playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
   matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
   matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
@@ -4539,9 +4694,9 @@ input TeamWhereInput {
 
   """All values not ending with the given string."""
   dummy_not_ends_with: String
-  players_every: UserRefWhereInput
-  players_some: UserRefWhereInput
-  players_none: UserRefWhereInput
+  playerRefs_every: MemberRefWhereInput
+  playerRefs_some: MemberRefWhereInput
+  playerRefs_none: MemberRefWhereInput
   matchTournamentTeamLeft: MatchTournamentWhereInput
   matchTournamentTeamRight: MatchTournamentWhereInput
   matchTournamentTeamWinner: MatchTournamentWhereInput
@@ -4570,7 +4725,6 @@ type Tournament implements Node {
   roundSemifinals(where: RoundSemifinalsWhereInput): RoundSemifinals
   roundFinal(where: RoundFinalWhereInput): RoundFinal
   matches(where: MatchTournamentWhereInput, orderBy: MatchTournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchTournament!]
-  dummy: String
 }
 
 """A connection to a list of items."""
@@ -4589,7 +4743,6 @@ input TournamentCreateInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  dummy: String
   organization: OrganizationCreateOneWithoutTournamentsInput!
   teams: TeamCreateManyInput
   roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
@@ -4635,7 +4788,6 @@ input TournamentCreateWithoutMatchesInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  dummy: String
   organization: OrganizationCreateOneWithoutTournamentsInput!
   teams: TeamCreateManyInput
   roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
@@ -4650,7 +4802,6 @@ input TournamentCreateWithoutOrganizationInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  dummy: String
   teams: TeamCreateManyInput
   roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
   roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
@@ -4665,7 +4816,6 @@ input TournamentCreateWithoutRoundFinalInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  dummy: String
   organization: OrganizationCreateOneWithoutTournamentsInput!
   teams: TeamCreateManyInput
   roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
@@ -4680,7 +4830,6 @@ input TournamentCreateWithoutRoundLastSixteenInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  dummy: String
   organization: OrganizationCreateOneWithoutTournamentsInput!
   teams: TeamCreateManyInput
   roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
@@ -4695,7 +4844,6 @@ input TournamentCreateWithoutRoundQuarterfinalsInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  dummy: String
   organization: OrganizationCreateOneWithoutTournamentsInput!
   teams: TeamCreateManyInput
   roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
@@ -4710,7 +4858,6 @@ input TournamentCreateWithoutRoundSemifinalsInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  dummy: String
   organization: OrganizationCreateOneWithoutTournamentsInput!
   teams: TeamCreateManyInput
   roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
@@ -4745,8 +4892,6 @@ enum TournamentOrderByInput {
   discipline_DESC
   teamSize_ASC
   teamSize_DESC
-  dummy_ASC
-  dummy_DESC
 }
 
 type TournamentPreviousValues {
@@ -4758,7 +4903,6 @@ type TournamentPreviousValues {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  dummy: String
 }
 
 enum TournamentSize {
@@ -4819,7 +4963,6 @@ input TournamentUpdateInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  dummy: String
   organization: OrganizationUpdateOneWithoutTournamentsInput
   teams: TeamUpdateManyInput
   roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
@@ -4884,7 +5027,6 @@ input TournamentUpdateWithoutMatchesDataInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  dummy: String
   organization: OrganizationUpdateOneWithoutTournamentsInput
   teams: TeamUpdateManyInput
   roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
@@ -4899,7 +5041,6 @@ input TournamentUpdateWithoutOrganizationDataInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  dummy: String
   teams: TeamUpdateManyInput
   roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
   roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
@@ -4914,7 +5055,6 @@ input TournamentUpdateWithoutRoundFinalDataInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  dummy: String
   organization: OrganizationUpdateOneWithoutTournamentsInput
   teams: TeamUpdateManyInput
   roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
@@ -4929,7 +5069,6 @@ input TournamentUpdateWithoutRoundLastSixteenDataInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  dummy: String
   organization: OrganizationUpdateOneWithoutTournamentsInput
   teams: TeamUpdateManyInput
   roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
@@ -4944,7 +5083,6 @@ input TournamentUpdateWithoutRoundQuarterfinalsDataInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  dummy: String
   organization: OrganizationUpdateOneWithoutTournamentsInput
   teams: TeamUpdateManyInput
   roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
@@ -4959,7 +5097,6 @@ input TournamentUpdateWithoutRoundSemifinalsDataInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  dummy: String
   organization: OrganizationUpdateOneWithoutTournamentsInput
   teams: TeamUpdateManyInput
   roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
@@ -5189,46 +5326,6 @@ input TournamentWhereInput {
 
   """All values greater than or equal the given value."""
   teamSize_gte: Int
-  dummy: String
-
-  """All values that are not equal to given value."""
-  dummy_not: String
-
-  """All values that are contained in given list."""
-  dummy_in: [String!]
-
-  """All values that are not contained in given list."""
-  dummy_not_in: [String!]
-
-  """All values less than the given value."""
-  dummy_lt: String
-
-  """All values less than or equal the given value."""
-  dummy_lte: String
-
-  """All values greater than the given value."""
-  dummy_gt: String
-
-  """All values greater than or equal the given value."""
-  dummy_gte: String
-
-  """All values containing the given string."""
-  dummy_contains: String
-
-  """All values not containing the given string."""
-  dummy_not_contains: String
-
-  """All values starting with the given string."""
-  dummy_starts_with: String
-
-  """All values not starting with the given string."""
-  dummy_not_starts_with: String
-
-  """All values ending with the given string."""
-  dummy_ends_with: String
-
-  """All values not ending with the given string."""
-  dummy_not_ends_with: String
   organization: OrganizationWhereInput
   teams_every: TeamWhereInput
   teams_some: TeamWhereInput
@@ -5244,237 +5341,4 @@ input TournamentWhereInput {
 
 input TournamentWhereUniqueInput {
   id: ID
-}
-
-type UserRef {
-  auth0Id: String!
-  role: Role!
-  dummy: String
-}
-
-"""A connection to a list of items."""
-type UserRefConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [UserRefEdge]!
-  aggregate: AggregateUserRef!
-}
-
-input UserRefCreateInput {
-  auth0Id: String!
-  role: Role!
-  dummy: String
-}
-
-input UserRefCreateManyInput {
-  create: [UserRefCreateInput!]
-  connect: [UserRefWhereUniqueInput!]
-}
-
-"""An edge in a connection."""
-type UserRefEdge {
-  """The item at the end of the edge."""
-  node: UserRef!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum UserRefOrderByInput {
-  auth0Id_ASC
-  auth0Id_DESC
-  role_ASC
-  role_DESC
-  dummy_ASC
-  dummy_DESC
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type UserRefPreviousValues {
-  auth0Id: String!
-  role: Role!
-  dummy: String
-}
-
-type UserRefSubscriptionPayload {
-  mutation: MutationType!
-  node: UserRef
-  updatedFields: [String!]
-  previousValues: UserRefPreviousValues
-}
-
-input UserRefSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserRefSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserRefSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserRefSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: UserRefWhereInput
-}
-
-input UserRefUpdateDataInput {
-  auth0Id: String
-  role: Role
-  dummy: String
-}
-
-input UserRefUpdateInput {
-  auth0Id: String
-  role: Role
-  dummy: String
-}
-
-input UserRefUpdateManyInput {
-  create: [UserRefCreateInput!]
-  connect: [UserRefWhereUniqueInput!]
-  disconnect: [UserRefWhereUniqueInput!]
-  delete: [UserRefWhereUniqueInput!]
-  update: [UserRefUpdateWithWhereUniqueNestedInput!]
-  upsert: [UserRefUpsertWithWhereUniqueNestedInput!]
-}
-
-input UserRefUpdateWithWhereUniqueNestedInput {
-  where: UserRefWhereUniqueInput!
-  data: UserRefUpdateDataInput!
-}
-
-input UserRefUpsertWithWhereUniqueNestedInput {
-  where: UserRefWhereUniqueInput!
-  update: UserRefUpdateDataInput!
-  create: UserRefCreateInput!
-}
-
-input UserRefWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserRefWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserRefWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserRefWhereInput!]
-  auth0Id: String
-
-  """All values that are not equal to given value."""
-  auth0Id_not: String
-
-  """All values that are contained in given list."""
-  auth0Id_in: [String!]
-
-  """All values that are not contained in given list."""
-  auth0Id_not_in: [String!]
-
-  """All values less than the given value."""
-  auth0Id_lt: String
-
-  """All values less than or equal the given value."""
-  auth0Id_lte: String
-
-  """All values greater than the given value."""
-  auth0Id_gt: String
-
-  """All values greater than or equal the given value."""
-  auth0Id_gte: String
-
-  """All values containing the given string."""
-  auth0Id_contains: String
-
-  """All values not containing the given string."""
-  auth0Id_not_contains: String
-
-  """All values starting with the given string."""
-  auth0Id_starts_with: String
-
-  """All values not starting with the given string."""
-  auth0Id_not_starts_with: String
-
-  """All values ending with the given string."""
-  auth0Id_ends_with: String
-
-  """All values not ending with the given string."""
-  auth0Id_not_ends_with: String
-  role: Role
-
-  """All values that are not equal to given value."""
-  role_not: Role
-
-  """All values that are contained in given list."""
-  role_in: [Role!]
-
-  """All values that are not contained in given list."""
-  role_not_in: [Role!]
-  dummy: String
-
-  """All values that are not equal to given value."""
-  dummy_not: String
-
-  """All values that are contained in given list."""
-  dummy_in: [String!]
-
-  """All values that are not contained in given list."""
-  dummy_not_in: [String!]
-
-  """All values less than the given value."""
-  dummy_lt: String
-
-  """All values less than or equal the given value."""
-  dummy_lte: String
-
-  """All values greater than the given value."""
-  dummy_gt: String
-
-  """All values greater than or equal the given value."""
-  dummy_gte: String
-
-  """All values containing the given string."""
-  dummy_contains: String
-
-  """All values not containing the given string."""
-  dummy_not_contains: String
-
-  """All values starting with the given string."""
-  dummy_starts_with: String
-
-  """All values not starting with the given string."""
-  dummy_not_starts_with: String
-
-  """All values ending with the given string."""
-  dummy_ends_with: String
-
-  """All values not ending with the given string."""
-  dummy_not_ends_with: String
-}
-
-input UserRefWhereUniqueInput {
-  auth0Id: String
 }
