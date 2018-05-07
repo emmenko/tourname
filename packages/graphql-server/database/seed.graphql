@@ -1,25 +1,11 @@
-# mutation {
-#   first: createUser(data: {
-#     name: "Tony Stark",
-#     email: "tony.stark@avengers.com",
-#     picture: "https://vignette.wikia.nocookie.net/marveldatabase/images/9/93/Anthony_Stark_%28Earth-616%29_from_Guardians_of_the_Galaxy_Vol_3_4_001.png/revision/latest/scale-to-width-down/625?cb=20131029213424",
-#   }) {
-#     id
-#   }
-
-#   second: createUser(data: {
-#     name: "Peter Parker",
-#     email: "peter.parker@avengers.com",
-#     picture: "https://pre00.deviantart.net/71f4/th/pre/i/2013/314/4/a/peter_parker_by_wesflo-d6trh0q.jpg",
-#   }) {
-#     id
-#   }
-
-#   third: createUser(data: {
-#     name: "Bruce Wayne",
-#     email: "bruce.wayne@justice-league.com",
-#     picture: "https://img-9gag-fun.9cache.com/photo/aW6nrZ6_700b.jpg",
-#   }) {
-#     id
-#   }
-# }
+mutation {
+  first: createOrganization(
+    data: {
+      key: "avengers"
+      name: "The Avengers"
+      memberRefs: { create: [{ auth0Id: "github|1110551", role: Admin }] }
+    }
+  ) {
+    key
+  }
+}
