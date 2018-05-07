@@ -16,16 +16,18 @@ type Mutation {
   ): Organization
   # Promote a member to admin
   promoteMemberToAdmin(organizationKey: String!, memberId: String!): Organization
-  # # Every user can add new members to the organization
-  # addMemberToOrganization(
-  #   organizationKey: String!
-  #   memberId: String!
-  # ): Organization
-  # # Only admin members can remove users from the organization
-  # removeMemberFromOrganization(
-  #   organizationKey: String!
-  #   memberId: String!
-  # ): Organization
+  # Demote a an admin to member
+  demoteAdminToMember(organizationKey: String!, memberId: String!): Organization
+  # Every user can add new members to the organization
+  addMemberToOrganization(
+    organizationKey: String!
+    memberId: String!
+  ): Organization
+  # Only admin members can remove users from the organization
+  removeMemberFromOrganization(
+    organizationKey: String!
+    memberId: String!
+  ): Organization
 }
 
 type User {
