@@ -1,5 +1,5 @@
 {
-  "name": "http-server",
+  "name": "@tourname/http-server",
   "description": "",
   "version": "1.0.0",
   "private": true,
