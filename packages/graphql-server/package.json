@@ -12,7 +12,6 @@
   "dependencies": {
     "@commercetools/sdk-client": "1.5.6",
     "@commercetools/sdk-middleware-http": "3.0.1",
-    "cors": "2.8.4",
     "dataloader": "1.4.0",
     "dotenv": "5.0.1",
     "express-jwt": "5.3.1",

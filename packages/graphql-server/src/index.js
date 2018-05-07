@@ -1,4 +1,3 @@
-const cors = require('cors');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 const { GraphQLServer } = require('graphql-yoga');
@@ -26,16 +25,19 @@ const resolvers = {
       );
       return Boolean(org);
     },
-    organization: async (parent, args, context) => {
-      const orgs = await context.db.query.organizations({
-        where: {
-          AND: [
-            { key: args.key },
-            { memberRefs_every: { auth0Id: context.userId } },
-          ],
+    organization: async (parent, args, context, info) => {
+      const orgs = await context.db.query.organizations(
+        {
+          where: {
+            AND: [
+              { key: args.key },
+              { memberRefs_every: { auth0Id: context.userId } },
+            ],
+          },
+          first: 1,
         },
-        first: 1,
-      });
+        info
+      );
       if (orgs && orgs.length > 0) return orgs[0];
       // TODO: return proper status code
       throw new Error(`Organization with key "${args.key}" not found`);
@@ -55,13 +57,27 @@ const resolvers = {
   },
   Organization: {
     members: async (parent, args, context) => {
-      const normalizedMemberRefs = parent.memberRefs.reduce(
-        (acc, memberRef) => {
-          acc[memberRef.auth0Id] = memberRef;
-          return acc;
+      const orgs = await context.db.query.organizations(
+        {
+          where: {
+            AND: [
+              { key: args.key },
+              { memberRefs_every: { auth0Id: context.userId } },
+            ],
+          },
+          first: 1,
         },
-        {}
+        '{ memberRefs { auth0Id role } }'
       );
+      if (orgs && orgs.length === 0)
+        // TODO: return proper status code
+        throw new Error(`Organization with key "${args.key}" not found`);
+      const org = orgs[0];
+
+      const normalizedMemberRefs = org.memberRefs.reduce((acc, memberRef) => {
+        acc[memberRef.auth0Id] = memberRef;
+        return acc;
+      }, {});
       const docs = await context.loaders.users.loadMany(
         Object.keys(normalizedMemberRefs)
       );
@@ -103,9 +119,6 @@ const resolvers = {
           memberRefs: {
             create: [{ auth0Id: context.userId, role: 'Admin' }],
           },
-          // tournaments: [],
-          // tournamentMatches: [],
-          // singleMatches: [],
         },
       });
     },
@@ -276,21 +289,35 @@ const resolvers = {
   },
 };
 
-const checkJwt = jwt({
-  // Dynamically provide a signing key based on the kid in the header and the
-  // signing keys provided by the JWKS endpoint.
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
-  }),
+const checkJwt = (request, response, next) => {
+  const userIdFromHeaders = request.headers['x-graphql-userid'];
+  if (userIdFromHeaders) {
+    if (isProd) {
+      console.warn('Ignoring header "X-GraphQL-UserId" is production mode.');
+    } else {
+      console.warn(
+        'You are passing a header "X-GraphQL-UserId", which is used to skip the JWT check. This is usually helpful when developing with GraphQL Playground. BE CAREFUL not to enable this on production!'
+      );
+      request.user = { sub: userIdFromHeaders };
+      return next();
+    }
+  }
+  return jwt({
+    // Dynamically provide a signing key based on the kid in the header and the
+    // signing keys provided by the JWKS endpoint.
+    secret: jwksRsa.expressJwtSecret({
+      cache: true,
+      rateLimit: true,
+      jwksRequestsPerMinute: 5,
+      jwksUri: `${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`,
+    }),
 
-  // Validate the audience and the issuer.
-  audience: `${process.env.AUTH0_DOMAIN}/api/v2/`,
-  issuer: `${process.env.AUTH0_DOMAIN}/`,
-  algorithms: [SIGNATURE_ALGORITHM_HS256],
-});
+    // Validate the audience and the issuer.
+    audience: `${process.env.AUTH0_DOMAIN}/api/v2/`,
+    issuer: `${process.env.AUTH0_DOMAIN}/`,
+    algorithms: [SIGNATURE_ALGORITHM_HS256],
+  })(request, response, next);
+};
 
 const port = process.env.APP_PORT;
 const graphqlEndpoint = '/graphql';
@@ -298,25 +325,22 @@ const graphqlEndpoint = '/graphql';
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
-  context: req =>
-    Object.assign({}, req, {
-      db: new Prisma({
-        typeDefs: 'src/generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
-        endpoint: process.env.PRISMA_API_URL, // the endpoint of the Prisma API
-        debug: !isProd, // log all GraphQL queries & mutations sent to the Prisma API
-        // secret: 'mysecret123', // only needed if specified in `database/prisma.yml`
-      }),
-      loaders: {
-        users: new DataLoader(ids => {
-          const queryForIds = encodeURIComponent(
-            `user_id:(${ids.join(' OR ')})`
-          );
-          return fetchUser(queryForIds);
-        }),
-      },
+  context: ({ request }) => ({
+    userId: request.user && request.user.sub,
+    db: new Prisma({
+      typeDefs: 'src/generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
+      endpoint: process.env.PRISMA_API_URL, // the endpoint of the Prisma API
+      debug: !isProd, // log all GraphQL queries & mutations sent to the Prisma API
+      // secret: 'mysecret123', // only needed if specified in `database/prisma.yml`
     }),
+    loaders: {
+      users: new DataLoader(ids => {
+        const queryForIds = encodeURIComponent(`user_id:(${ids.join(' OR ')})`);
+        return fetchUser(queryForIds);
+      }),
+    },
+  }),
 });
-server.express.use(cors());
 server.express.post(
   graphqlEndpoint,
   checkJwt,
