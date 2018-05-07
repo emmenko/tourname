@@ -94,9 +94,10 @@ const resolvers = {
       context.db.query.tournaments({
         first: args.perPage,
         skip: args.page > 0 ? (args.page - 1) * args.perPage : 0,
-        orderBy: `${args.sort.key}_${args.sort.order.toUpperCase()}`,
+        orderBy: args.orderBy,
         where: {
-          status_in: args.status || [],
+          organization: { key: parent.key },
+          status_in: args.status,
         },
       }),
   },
