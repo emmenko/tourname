@@ -338,53 +338,71 @@ const resolvers = {
       );
     },
     /**
-     * Only admin users can remove users from an organization.
+     * Only admin members can remove other members from an organization.
      *
      * Args:
      * - organizationKey
-     * - userId
+     * - memberId
      */
-    // removeUserFromOrganization: async (parent, args, context) => {
-    //   // Only admin users can remove users from the organization
-    //   // TODO: validate that current user is admin.
-    //   // TODO: current user cannot remove itself, instead the org should be removed
-    //   if (context.userId === args.userId)
-    //     throw new Error(
-    //       `You cannot remove yourself from the organization "${
-    //         args.organizationKey
-    //       }"`
-    //     );
+    removeMemberFromOrganization: async (parent, args, context, info) => {
+      // Only admin users can remove users from the organization
+      // TODO: validate that current user is admin.
+      // TODO: current user cannot remove itself, instead the org should be removed
+      // Check that the user has access to the given organization
+      const adminMembersOfOrganization = await context.db.query.memberRefs({
+        where: {
+          AND: [
+            { role: 'Admin' },
+            { organization: { key: args.organizationKey } },
+          ],
+        },
+      });
+      if (
+        !adminMembersOfOrganization ||
+        adminMembersOfOrganization.length === 0
+      )
+        // TODO: return proper status code
+        throw new Error(
+          `The organization with key "${args.organizationKey}" is not found.`
+        );
+      if (
+        adminMembersOfOrganization &&
+        !adminMembersOfOrganization.find(
+          member => member.auth0Id === context.userId
+        )
+      )
+        // TODO: return proper status code
+        throw new Error(
+          `You are not an Admin of the organization "${
+            args.organizationKey
+          }" and therefore cannot remove other members from the it.`
+        );
+      if (
+        adminMembersOfOrganization &&
+        adminMembersOfOrganization.length === 1 &&
+        context.userId === args.memberId
+      )
+        // TODO: return proper status code
+        throw new Error(
+          `You are the only Admin of the organization "${
+            args.organizationKey
+          }" and cannot remove yourself. If you wish to do so, you should delete the organization.`
+        );
 
-    //   // Check that the user has access to the given organization
-    //   const organizationDoc = await context.loaders.organizations.load(
-    //     args.organizationKey
-    //   );
-    //   if (!organizationDoc)
-    //     // TODO: return proper status code
-    //     throw new Error('Unauthorized');
+      await context.db.mutation.deleteManyMemberRefs({
+        where: {
+          AND: [
+            { auth0Id: args.memberId },
+            { organization: { key: args.organizationKey } },
+          ],
+        },
+      });
 
-    //   const userSelfInOrg = organizationDoc.users.find(
-    //     user => user.id === context.userId
-    //   );
-    //   if (!userSelfInOrg.isAdmin)
-    //     throw new Error(
-    //       `You are not an admin of the organization "${
-    //         args.organizationKey
-    //       }". Only admins can remove users`
-    //     );
-
-    //   const isoDate = new Date().toISOString();
-    //   await context.db.organizations.updateOne(
-    //     { _id: args.organizationKey },
-    //     {
-    //       $set: { lastModifiedAt: isoDate },
-    //       $pull: { users: { id: args.userId } },
-    //     }
-    //   );
-    //   context.loaders.organizations
-    //     .clear(args.organizationKey)
-    //     .load(args.organizationKey);
-    // },
+      return context.db.query.organization(
+        { where: { key: args.organizationKey } },
+        info
+      );
+    },
   },
 };
 
