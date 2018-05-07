@@ -5,7 +5,8 @@ const { Prisma } = require('prisma-binding');
 const DataLoader = require('dataloader');
 const { fetchUser } = require('./utils/api');
 
-const SIGNATURE_ALGORITHM_HS256 = 'HS256';
+// https://auth0.com/docs/apis#signing-algorithms
+const SIGNATURE_ALGORITHM_RS256 = 'RS256';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -315,7 +316,7 @@ const checkJwt = (request, response, next) => {
     // Validate the audience and the issuer.
     audience: `${process.env.AUTH0_DOMAIN}/api/v2/`,
     issuer: `${process.env.AUTH0_DOMAIN}/`,
-    algorithms: [SIGNATURE_ALGORITHM_HS256],
+    algorithms: [SIGNATURE_ALGORITHM_RS256],
   })(request, response, next);
 };
 
