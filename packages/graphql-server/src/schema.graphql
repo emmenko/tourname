@@ -1,4 +1,4 @@
-# import Role,Discipline,TournamentStatus,TournamentSize from "./generated/prisma.graphql"
+# import Role,Discipline,TournamentStatus,TournamentSize,TournamentOrderByInput from "./generated/prisma.graphql"
 
 type Query {
   me: User!
@@ -28,16 +28,6 @@ type Mutation {
   # ): Organization
 }
 
-enum SortOrder {
-  Asc
-  Desc
-}
-
-input SortBy {
-  key: String!
-  order: SortOrder!
-}
-
 type User {
   id: String! # the auth0 id
   createdAt: DateTime!
@@ -56,7 +46,7 @@ type Organization {
   members: [Member!]!
   tournaments(
     status: [TournamentStatus!] # `or` condition
-    sort: SortBy!
+    orderBy: TournamentOrderByInput!
     page: Int!
     perPage: Int!
   ): [TournamentInfo!]!
