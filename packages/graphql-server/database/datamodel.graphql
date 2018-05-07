@@ -35,9 +35,6 @@ type Organization {
   updatedAt: DateTime!
   name: String!
   memberRefs: [MemberRef!]!
-  tournaments: [Tournament!]!
-  tournamentMatches: [MatchTournament!]!
-  singleMatches: [MatchSingle!]!
 }
 
 type Tournament {

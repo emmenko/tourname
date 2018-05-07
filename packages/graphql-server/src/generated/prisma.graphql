@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466
-# timestamp: Sun May 06 2018 21:47:04 GMT+0200 (CEST)
+# timestamp: Mon May 07 2018 09:02:39 GMT+0200 (CEST)
 
 type AggregateMatchSingle {
   count: Int!
@@ -84,15 +84,10 @@ type MatchSingleConnection {
 input MatchSingleCreateInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutSingleMatchesInput!
+  organization: OrganizationCreateOneInput!
   teamLeft: TeamCreateOneWithoutMatchSingleTeamLeftInput!
   teamRight: TeamCreateOneWithoutMatchSingleTeamRightInput!
   winner: TeamCreateOneWithoutMatchSingleTeamWinnerInput
-}
-
-input MatchSingleCreateManyWithoutOrganizationInput {
-  create: [MatchSingleCreateWithoutOrganizationInput!]
-  connect: [MatchSingleWhereUniqueInput!]
 }
 
 input MatchSingleCreateOneWithoutTeamLeftInput {
@@ -110,18 +105,10 @@ input MatchSingleCreateOneWithoutWinnerInput {
   connect: MatchSingleWhereUniqueInput
 }
 
-input MatchSingleCreateWithoutOrganizationInput {
-  discipline: Discipline!
-  dummy: String
-  teamLeft: TeamCreateOneWithoutMatchSingleTeamLeftInput!
-  teamRight: TeamCreateOneWithoutMatchSingleTeamRightInput!
-  winner: TeamCreateOneWithoutMatchSingleTeamWinnerInput
-}
-
 input MatchSingleCreateWithoutTeamLeftInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutSingleMatchesInput!
+  organization: OrganizationCreateOneInput!
   teamRight: TeamCreateOneWithoutMatchSingleTeamRightInput!
   winner: TeamCreateOneWithoutMatchSingleTeamWinnerInput
 }
@@ -129,7 +116,7 @@ input MatchSingleCreateWithoutTeamLeftInput {
 input MatchSingleCreateWithoutTeamRightInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutSingleMatchesInput!
+  organization: OrganizationCreateOneInput!
   teamLeft: TeamCreateOneWithoutMatchSingleTeamLeftInput!
   winner: TeamCreateOneWithoutMatchSingleTeamWinnerInput
 }
@@ -137,7 +124,7 @@ input MatchSingleCreateWithoutTeamRightInput {
 input MatchSingleCreateWithoutWinnerInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutSingleMatchesInput!
+  organization: OrganizationCreateOneInput!
   teamLeft: TeamCreateOneWithoutMatchSingleTeamLeftInput!
   teamRight: TeamCreateOneWithoutMatchSingleTeamRightInput!
 }
@@ -214,19 +201,10 @@ input MatchSingleSubscriptionWhereInput {
 input MatchSingleUpdateInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutSingleMatchesInput
+  organization: OrganizationUpdateOneInput
   teamLeft: TeamUpdateOneWithoutMatchSingleTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchSingleTeamRightInput
   winner: TeamUpdateOneWithoutMatchSingleTeamWinnerInput
-}
-
-input MatchSingleUpdateManyWithoutOrganizationInput {
-  create: [MatchSingleCreateWithoutOrganizationInput!]
-  connect: [MatchSingleWhereUniqueInput!]
-  disconnect: [MatchSingleWhereUniqueInput!]
-  delete: [MatchSingleWhereUniqueInput!]
-  update: [MatchSingleUpdateWithWhereUniqueWithoutOrganizationInput!]
-  upsert: [MatchSingleUpsertWithWhereUniqueWithoutOrganizationInput!]
 }
 
 input MatchSingleUpdateOneWithoutTeamLeftInput {
@@ -256,18 +234,10 @@ input MatchSingleUpdateOneWithoutWinnerInput {
   upsert: MatchSingleUpsertWithoutWinnerInput
 }
 
-input MatchSingleUpdateWithoutOrganizationDataInput {
-  discipline: Discipline
-  dummy: String
-  teamLeft: TeamUpdateOneWithoutMatchSingleTeamLeftInput
-  teamRight: TeamUpdateOneWithoutMatchSingleTeamRightInput
-  winner: TeamUpdateOneWithoutMatchSingleTeamWinnerInput
-}
-
 input MatchSingleUpdateWithoutTeamLeftDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutSingleMatchesInput
+  organization: OrganizationUpdateOneInput
   teamRight: TeamUpdateOneWithoutMatchSingleTeamRightInput
   winner: TeamUpdateOneWithoutMatchSingleTeamWinnerInput
 }
@@ -275,7 +245,7 @@ input MatchSingleUpdateWithoutTeamLeftDataInput {
 input MatchSingleUpdateWithoutTeamRightDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutSingleMatchesInput
+  organization: OrganizationUpdateOneInput
   teamLeft: TeamUpdateOneWithoutMatchSingleTeamLeftInput
   winner: TeamUpdateOneWithoutMatchSingleTeamWinnerInput
 }
@@ -283,14 +253,9 @@ input MatchSingleUpdateWithoutTeamRightDataInput {
 input MatchSingleUpdateWithoutWinnerDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutSingleMatchesInput
+  organization: OrganizationUpdateOneInput
   teamLeft: TeamUpdateOneWithoutMatchSingleTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchSingleTeamRightInput
-}
-
-input MatchSingleUpdateWithWhereUniqueWithoutOrganizationInput {
-  where: MatchSingleWhereUniqueInput!
-  data: MatchSingleUpdateWithoutOrganizationDataInput!
 }
 
 input MatchSingleUpsertWithoutTeamLeftInput {
@@ -306,12 +271,6 @@ input MatchSingleUpsertWithoutTeamRightInput {
 input MatchSingleUpsertWithoutWinnerInput {
   update: MatchSingleUpdateWithoutWinnerDataInput!
   create: MatchSingleCreateWithoutWinnerInput!
-}
-
-input MatchSingleUpsertWithWhereUniqueWithoutOrganizationInput {
-  where: MatchSingleWhereUniqueInput!
-  update: MatchSingleUpdateWithoutOrganizationDataInput!
-  create: MatchSingleCreateWithoutOrganizationInput!
 }
 
 input MatchSingleWhereInput {
@@ -509,7 +468,7 @@ type MatchTournamentConnection {
 input MatchTournamentCreateInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -530,11 +489,6 @@ input MatchTournamentCreateInput {
   roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
   roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
   roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateManyWithoutOrganizationInput {
-  create: [MatchTournamentCreateWithoutOrganizationInput!]
-  connect: [MatchTournamentWhereUniqueInput!]
 }
 
 input MatchTournamentCreateManyWithoutTournamentInput {
@@ -637,35 +591,10 @@ input MatchTournamentCreateOneWithoutWinnerInput {
   connect: MatchTournamentWhereUniqueInput
 }
 
-input MatchTournamentCreateWithoutOrganizationInput {
-  discipline: Discipline!
-  dummy: String
-  tournament: TournamentCreateOneWithoutMatchesInput!
-  teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
 input MatchTournamentCreateWithoutRoundFinalMatchInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -690,7 +619,7 @@ input MatchTournamentCreateWithoutRoundFinalMatchInput {
 input MatchTournamentCreateWithoutRoundLastSixteenMatchAInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -715,7 +644,7 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchAInput {
 input MatchTournamentCreateWithoutRoundLastSixteenMatchBInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -740,7 +669,7 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchBInput {
 input MatchTournamentCreateWithoutRoundLastSixteenMatchCInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -765,7 +694,7 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchCInput {
 input MatchTournamentCreateWithoutRoundLastSixteenMatchDInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -790,7 +719,7 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchDInput {
 input MatchTournamentCreateWithoutRoundLastSixteenMatchEInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -815,7 +744,7 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchEInput {
 input MatchTournamentCreateWithoutRoundLastSixteenMatchFInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -840,7 +769,7 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchFInput {
 input MatchTournamentCreateWithoutRoundLastSixteenMatchGInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -865,7 +794,7 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchGInput {
 input MatchTournamentCreateWithoutRoundLastSixteenMatchHInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -890,7 +819,7 @@ input MatchTournamentCreateWithoutRoundLastSixteenMatchHInput {
 input MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -915,7 +844,7 @@ input MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput {
 input MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -940,7 +869,7 @@ input MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput {
 input MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -965,7 +894,7 @@ input MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput {
 input MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -990,7 +919,7 @@ input MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput {
 input MatchTournamentCreateWithoutRoundSemifinalsMatchAInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -1015,7 +944,7 @@ input MatchTournamentCreateWithoutRoundSemifinalsMatchAInput {
 input MatchTournamentCreateWithoutRoundSemifinalsMatchBInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -1040,7 +969,7 @@ input MatchTournamentCreateWithoutRoundSemifinalsMatchBInput {
 input MatchTournamentCreateWithoutTeamLeftInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
   winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
@@ -1065,7 +994,7 @@ input MatchTournamentCreateWithoutTeamLeftInput {
 input MatchTournamentCreateWithoutTeamRightInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
@@ -1090,7 +1019,7 @@ input MatchTournamentCreateWithoutTeamRightInput {
 input MatchTournamentCreateWithoutTournamentInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
   winner: TeamCreateOneWithoutMatchTournamentTeamWinnerInput
@@ -1115,7 +1044,7 @@ input MatchTournamentCreateWithoutTournamentInput {
 input MatchTournamentCreateWithoutWinnerInput {
   discipline: Discipline!
   dummy: String
-  organization: OrganizationCreateOneWithoutTournamentMatchesInput!
+  organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneWithoutMatchesInput!
   teamLeft: TeamCreateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamCreateOneWithoutMatchTournamentTeamRightInput
@@ -1209,7 +1138,7 @@ input MatchTournamentSubscriptionWhereInput {
 input MatchTournamentUpdateDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1235,7 +1164,7 @@ input MatchTournamentUpdateDataInput {
 input MatchTournamentUpdateInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1256,15 +1185,6 @@ input MatchTournamentUpdateInput {
   roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
   roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
   roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateManyWithoutOrganizationInput {
-  create: [MatchTournamentCreateWithoutOrganizationInput!]
-  connect: [MatchTournamentWhereUniqueInput!]
-  disconnect: [MatchTournamentWhereUniqueInput!]
-  delete: [MatchTournamentWhereUniqueInput!]
-  update: [MatchTournamentUpdateWithWhereUniqueWithoutOrganizationInput!]
-  upsert: [MatchTournamentUpsertWithWhereUniqueWithoutOrganizationInput!]
 }
 
 input MatchTournamentUpdateManyWithoutTournamentInput {
@@ -1432,35 +1352,10 @@ input MatchTournamentUpdateOneWithoutWinnerInput {
   upsert: MatchTournamentUpsertWithoutWinnerInput
 }
 
-input MatchTournamentUpdateWithoutOrganizationDataInput {
-  discipline: Discipline
-  dummy: String
-  tournament: TournamentUpdateOneWithoutMatchesInput
-  teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
 input MatchTournamentUpdateWithoutRoundFinalMatchDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1485,7 +1380,7 @@ input MatchTournamentUpdateWithoutRoundFinalMatchDataInput {
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchADataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1510,7 +1405,7 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchADataInput {
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchBDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1535,7 +1430,7 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchBDataInput {
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchCDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1560,7 +1455,7 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchCDataInput {
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchDDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1585,7 +1480,7 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchDDataInput {
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchEDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1610,7 +1505,7 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchEDataInput {
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchFDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1635,7 +1530,7 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchFDataInput {
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchGDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1660,7 +1555,7 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchGDataInput {
 input MatchTournamentUpdateWithoutRoundLastSixteenMatchHDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1685,7 +1580,7 @@ input MatchTournamentUpdateWithoutRoundLastSixteenMatchHDataInput {
 input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchADataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1710,7 +1605,7 @@ input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchADataInput {
 input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchBDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1735,7 +1630,7 @@ input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchBDataInput {
 input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchCDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1760,7 +1655,7 @@ input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchCDataInput {
 input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchDDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1785,7 +1680,7 @@ input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchDDataInput {
 input MatchTournamentUpdateWithoutRoundSemifinalsMatchADataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1810,7 +1705,7 @@ input MatchTournamentUpdateWithoutRoundSemifinalsMatchADataInput {
 input MatchTournamentUpdateWithoutRoundSemifinalsMatchBDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1835,7 +1730,7 @@ input MatchTournamentUpdateWithoutRoundSemifinalsMatchBDataInput {
 input MatchTournamentUpdateWithoutTeamLeftDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
   winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
@@ -1860,7 +1755,7 @@ input MatchTournamentUpdateWithoutTeamLeftDataInput {
 input MatchTournamentUpdateWithoutTeamRightDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
@@ -1885,7 +1780,7 @@ input MatchTournamentUpdateWithoutTeamRightDataInput {
 input MatchTournamentUpdateWithoutTournamentDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
   winner: TeamUpdateOneWithoutMatchTournamentTeamWinnerInput
@@ -1910,7 +1805,7 @@ input MatchTournamentUpdateWithoutTournamentDataInput {
 input MatchTournamentUpdateWithoutWinnerDataInput {
   discipline: Discipline
   dummy: String
-  organization: OrganizationUpdateOneWithoutTournamentMatchesInput
+  organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneWithoutMatchesInput
   teamLeft: TeamUpdateOneWithoutMatchTournamentTeamLeftInput
   teamRight: TeamUpdateOneWithoutMatchTournamentTeamRightInput
@@ -1930,11 +1825,6 @@ input MatchTournamentUpdateWithoutWinnerDataInput {
   roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
   roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
   roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithWhereUniqueWithoutOrganizationInput {
-  where: MatchTournamentWhereUniqueInput!
-  data: MatchTournamentUpdateWithoutOrganizationDataInput!
 }
 
 input MatchTournamentUpdateWithWhereUniqueWithoutTournamentInput {
@@ -2035,12 +1925,6 @@ input MatchTournamentUpsertWithoutTeamRightInput {
 input MatchTournamentUpsertWithoutWinnerInput {
   update: MatchTournamentUpdateWithoutWinnerDataInput!
   create: MatchTournamentCreateWithoutWinnerInput!
-}
-
-input MatchTournamentUpsertWithWhereUniqueWithoutOrganizationInput {
-  where: MatchTournamentWhereUniqueInput!
-  update: MatchTournamentUpdateWithoutOrganizationDataInput!
-  create: MatchTournamentCreateWithoutOrganizationInput!
 }
 
 input MatchTournamentUpsertWithWhereUniqueWithoutTournamentInput {
@@ -2462,9 +2346,6 @@ type Organization {
   updatedAt: DateTime!
   name: String!
   memberRefs(where: MemberRefWhereInput, orderBy: MemberRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MemberRef!]
-  tournaments(where: TournamentWhereInput, orderBy: TournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tournament!]
-  tournamentMatches(where: MatchTournamentWhereInput, orderBy: MatchTournamentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchTournament!]
-  singleMatches(where: MatchSingleWhereInput, orderBy: MatchSingleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MatchSingle!]
 }
 
 """A connection to a list of items."""
@@ -2481,9 +2362,11 @@ input OrganizationCreateInput {
   key: String!
   name: String!
   memberRefs: MemberRefCreateManyWithoutOrganizationInput
-  tournaments: TournamentCreateManyWithoutOrganizationInput
-  tournamentMatches: MatchTournamentCreateManyWithoutOrganizationInput
-  singleMatches: MatchSingleCreateManyWithoutOrganizationInput
+}
+
+input OrganizationCreateOneInput {
+  create: OrganizationCreateInput
+  connect: OrganizationWhereUniqueInput
 }
 
 input OrganizationCreateOneWithoutMemberRefsInput {
@@ -2491,51 +2374,9 @@ input OrganizationCreateOneWithoutMemberRefsInput {
   connect: OrganizationWhereUniqueInput
 }
 
-input OrganizationCreateOneWithoutSingleMatchesInput {
-  create: OrganizationCreateWithoutSingleMatchesInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationCreateOneWithoutTournamentMatchesInput {
-  create: OrganizationCreateWithoutTournamentMatchesInput
-  connect: OrganizationWhereUniqueInput
-}
-
-input OrganizationCreateOneWithoutTournamentsInput {
-  create: OrganizationCreateWithoutTournamentsInput
-  connect: OrganizationWhereUniqueInput
-}
-
 input OrganizationCreateWithoutMemberRefsInput {
   key: String!
   name: String!
-  tournaments: TournamentCreateManyWithoutOrganizationInput
-  tournamentMatches: MatchTournamentCreateManyWithoutOrganizationInput
-  singleMatches: MatchSingleCreateManyWithoutOrganizationInput
-}
-
-input OrganizationCreateWithoutSingleMatchesInput {
-  key: String!
-  name: String!
-  memberRefs: MemberRefCreateManyWithoutOrganizationInput
-  tournaments: TournamentCreateManyWithoutOrganizationInput
-  tournamentMatches: MatchTournamentCreateManyWithoutOrganizationInput
-}
-
-input OrganizationCreateWithoutTournamentMatchesInput {
-  key: String!
-  name: String!
-  memberRefs: MemberRefCreateManyWithoutOrganizationInput
-  tournaments: TournamentCreateManyWithoutOrganizationInput
-  singleMatches: MatchSingleCreateManyWithoutOrganizationInput
-}
-
-input OrganizationCreateWithoutTournamentsInput {
-  key: String!
-  name: String!
-  memberRefs: MemberRefCreateManyWithoutOrganizationInput
-  tournamentMatches: MatchTournamentCreateManyWithoutOrganizationInput
-  singleMatches: MatchSingleCreateManyWithoutOrganizationInput
 }
 
 """An edge in a connection."""
@@ -2606,13 +2447,24 @@ input OrganizationSubscriptionWhereInput {
   node: OrganizationWhereInput
 }
 
+input OrganizationUpdateDataInput {
+  key: String
+  name: String
+  memberRefs: MemberRefUpdateManyWithoutOrganizationInput
+}
+
 input OrganizationUpdateInput {
   key: String
   name: String
   memberRefs: MemberRefUpdateManyWithoutOrganizationInput
-  tournaments: TournamentUpdateManyWithoutOrganizationInput
-  tournamentMatches: MatchTournamentUpdateManyWithoutOrganizationInput
-  singleMatches: MatchSingleUpdateManyWithoutOrganizationInput
+}
+
+input OrganizationUpdateOneInput {
+  create: OrganizationCreateInput
+  connect: OrganizationWhereUniqueInput
+  delete: Boolean
+  update: OrganizationUpdateDataInput
+  upsert: OrganizationUpsertNestedInput
 }
 
 input OrganizationUpdateOneWithoutMemberRefsInput {
@@ -2623,80 +2475,19 @@ input OrganizationUpdateOneWithoutMemberRefsInput {
   upsert: OrganizationUpsertWithoutMemberRefsInput
 }
 
-input OrganizationUpdateOneWithoutSingleMatchesInput {
-  create: OrganizationCreateWithoutSingleMatchesInput
-  connect: OrganizationWhereUniqueInput
-  delete: Boolean
-  update: OrganizationUpdateWithoutSingleMatchesDataInput
-  upsert: OrganizationUpsertWithoutSingleMatchesInput
-}
-
-input OrganizationUpdateOneWithoutTournamentMatchesInput {
-  create: OrganizationCreateWithoutTournamentMatchesInput
-  connect: OrganizationWhereUniqueInput
-  delete: Boolean
-  update: OrganizationUpdateWithoutTournamentMatchesDataInput
-  upsert: OrganizationUpsertWithoutTournamentMatchesInput
-}
-
-input OrganizationUpdateOneWithoutTournamentsInput {
-  create: OrganizationCreateWithoutTournamentsInput
-  connect: OrganizationWhereUniqueInput
-  delete: Boolean
-  update: OrganizationUpdateWithoutTournamentsDataInput
-  upsert: OrganizationUpsertWithoutTournamentsInput
-}
-
 input OrganizationUpdateWithoutMemberRefsDataInput {
   key: String
   name: String
-  tournaments: TournamentUpdateManyWithoutOrganizationInput
-  tournamentMatches: MatchTournamentUpdateManyWithoutOrganizationInput
-  singleMatches: MatchSingleUpdateManyWithoutOrganizationInput
 }
 
-input OrganizationUpdateWithoutSingleMatchesDataInput {
-  key: String
-  name: String
-  memberRefs: MemberRefUpdateManyWithoutOrganizationInput
-  tournaments: TournamentUpdateManyWithoutOrganizationInput
-  tournamentMatches: MatchTournamentUpdateManyWithoutOrganizationInput
-}
-
-input OrganizationUpdateWithoutTournamentMatchesDataInput {
-  key: String
-  name: String
-  memberRefs: MemberRefUpdateManyWithoutOrganizationInput
-  tournaments: TournamentUpdateManyWithoutOrganizationInput
-  singleMatches: MatchSingleUpdateManyWithoutOrganizationInput
-}
-
-input OrganizationUpdateWithoutTournamentsDataInput {
-  key: String
-  name: String
-  memberRefs: MemberRefUpdateManyWithoutOrganizationInput
-  tournamentMatches: MatchTournamentUpdateManyWithoutOrganizationInput
-  singleMatches: MatchSingleUpdateManyWithoutOrganizationInput
+input OrganizationUpsertNestedInput {
+  update: OrganizationUpdateDataInput!
+  create: OrganizationCreateInput!
 }
 
 input OrganizationUpsertWithoutMemberRefsInput {
   update: OrganizationUpdateWithoutMemberRefsDataInput!
   create: OrganizationCreateWithoutMemberRefsInput!
-}
-
-input OrganizationUpsertWithoutSingleMatchesInput {
-  update: OrganizationUpdateWithoutSingleMatchesDataInput!
-  create: OrganizationCreateWithoutSingleMatchesInput!
-}
-
-input OrganizationUpsertWithoutTournamentMatchesInput {
-  update: OrganizationUpdateWithoutTournamentMatchesDataInput!
-  create: OrganizationCreateWithoutTournamentMatchesInput!
-}
-
-input OrganizationUpsertWithoutTournamentsInput {
-  update: OrganizationUpdateWithoutTournamentsDataInput!
-  create: OrganizationCreateWithoutTournamentsInput!
 }
 
 input OrganizationWhereInput {
@@ -2835,15 +2626,6 @@ input OrganizationWhereInput {
   memberRefs_every: MemberRefWhereInput
   memberRefs_some: MemberRefWhereInput
   memberRefs_none: MemberRefWhereInput
-  tournaments_every: TournamentWhereInput
-  tournaments_some: TournamentWhereInput
-  tournaments_none: TournamentWhereInput
-  tournamentMatches_every: MatchTournamentWhereInput
-  tournamentMatches_some: MatchTournamentWhereInput
-  tournamentMatches_none: MatchTournamentWhereInput
-  singleMatches_every: MatchSingleWhereInput
-  singleMatches_some: MatchSingleWhereInput
-  singleMatches_none: MatchSingleWhereInput
 }
 
 input OrganizationWhereUniqueInput {
@@ -4743,18 +4525,13 @@ input TournamentCreateInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  organization: OrganizationCreateOneWithoutTournamentsInput!
+  organization: OrganizationCreateOneInput!
   teams: TeamCreateManyInput
   roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
   roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
   roundSemifinals: RoundSemifinalsCreateOneWithoutTournamentInput
   roundFinal: RoundFinalCreateOneWithoutTournamentInput
   matches: MatchTournamentCreateManyWithoutTournamentInput
-}
-
-input TournamentCreateManyWithoutOrganizationInput {
-  create: [TournamentCreateWithoutOrganizationInput!]
-  connect: [TournamentWhereUniqueInput!]
 }
 
 input TournamentCreateOneWithoutMatchesInput {
@@ -4788,26 +4565,12 @@ input TournamentCreateWithoutMatchesInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  organization: OrganizationCreateOneWithoutTournamentsInput!
+  organization: OrganizationCreateOneInput!
   teams: TeamCreateManyInput
   roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
   roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
   roundSemifinals: RoundSemifinalsCreateOneWithoutTournamentInput
   roundFinal: RoundFinalCreateOneWithoutTournamentInput
-}
-
-input TournamentCreateWithoutOrganizationInput {
-  name: String!
-  size: TournamentSize!
-  status: TournamentStatus!
-  discipline: Discipline!
-  teamSize: Int!
-  teams: TeamCreateManyInput
-  roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
-  roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
-  roundSemifinals: RoundSemifinalsCreateOneWithoutTournamentInput
-  roundFinal: RoundFinalCreateOneWithoutTournamentInput
-  matches: MatchTournamentCreateManyWithoutTournamentInput
 }
 
 input TournamentCreateWithoutRoundFinalInput {
@@ -4816,7 +4579,7 @@ input TournamentCreateWithoutRoundFinalInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  organization: OrganizationCreateOneWithoutTournamentsInput!
+  organization: OrganizationCreateOneInput!
   teams: TeamCreateManyInput
   roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
   roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
@@ -4830,7 +4593,7 @@ input TournamentCreateWithoutRoundLastSixteenInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  organization: OrganizationCreateOneWithoutTournamentsInput!
+  organization: OrganizationCreateOneInput!
   teams: TeamCreateManyInput
   roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
   roundSemifinals: RoundSemifinalsCreateOneWithoutTournamentInput
@@ -4844,7 +4607,7 @@ input TournamentCreateWithoutRoundQuarterfinalsInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  organization: OrganizationCreateOneWithoutTournamentsInput!
+  organization: OrganizationCreateOneInput!
   teams: TeamCreateManyInput
   roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
   roundSemifinals: RoundSemifinalsCreateOneWithoutTournamentInput
@@ -4858,7 +4621,7 @@ input TournamentCreateWithoutRoundSemifinalsInput {
   status: TournamentStatus!
   discipline: Discipline!
   teamSize: Int!
-  organization: OrganizationCreateOneWithoutTournamentsInput!
+  organization: OrganizationCreateOneInput!
   teams: TeamCreateManyInput
   roundLastSixteen: RoundLastSixteenCreateOneWithoutTournamentInput
   roundQuarterfinals: RoundQuarterfinalsCreateOneWithoutTournamentInput
@@ -4963,22 +4726,13 @@ input TournamentUpdateInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  organization: OrganizationUpdateOneWithoutTournamentsInput
+  organization: OrganizationUpdateOneInput
   teams: TeamUpdateManyInput
   roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
   roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
   roundSemifinals: RoundSemifinalsUpdateOneWithoutTournamentInput
   roundFinal: RoundFinalUpdateOneWithoutTournamentInput
   matches: MatchTournamentUpdateManyWithoutTournamentInput
-}
-
-input TournamentUpdateManyWithoutOrganizationInput {
-  create: [TournamentCreateWithoutOrganizationInput!]
-  connect: [TournamentWhereUniqueInput!]
-  disconnect: [TournamentWhereUniqueInput!]
-  delete: [TournamentWhereUniqueInput!]
-  update: [TournamentUpdateWithWhereUniqueWithoutOrganizationInput!]
-  upsert: [TournamentUpsertWithWhereUniqueWithoutOrganizationInput!]
 }
 
 input TournamentUpdateOneWithoutMatchesInput {
@@ -5027,26 +4781,12 @@ input TournamentUpdateWithoutMatchesDataInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  organization: OrganizationUpdateOneWithoutTournamentsInput
+  organization: OrganizationUpdateOneInput
   teams: TeamUpdateManyInput
   roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
   roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
   roundSemifinals: RoundSemifinalsUpdateOneWithoutTournamentInput
   roundFinal: RoundFinalUpdateOneWithoutTournamentInput
-}
-
-input TournamentUpdateWithoutOrganizationDataInput {
-  name: String
-  size: TournamentSize
-  status: TournamentStatus
-  discipline: Discipline
-  teamSize: Int
-  teams: TeamUpdateManyInput
-  roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
-  roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
-  roundSemifinals: RoundSemifinalsUpdateOneWithoutTournamentInput
-  roundFinal: RoundFinalUpdateOneWithoutTournamentInput
-  matches: MatchTournamentUpdateManyWithoutTournamentInput
 }
 
 input TournamentUpdateWithoutRoundFinalDataInput {
@@ -5055,7 +4795,7 @@ input TournamentUpdateWithoutRoundFinalDataInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  organization: OrganizationUpdateOneWithoutTournamentsInput
+  organization: OrganizationUpdateOneInput
   teams: TeamUpdateManyInput
   roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
   roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
@@ -5069,7 +4809,7 @@ input TournamentUpdateWithoutRoundLastSixteenDataInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  organization: OrganizationUpdateOneWithoutTournamentsInput
+  organization: OrganizationUpdateOneInput
   teams: TeamUpdateManyInput
   roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
   roundSemifinals: RoundSemifinalsUpdateOneWithoutTournamentInput
@@ -5083,7 +4823,7 @@ input TournamentUpdateWithoutRoundQuarterfinalsDataInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  organization: OrganizationUpdateOneWithoutTournamentsInput
+  organization: OrganizationUpdateOneInput
   teams: TeamUpdateManyInput
   roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
   roundSemifinals: RoundSemifinalsUpdateOneWithoutTournamentInput
@@ -5097,17 +4837,12 @@ input TournamentUpdateWithoutRoundSemifinalsDataInput {
   status: TournamentStatus
   discipline: Discipline
   teamSize: Int
-  organization: OrganizationUpdateOneWithoutTournamentsInput
+  organization: OrganizationUpdateOneInput
   teams: TeamUpdateManyInput
   roundLastSixteen: RoundLastSixteenUpdateOneWithoutTournamentInput
   roundQuarterfinals: RoundQuarterfinalsUpdateOneWithoutTournamentInput
   roundFinal: RoundFinalUpdateOneWithoutTournamentInput
   matches: MatchTournamentUpdateManyWithoutTournamentInput
-}
-
-input TournamentUpdateWithWhereUniqueWithoutOrganizationInput {
-  where: TournamentWhereUniqueInput!
-  data: TournamentUpdateWithoutOrganizationDataInput!
 }
 
 input TournamentUpsertWithoutMatchesInput {
@@ -5133,12 +4868,6 @@ input TournamentUpsertWithoutRoundQuarterfinalsInput {
 input TournamentUpsertWithoutRoundSemifinalsInput {
   update: TournamentUpdateWithoutRoundSemifinalsDataInput!
   create: TournamentCreateWithoutRoundSemifinalsInput!
-}
-
-input TournamentUpsertWithWhereUniqueWithoutOrganizationInput {
-  where: TournamentWhereUniqueInput!
-  update: TournamentUpdateWithoutOrganizationDataInput!
-  create: TournamentCreateWithoutOrganizationInput!
 }
 
 input TournamentWhereInput {
