@@ -1,4 +1,3 @@
-const isUserAdminOfOrganization = require('../../validations/is-user-admin-of-organization');
 const isUserInAuth0 = require('../../validations/is-user-in-auth0');
 
 /**
@@ -9,7 +8,6 @@ const isUserInAuth0 = require('../../validations/is-user-in-auth0');
  * - memberId
  */
 module.exports = async (parent, args, context, info) => {
-  await isUserAdminOfOrganization(args, context);
   await isUserInAuth0(args, context);
 
   await context.db.mutation.createMemberRef({

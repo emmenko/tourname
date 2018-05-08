@@ -1,5 +1,4 @@
 const { ValidationError } = require('../../utils/errors');
-const isUserAdminOfOrganization = require('../../validations/is-user-admin-of-organization');
 
 const isTargetMemberNotSelf = (args, context) => {
   if (context.userId === args.memberId)
@@ -43,7 +42,6 @@ const isTargetMemberNotAnAdmin = async (args, context) => {
  */
 module.exports = async (parent, args, context, info) => {
   isTargetMemberNotSelf(args, context);
-  await isUserAdminOfOrganization(args, context);
   await isTargetMemberNotAnAdmin(args, context);
 
   await context.db.mutation.updateManyMemberRefs({
