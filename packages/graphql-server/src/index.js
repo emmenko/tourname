@@ -14,6 +14,13 @@ const graphqlEndpoint = '/graphql';
 const SIGNATURE_ALGORITHM_RS256 = 'RS256';
 
 const checkJwt = (request, response, next) => {
+  // NOTE: for local development, in order to use GraphQL Playground
+  // we would to authenticate the requests by using signed JWT from Auth0.
+  // However, since we are using the `RS256` signing algorithm, which uses an
+  // asymmetric signature, only Auth0 can sign the JWT using a private key
+  // and we can only verify the JWT using the public key.
+  // For that reason, when using the GraphQL Playground we pass a custom header
+  // which will skip the JWT validation. This is only possible in dev mode.
   const userIdFromHeaders = request.headers['x-graphql-userid'];
   if (userIdFromHeaders) {
     if (isProd) {
