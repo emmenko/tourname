@@ -11,7 +11,7 @@
     "get-schema": "send-introspection-query http://localhost:3999/graphql"
   },
   "dependencies": {
-    "apollo-cache-inmemory": "1.1.12",
+    "apollo-cache-inmemory": "1.2.1",
     "apollo-client": "2.2.8",
     "apollo-link": "1.2.2",
     "apollo-link-context": "1.0.8",
