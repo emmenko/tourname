@@ -12,6 +12,7 @@ const addMemberToOrganization = require('./mutation/add-member-to-organization')
 const removeMemberFromOrganization = require('./mutation/remove-member-from-organization');
 const promoteMemberToAdmin = require('./mutation/promote-member-to-admin');
 const demoteAdminToMember = require('./mutation/demote-admin-to-member');
+const createTournament = require('./mutation/create-tournament');
 
 module.exports = {
   Query: {
@@ -35,5 +36,6 @@ module.exports = {
     removeMemberFromOrganization,
     promoteMemberToAdmin,
     demoteAdminToMember,
+    createTournament,
   },
 };

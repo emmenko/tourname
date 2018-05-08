@@ -1,6 +1,7 @@
-# import Role,Discipline,TournamentStatus,TournamentSize,TournamentOrderByInput from "./generated/prisma.graphql"
+# import Role,Discipline,Tournament,TournamentStatus,TournamentSize,TournamentOrderByInput from "./generated/prisma.graphql"
 
 directive @isAuthenticated on FIELD_DEFINITION
+
 directive @isAdmin on FIELD_DEFINITION
 
 type Query {
@@ -32,6 +33,14 @@ type Mutation {
     organizationKey: String!
     memberId: String!
   ): Organization @isAuthenticated @isAdmin
+
+  createTournament(
+    name: String!
+    size: TournamentSize!
+    discipline: Discipline!
+    organizationKey: String!
+    teamSize: Int!
+  ): Tournament @isAuthenticated
 }
 
 type User {
