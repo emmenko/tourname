@@ -53,11 +53,10 @@ type Tournament {
   roundQuarterfinals: RoundQuarterfinals
   roundSemifinals: RoundSemifinals
   roundFinal: RoundFinal
-  matches: [MatchTournament!]!
 }
 
 type Team {
-  key: ID! @unique
+  id: ID! @unique
   playerRefs: [MemberRef!]!
   # 👇 List all relation fields
   # See https://github.com/graphcool/prisma/issues/1907
