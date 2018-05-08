@@ -1,8 +1,9 @@
+const { ValidationError } = require('../../utils/errors');
 const isUserAdminOfOrganization = require('../../validations/is-user-admin-of-organization');
 
 const isTargetMemberNotSelf = (args, context) => {
   if (context.userId === args.memberId)
-    throw new Error(
+    throw new ValidationError(
       `You cannot demote yourself from admin of the organization "${
         args.organizationKey
       }"`
@@ -18,13 +19,13 @@ const isTargetMemberAnAdmin = async (args, context) => {
     },
   });
   if (memberResult && memberResult.length === 0)
-    throw new Error(
+    throw new ValidationError(
       `The member you are trying to demote "${
         args.memberId
       }" is not part of the organization "${args.organizationKey}"`
     );
   if (memberResult && memberResult[0].role === 'Member')
-    throw new Error(
+    throw new ValidationError(
       `The member you are trying to demote "${
         args.memberId
       }" has already the role "Member" of the organization "${

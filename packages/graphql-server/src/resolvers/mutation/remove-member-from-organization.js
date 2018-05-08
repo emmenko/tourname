@@ -1,3 +1,4 @@
+const { ValidationError } = require('../../utils/errors');
 const isUserAdminOfOrganization = require('../../validations/is-user-admin-of-organization');
 
 const isTargetMemberNotSelfAndNotLastAdmin = async (args, context) => {
@@ -11,8 +12,7 @@ const isTargetMemberNotSelfAndNotLastAdmin = async (args, context) => {
     adminMembersOfOrganization.length === 1 &&
     context.userId === args.memberId
   )
-    // TODO: return proper status code
-    throw new Error(
+    throw new ValidationError(
       `You are the only Admin of the organization "${
         args.organizationKey
       }" and cannot remove yourself. If you wish to do so, you should delete the organization.`

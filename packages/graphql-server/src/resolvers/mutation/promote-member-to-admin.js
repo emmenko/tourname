@@ -1,8 +1,9 @@
+const { ValidationError } = require('../../utils/errors');
 const isUserAdminOfOrganization = require('../../validations/is-user-admin-of-organization');
 
 const isTargetMemberNotSelf = (args, context) => {
   if (context.userId === args.memberId)
-    throw new Error(
+    throw new ValidationError(
       `You cannot set yourself admin of the organization "${
         args.organizationKey
       }"`
@@ -18,13 +19,13 @@ const isTargetMemberNotAnAdmin = async (args, context) => {
     },
   });
   if (memberAdminResult && memberAdminResult.length === 0)
-    throw new Error(
+    throw new ValidationError(
       `The member you are trying to promote "${
         args.memberId
       }" is not part of the organization "${args.organizationKey}"`
     );
   if (memberAdminResult && memberAdminResult[0].role === 'Admin')
-    throw new Error(
+    throw new ValidationError(
       `The member you are trying to promote "${
         args.memberId
       }" has already the role "Admin" of the organization "${

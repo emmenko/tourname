@@ -12,9 +12,8 @@ module.exports = async (parent, args, context) => {
     },
     '{ memberRefs { auth0Id role } }'
   );
-  if (orgs && orgs.length === 0)
-    // TODO: return proper status code
-    throw new Error(`Organization with key "${args.key}" not found`);
+  if (orgs.length === 0) return null;
+
   const org = orgs[0];
 
   const normalizedMemberRefs = org.memberRefs.reduce((acc, memberRef) => {
