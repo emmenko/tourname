@@ -27,7 +27,7 @@
     "uuid": "^3.2.1"
   },
   "devDependencies": {
-    "graphql-schema-linter": "^0.1.5"
+    "graphql-schema-linter": "0.1.5"
   },
   "graphql-schema-linter": {
     "rules": [
