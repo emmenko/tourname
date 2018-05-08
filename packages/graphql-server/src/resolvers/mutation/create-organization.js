@@ -1,9 +1,13 @@
+const { ValidationError } = require('../../utils/errors');
+
 const isOrganizationKeyAvailable = async (args, context) => {
   const existingOrgForGivenKey = await context.db.query.organization({
     where: { key: args.key },
   });
   if (existingOrgForGivenKey)
-    throw new Error(`An organization for key "${args.key}" already exist`);
+    throw new ValidationError(
+      `An organization for key "${args.key}" already exist`
+    );
 };
 
 /**
