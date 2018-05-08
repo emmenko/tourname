@@ -54,7 +54,7 @@ const setUserInRequestContextFromJwt = context =>
     });
   });
 
-class AuthDirective extends SchemaDirectiveVisitor {
+class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
   // Visitor methods for nested types like fields and arguments
   // also receive a details object that provides information about
   // the parent and grandparent types.
@@ -68,4 +68,4 @@ class AuthDirective extends SchemaDirectiveVisitor {
   }
 }
 
-module.exports = AuthDirective;
+module.exports = IsAuthenticatedDirective;

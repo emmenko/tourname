@@ -1,5 +1,4 @@
 const { ValidationError } = require('../../utils/errors');
-const isUserAdminOfOrganization = require('../../validations/is-user-admin-of-organization');
 
 const isTargetMemberNotSelfAndNotLastAdmin = async (args, context) => {
   const adminMembersOfOrganization = await context.db.query.memberRefs({
@@ -27,7 +26,6 @@ const isTargetMemberNotSelfAndNotLastAdmin = async (args, context) => {
  * - memberId
  */
 module.exports = async (parent, args, context, info) => {
-  await isUserAdminOfOrganization(args, context);
   await isTargetMemberNotSelfAndNotLastAdmin(args, context);
 
   await context.db.mutation.deleteManyMemberRefs({

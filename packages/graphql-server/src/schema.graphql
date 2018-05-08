@@ -1,6 +1,7 @@
 # import Role,Discipline,TournamentStatus,TournamentSize,TournamentOrderByInput from "./generated/prisma.graphql"
 
 directive @isAuthenticated on FIELD_DEFINITION
+directive @isAdmin on FIELD_DEFINITION
 
 type Query {
   me: User! @isAuthenticated
@@ -11,31 +12,26 @@ type Query {
 type Mutation {
   # TODO: add mutation to save userRef (auth0Id)
 
-  # Every user can create an organization
   createOrganization(
     key: String! # unique identifier
     name: String!
   ): Organization @isAuthenticated
-  # Promote a member to admin
   promoteMemberToAdmin(
     organizationKey: String!
     memberId: String!
-  ): Organization @isAuthenticated
-  # Demote an admin to member
+  ): Organization @isAuthenticated @isAdmin
   demoteAdminToMember(
     organizationKey: String!
     memberId: String!
-  ): Organization @isAuthenticated
-  # Every user can add new members to the organization
+  ): Organization @isAuthenticated @isAdmin
   addMemberToOrganization(
     organizationKey: String!
     memberId: String!
-  ): Organization @isAuthenticated
-  # Only admin members can remove users from the organization
+  ): Organization @isAuthenticated @isAdmin
   removeMemberFromOrganization(
     organizationKey: String!
     memberId: String!
-  ): Organization @isAuthenticated
+  ): Organization @isAuthenticated @isAdmin
 }
 
 type User {
