@@ -28,17 +28,15 @@ const isTargetMemberNotSelfAndNotLastAdmin = async (args, context) => {
 module.exports = async (parent, args, context, info) => {
   await isTargetMemberNotSelfAndNotLastAdmin(args, context);
 
-  await context.db.mutation.deleteManyMemberRefs({
-    where: {
-      AND: [
-        { auth0Id: args.memberId },
-        { organization: { key: args.organizationKey } },
-      ],
+  return context.db.mutation.updateOrganization(
+    {
+      where: { key: args.organizationKey },
+      data: {
+        memberRefs: {
+          delete: { auth0Id: args.memberId },
+        },
+      },
     },
-  });
-
-  return context.db.query.organization(
-    { where: { key: args.organizationKey } },
     info
   );
 };

@@ -44,21 +44,17 @@ module.exports = async (parent, args, context, info) => {
   isTargetMemberNotSelf(args, context);
   await isTargetMemberNotAnAdmin(args, context);
 
-  await context.db.mutation.updateManyMemberRefs({
-    where: {
-      AND: [
-        { auth0Id: args.memberId },
-        { organization: { key: args.organizationKey } },
-      ],
-    },
-    data: {
-      role: 'Admin',
-    },
-  });
-
-  return context.db.query.organization(
+  return context.db.mutation.updateOrganization(
     {
       where: { key: args.organizationKey },
+      data: {
+        memberRefs: {
+          update: {
+            where: { auth0Id: args.memberId },
+            data: { role: 'Member' },
+          },
+        },
+      },
     },
     info
   );
