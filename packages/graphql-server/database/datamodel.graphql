@@ -24,7 +24,7 @@ enum Discipline {
 type MemberRef {
   # Users are only stored in Auth0, therefore we only
   # need a reference to them.
-  auth0Id: String!,
+  auth0Id: String!
   role: Role!
   organization: Organization!
 }
@@ -57,6 +57,7 @@ type Tournament {
 
 type Team {
   id: ID! @unique
+  size: Int!
   playerRefs: [MemberRef!]!
   # 👇 List all relation fields
   # See https://github.com/graphcool/prisma/issues/1907

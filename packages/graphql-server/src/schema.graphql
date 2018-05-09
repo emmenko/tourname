@@ -35,10 +35,10 @@ type Mutation {
   ): Organization @isAuthenticated @isAdmin
 
   createTournament(
+    organizationKey: String!
     name: String!
     size: TournamentSize!
     discipline: Discipline!
-    organizationKey: String!
     teamSize: Int!
   ): Tournament @isAuthenticated
 }
