@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466/tourname/dev
-# timestamp: Tue May 08 2018 21:53:56 GMT+0200 (CEST)
+# timestamp: Wed May 09 2018 10:21:25 GMT+0200 (CEST)
 
 type AggregateMatchSingle {
   count: Int!
@@ -3921,6 +3921,7 @@ type Subscription {
 
 type Team implements Node {
   id: ID!
+  size: Int!
   playerRefs(where: MemberRefWhereInput, orderBy: MemberRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MemberRef!]
   matchTournamentTeamLeft(where: MatchTournamentWhereInput): MatchTournament
   matchTournamentTeamRight(where: MatchTournamentWhereInput): MatchTournament
@@ -3942,6 +3943,7 @@ type TeamConnection {
 }
 
 input TeamCreateInput {
+  size: Int!
   dummy: String
   playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
@@ -3988,6 +3990,7 @@ input TeamCreateOneWithoutMatchTournamentTeamWinnerInput {
 }
 
 input TeamCreateWithoutMatchSingleTeamLeftInput {
+  size: Int!
   dummy: String
   playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
@@ -3998,6 +4001,7 @@ input TeamCreateWithoutMatchSingleTeamLeftInput {
 }
 
 input TeamCreateWithoutMatchSingleTeamRightInput {
+  size: Int!
   dummy: String
   playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
@@ -4008,6 +4012,7 @@ input TeamCreateWithoutMatchSingleTeamRightInput {
 }
 
 input TeamCreateWithoutMatchSingleTeamWinnerInput {
+  size: Int!
   dummy: String
   playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
@@ -4018,6 +4023,7 @@ input TeamCreateWithoutMatchSingleTeamWinnerInput {
 }
 
 input TeamCreateWithoutMatchTournamentTeamLeftInput {
+  size: Int!
   dummy: String
   playerRefs: MemberRefCreateManyInput
   matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
@@ -4028,6 +4034,7 @@ input TeamCreateWithoutMatchTournamentTeamLeftInput {
 }
 
 input TeamCreateWithoutMatchTournamentTeamRightInput {
+  size: Int!
   dummy: String
   playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
@@ -4038,6 +4045,7 @@ input TeamCreateWithoutMatchTournamentTeamRightInput {
 }
 
 input TeamCreateWithoutMatchTournamentTeamWinnerInput {
+  size: Int!
   dummy: String
   playerRefs: MemberRefCreateManyInput
   matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
@@ -4059,6 +4067,8 @@ type TeamEdge {
 enum TeamOrderByInput {
   id_ASC
   id_DESC
+  size_ASC
+  size_DESC
   dummy_ASC
   dummy_DESC
   updatedAt_ASC
@@ -4069,6 +4079,7 @@ enum TeamOrderByInput {
 
 type TeamPreviousValues {
   id: ID!
+  size: Int!
   dummy: String
 }
 
@@ -4112,6 +4123,7 @@ input TeamSubscriptionWhereInput {
 }
 
 input TeamUpdateDataInput {
+  size: Int
   dummy: String
   playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
@@ -4123,6 +4135,7 @@ input TeamUpdateDataInput {
 }
 
 input TeamUpdateInput {
+  size: Int
   dummy: String
   playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
@@ -4195,6 +4208,7 @@ input TeamUpdateOneWithoutMatchTournamentTeamWinnerInput {
 }
 
 input TeamUpdateWithoutMatchSingleTeamLeftDataInput {
+  size: Int
   dummy: String
   playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
@@ -4205,6 +4219,7 @@ input TeamUpdateWithoutMatchSingleTeamLeftDataInput {
 }
 
 input TeamUpdateWithoutMatchSingleTeamRightDataInput {
+  size: Int
   dummy: String
   playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
@@ -4215,6 +4230,7 @@ input TeamUpdateWithoutMatchSingleTeamRightDataInput {
 }
 
 input TeamUpdateWithoutMatchSingleTeamWinnerDataInput {
+  size: Int
   dummy: String
   playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
@@ -4225,6 +4241,7 @@ input TeamUpdateWithoutMatchSingleTeamWinnerDataInput {
 }
 
 input TeamUpdateWithoutMatchTournamentTeamLeftDataInput {
+  size: Int
   dummy: String
   playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
@@ -4235,6 +4252,7 @@ input TeamUpdateWithoutMatchTournamentTeamLeftDataInput {
 }
 
 input TeamUpdateWithoutMatchTournamentTeamRightDataInput {
+  size: Int
   dummy: String
   playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
@@ -4245,6 +4263,7 @@ input TeamUpdateWithoutMatchTournamentTeamRightDataInput {
 }
 
 input TeamUpdateWithoutMatchTournamentTeamWinnerDataInput {
+  size: Int
   dummy: String
   playerRefs: MemberRefUpdateManyInput
   matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
@@ -4344,6 +4363,28 @@ input TeamWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  size: Int
+
+  """All values that are not equal to given value."""
+  size_not: Int
+
+  """All values that are contained in given list."""
+  size_in: [Int!]
+
+  """All values that are not contained in given list."""
+  size_not_in: [Int!]
+
+  """All values less than the given value."""
+  size_lt: Int
+
+  """All values less than or equal the given value."""
+  size_lte: Int
+
+  """All values greater than the given value."""
+  size_gt: Int
+
+  """All values greater than or equal the given value."""
+  size_gte: Int
   dummy: String
 
   """All values that are not equal to given value."""

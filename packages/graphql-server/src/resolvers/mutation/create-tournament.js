@@ -42,7 +42,9 @@ module.exports = async (parent, args, context, info) => {
         status: 'New',
         discipline: args.discipline,
         teamSize: args.teamSize,
-        teams: { create: mapByTeamSize(args.size, () => ({})) },
+        teams: {
+          create: mapByTeamSize(args.size, () => ({ size: args.teamSize })),
+        },
         organization: { connect: { key: args.organizationKey } },
       },
     },
