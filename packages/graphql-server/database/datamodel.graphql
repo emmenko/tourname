@@ -22,11 +22,14 @@ enum Discipline {
 }
 
 type MemberRef {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
   # Users are only stored in Auth0, therefore we only
   # need a reference to them.
-  auth0Id: String!
-  role: Role!
+  auth0Id: String! @unique
   organization: Organization!
+  role: Role!
 }
 
 type Organization {
@@ -48,15 +51,18 @@ type Tournament {
   organization: Organization!
   teamSize: Int!
   # The number of teams depends on the size of the tournament
-  teams: [Team!]!
+  teams: [TeamMatchTournament!]!
   roundLastSixteen: RoundLastSixteen
   roundQuarterfinals: RoundQuarterfinals
   roundSemifinals: RoundSemifinals
   roundFinal: RoundFinal
 }
 
-type Team {
+type TeamMatchTournament {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  tournament: Tournament!
   size: Int!
   playerRefs: [MemberRef!]!
   # 👇 List all relation fields
@@ -64,10 +70,22 @@ type Team {
   matchTournamentTeamLeft: MatchTournament @relation(name: "TeamLeftMatchTournament")
   matchTournamentTeamRight: MatchTournament @relation(name: "TeamRightMatchTournament")
   matchTournamentTeamWinner: MatchTournament @relation(name: "TeamWinnerMatchTournament")
+  __ignore__: String
+}
+
+type TeamMatchSingle {
+  id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+
+  size: Int!
+  playerRefs: [MemberRef!]!
+  # 👇 List all relation fields
+  # See https://github.com/graphcool/prisma/issues/1907
   matchSingleTeamLeft: MatchSingle @relation(name: "TeamLeftMatchSingle")
   matchSingleTeamRight: MatchSingle @relation(name: "TeamRightMatchSingle")
   matchSingleTeamWinner: MatchSingle @relation(name: "TeamWinnerMatchSingle")
-  dummy: String
+  __ignore__: String
 }
 
 type RoundLastSixteen {
@@ -80,7 +98,7 @@ type RoundLastSixteen {
   matchG: MatchTournament! @relation(name: "MatchGOfRoundLastSixteen")
   matchH: MatchTournament! @relation(name: "MatchHOfRoundLastSixteen")
   tournament: Tournament!
-  dummy: String
+  __ignore__: String
 }
 
 type RoundQuarterfinals {
@@ -89,20 +107,20 @@ type RoundQuarterfinals {
   matchC: MatchTournament! @relation(name: "MatchCOfRoundQuarterfinals")
   matchD: MatchTournament! @relation(name: "MatchDOfRoundQuarterfinals")
   tournament: Tournament!
-  dummy: String
+  __ignore__: String
 }
 
 type RoundSemifinals {
   matchA: MatchTournament! @relation(name: "MatchAOfRoundSemifinals")
   matchB: MatchTournament! @relation(name: "MatchBOfRoundSemifinals")
   tournament: Tournament!
-  dummy: String
+  __ignore__: String
 }
 
 type RoundFinal {
   match: MatchTournament! @relation(name: "MatchOfRoundFinal")
   tournament: Tournament!
-  dummy: String
+  __ignore__: String
 }
 
 # A tournament match does not require teams to be defined
@@ -116,9 +134,9 @@ type MatchTournament {
   organization: Organization!
   tournament: Tournament!
   discipline: Discipline!
-  teamLeft: Team @relation(name: "TeamLeftMatchTournament")
-  teamRight: Team @relation(name: "TeamRightMatchTournament")
-  winner: Team @relation(name: "TeamWinnerMatchTournament")
+  teamLeft: TeamMatchTournament @relation(name: "TeamLeftMatchTournament")
+  teamRight: TeamMatchTournament @relation(name: "TeamRightMatchTournament")
+  winner: TeamMatchTournament @relation(name: "TeamWinnerMatchTournament")
   nextMatch: MatchTournament
   # 👇 List all relation fields
   # See https://github.com/graphcool/prisma/issues/1907
@@ -137,7 +155,7 @@ type MatchTournament {
   roundSemifinalsMatchA: RoundSemifinals @relation(name: "MatchAOfRoundSemifinals")
   roundSemifinalsMatchB: RoundSemifinals @relation(name: "MatchBOfRoundSemifinals")
   roundFinalMatch: RoundFinal @relation(name: "MatchOfRoundFinal")
-  dummy: String
+  __ignore__: String
 }
 
 # A single match requires both teams to be defined
@@ -148,8 +166,8 @@ type MatchSingle {
   updatedAt: DateTime!
   organization: Organization!
   discipline: Discipline!
-  teamLeft: Team! @relation(name: "TeamLeftMatchSingle")
-  teamRight: Team! @relation(name: "TeamRightMatchSingle")
-  winner: Team @relation(name: "TeamWinnerMatchSingle")
-  dummy: String
+  teamLeft: TeamMatchSingle! @relation(name: "TeamLeftMatchSingle")
+  teamRight: TeamMatchSingle! @relation(name: "TeamRightMatchSingle")
+  winner: TeamMatchSingle @relation(name: "TeamWinnerMatchSingle")
+  __ignore__: String
 }
