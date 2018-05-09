@@ -70,7 +70,7 @@ type TeamMatchTournament {
   matchTournamentTeamLeft: MatchTournament @relation(name: "TeamLeftMatchTournament")
   matchTournamentTeamRight: MatchTournament @relation(name: "TeamRightMatchTournament")
   matchTournamentTeamWinner: MatchTournament @relation(name: "TeamWinnerMatchTournament")
-  __ignore__: String
+  _ignore_: String
 }
 
 type TeamMatchSingle {
@@ -85,7 +85,7 @@ type TeamMatchSingle {
   matchSingleTeamLeft: MatchSingle @relation(name: "TeamLeftMatchSingle")
   matchSingleTeamRight: MatchSingle @relation(name: "TeamRightMatchSingle")
   matchSingleTeamWinner: MatchSingle @relation(name: "TeamWinnerMatchSingle")
-  __ignore__: String
+  _ignore_: String
 }
 
 type RoundLastSixteen {
@@ -98,7 +98,7 @@ type RoundLastSixteen {
   matchG: MatchTournament! @relation(name: "MatchGOfRoundLastSixteen")
   matchH: MatchTournament! @relation(name: "MatchHOfRoundLastSixteen")
   tournament: Tournament!
-  __ignore__: String
+  _ignore_: String
 }
 
 type RoundQuarterfinals {
@@ -107,20 +107,20 @@ type RoundQuarterfinals {
   matchC: MatchTournament! @relation(name: "MatchCOfRoundQuarterfinals")
   matchD: MatchTournament! @relation(name: "MatchDOfRoundQuarterfinals")
   tournament: Tournament!
-  __ignore__: String
+  _ignore_: String
 }
 
 type RoundSemifinals {
   matchA: MatchTournament! @relation(name: "MatchAOfRoundSemifinals")
   matchB: MatchTournament! @relation(name: "MatchBOfRoundSemifinals")
   tournament: Tournament!
-  __ignore__: String
+  _ignore_: String
 }
 
 type RoundFinal {
   match: MatchTournament! @relation(name: "MatchOfRoundFinal")
   tournament: Tournament!
-  __ignore__: String
+  _ignore_: String
 }
 
 # A tournament match does not require teams to be defined
@@ -155,7 +155,7 @@ type MatchTournament {
   roundSemifinalsMatchA: RoundSemifinals @relation(name: "MatchAOfRoundSemifinals")
   roundSemifinalsMatchB: RoundSemifinals @relation(name: "MatchBOfRoundSemifinals")
   roundFinalMatch: RoundFinal @relation(name: "MatchOfRoundFinal")
-  __ignore__: String
+  _ignore_: String
 }
 
 # A single match requires both teams to be defined
@@ -169,5 +169,5 @@ type MatchSingle {
   teamLeft: TeamMatchSingle! @relation(name: "TeamLeftMatchSingle")
   teamRight: TeamMatchSingle! @relation(name: "TeamRightMatchSingle")
   winner: TeamMatchSingle @relation(name: "TeamWinnerMatchSingle")
-  __ignore__: String
+  _ignore_: String
 }
