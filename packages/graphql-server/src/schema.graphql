@@ -1,13 +1,11 @@
 # import Role,Discipline,Tournament,TournamentStatus,TournamentSize,TournamentOrderByInput from "./generated/prisma.graphql"
 
-directive @isAuthenticated on FIELD_DEFINITION
-
-directive @isAdmin on FIELD_DEFINITION
+directive @isAuthenticated(role: Role) on FIELD_DEFINITION
 
 type Query {
   me: User! @isAuthenticated
   isOrganizationKeyUsed(key: String!): Boolean!
-  organization(key: String!): Organization @isAuthenticated
+  organization(key: String!): Organization @isAuthenticated(role: Member)
 }
 
 type Mutation {
@@ -20,19 +18,19 @@ type Mutation {
   promoteMemberToAdmin(
     organizationKey: String!
     memberId: String!
-  ): Organization @isAuthenticated @isAdmin
+  ): Organization @isAuthenticated(role: Admin)
   demoteAdminToMember(
     organizationKey: String!
     memberId: String!
-  ): Organization @isAuthenticated @isAdmin
+  ): Organization @isAuthenticated(role: Admin)
   addMemberToOrganization(
     organizationKey: String!
     memberId: String!
-  ): Organization @isAuthenticated @isAdmin
+  ): Organization @isAuthenticated(role: Admin)
   removeMemberFromOrganization(
     organizationKey: String!
     memberId: String!
-  ): Organization @isAuthenticated @isAdmin
+  ): Organization @isAuthenticated(role: Admin)
 
   createTournament(
     organizationKey: String!
@@ -40,7 +38,7 @@ type Mutation {
     size: TournamentSize!
     discipline: Discipline!
     teamSize: Int!
-  ): Tournament @isAuthenticated
+  ): Tournament @isAuthenticated(role: Member)
 }
 
 type User {
@@ -75,7 +73,7 @@ type Member {
   email: String!
   name: String!
   picture: String!
-  role: Role!
+  role: Role! @isAuthenticated(role: Admin)
 }
 
 type OrganizationInfo {

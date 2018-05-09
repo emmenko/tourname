@@ -1,29 +1,22 @@
 module.exports = async (parent, args, context) => {
   const organizationKey = args.key || args.organizationKey;
-  const orgs = await context.db.query.organizations(
+  const members = await context.db.mutation.memberRefs(
     {
       where: {
-        AND: [
-          { key: organizationKey },
-          { memberRefs_some: { auth0Id: context.userId } },
-        ],
+        organization: { key: organizationKey },
       },
-      first: 1,
     },
-    '{ memberRefs { auth0Id role } }'
+    '{ auth0Id role }'
   );
-  if (orgs.length === 0) return null;
 
-  const org = orgs[0];
-
-  const normalizedMemberRefs = org.memberRefs.reduce((acc, memberRef) => {
+  const normalizedMemberRefs = members.reduce((acc, memberRef) => {
     acc[memberRef.auth0Id] = memberRef;
     return acc;
   }, {});
-  const docs = await context.loaders.users.loadMany(
+  const userProfiles = await context.loaders.users.loadMany(
     Object.keys(normalizedMemberRefs)
   );
-  return docs.map(doc => ({
+  return userProfiles.map(doc => ({
     id: doc.user_id,
     email: doc.email,
     name: doc.name,

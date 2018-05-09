@@ -1,5 +1,4 @@
 const { ValidationError } = require('../../utils/errors');
-const hasUserAccessToOrganization = require('../../validations/has-user-access-to-organization');
 
 const isTeamSizeEqualOrGreaterThanOne = teamSize => {
   if (teamSize < 1)
@@ -32,7 +31,6 @@ const mapByTeamSize = (size, mapFn) => {
  */
 module.exports = async (parent, args, context, info) => {
   isTeamSizeEqualOrGreaterThanOne(args.teamSize);
-  await hasUserAccessToOrganization(args, context);
 
   return context.db.mutation.createTournament(
     {

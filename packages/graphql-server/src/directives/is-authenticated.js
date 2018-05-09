@@ -3,6 +3,7 @@ const { defaultFieldResolver } = require('graphql');
 const { SchemaDirectiveVisitor } = require('graphql-tools');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
+const hasUserAccessToOrganization = require('../validations/has-user-access-to-organization');
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -61,8 +62,11 @@ class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     const { resolve = defaultFieldResolver } = field;
     field.resolve = async (...args) => {
+      const params = args[1];
       const context = args[2];
       await setUserInRequestContextFromJwt(context);
+      if (this.args.role)
+        await hasUserAccessToOrganization(this.args.role, params, context);
       return resolve.apply(this, args);
     };
   }
