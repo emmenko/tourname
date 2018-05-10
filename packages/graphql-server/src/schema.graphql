@@ -39,6 +39,12 @@ type Mutation {
     discipline: Discipline!
     teamSize: Int!
   ): Tournament @isAuthenticated(role: Member)
+  addPlayerToTeam(
+    organizationKey: String!
+    tournamentId: ID!
+    teamId: ID!
+    memberId: ID!
+  ): Tournament @isAuthenticated(role: Member)
 }
 
 type User {

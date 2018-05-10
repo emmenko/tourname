@@ -2,6 +2,9 @@ const { ValidationError } = require('../utils/errors');
 
 module.exports = async (role, args, context) => {
   const organizationKey = args.organizationKey || args.key;
+  if (!organizationKey) {
+    throw new ValidationError(`Missing required parameter "organizationKey".`);
+  }
   const organizationResults = await context.db.query.organizations({
     where: {
       AND: [
