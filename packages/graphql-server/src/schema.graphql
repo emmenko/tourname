@@ -51,6 +51,8 @@ type Mutation {
     teamId: ID!
     memberId: ID!
   ): Tournament @isAuthenticated(role: Member)
+  startTournament(organizationKey: String!, tournamentId: String!): Tournament
+    @isAuthenticated(role: Member)
 }
 
 type User {
