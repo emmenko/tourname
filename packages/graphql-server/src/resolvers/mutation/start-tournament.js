@@ -4,6 +4,8 @@
  * - tournamentId
  */
 module.exports = (parent, args, context, info) =>
+  // TODO:
+  // * create group matches based on tournament size
   context.db.mutation.updateTournament(
     {
       where: {
