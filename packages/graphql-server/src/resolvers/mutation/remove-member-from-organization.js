@@ -28,12 +28,33 @@ const isTargetMemberNotSelfAndNotLastAdmin = async (args, context) => {
 module.exports = async (parent, args, context, info) => {
   await isTargetMemberNotSelfAndNotLastAdmin(args, context);
 
+  const matchingMembers = await context.db.query.memberRefs(
+    {
+      where: {
+        AND: [
+          { auth0Id: args.memberId },
+          { organization: { key: args.organizationKey } },
+        ],
+      },
+    },
+    '{ id }'
+  );
+
+  if (matchingMembers.length === 0)
+    throw new ValidationError(
+      `The member "${
+        args.memberId
+      }" you are trying to remove is not part of the organization "${
+        args.organizationKey
+      }".`
+    );
+
   return context.db.mutation.updateOrganization(
     {
       where: { key: args.organizationKey },
       data: {
         memberRefs: {
-          delete: { auth0Id: args.memberId },
+          delete: { id: matchingMembers[0] },
         },
       },
     },
