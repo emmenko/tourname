@@ -16,6 +16,7 @@ const createTournament = require('./mutation/create-tournament');
 const addPlayerToTeam = require('./mutation/add-player-to-team');
 const removePlayerFromTeam = require('./mutation/remove-player-from-team');
 const startTournament = require('./mutation/start-tournament');
+const createSingleMatch = require('./mutation/create-single-match');
 
 module.exports = {
   Query: {
@@ -43,5 +44,6 @@ module.exports = {
     addPlayerToTeam,
     removePlayerFromTeam,
     startTournament,
+    createSingleMatch,
   },
 };
