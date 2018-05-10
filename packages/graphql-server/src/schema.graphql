@@ -73,7 +73,7 @@ type Member {
   email: String!
   name: String!
   picture: String!
-  role: Role! @isAuthenticated(role: Admin)
+  role: Role!
 }
 
 type OrganizationInfo {
