@@ -6,7 +6,7 @@ const hasMemberForOrganization = require('../../validations/has-member-for-organ
  *
  * Args:
  * - organizationKey
- * - memberId
+ * - memberAuth0Id
  */
 module.exports = async (parent, args, context, info) => {
   await isUserInAuth0(args, context);
@@ -17,7 +17,7 @@ module.exports = async (parent, args, context, info) => {
       where: { key: args.organizationKey },
       data: {
         memberRefs: {
-          create: { auth0Id: args.memberId, role: 'Member' },
+          create: { auth0Id: args.memberAuth0Id, role: 'Member' },
         },
       },
     },

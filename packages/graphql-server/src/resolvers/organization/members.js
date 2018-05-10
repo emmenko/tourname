@@ -6,7 +6,7 @@ module.exports = async (parent, args, context) => {
         organization: { key: organizationKey },
       },
     },
-    '{ auth0Id role }'
+    '{ id auth0Id role }'
   );
 
   const normalizedMemberRefs = members.reduce((acc, memberRef) => {
@@ -17,10 +17,13 @@ module.exports = async (parent, args, context) => {
     Object.keys(normalizedMemberRefs)
   );
   return userProfiles.map(doc => ({
-    id: doc.user_id,
+    // From Auth0
+    auth0Id: doc.user_id,
     email: doc.email,
     name: doc.name,
     picture: doc.picture,
+    // From DB
+    id: normalizedMemberRefs[doc.user_id].id,
     role: normalizedMemberRefs[doc.user_id].role,
   }));
 };
