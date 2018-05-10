@@ -45,6 +45,12 @@ type Mutation {
     teamId: ID!
     memberId: ID!
   ): Tournament @isAuthenticated(role: Member)
+  removePlayerFromTeam(
+    organizationKey: String!
+    tournamentId: ID!
+    teamId: ID!
+    memberId: ID!
+  ): Tournament @isAuthenticated(role: Member)
 }
 
 type User {
