@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466/tourname/dev
-# timestamp: Wed May 09 2018 22:12:58 GMT+0200 (CEST)
+# timestamp: Thu May 10 2018 21:30:03 GMT+0200 (CEST)
 
 type AggregateMatchSingle {
   count: Int!
@@ -5068,7 +5068,6 @@ enum TournamentSize {
   Small
   Medium
   Large
-  XLarge
 }
 
 enum TournamentStatus {
