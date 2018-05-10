@@ -53,6 +53,12 @@ type Mutation {
   ): Tournament @isAuthenticated(role: Member)
   startTournament(organizationKey: String!, tournamentId: String!): Tournament
     @isAuthenticated(role: Member)
+  setMatchTournamentTeamWinner(
+    organizationKey: String!
+    tournamentId: ID!
+    matchTournamentId: ID!
+    teamWinnerId: ID!
+  ): Tournament @isAuthenticated(role: Member)
 
   createSingleMatch(
     organizationKey: String!
