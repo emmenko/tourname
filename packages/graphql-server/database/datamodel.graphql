@@ -7,7 +7,6 @@ enum TournamentSize {
   Small
   Medium
   Large
-  XLarge
 }
 
 enum TournamentStatus {
