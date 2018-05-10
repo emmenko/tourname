@@ -27,7 +27,15 @@ type MemberRef {
   updatedAt: DateTime!
   # Users are only stored in Auth0, therefore we only
   # need a reference to them.
-  auth0Id: String! @unique
+  # NOTE: ideally, we would like to ensure that for each
+  # Member the combination of `auth0Id` and `Organization`
+  # is unique, meaning that there should only be one unique
+  # user for each organization.
+  # The support for this feature might come soon...
+  # In the meantime, we need to ensure on our own that we
+  # do not add multiple members with the same `auth0Id` ref
+  # to the same organization!
+  auth0Id: String!
   organization: Organization!
   role: Role!
 }
