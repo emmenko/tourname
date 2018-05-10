@@ -64,7 +64,12 @@ class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
     field.resolve = async (...args) => {
       const params = args[1];
       const context = args[2];
+      // Validate JWT token first, then put the user id into the context
+      // for fast access from the resolvers.
       await setUserInRequestContextFromJwt(context);
+      // If a `role` argument is provided, check that the user has access
+      // to the organization (assumed to be given by the query/mutation
+      // arguments) with the given `role`.
       if (this.args.role)
         await hasUserAccessToOrganization(this.args.role, params, context);
       return resolve.apply(this, args);
