@@ -53,6 +53,13 @@ type Mutation {
   ): Tournament @isAuthenticated(role: Member)
   startTournament(organizationKey: String!, tournamentId: String!): Tournament
     @isAuthenticated(role: Member)
+
+  createSingleMatch(
+    organizationKey: String!
+    discipline: Discipline!
+    teamLeft: MatchSingleTeamInput!
+    teamRight: MatchSingleTeamInput!
+  ): MatchSingle @isAuthenticated(role: Member)
 }
 
 type User {
@@ -113,4 +120,9 @@ type MatchSingleInfo {
   createdAt: DateTime!
   updatedAt: DateTime!
   discipline: Discipline!
+}
+
+input MatchSingleTeamInput {
+  size: Int!
+  playerIds: [ID!]!
 }
