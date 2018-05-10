@@ -9,7 +9,7 @@ const isTargetMemberNotSelfAndNotLastAdmin = async (args, context) => {
   if (
     adminMembersOfOrganization &&
     adminMembersOfOrganization.length === 1 &&
-    context.userId === args.memberId
+    context.userId === args.memberAuth0Id
   )
     throw new ValidationError(
       `You are the only Admin of the organization "${
@@ -23,7 +23,7 @@ const isTargetMemberNotSelfAndNotLastAdmin = async (args, context) => {
  *
  * Args:
  * - organizationKey
- * - memberId
+ * - memberAuth0Id
  */
 module.exports = async (parent, args, context, info) => {
   await isTargetMemberNotSelfAndNotLastAdmin(args, context);
@@ -32,7 +32,7 @@ module.exports = async (parent, args, context, info) => {
     {
       where: {
         AND: [
-          { auth0Id: args.memberId },
+          { auth0Id: args.memberAuth0Id },
           { organization: { key: args.organizationKey } },
         ],
       },
@@ -43,7 +43,7 @@ module.exports = async (parent, args, context, info) => {
   if (matchingMembers.length === 0)
     throw new ValidationError(
       `The member "${
-        args.memberId
+        args.memberAuth0Id
       }" you are trying to remove is not part of the organization "${
         args.organizationKey
       }".`

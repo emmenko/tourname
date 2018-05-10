@@ -17,19 +17,19 @@ type Mutation {
   ): Organization @isAuthenticated
   promoteMemberToAdmin(
     organizationKey: String!
-    memberId: String!
+    memberAuth0Id: String!
   ): Organization @isAuthenticated(role: Admin)
   demoteAdminToMember(
     organizationKey: String!
-    memberId: String!
+    memberAuth0Id: String!
   ): Organization @isAuthenticated(role: Admin)
   addMemberToOrganization(
     organizationKey: String!
-    memberId: String!
+    memberAuth0Id: String!
   ): Organization @isAuthenticated(role: Admin)
   removeMemberFromOrganization(
     organizationKey: String!
-    memberId: String!
+    memberAuth0Id: String!
   ): Organization @isAuthenticated(role: Admin)
 
   createTournament(
@@ -42,23 +42,24 @@ type Mutation {
 }
 
 type User {
-  id: String! # the auth0 id
   createdAt: DateTime!
   updatedAt: DateTime!
+  auth0Id: String!
   email: String!
   name: String!
   picture: String!
+  role: Role!
   availableOrganizations: [OrganizationInfo!]!
 }
 
 type Organization {
-  key: String! # unique identifier
+  key: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   name: String!
-  members: [Member!]!
+  members: [MemberInfo!]!
   tournaments(
-    status: [TournamentStatus!] # `or` condition
+    status: [TournamentStatus!] # OR`condition
     orderBy: TournamentOrderByInput!
     page: Int!
     perPage: Int!
@@ -66,10 +67,11 @@ type Organization {
   singleMatches: [MatchSingleInfo!]!
 }
 
-# A `Member` contains basic user profile data plus
+# A `MemberInfo` contains basic user profile data plus
 # specific fields related to the organization (e.g. role)
-type Member {
-  id: String! # the auth0 id
+type MemberInfo {
+  id: ID!
+  auth0Id: String!
   email: String!
   name: String!
   picture: String!
@@ -77,7 +79,7 @@ type Member {
 }
 
 type OrganizationInfo {
-  key: String! # unique identifier
+  key: String!
   name: String!
 }
 
