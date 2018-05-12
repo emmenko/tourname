@@ -80,6 +80,11 @@ type Mutation {
     teamLeft: MatchSingleTeamInput!
     teamRight: MatchSingleTeamInput!
   ): MatchSingle @isAuthenticated(role: Member)
+  setSingleMatchTeamWinner(
+    organizationKey: String!
+    matchId: ID!
+    teamWinnerId: ID!
+  ): MatchSingle @isAuthenticated(role: Member)
 }
 
 type User {
