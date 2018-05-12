@@ -1,6 +1,6 @@
 module.exports = async (parent, args, context) => {
   const organizationKey = args.key || args.organizationKey;
-  const members = await context.db.mutation.memberRefs(
+  const members = await context.db.query.memberRefs(
     {
       where: {
         organization: { key: organizationKey },
