@@ -15,6 +15,11 @@ enum TournamentStatus {
   Finished
 }
 
+enum MatchSingleStatus {
+  New
+  Finished
+}
+
 enum Discipline {
   PoolTable
   TableTennis
@@ -173,6 +178,7 @@ type MatchSingle {
   updatedAt: DateTime!
   organization: Organization!
   discipline: Discipline!
+  status: MatchSingleStatus!
   teamLeft: TeamMatchSingle! @relation(name: "TeamLeftMatchSingle")
   teamRight: TeamMatchSingle! @relation(name: "TeamRightMatchSingle")
   winner: TeamMatchSingle @relation(name: "TeamWinnerMatchSingle")

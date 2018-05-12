@@ -14,6 +14,7 @@ module.exports = (parent, args, context, info) =>
     data: {
       organization: { connect: { key: args.organizationKey } },
       discipline: args.discipline,
+      status: 'New',
       teamLeft: {
         create: {
           size: args.teamLeft.size,

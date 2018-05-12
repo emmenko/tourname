@@ -5,7 +5,7 @@ module.exports = async (args, context) => {
     {
       where: {
         AND: [
-          { auth0Id: context.userId },
+          { auth0Id: args.memberAuth0Id },
           { organization: { key: args.organizationKey } },
         ],
       },
@@ -15,8 +15,8 @@ module.exports = async (args, context) => {
 
   if (matchingMembers.length > 0)
     throw new ValidationError(
-      `The member "${context.userId}" is already part of the organization "${
-        args.organizationKey
-      }".`
+      `The member "${
+        context.memberAuth0Id
+      }" is already part of the organization "${args.organizationKey}".`
     );
 };

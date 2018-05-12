@@ -1,4 +1,4 @@
-# import Role,Discipline,Tournament,TournamentStatus,TournamentSize,TournamentOrderByInput from "./generated/prisma.graphql"
+# import Role,Discipline,MatchSingle,MatchSingleStatus,Tournament,TournamentStatus,TournamentSize,TournamentOrderByInput from "./generated/prisma.graphql"
 
 directive @isAuthenticated(role: Role) on FIELD_DEFINITION
 
@@ -6,6 +6,20 @@ type Query {
   me: User! @isAuthenticated
   isOrganizationKeyUsed(key: String!): Boolean!
   organization(key: String!): Organization @isAuthenticated(role: Member)
+  tournaments(
+    organizationKey: String!
+    status: [TournamentStatus!] # OR`condition
+    orderBy: TournamentOrderByInput!
+    page: Int!
+    perPage: Int!
+  ): [Tournament!]! @isAuthenticated(role: Member)
+  singleMatches(
+    organizationKey: String!
+    status: MatchSingleStatus!
+    orderBy: MatchSingleOrderBy!
+    page: Int!
+    perPage: Int!
+  ): [MatchSingle!]! @isAuthenticated(role: Member)
 }
 
 type Mutation {
@@ -85,13 +99,6 @@ type Organization {
   updatedAt: DateTime!
   name: String!
   members: [MemberInfo!]!
-  tournaments(
-    status: [TournamentStatus!] # OR`condition
-    orderBy: TournamentOrderByInput!
-    page: Int!
-    perPage: Int!
-  ): [TournamentInfo!]!
-  singleMatches: [MatchSingleInfo!]!
 }
 
 # A `MemberInfo` contains basic user profile data plus
@@ -121,14 +128,12 @@ type TournamentInfo {
   teamSize: Int!
 }
 
-type MatchSingleInfo {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  discipline: Discipline!
-}
-
 input MatchSingleTeamInput {
   size: Int!
   playerIds: [ID!]!
+}
+
+enum MatchSingleOrderBy {
+  createdAt_ASC
+  createdAt_DESC
 }
