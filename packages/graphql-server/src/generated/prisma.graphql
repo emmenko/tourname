@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466/tourname/dev
-# timestamp: Thu May 10 2018 21:30:03 GMT+0200 (CEST)
+# timestamp: Sat May 12 2018 16:02:47 GMT+0200 (CEST)
 
 type AggregateMatchSingle {
   count: Int!
@@ -69,6 +69,7 @@ type MatchSingle implements Node {
   updatedAt: DateTime!
   organization(where: OrganizationWhereInput): Organization!
   discipline: Discipline!
+  status: MatchSingleStatus!
   teamLeft(where: TeamMatchSingleWhereInput): TeamMatchSingle!
   teamRight(where: TeamMatchSingleWhereInput): TeamMatchSingle!
   winner(where: TeamMatchSingleWhereInput): TeamMatchSingle
@@ -87,6 +88,7 @@ type MatchSingleConnection {
 
 input MatchSingleCreateInput {
   discipline: Discipline!
+  status: MatchSingleStatus!
   _ignore_: String
   organization: OrganizationCreateOneInput!
   teamLeft: TeamMatchSingleCreateOneWithoutMatchSingleTeamLeftInput!
@@ -111,6 +113,7 @@ input MatchSingleCreateOneWithoutWinnerInput {
 
 input MatchSingleCreateWithoutTeamLeftInput {
   discipline: Discipline!
+  status: MatchSingleStatus!
   _ignore_: String
   organization: OrganizationCreateOneInput!
   teamRight: TeamMatchSingleCreateOneWithoutMatchSingleTeamRightInput!
@@ -119,6 +122,7 @@ input MatchSingleCreateWithoutTeamLeftInput {
 
 input MatchSingleCreateWithoutTeamRightInput {
   discipline: Discipline!
+  status: MatchSingleStatus!
   _ignore_: String
   organization: OrganizationCreateOneInput!
   teamLeft: TeamMatchSingleCreateOneWithoutMatchSingleTeamLeftInput!
@@ -127,6 +131,7 @@ input MatchSingleCreateWithoutTeamRightInput {
 
 input MatchSingleCreateWithoutWinnerInput {
   discipline: Discipline!
+  status: MatchSingleStatus!
   _ignore_: String
   organization: OrganizationCreateOneInput!
   teamLeft: TeamMatchSingleCreateOneWithoutMatchSingleTeamLeftInput!
@@ -151,6 +156,8 @@ enum MatchSingleOrderByInput {
   updatedAt_DESC
   discipline_ASC
   discipline_DESC
+  status_ASC
+  status_DESC
   _ignore__ASC
   _ignore__DESC
 }
@@ -160,7 +167,13 @@ type MatchSinglePreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   discipline: Discipline!
+  status: MatchSingleStatus!
   _ignore_: String
+}
+
+enum MatchSingleStatus {
+  New
+  Finished
 }
 
 type MatchSingleSubscriptionPayload {
@@ -204,6 +217,7 @@ input MatchSingleSubscriptionWhereInput {
 
 input MatchSingleUpdateInput {
   discipline: Discipline
+  status: MatchSingleStatus
   _ignore_: String
   organization: OrganizationUpdateOneInput
   teamLeft: TeamMatchSingleUpdateOneWithoutMatchSingleTeamLeftInput
@@ -240,6 +254,7 @@ input MatchSingleUpdateOneWithoutWinnerInput {
 
 input MatchSingleUpdateWithoutTeamLeftDataInput {
   discipline: Discipline
+  status: MatchSingleStatus
   _ignore_: String
   organization: OrganizationUpdateOneInput
   teamRight: TeamMatchSingleUpdateOneWithoutMatchSingleTeamRightInput
@@ -248,6 +263,7 @@ input MatchSingleUpdateWithoutTeamLeftDataInput {
 
 input MatchSingleUpdateWithoutTeamRightDataInput {
   discipline: Discipline
+  status: MatchSingleStatus
   _ignore_: String
   organization: OrganizationUpdateOneInput
   teamLeft: TeamMatchSingleUpdateOneWithoutMatchSingleTeamLeftInput
@@ -256,6 +272,7 @@ input MatchSingleUpdateWithoutTeamRightDataInput {
 
 input MatchSingleUpdateWithoutWinnerDataInput {
   discipline: Discipline
+  status: MatchSingleStatus
   _ignore_: String
   organization: OrganizationUpdateOneInput
   teamLeft: TeamMatchSingleUpdateOneWithoutMatchSingleTeamLeftInput
@@ -380,6 +397,16 @@ input MatchSingleWhereInput {
 
   """All values that are not contained in given list."""
   discipline_not_in: [Discipline!]
+  status: MatchSingleStatus
+
+  """All values that are not equal to given value."""
+  status_not: MatchSingleStatus
+
+  """All values that are contained in given list."""
+  status_in: [MatchSingleStatus!]
+
+  """All values that are not contained in given list."""
+  status_not_in: [MatchSingleStatus!]
   _ignore_: String
 
   """All values that are not equal to given value."""

@@ -6,6 +6,8 @@
  * - memberId
  */
 module.exports = (parent, args, context, info) =>
+  // TODO:
+  // * check if the player is already part of another team?
   context.db.mutation.updateTournament(
     {
       where: {
