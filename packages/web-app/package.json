@@ -39,7 +39,7 @@
   "devDependencies": {
     "@glennsl/bs-jest": "0.4.2",
     "babel-plugin-transform-class-properties": "6.24.1",
-    "babel-preset-env": "1.6.1",
+    "babel-preset-env": "1.7.0",
     "bs-platform": "3.0.0",
     "bsb-js": "1.0.2",
     "graphql_ppx": "0.2.1",
