@@ -2,15 +2,17 @@
 
 # Tourname
 
-A OSS service for managing tournaments within an organization.
+A OSS service for managing tournaments, built on OSS technologies.
+
+<img align="center" src="./oss-logos.png" />
 
 ## Background
 
 You have a table tennis, a pool table, a table soccer (or something similar) in your office and you always wanted to keep track of the matches between you and your colleagues? With `tourname` you can do that!
 Create your own tournaments and see who comes out on top, challenge a single player and see the leaderboard results.
 
-
 ## Development
+
 _TBD_
 
 ```bash
@@ -21,4 +23,5 @@ $ yarn start
 ```
 
 ---
+
 <h5 align="center">`< / >` with ❤️</h5>
