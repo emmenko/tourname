@@ -4,7 +4,7 @@
 
 A OSS service for managing tournaments, built on OSS technologies.
 
-<img align="center" src="./oss-logos.png" />
+<img align="center" src="./oss_logos.png" />
 
 ## Background
 
