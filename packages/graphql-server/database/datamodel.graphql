@@ -77,8 +77,6 @@ type TeamMatchTournament {
   tournament: Tournament!
   size: Int!
   playerRefs: [MemberRef!]!
-
-  _ignore_: String
 }
 
 type TeamMatchSingle {
@@ -87,8 +85,6 @@ type TeamMatchSingle {
   updatedAt: DateTime!
   size: Int!
   playerRefs: [MemberRef!]!
-
-  _ignore_: String
 }
 
 type RoundLastSixteen {
@@ -141,8 +137,6 @@ type MatchTournament {
   teamRight: TeamMatchTournament @relation(name: "TeamRightMatchTournament")
   winner: TeamMatchTournament @relation(name: "TeamWinnerMatchTournament")
   nextMatch: MatchTournament
-
-  _ignore_: String
 }
 
 # A single match requires both teams to be defined
@@ -157,5 +151,4 @@ type MatchSingle {
   teamLeft: TeamMatchSingle! @relation(name: "TeamLeftMatchSingle")
   teamRight: TeamMatchSingle! @relation(name: "TeamRightMatchSingle")
   winner: TeamMatchSingle @relation(name: "TeamWinnerMatchSingle")
-  _ignore_: String
 }
