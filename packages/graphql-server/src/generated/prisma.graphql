@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466/tourname/dev
-# timestamp: Sat May 12 2018 16:02:47 GMT+0200 (CEST)
+# timestamp: Tue May 15 2018 22:03:03 GMT+0200 (CEST)
 
 type AggregateMatchSingle {
   count: Int!
@@ -91,51 +91,9 @@ input MatchSingleCreateInput {
   status: MatchSingleStatus!
   _ignore_: String
   organization: OrganizationCreateOneInput!
-  teamLeft: TeamMatchSingleCreateOneWithoutMatchSingleTeamLeftInput!
-  teamRight: TeamMatchSingleCreateOneWithoutMatchSingleTeamRightInput!
-  winner: TeamMatchSingleCreateOneWithoutMatchSingleTeamWinnerInput
-}
-
-input MatchSingleCreateOneWithoutTeamLeftInput {
-  create: MatchSingleCreateWithoutTeamLeftInput
-  connect: MatchSingleWhereUniqueInput
-}
-
-input MatchSingleCreateOneWithoutTeamRightInput {
-  create: MatchSingleCreateWithoutTeamRightInput
-  connect: MatchSingleWhereUniqueInput
-}
-
-input MatchSingleCreateOneWithoutWinnerInput {
-  create: MatchSingleCreateWithoutWinnerInput
-  connect: MatchSingleWhereUniqueInput
-}
-
-input MatchSingleCreateWithoutTeamLeftInput {
-  discipline: Discipline!
-  status: MatchSingleStatus!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  teamRight: TeamMatchSingleCreateOneWithoutMatchSingleTeamRightInput!
-  winner: TeamMatchSingleCreateOneWithoutMatchSingleTeamWinnerInput
-}
-
-input MatchSingleCreateWithoutTeamRightInput {
-  discipline: Discipline!
-  status: MatchSingleStatus!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  teamLeft: TeamMatchSingleCreateOneWithoutMatchSingleTeamLeftInput!
-  winner: TeamMatchSingleCreateOneWithoutMatchSingleTeamWinnerInput
-}
-
-input MatchSingleCreateWithoutWinnerInput {
-  discipline: Discipline!
-  status: MatchSingleStatus!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  teamLeft: TeamMatchSingleCreateOneWithoutMatchSingleTeamLeftInput!
-  teamRight: TeamMatchSingleCreateOneWithoutMatchSingleTeamRightInput!
+  teamLeft: TeamMatchSingleCreateOneInput!
+  teamRight: TeamMatchSingleCreateOneInput!
+  winner: TeamMatchSingleCreateOneInput
 }
 
 """An edge in a connection."""
@@ -220,78 +178,9 @@ input MatchSingleUpdateInput {
   status: MatchSingleStatus
   _ignore_: String
   organization: OrganizationUpdateOneInput
-  teamLeft: TeamMatchSingleUpdateOneWithoutMatchSingleTeamLeftInput
-  teamRight: TeamMatchSingleUpdateOneWithoutMatchSingleTeamRightInput
-  winner: TeamMatchSingleUpdateOneWithoutMatchSingleTeamWinnerInput
-}
-
-input MatchSingleUpdateOneWithoutTeamLeftInput {
-  create: MatchSingleCreateWithoutTeamLeftInput
-  connect: MatchSingleWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: MatchSingleUpdateWithoutTeamLeftDataInput
-  upsert: MatchSingleUpsertWithoutTeamLeftInput
-}
-
-input MatchSingleUpdateOneWithoutTeamRightInput {
-  create: MatchSingleCreateWithoutTeamRightInput
-  connect: MatchSingleWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: MatchSingleUpdateWithoutTeamRightDataInput
-  upsert: MatchSingleUpsertWithoutTeamRightInput
-}
-
-input MatchSingleUpdateOneWithoutWinnerInput {
-  create: MatchSingleCreateWithoutWinnerInput
-  connect: MatchSingleWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: MatchSingleUpdateWithoutWinnerDataInput
-  upsert: MatchSingleUpsertWithoutWinnerInput
-}
-
-input MatchSingleUpdateWithoutTeamLeftDataInput {
-  discipline: Discipline
-  status: MatchSingleStatus
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  teamRight: TeamMatchSingleUpdateOneWithoutMatchSingleTeamRightInput
-  winner: TeamMatchSingleUpdateOneWithoutMatchSingleTeamWinnerInput
-}
-
-input MatchSingleUpdateWithoutTeamRightDataInput {
-  discipline: Discipline
-  status: MatchSingleStatus
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  teamLeft: TeamMatchSingleUpdateOneWithoutMatchSingleTeamLeftInput
-  winner: TeamMatchSingleUpdateOneWithoutMatchSingleTeamWinnerInput
-}
-
-input MatchSingleUpdateWithoutWinnerDataInput {
-  discipline: Discipline
-  status: MatchSingleStatus
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  teamLeft: TeamMatchSingleUpdateOneWithoutMatchSingleTeamLeftInput
-  teamRight: TeamMatchSingleUpdateOneWithoutMatchSingleTeamRightInput
-}
-
-input MatchSingleUpsertWithoutTeamLeftInput {
-  update: MatchSingleUpdateWithoutTeamLeftDataInput!
-  create: MatchSingleCreateWithoutTeamLeftInput!
-}
-
-input MatchSingleUpsertWithoutTeamRightInput {
-  update: MatchSingleUpdateWithoutTeamRightDataInput!
-  create: MatchSingleCreateWithoutTeamRightInput!
-}
-
-input MatchSingleUpsertWithoutWinnerInput {
-  update: MatchSingleUpdateWithoutWinnerDataInput!
-  create: MatchSingleCreateWithoutWinnerInput!
+  teamLeft: TeamMatchSingleUpdateOneInput
+  teamRight: TeamMatchSingleUpdateOneInput
+  winner: TeamMatchSingleUpdateOneInput
 }
 
 input MatchSingleWhereInput {
@@ -468,21 +357,6 @@ type MatchTournament implements Node {
   teamRight(where: TeamMatchTournamentWhereInput): TeamMatchTournament
   winner(where: TeamMatchTournamentWhereInput): TeamMatchTournament
   nextMatch(where: MatchTournamentWhereInput): MatchTournament
-  roundLastSixteenMatchA(where: RoundLastSixteenWhereInput): RoundLastSixteen
-  roundLastSixteenMatchB(where: RoundLastSixteenWhereInput): RoundLastSixteen
-  roundLastSixteenMatchC(where: RoundLastSixteenWhereInput): RoundLastSixteen
-  roundLastSixteenMatchD(where: RoundLastSixteenWhereInput): RoundLastSixteen
-  roundLastSixteenMatchE(where: RoundLastSixteenWhereInput): RoundLastSixteen
-  roundLastSixteenMatchF(where: RoundLastSixteenWhereInput): RoundLastSixteen
-  roundLastSixteenMatchG(where: RoundLastSixteenWhereInput): RoundLastSixteen
-  roundLastSixteenMatchH(where: RoundLastSixteenWhereInput): RoundLastSixteen
-  roundQuarterfinalsMatchA(where: RoundQuarterfinalsWhereInput): RoundQuarterfinals
-  roundQuarterfinalsMatchB(where: RoundQuarterfinalsWhereInput): RoundQuarterfinals
-  roundQuarterfinalsMatchC(where: RoundQuarterfinalsWhereInput): RoundQuarterfinals
-  roundQuarterfinalsMatchD(where: RoundQuarterfinalsWhereInput): RoundQuarterfinals
-  roundSemifinalsMatchA(where: RoundSemifinalsWhereInput): RoundSemifinals
-  roundSemifinalsMatchB(where: RoundSemifinalsWhereInput): RoundSemifinals
-  roundFinalMatch(where: RoundFinalWhereInput): RoundFinal
   _ignore_: String
 }
 
@@ -501,570 +375,15 @@ input MatchTournamentCreateInput {
   _ignore_: String
   organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
+  teamLeft: TeamMatchTournamentCreateOneInput
+  teamRight: TeamMatchTournamentCreateOneInput
+  winner: TeamMatchTournamentCreateOneInput
   nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
 }
 
 input MatchTournamentCreateOneInput {
   create: MatchTournamentCreateInput
   connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundFinalMatchInput {
-  create: MatchTournamentCreateWithoutRoundFinalMatchInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchAInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchBInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchCInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchDInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchEInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchFInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchGInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchHInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput {
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput {
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput {
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput {
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundSemifinalsMatchAInput {
-  create: MatchTournamentCreateWithoutRoundSemifinalsMatchAInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutRoundSemifinalsMatchBInput {
-  create: MatchTournamentCreateWithoutRoundSemifinalsMatchBInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutTeamLeftInput {
-  create: MatchTournamentCreateWithoutTeamLeftInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutTeamRightInput {
-  create: MatchTournamentCreateWithoutTeamRightInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateOneWithoutWinnerInput {
-  create: MatchTournamentCreateWithoutWinnerInput
-  connect: MatchTournamentWhereUniqueInput
-}
-
-input MatchTournamentCreateWithoutRoundFinalMatchInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-}
-
-input MatchTournamentCreateWithoutRoundLastSixteenMatchAInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundLastSixteenMatchBInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundLastSixteenMatchCInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundLastSixteenMatchDInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundLastSixteenMatchEInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundLastSixteenMatchFInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundLastSixteenMatchGInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundLastSixteenMatchHInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundSemifinalsMatchAInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutRoundSemifinalsMatchBInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutTeamLeftInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutTeamRightInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  winner: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
-}
-
-input MatchTournamentCreateWithoutWinnerInput {
-  discipline: Discipline!
-  _ignore_: String
-  organization: OrganizationCreateOneInput!
-  tournament: TournamentCreateOneInput!
-  teamLeft: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput
-  nextMatch: MatchTournamentCreateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenCreateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenCreateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenCreateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenCreateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenCreateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenCreateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenCreateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenCreateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsCreateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsCreateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsCreateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsCreateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsCreateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsCreateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalCreateOneWithoutMatchInput
 }
 
 """An edge in a connection."""
@@ -1141,25 +460,10 @@ input MatchTournamentUpdateDataInput {
   _ignore_: String
   organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
+  teamLeft: TeamMatchTournamentUpdateOneInput
+  teamRight: TeamMatchTournamentUpdateOneInput
+  winner: TeamMatchTournamentUpdateOneInput
   nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
 }
 
 input MatchTournamentUpdateInput {
@@ -1167,726 +471,23 @@ input MatchTournamentUpdateInput {
   _ignore_: String
   organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
+  teamLeft: TeamMatchTournamentUpdateOneInput
+  teamRight: TeamMatchTournamentUpdateOneInput
+  winner: TeamMatchTournamentUpdateOneInput
   nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
 }
 
 input MatchTournamentUpdateOneInput {
   create: MatchTournamentCreateInput
   connect: MatchTournamentWhereUniqueInput
-  disconnect: Boolean
   delete: Boolean
   update: MatchTournamentUpdateDataInput
   upsert: MatchTournamentUpsertNestedInput
 }
 
-input MatchTournamentUpdateOneWithoutRoundFinalMatchInput {
-  create: MatchTournamentCreateWithoutRoundFinalMatchInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundFinalMatchDataInput
-  upsert: MatchTournamentUpsertWithoutRoundFinalMatchInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchAInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchADataInput
-  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchAInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchBInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchBDataInput
-  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchBInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchCInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchCDataInput
-  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchCInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchDInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchDDataInput
-  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchDInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchEInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchEDataInput
-  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchEInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchFInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchFDataInput
-  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchFInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchGInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchGDataInput
-  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchGInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput {
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchHInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchHDataInput
-  upsert: MatchTournamentUpsertWithoutRoundLastSixteenMatchHInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput {
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchADataInput
-  upsert: MatchTournamentUpsertWithoutRoundQuarterfinalsMatchAInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput {
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchBDataInput
-  upsert: MatchTournamentUpsertWithoutRoundQuarterfinalsMatchBInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput {
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchCDataInput
-  upsert: MatchTournamentUpsertWithoutRoundQuarterfinalsMatchCInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput {
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchDDataInput
-  upsert: MatchTournamentUpsertWithoutRoundQuarterfinalsMatchDInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundSemifinalsMatchAInput {
-  create: MatchTournamentCreateWithoutRoundSemifinalsMatchAInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundSemifinalsMatchADataInput
-  upsert: MatchTournamentUpsertWithoutRoundSemifinalsMatchAInput
-}
-
-input MatchTournamentUpdateOneWithoutRoundSemifinalsMatchBInput {
-  create: MatchTournamentCreateWithoutRoundSemifinalsMatchBInput
-  connect: MatchTournamentWhereUniqueInput
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutRoundSemifinalsMatchBDataInput
-  upsert: MatchTournamentUpsertWithoutRoundSemifinalsMatchBInput
-}
-
-input MatchTournamentUpdateOneWithoutTeamLeftInput {
-  create: MatchTournamentCreateWithoutTeamLeftInput
-  connect: MatchTournamentWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutTeamLeftDataInput
-  upsert: MatchTournamentUpsertWithoutTeamLeftInput
-}
-
-input MatchTournamentUpdateOneWithoutTeamRightInput {
-  create: MatchTournamentCreateWithoutTeamRightInput
-  connect: MatchTournamentWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutTeamRightDataInput
-  upsert: MatchTournamentUpsertWithoutTeamRightInput
-}
-
-input MatchTournamentUpdateOneWithoutWinnerInput {
-  create: MatchTournamentCreateWithoutWinnerInput
-  connect: MatchTournamentWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: MatchTournamentUpdateWithoutWinnerDataInput
-  upsert: MatchTournamentUpsertWithoutWinnerInput
-}
-
-input MatchTournamentUpdateWithoutRoundFinalMatchDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-}
-
-input MatchTournamentUpdateWithoutRoundLastSixteenMatchADataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundLastSixteenMatchBDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundLastSixteenMatchCDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundLastSixteenMatchDDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundLastSixteenMatchEDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundLastSixteenMatchFDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundLastSixteenMatchGDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundLastSixteenMatchHDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchADataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchBDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchCDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundQuarterfinalsMatchDDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundSemifinalsMatchADataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutRoundSemifinalsMatchBDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutTeamLeftDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutTeamRightDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  winner: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
-input MatchTournamentUpdateWithoutWinnerDataInput {
-  discipline: Discipline
-  _ignore_: String
-  organization: OrganizationUpdateOneInput
-  tournament: TournamentUpdateOneInput
-  teamLeft: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput
-  teamRight: TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput
-  nextMatch: MatchTournamentUpdateOneInput
-  roundLastSixteenMatchA: RoundLastSixteenUpdateOneWithoutMatchAInput
-  roundLastSixteenMatchB: RoundLastSixteenUpdateOneWithoutMatchBInput
-  roundLastSixteenMatchC: RoundLastSixteenUpdateOneWithoutMatchCInput
-  roundLastSixteenMatchD: RoundLastSixteenUpdateOneWithoutMatchDInput
-  roundLastSixteenMatchE: RoundLastSixteenUpdateOneWithoutMatchEInput
-  roundLastSixteenMatchF: RoundLastSixteenUpdateOneWithoutMatchFInput
-  roundLastSixteenMatchG: RoundLastSixteenUpdateOneWithoutMatchGInput
-  roundLastSixteenMatchH: RoundLastSixteenUpdateOneWithoutMatchHInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsUpdateOneWithoutMatchAInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsUpdateOneWithoutMatchBInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsUpdateOneWithoutMatchCInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsUpdateOneWithoutMatchDInput
-  roundSemifinalsMatchA: RoundSemifinalsUpdateOneWithoutMatchAInput
-  roundSemifinalsMatchB: RoundSemifinalsUpdateOneWithoutMatchBInput
-  roundFinalMatch: RoundFinalUpdateOneWithoutMatchInput
-}
-
 input MatchTournamentUpsertNestedInput {
   update: MatchTournamentUpdateDataInput!
   create: MatchTournamentCreateInput!
-}
-
-input MatchTournamentUpsertWithoutRoundFinalMatchInput {
-  update: MatchTournamentUpdateWithoutRoundFinalMatchDataInput!
-  create: MatchTournamentCreateWithoutRoundFinalMatchInput!
-}
-
-input MatchTournamentUpsertWithoutRoundLastSixteenMatchAInput {
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchADataInput!
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchAInput!
-}
-
-input MatchTournamentUpsertWithoutRoundLastSixteenMatchBInput {
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchBDataInput!
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchBInput!
-}
-
-input MatchTournamentUpsertWithoutRoundLastSixteenMatchCInput {
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchCDataInput!
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchCInput!
-}
-
-input MatchTournamentUpsertWithoutRoundLastSixteenMatchDInput {
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchDDataInput!
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchDInput!
-}
-
-input MatchTournamentUpsertWithoutRoundLastSixteenMatchEInput {
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchEDataInput!
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchEInput!
-}
-
-input MatchTournamentUpsertWithoutRoundLastSixteenMatchFInput {
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchFDataInput!
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchFInput!
-}
-
-input MatchTournamentUpsertWithoutRoundLastSixteenMatchGInput {
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchGDataInput!
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchGInput!
-}
-
-input MatchTournamentUpsertWithoutRoundLastSixteenMatchHInput {
-  update: MatchTournamentUpdateWithoutRoundLastSixteenMatchHDataInput!
-  create: MatchTournamentCreateWithoutRoundLastSixteenMatchHInput!
-}
-
-input MatchTournamentUpsertWithoutRoundQuarterfinalsMatchAInput {
-  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchADataInput!
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchAInput!
-}
-
-input MatchTournamentUpsertWithoutRoundQuarterfinalsMatchBInput {
-  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchBDataInput!
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchBInput!
-}
-
-input MatchTournamentUpsertWithoutRoundQuarterfinalsMatchCInput {
-  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchCDataInput!
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchCInput!
-}
-
-input MatchTournamentUpsertWithoutRoundQuarterfinalsMatchDInput {
-  update: MatchTournamentUpdateWithoutRoundQuarterfinalsMatchDDataInput!
-  create: MatchTournamentCreateWithoutRoundQuarterfinalsMatchDInput!
-}
-
-input MatchTournamentUpsertWithoutRoundSemifinalsMatchAInput {
-  update: MatchTournamentUpdateWithoutRoundSemifinalsMatchADataInput!
-  create: MatchTournamentCreateWithoutRoundSemifinalsMatchAInput!
-}
-
-input MatchTournamentUpsertWithoutRoundSemifinalsMatchBInput {
-  update: MatchTournamentUpdateWithoutRoundSemifinalsMatchBDataInput!
-  create: MatchTournamentCreateWithoutRoundSemifinalsMatchBInput!
-}
-
-input MatchTournamentUpsertWithoutTeamLeftInput {
-  update: MatchTournamentUpdateWithoutTeamLeftDataInput!
-  create: MatchTournamentCreateWithoutTeamLeftInput!
-}
-
-input MatchTournamentUpsertWithoutTeamRightInput {
-  update: MatchTournamentUpdateWithoutTeamRightDataInput!
-  create: MatchTournamentCreateWithoutTeamRightInput!
-}
-
-input MatchTournamentUpsertWithoutWinnerInput {
-  update: MatchTournamentUpdateWithoutWinnerDataInput!
-  create: MatchTournamentCreateWithoutWinnerInput!
 }
 
 input MatchTournamentWhereInput {
@@ -2038,21 +639,6 @@ input MatchTournamentWhereInput {
   teamRight: TeamMatchTournamentWhereInput
   winner: TeamMatchTournamentWhereInput
   nextMatch: MatchTournamentWhereInput
-  roundLastSixteenMatchA: RoundLastSixteenWhereInput
-  roundLastSixteenMatchB: RoundLastSixteenWhereInput
-  roundLastSixteenMatchC: RoundLastSixteenWhereInput
-  roundLastSixteenMatchD: RoundLastSixteenWhereInput
-  roundLastSixteenMatchE: RoundLastSixteenWhereInput
-  roundLastSixteenMatchF: RoundLastSixteenWhereInput
-  roundLastSixteenMatchG: RoundLastSixteenWhereInput
-  roundLastSixteenMatchH: RoundLastSixteenWhereInput
-  roundQuarterfinalsMatchA: RoundQuarterfinalsWhereInput
-  roundQuarterfinalsMatchB: RoundQuarterfinalsWhereInput
-  roundQuarterfinalsMatchC: RoundQuarterfinalsWhereInput
-  roundQuarterfinalsMatchD: RoundQuarterfinalsWhereInput
-  roundSemifinalsMatchA: RoundSemifinalsWhereInput
-  roundSemifinalsMatchB: RoundSemifinalsWhereInput
-  roundFinalMatch: RoundFinalWhereInput
 }
 
 input MatchTournamentWhereUniqueInput {
@@ -2812,26 +1398,17 @@ type RoundFinalConnection {
 
 input RoundFinalCreateInput {
   _ignore_: String
-  match: MatchTournamentCreateOneWithoutRoundFinalMatchInput!
+  match: MatchTournamentCreateOneInput!
   tournament: TournamentCreateOneWithoutRoundFinalInput!
-}
-
-input RoundFinalCreateOneWithoutMatchInput {
-  create: RoundFinalCreateWithoutMatchInput
 }
 
 input RoundFinalCreateOneWithoutTournamentInput {
   create: RoundFinalCreateWithoutTournamentInput
 }
 
-input RoundFinalCreateWithoutMatchInput {
-  _ignore_: String
-  tournament: TournamentCreateOneWithoutRoundFinalInput!
-}
-
 input RoundFinalCreateWithoutTournamentInput {
   _ignore_: String
-  match: MatchTournamentCreateOneWithoutRoundFinalMatchInput!
+  match: MatchTournamentCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -2899,16 +1476,8 @@ input RoundFinalSubscriptionWhereInput {
 
 input RoundFinalUpdateInput {
   _ignore_: String
-  match: MatchTournamentUpdateOneWithoutRoundFinalMatchInput
+  match: MatchTournamentUpdateOneInput
   tournament: TournamentUpdateOneWithoutRoundFinalInput
-}
-
-input RoundFinalUpdateOneWithoutMatchInput {
-  create: RoundFinalCreateWithoutMatchInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundFinalUpdateWithoutMatchDataInput
-  upsert: RoundFinalUpsertWithoutMatchInput
 }
 
 input RoundFinalUpdateOneWithoutTournamentInput {
@@ -2919,19 +1488,9 @@ input RoundFinalUpdateOneWithoutTournamentInput {
   upsert: RoundFinalUpsertWithoutTournamentInput
 }
 
-input RoundFinalUpdateWithoutMatchDataInput {
-  _ignore_: String
-  tournament: TournamentUpdateOneWithoutRoundFinalInput
-}
-
 input RoundFinalUpdateWithoutTournamentDataInput {
   _ignore_: String
-  match: MatchTournamentUpdateOneWithoutRoundFinalMatchInput
-}
-
-input RoundFinalUpsertWithoutMatchInput {
-  update: RoundFinalUpdateWithoutMatchDataInput!
-  create: RoundFinalCreateWithoutMatchInput!
+  match: MatchTournamentUpdateOneInput
 }
 
 input RoundFinalUpsertWithoutTournamentInput {
@@ -3017,159 +1576,31 @@ type RoundLastSixteenConnection {
 
 input RoundLastSixteenCreateInput {
   _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
-  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
-  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
-  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
-  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
+  matchA: MatchTournamentCreateOneInput!
+  matchB: MatchTournamentCreateOneInput!
+  matchC: MatchTournamentCreateOneInput!
+  matchD: MatchTournamentCreateOneInput!
+  matchE: MatchTournamentCreateOneInput!
+  matchF: MatchTournamentCreateOneInput!
+  matchG: MatchTournamentCreateOneInput!
+  matchH: MatchTournamentCreateOneInput!
   tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
-}
-
-input RoundLastSixteenCreateOneWithoutMatchAInput {
-  create: RoundLastSixteenCreateWithoutMatchAInput
-}
-
-input RoundLastSixteenCreateOneWithoutMatchBInput {
-  create: RoundLastSixteenCreateWithoutMatchBInput
-}
-
-input RoundLastSixteenCreateOneWithoutMatchCInput {
-  create: RoundLastSixteenCreateWithoutMatchCInput
-}
-
-input RoundLastSixteenCreateOneWithoutMatchDInput {
-  create: RoundLastSixteenCreateWithoutMatchDInput
-}
-
-input RoundLastSixteenCreateOneWithoutMatchEInput {
-  create: RoundLastSixteenCreateWithoutMatchEInput
-}
-
-input RoundLastSixteenCreateOneWithoutMatchFInput {
-  create: RoundLastSixteenCreateWithoutMatchFInput
-}
-
-input RoundLastSixteenCreateOneWithoutMatchGInput {
-  create: RoundLastSixteenCreateWithoutMatchGInput
-}
-
-input RoundLastSixteenCreateOneWithoutMatchHInput {
-  create: RoundLastSixteenCreateWithoutMatchHInput
 }
 
 input RoundLastSixteenCreateOneWithoutTournamentInput {
   create: RoundLastSixteenCreateWithoutTournamentInput
 }
 
-input RoundLastSixteenCreateWithoutMatchAInput {
-  _ignore_: String
-  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
-  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
-  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
-  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
-  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
-  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
-}
-
-input RoundLastSixteenCreateWithoutMatchBInput {
-  _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
-  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
-  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
-  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
-  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
-  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
-  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
-}
-
-input RoundLastSixteenCreateWithoutMatchCInput {
-  _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
-  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
-  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
-  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
-  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
-  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
-  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
-}
-
-input RoundLastSixteenCreateWithoutMatchDInput {
-  _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
-  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
-  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
-  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
-  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
-  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
-}
-
-input RoundLastSixteenCreateWithoutMatchEInput {
-  _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
-  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
-  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
-  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
-  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
-}
-
-input RoundLastSixteenCreateWithoutMatchFInput {
-  _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
-  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
-  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
-  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
-  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
-}
-
-input RoundLastSixteenCreateWithoutMatchGInput {
-  _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
-  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
-  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
-  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
-  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
-}
-
-input RoundLastSixteenCreateWithoutMatchHInput {
-  _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
-  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
-  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
-  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
-  tournament: TournamentCreateOneWithoutRoundLastSixteenInput!
-}
-
 input RoundLastSixteenCreateWithoutTournamentInput {
   _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundLastSixteenMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundLastSixteenMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundLastSixteenMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundLastSixteenMatchDInput!
-  matchE: MatchTournamentCreateOneWithoutRoundLastSixteenMatchEInput!
-  matchF: MatchTournamentCreateOneWithoutRoundLastSixteenMatchFInput!
-  matchG: MatchTournamentCreateOneWithoutRoundLastSixteenMatchGInput!
-  matchH: MatchTournamentCreateOneWithoutRoundLastSixteenMatchHInput!
+  matchA: MatchTournamentCreateOneInput!
+  matchB: MatchTournamentCreateOneInput!
+  matchC: MatchTournamentCreateOneInput!
+  matchD: MatchTournamentCreateOneInput!
+  matchE: MatchTournamentCreateOneInput!
+  matchF: MatchTournamentCreateOneInput!
+  matchG: MatchTournamentCreateOneInput!
+  matchH: MatchTournamentCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -3237,79 +1668,15 @@ input RoundLastSixteenSubscriptionWhereInput {
 
 input RoundLastSixteenUpdateInput {
   _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
-  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
-  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
-  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
-  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
+  matchA: MatchTournamentUpdateOneInput
+  matchB: MatchTournamentUpdateOneInput
+  matchC: MatchTournamentUpdateOneInput
+  matchD: MatchTournamentUpdateOneInput
+  matchE: MatchTournamentUpdateOneInput
+  matchF: MatchTournamentUpdateOneInput
+  matchG: MatchTournamentUpdateOneInput
+  matchH: MatchTournamentUpdateOneInput
   tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
-}
-
-input RoundLastSixteenUpdateOneWithoutMatchAInput {
-  create: RoundLastSixteenCreateWithoutMatchAInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundLastSixteenUpdateWithoutMatchADataInput
-  upsert: RoundLastSixteenUpsertWithoutMatchAInput
-}
-
-input RoundLastSixteenUpdateOneWithoutMatchBInput {
-  create: RoundLastSixteenCreateWithoutMatchBInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundLastSixteenUpdateWithoutMatchBDataInput
-  upsert: RoundLastSixteenUpsertWithoutMatchBInput
-}
-
-input RoundLastSixteenUpdateOneWithoutMatchCInput {
-  create: RoundLastSixteenCreateWithoutMatchCInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundLastSixteenUpdateWithoutMatchCDataInput
-  upsert: RoundLastSixteenUpsertWithoutMatchCInput
-}
-
-input RoundLastSixteenUpdateOneWithoutMatchDInput {
-  create: RoundLastSixteenCreateWithoutMatchDInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundLastSixteenUpdateWithoutMatchDDataInput
-  upsert: RoundLastSixteenUpsertWithoutMatchDInput
-}
-
-input RoundLastSixteenUpdateOneWithoutMatchEInput {
-  create: RoundLastSixteenCreateWithoutMatchEInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundLastSixteenUpdateWithoutMatchEDataInput
-  upsert: RoundLastSixteenUpsertWithoutMatchEInput
-}
-
-input RoundLastSixteenUpdateOneWithoutMatchFInput {
-  create: RoundLastSixteenCreateWithoutMatchFInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundLastSixteenUpdateWithoutMatchFDataInput
-  upsert: RoundLastSixteenUpsertWithoutMatchFInput
-}
-
-input RoundLastSixteenUpdateOneWithoutMatchGInput {
-  create: RoundLastSixteenCreateWithoutMatchGInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundLastSixteenUpdateWithoutMatchGDataInput
-  upsert: RoundLastSixteenUpsertWithoutMatchGInput
-}
-
-input RoundLastSixteenUpdateOneWithoutMatchHInput {
-  create: RoundLastSixteenCreateWithoutMatchHInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundLastSixteenUpdateWithoutMatchHDataInput
-  upsert: RoundLastSixteenUpsertWithoutMatchHInput
 }
 
 input RoundLastSixteenUpdateOneWithoutTournamentInput {
@@ -3320,152 +1687,16 @@ input RoundLastSixteenUpdateOneWithoutTournamentInput {
   upsert: RoundLastSixteenUpsertWithoutTournamentInput
 }
 
-input RoundLastSixteenUpdateWithoutMatchADataInput {
-  _ignore_: String
-  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
-  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
-  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
-  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
-  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
-  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
-}
-
-input RoundLastSixteenUpdateWithoutMatchBDataInput {
-  _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
-  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
-  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
-  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
-  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
-  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
-  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
-}
-
-input RoundLastSixteenUpdateWithoutMatchCDataInput {
-  _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
-  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
-  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
-  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
-  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
-  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
-  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
-}
-
-input RoundLastSixteenUpdateWithoutMatchDDataInput {
-  _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
-  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
-  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
-  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
-  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
-  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
-}
-
-input RoundLastSixteenUpdateWithoutMatchEDataInput {
-  _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
-  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
-  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
-  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
-  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
-}
-
-input RoundLastSixteenUpdateWithoutMatchFDataInput {
-  _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
-  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
-  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
-  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
-  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
-}
-
-input RoundLastSixteenUpdateWithoutMatchGDataInput {
-  _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
-  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
-  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
-  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
-  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
-}
-
-input RoundLastSixteenUpdateWithoutMatchHDataInput {
-  _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
-  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
-  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
-  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
-  tournament: TournamentUpdateOneWithoutRoundLastSixteenInput
-}
-
 input RoundLastSixteenUpdateWithoutTournamentDataInput {
   _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchDInput
-  matchE: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchEInput
-  matchF: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchFInput
-  matchG: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchGInput
-  matchH: MatchTournamentUpdateOneWithoutRoundLastSixteenMatchHInput
-}
-
-input RoundLastSixteenUpsertWithoutMatchAInput {
-  update: RoundLastSixteenUpdateWithoutMatchADataInput!
-  create: RoundLastSixteenCreateWithoutMatchAInput!
-}
-
-input RoundLastSixteenUpsertWithoutMatchBInput {
-  update: RoundLastSixteenUpdateWithoutMatchBDataInput!
-  create: RoundLastSixteenCreateWithoutMatchBInput!
-}
-
-input RoundLastSixteenUpsertWithoutMatchCInput {
-  update: RoundLastSixteenUpdateWithoutMatchCDataInput!
-  create: RoundLastSixteenCreateWithoutMatchCInput!
-}
-
-input RoundLastSixteenUpsertWithoutMatchDInput {
-  update: RoundLastSixteenUpdateWithoutMatchDDataInput!
-  create: RoundLastSixteenCreateWithoutMatchDInput!
-}
-
-input RoundLastSixteenUpsertWithoutMatchEInput {
-  update: RoundLastSixteenUpdateWithoutMatchEDataInput!
-  create: RoundLastSixteenCreateWithoutMatchEInput!
-}
-
-input RoundLastSixteenUpsertWithoutMatchFInput {
-  update: RoundLastSixteenUpdateWithoutMatchFDataInput!
-  create: RoundLastSixteenCreateWithoutMatchFInput!
-}
-
-input RoundLastSixteenUpsertWithoutMatchGInput {
-  update: RoundLastSixteenUpdateWithoutMatchGDataInput!
-  create: RoundLastSixteenCreateWithoutMatchGInput!
-}
-
-input RoundLastSixteenUpsertWithoutMatchHInput {
-  update: RoundLastSixteenUpdateWithoutMatchHDataInput!
-  create: RoundLastSixteenCreateWithoutMatchHInput!
+  matchA: MatchTournamentUpdateOneInput
+  matchB: MatchTournamentUpdateOneInput
+  matchC: MatchTournamentUpdateOneInput
+  matchD: MatchTournamentUpdateOneInput
+  matchE: MatchTournamentUpdateOneInput
+  matchF: MatchTournamentUpdateOneInput
+  matchG: MatchTournamentUpdateOneInput
+  matchH: MatchTournamentUpdateOneInput
 }
 
 input RoundLastSixteenUpsertWithoutTournamentInput {
@@ -3554,71 +1785,23 @@ type RoundQuarterfinalsConnection {
 
 input RoundQuarterfinalsCreateInput {
   _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput!
+  matchA: MatchTournamentCreateOneInput!
+  matchB: MatchTournamentCreateOneInput!
+  matchC: MatchTournamentCreateOneInput!
+  matchD: MatchTournamentCreateOneInput!
   tournament: TournamentCreateOneWithoutRoundQuarterfinalsInput!
-}
-
-input RoundQuarterfinalsCreateOneWithoutMatchAInput {
-  create: RoundQuarterfinalsCreateWithoutMatchAInput
-}
-
-input RoundQuarterfinalsCreateOneWithoutMatchBInput {
-  create: RoundQuarterfinalsCreateWithoutMatchBInput
-}
-
-input RoundQuarterfinalsCreateOneWithoutMatchCInput {
-  create: RoundQuarterfinalsCreateWithoutMatchCInput
-}
-
-input RoundQuarterfinalsCreateOneWithoutMatchDInput {
-  create: RoundQuarterfinalsCreateWithoutMatchDInput
 }
 
 input RoundQuarterfinalsCreateOneWithoutTournamentInput {
   create: RoundQuarterfinalsCreateWithoutTournamentInput
 }
 
-input RoundQuarterfinalsCreateWithoutMatchAInput {
-  _ignore_: String
-  matchB: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput!
-  tournament: TournamentCreateOneWithoutRoundQuarterfinalsInput!
-}
-
-input RoundQuarterfinalsCreateWithoutMatchBInput {
-  _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput!
-  matchC: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput!
-  tournament: TournamentCreateOneWithoutRoundQuarterfinalsInput!
-}
-
-input RoundQuarterfinalsCreateWithoutMatchCInput {
-  _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput!
-  matchD: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput!
-  tournament: TournamentCreateOneWithoutRoundQuarterfinalsInput!
-}
-
-input RoundQuarterfinalsCreateWithoutMatchDInput {
-  _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput!
-  tournament: TournamentCreateOneWithoutRoundQuarterfinalsInput!
-}
-
 input RoundQuarterfinalsCreateWithoutTournamentInput {
   _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchBInput!
-  matchC: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchCInput!
-  matchD: MatchTournamentCreateOneWithoutRoundQuarterfinalsMatchDInput!
+  matchA: MatchTournamentCreateOneInput!
+  matchB: MatchTournamentCreateOneInput!
+  matchC: MatchTournamentCreateOneInput!
+  matchD: MatchTournamentCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -3686,43 +1869,11 @@ input RoundQuarterfinalsSubscriptionWhereInput {
 
 input RoundQuarterfinalsUpdateInput {
   _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput
+  matchA: MatchTournamentUpdateOneInput
+  matchB: MatchTournamentUpdateOneInput
+  matchC: MatchTournamentUpdateOneInput
+  matchD: MatchTournamentUpdateOneInput
   tournament: TournamentUpdateOneWithoutRoundQuarterfinalsInput
-}
-
-input RoundQuarterfinalsUpdateOneWithoutMatchAInput {
-  create: RoundQuarterfinalsCreateWithoutMatchAInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundQuarterfinalsUpdateWithoutMatchADataInput
-  upsert: RoundQuarterfinalsUpsertWithoutMatchAInput
-}
-
-input RoundQuarterfinalsUpdateOneWithoutMatchBInput {
-  create: RoundQuarterfinalsCreateWithoutMatchBInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundQuarterfinalsUpdateWithoutMatchBDataInput
-  upsert: RoundQuarterfinalsUpsertWithoutMatchBInput
-}
-
-input RoundQuarterfinalsUpdateOneWithoutMatchCInput {
-  create: RoundQuarterfinalsCreateWithoutMatchCInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundQuarterfinalsUpdateWithoutMatchCDataInput
-  upsert: RoundQuarterfinalsUpsertWithoutMatchCInput
-}
-
-input RoundQuarterfinalsUpdateOneWithoutMatchDInput {
-  create: RoundQuarterfinalsCreateWithoutMatchDInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundQuarterfinalsUpdateWithoutMatchDDataInput
-  upsert: RoundQuarterfinalsUpsertWithoutMatchDInput
 }
 
 input RoundQuarterfinalsUpdateOneWithoutTournamentInput {
@@ -3733,64 +1884,12 @@ input RoundQuarterfinalsUpdateOneWithoutTournamentInput {
   upsert: RoundQuarterfinalsUpsertWithoutTournamentInput
 }
 
-input RoundQuarterfinalsUpdateWithoutMatchADataInput {
-  _ignore_: String
-  matchB: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput
-  tournament: TournamentUpdateOneWithoutRoundQuarterfinalsInput
-}
-
-input RoundQuarterfinalsUpdateWithoutMatchBDataInput {
-  _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput
-  matchC: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput
-  tournament: TournamentUpdateOneWithoutRoundQuarterfinalsInput
-}
-
-input RoundQuarterfinalsUpdateWithoutMatchCDataInput {
-  _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput
-  matchD: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput
-  tournament: TournamentUpdateOneWithoutRoundQuarterfinalsInput
-}
-
-input RoundQuarterfinalsUpdateWithoutMatchDDataInput {
-  _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput
-  tournament: TournamentUpdateOneWithoutRoundQuarterfinalsInput
-}
-
 input RoundQuarterfinalsUpdateWithoutTournamentDataInput {
   _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchBInput
-  matchC: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchCInput
-  matchD: MatchTournamentUpdateOneWithoutRoundQuarterfinalsMatchDInput
-}
-
-input RoundQuarterfinalsUpsertWithoutMatchAInput {
-  update: RoundQuarterfinalsUpdateWithoutMatchADataInput!
-  create: RoundQuarterfinalsCreateWithoutMatchAInput!
-}
-
-input RoundQuarterfinalsUpsertWithoutMatchBInput {
-  update: RoundQuarterfinalsUpdateWithoutMatchBDataInput!
-  create: RoundQuarterfinalsCreateWithoutMatchBInput!
-}
-
-input RoundQuarterfinalsUpsertWithoutMatchCInput {
-  update: RoundQuarterfinalsUpdateWithoutMatchCDataInput!
-  create: RoundQuarterfinalsCreateWithoutMatchCInput!
-}
-
-input RoundQuarterfinalsUpsertWithoutMatchDInput {
-  update: RoundQuarterfinalsUpdateWithoutMatchDDataInput!
-  create: RoundQuarterfinalsCreateWithoutMatchDInput!
+  matchA: MatchTournamentUpdateOneInput
+  matchB: MatchTournamentUpdateOneInput
+  matchC: MatchTournamentUpdateOneInput
+  matchD: MatchTournamentUpdateOneInput
 }
 
 input RoundQuarterfinalsUpsertWithoutTournamentInput {
@@ -3873,39 +1972,19 @@ type RoundSemifinalsConnection {
 
 input RoundSemifinalsCreateInput {
   _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundSemifinalsMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundSemifinalsMatchBInput!
+  matchA: MatchTournamentCreateOneInput!
+  matchB: MatchTournamentCreateOneInput!
   tournament: TournamentCreateOneWithoutRoundSemifinalsInput!
-}
-
-input RoundSemifinalsCreateOneWithoutMatchAInput {
-  create: RoundSemifinalsCreateWithoutMatchAInput
-}
-
-input RoundSemifinalsCreateOneWithoutMatchBInput {
-  create: RoundSemifinalsCreateWithoutMatchBInput
 }
 
 input RoundSemifinalsCreateOneWithoutTournamentInput {
   create: RoundSemifinalsCreateWithoutTournamentInput
 }
 
-input RoundSemifinalsCreateWithoutMatchAInput {
-  _ignore_: String
-  matchB: MatchTournamentCreateOneWithoutRoundSemifinalsMatchBInput!
-  tournament: TournamentCreateOneWithoutRoundSemifinalsInput!
-}
-
-input RoundSemifinalsCreateWithoutMatchBInput {
-  _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundSemifinalsMatchAInput!
-  tournament: TournamentCreateOneWithoutRoundSemifinalsInput!
-}
-
 input RoundSemifinalsCreateWithoutTournamentInput {
   _ignore_: String
-  matchA: MatchTournamentCreateOneWithoutRoundSemifinalsMatchAInput!
-  matchB: MatchTournamentCreateOneWithoutRoundSemifinalsMatchBInput!
+  matchA: MatchTournamentCreateOneInput!
+  matchB: MatchTournamentCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -3973,25 +2052,9 @@ input RoundSemifinalsSubscriptionWhereInput {
 
 input RoundSemifinalsUpdateInput {
   _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchBInput
+  matchA: MatchTournamentUpdateOneInput
+  matchB: MatchTournamentUpdateOneInput
   tournament: TournamentUpdateOneWithoutRoundSemifinalsInput
-}
-
-input RoundSemifinalsUpdateOneWithoutMatchAInput {
-  create: RoundSemifinalsCreateWithoutMatchAInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundSemifinalsUpdateWithoutMatchADataInput
-  upsert: RoundSemifinalsUpsertWithoutMatchAInput
-}
-
-input RoundSemifinalsUpdateOneWithoutMatchBInput {
-  create: RoundSemifinalsCreateWithoutMatchBInput
-  disconnect: Boolean
-  delete: Boolean
-  update: RoundSemifinalsUpdateWithoutMatchBDataInput
-  upsert: RoundSemifinalsUpsertWithoutMatchBInput
 }
 
 input RoundSemifinalsUpdateOneWithoutTournamentInput {
@@ -4002,32 +2065,10 @@ input RoundSemifinalsUpdateOneWithoutTournamentInput {
   upsert: RoundSemifinalsUpsertWithoutTournamentInput
 }
 
-input RoundSemifinalsUpdateWithoutMatchADataInput {
-  _ignore_: String
-  matchB: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchBInput
-  tournament: TournamentUpdateOneWithoutRoundSemifinalsInput
-}
-
-input RoundSemifinalsUpdateWithoutMatchBDataInput {
-  _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchAInput
-  tournament: TournamentUpdateOneWithoutRoundSemifinalsInput
-}
-
 input RoundSemifinalsUpdateWithoutTournamentDataInput {
   _ignore_: String
-  matchA: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchAInput
-  matchB: MatchTournamentUpdateOneWithoutRoundSemifinalsMatchBInput
-}
-
-input RoundSemifinalsUpsertWithoutMatchAInput {
-  update: RoundSemifinalsUpdateWithoutMatchADataInput!
-  create: RoundSemifinalsCreateWithoutMatchAInput!
-}
-
-input RoundSemifinalsUpsertWithoutMatchBInput {
-  update: RoundSemifinalsUpdateWithoutMatchBDataInput!
-  create: RoundSemifinalsCreateWithoutMatchBInput!
+  matchA: MatchTournamentUpdateOneInput
+  matchB: MatchTournamentUpdateOneInput
 }
 
 input RoundSemifinalsUpsertWithoutTournamentInput {
@@ -4109,9 +2150,6 @@ type TeamMatchSingle implements Node {
   updatedAt: DateTime!
   size: Int!
   playerRefs(where: MemberRefWhereInput, orderBy: MemberRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MemberRef!]
-  matchSingleTeamLeft(where: MatchSingleWhereInput): MatchSingle
-  matchSingleTeamRight(where: MatchSingleWhereInput): MatchSingle
-  matchSingleTeamWinner(where: MatchSingleWhereInput): MatchSingle
   _ignore_: String
 }
 
@@ -4129,48 +2167,11 @@ input TeamMatchSingleCreateInput {
   size: Int!
   _ignore_: String
   playerRefs: MemberRefCreateManyInput
-  matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
-  matchSingleTeamRight: MatchSingleCreateOneWithoutTeamRightInput
-  matchSingleTeamWinner: MatchSingleCreateOneWithoutWinnerInput
 }
 
-input TeamMatchSingleCreateOneWithoutMatchSingleTeamLeftInput {
-  create: TeamMatchSingleCreateWithoutMatchSingleTeamLeftInput
+input TeamMatchSingleCreateOneInput {
+  create: TeamMatchSingleCreateInput
   connect: TeamMatchSingleWhereUniqueInput
-}
-
-input TeamMatchSingleCreateOneWithoutMatchSingleTeamRightInput {
-  create: TeamMatchSingleCreateWithoutMatchSingleTeamRightInput
-  connect: TeamMatchSingleWhereUniqueInput
-}
-
-input TeamMatchSingleCreateOneWithoutMatchSingleTeamWinnerInput {
-  create: TeamMatchSingleCreateWithoutMatchSingleTeamWinnerInput
-  connect: TeamMatchSingleWhereUniqueInput
-}
-
-input TeamMatchSingleCreateWithoutMatchSingleTeamLeftInput {
-  size: Int!
-  _ignore_: String
-  playerRefs: MemberRefCreateManyInput
-  matchSingleTeamRight: MatchSingleCreateOneWithoutTeamRightInput
-  matchSingleTeamWinner: MatchSingleCreateOneWithoutWinnerInput
-}
-
-input TeamMatchSingleCreateWithoutMatchSingleTeamRightInput {
-  size: Int!
-  _ignore_: String
-  playerRefs: MemberRefCreateManyInput
-  matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
-  matchSingleTeamWinner: MatchSingleCreateOneWithoutWinnerInput
-}
-
-input TeamMatchSingleCreateWithoutMatchSingleTeamWinnerInput {
-  size: Int!
-  _ignore_: String
-  playerRefs: MemberRefCreateManyInput
-  matchSingleTeamLeft: MatchSingleCreateOneWithoutTeamLeftInput
-  matchSingleTeamRight: MatchSingleCreateOneWithoutTeamRightInput
 }
 
 """An edge in a connection."""
@@ -4242,77 +2243,29 @@ input TeamMatchSingleSubscriptionWhereInput {
   node: TeamMatchSingleWhereInput
 }
 
+input TeamMatchSingleUpdateDataInput {
+  size: Int
+  _ignore_: String
+  playerRefs: MemberRefUpdateManyInput
+}
+
 input TeamMatchSingleUpdateInput {
   size: Int
   _ignore_: String
   playerRefs: MemberRefUpdateManyInput
-  matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
-  matchSingleTeamRight: MatchSingleUpdateOneWithoutTeamRightInput
-  matchSingleTeamWinner: MatchSingleUpdateOneWithoutWinnerInput
 }
 
-input TeamMatchSingleUpdateOneWithoutMatchSingleTeamLeftInput {
-  create: TeamMatchSingleCreateWithoutMatchSingleTeamLeftInput
+input TeamMatchSingleUpdateOneInput {
+  create: TeamMatchSingleCreateInput
   connect: TeamMatchSingleWhereUniqueInput
   delete: Boolean
-  update: TeamMatchSingleUpdateWithoutMatchSingleTeamLeftDataInput
-  upsert: TeamMatchSingleUpsertWithoutMatchSingleTeamLeftInput
+  update: TeamMatchSingleUpdateDataInput
+  upsert: TeamMatchSingleUpsertNestedInput
 }
 
-input TeamMatchSingleUpdateOneWithoutMatchSingleTeamRightInput {
-  create: TeamMatchSingleCreateWithoutMatchSingleTeamRightInput
-  connect: TeamMatchSingleWhereUniqueInput
-  delete: Boolean
-  update: TeamMatchSingleUpdateWithoutMatchSingleTeamRightDataInput
-  upsert: TeamMatchSingleUpsertWithoutMatchSingleTeamRightInput
-}
-
-input TeamMatchSingleUpdateOneWithoutMatchSingleTeamWinnerInput {
-  create: TeamMatchSingleCreateWithoutMatchSingleTeamWinnerInput
-  connect: TeamMatchSingleWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: TeamMatchSingleUpdateWithoutMatchSingleTeamWinnerDataInput
-  upsert: TeamMatchSingleUpsertWithoutMatchSingleTeamWinnerInput
-}
-
-input TeamMatchSingleUpdateWithoutMatchSingleTeamLeftDataInput {
-  size: Int
-  _ignore_: String
-  playerRefs: MemberRefUpdateManyInput
-  matchSingleTeamRight: MatchSingleUpdateOneWithoutTeamRightInput
-  matchSingleTeamWinner: MatchSingleUpdateOneWithoutWinnerInput
-}
-
-input TeamMatchSingleUpdateWithoutMatchSingleTeamRightDataInput {
-  size: Int
-  _ignore_: String
-  playerRefs: MemberRefUpdateManyInput
-  matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
-  matchSingleTeamWinner: MatchSingleUpdateOneWithoutWinnerInput
-}
-
-input TeamMatchSingleUpdateWithoutMatchSingleTeamWinnerDataInput {
-  size: Int
-  _ignore_: String
-  playerRefs: MemberRefUpdateManyInput
-  matchSingleTeamLeft: MatchSingleUpdateOneWithoutTeamLeftInput
-  matchSingleTeamRight: MatchSingleUpdateOneWithoutTeamRightInput
-}
-
-input TeamMatchSingleUpsertWithoutMatchSingleTeamLeftInput {
-  update: TeamMatchSingleUpdateWithoutMatchSingleTeamLeftDataInput!
-  create: TeamMatchSingleCreateWithoutMatchSingleTeamLeftInput!
-}
-
-input TeamMatchSingleUpsertWithoutMatchSingleTeamRightInput {
-  update: TeamMatchSingleUpdateWithoutMatchSingleTeamRightDataInput!
-  create: TeamMatchSingleCreateWithoutMatchSingleTeamRightInput!
-}
-
-input TeamMatchSingleUpsertWithoutMatchSingleTeamWinnerInput {
-  update: TeamMatchSingleUpdateWithoutMatchSingleTeamWinnerDataInput!
-  create: TeamMatchSingleCreateWithoutMatchSingleTeamWinnerInput!
+input TeamMatchSingleUpsertNestedInput {
+  update: TeamMatchSingleUpdateDataInput!
+  create: TeamMatchSingleCreateInput!
 }
 
 input TeamMatchSingleWhereInput {
@@ -4473,9 +2426,6 @@ input TeamMatchSingleWhereInput {
   playerRefs_every: MemberRefWhereInput
   playerRefs_some: MemberRefWhereInput
   playerRefs_none: MemberRefWhereInput
-  matchSingleTeamLeft: MatchSingleWhereInput
-  matchSingleTeamRight: MatchSingleWhereInput
-  matchSingleTeamWinner: MatchSingleWhereInput
 }
 
 input TeamMatchSingleWhereUniqueInput {
@@ -4489,9 +2439,6 @@ type TeamMatchTournament implements Node {
   tournament(where: TournamentWhereInput): Tournament!
   size: Int!
   playerRefs(where: MemberRefWhereInput, orderBy: MemberRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MemberRef!]
-  matchTournamentTeamLeft(where: MatchTournamentWhereInput): MatchTournament
-  matchTournamentTeamRight(where: MatchTournamentWhereInput): MatchTournament
-  matchTournamentTeamWinner(where: MatchTournamentWhereInput): MatchTournament
   _ignore_: String
 }
 
@@ -4510,9 +2457,6 @@ input TeamMatchTournamentCreateInput {
   _ignore_: String
   tournament: TournamentCreateOneWithoutTeamsInput!
   playerRefs: MemberRefCreateManyInput
-  matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
-  matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
-  matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
 }
 
 input TeamMatchTournamentCreateManyWithoutTournamentInput {
@@ -4520,55 +2464,15 @@ input TeamMatchTournamentCreateManyWithoutTournamentInput {
   connect: [TeamMatchTournamentWhereUniqueInput!]
 }
 
-input TeamMatchTournamentCreateOneWithoutMatchTournamentTeamLeftInput {
-  create: TeamMatchTournamentCreateWithoutMatchTournamentTeamLeftInput
+input TeamMatchTournamentCreateOneInput {
+  create: TeamMatchTournamentCreateInput
   connect: TeamMatchTournamentWhereUniqueInput
-}
-
-input TeamMatchTournamentCreateOneWithoutMatchTournamentTeamRightInput {
-  create: TeamMatchTournamentCreateWithoutMatchTournamentTeamRightInput
-  connect: TeamMatchTournamentWhereUniqueInput
-}
-
-input TeamMatchTournamentCreateOneWithoutMatchTournamentTeamWinnerInput {
-  create: TeamMatchTournamentCreateWithoutMatchTournamentTeamWinnerInput
-  connect: TeamMatchTournamentWhereUniqueInput
-}
-
-input TeamMatchTournamentCreateWithoutMatchTournamentTeamLeftInput {
-  size: Int!
-  _ignore_: String
-  tournament: TournamentCreateOneWithoutTeamsInput!
-  playerRefs: MemberRefCreateManyInput
-  matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
-  matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
-}
-
-input TeamMatchTournamentCreateWithoutMatchTournamentTeamRightInput {
-  size: Int!
-  _ignore_: String
-  tournament: TournamentCreateOneWithoutTeamsInput!
-  playerRefs: MemberRefCreateManyInput
-  matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
-  matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
-}
-
-input TeamMatchTournamentCreateWithoutMatchTournamentTeamWinnerInput {
-  size: Int!
-  _ignore_: String
-  tournament: TournamentCreateOneWithoutTeamsInput!
-  playerRefs: MemberRefCreateManyInput
-  matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
-  matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
 }
 
 input TeamMatchTournamentCreateWithoutTournamentInput {
   size: Int!
   _ignore_: String
   playerRefs: MemberRefCreateManyInput
-  matchTournamentTeamLeft: MatchTournamentCreateOneWithoutTeamLeftInput
-  matchTournamentTeamRight: MatchTournamentCreateOneWithoutTeamRightInput
-  matchTournamentTeamWinner: MatchTournamentCreateOneWithoutWinnerInput
 }
 
 """An edge in a connection."""
@@ -4640,14 +2544,18 @@ input TeamMatchTournamentSubscriptionWhereInput {
   node: TeamMatchTournamentWhereInput
 }
 
+input TeamMatchTournamentUpdateDataInput {
+  size: Int
+  _ignore_: String
+  tournament: TournamentUpdateOneWithoutTeamsInput
+  playerRefs: MemberRefUpdateManyInput
+}
+
 input TeamMatchTournamentUpdateInput {
   size: Int
   _ignore_: String
   tournament: TournamentUpdateOneWithoutTeamsInput
   playerRefs: MemberRefUpdateManyInput
-  matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
-  matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
-  matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
 }
 
 input TeamMatchTournamentUpdateManyWithoutTournamentInput {
@@ -4659,67 +2567,19 @@ input TeamMatchTournamentUpdateManyWithoutTournamentInput {
   upsert: [TeamMatchTournamentUpsertWithWhereUniqueWithoutTournamentInput!]
 }
 
-input TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamLeftInput {
-  create: TeamMatchTournamentCreateWithoutMatchTournamentTeamLeftInput
+input TeamMatchTournamentUpdateOneInput {
+  create: TeamMatchTournamentCreateInput
   connect: TeamMatchTournamentWhereUniqueInput
   disconnect: Boolean
   delete: Boolean
-  update: TeamMatchTournamentUpdateWithoutMatchTournamentTeamLeftDataInput
-  upsert: TeamMatchTournamentUpsertWithoutMatchTournamentTeamLeftInput
-}
-
-input TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamRightInput {
-  create: TeamMatchTournamentCreateWithoutMatchTournamentTeamRightInput
-  connect: TeamMatchTournamentWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: TeamMatchTournamentUpdateWithoutMatchTournamentTeamRightDataInput
-  upsert: TeamMatchTournamentUpsertWithoutMatchTournamentTeamRightInput
-}
-
-input TeamMatchTournamentUpdateOneWithoutMatchTournamentTeamWinnerInput {
-  create: TeamMatchTournamentCreateWithoutMatchTournamentTeamWinnerInput
-  connect: TeamMatchTournamentWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: TeamMatchTournamentUpdateWithoutMatchTournamentTeamWinnerDataInput
-  upsert: TeamMatchTournamentUpsertWithoutMatchTournamentTeamWinnerInput
-}
-
-input TeamMatchTournamentUpdateWithoutMatchTournamentTeamLeftDataInput {
-  size: Int
-  _ignore_: String
-  tournament: TournamentUpdateOneWithoutTeamsInput
-  playerRefs: MemberRefUpdateManyInput
-  matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
-  matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
-}
-
-input TeamMatchTournamentUpdateWithoutMatchTournamentTeamRightDataInput {
-  size: Int
-  _ignore_: String
-  tournament: TournamentUpdateOneWithoutTeamsInput
-  playerRefs: MemberRefUpdateManyInput
-  matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
-  matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
-}
-
-input TeamMatchTournamentUpdateWithoutMatchTournamentTeamWinnerDataInput {
-  size: Int
-  _ignore_: String
-  tournament: TournamentUpdateOneWithoutTeamsInput
-  playerRefs: MemberRefUpdateManyInput
-  matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
-  matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
+  update: TeamMatchTournamentUpdateDataInput
+  upsert: TeamMatchTournamentUpsertNestedInput
 }
 
 input TeamMatchTournamentUpdateWithoutTournamentDataInput {
   size: Int
   _ignore_: String
   playerRefs: MemberRefUpdateManyInput
-  matchTournamentTeamLeft: MatchTournamentUpdateOneWithoutTeamLeftInput
-  matchTournamentTeamRight: MatchTournamentUpdateOneWithoutTeamRightInput
-  matchTournamentTeamWinner: MatchTournamentUpdateOneWithoutWinnerInput
 }
 
 input TeamMatchTournamentUpdateWithWhereUniqueWithoutTournamentInput {
@@ -4727,19 +2587,9 @@ input TeamMatchTournamentUpdateWithWhereUniqueWithoutTournamentInput {
   data: TeamMatchTournamentUpdateWithoutTournamentDataInput!
 }
 
-input TeamMatchTournamentUpsertWithoutMatchTournamentTeamLeftInput {
-  update: TeamMatchTournamentUpdateWithoutMatchTournamentTeamLeftDataInput!
-  create: TeamMatchTournamentCreateWithoutMatchTournamentTeamLeftInput!
-}
-
-input TeamMatchTournamentUpsertWithoutMatchTournamentTeamRightInput {
-  update: TeamMatchTournamentUpdateWithoutMatchTournamentTeamRightDataInput!
-  create: TeamMatchTournamentCreateWithoutMatchTournamentTeamRightInput!
-}
-
-input TeamMatchTournamentUpsertWithoutMatchTournamentTeamWinnerInput {
-  update: TeamMatchTournamentUpdateWithoutMatchTournamentTeamWinnerDataInput!
-  create: TeamMatchTournamentCreateWithoutMatchTournamentTeamWinnerInput!
+input TeamMatchTournamentUpsertNestedInput {
+  update: TeamMatchTournamentUpdateDataInput!
+  create: TeamMatchTournamentCreateInput!
 }
 
 input TeamMatchTournamentUpsertWithWhereUniqueWithoutTournamentInput {
@@ -4907,9 +2757,6 @@ input TeamMatchTournamentWhereInput {
   playerRefs_every: MemberRefWhereInput
   playerRefs_some: MemberRefWhereInput
   playerRefs_none: MemberRefWhereInput
-  matchTournamentTeamLeft: MatchTournamentWhereInput
-  matchTournamentTeamRight: MatchTournamentWhereInput
-  matchTournamentTeamWinner: MatchTournamentWhereInput
 }
 
 input TeamMatchTournamentWhereUniqueInput {

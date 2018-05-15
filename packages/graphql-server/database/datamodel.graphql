@@ -77,11 +77,7 @@ type TeamMatchTournament {
   tournament: Tournament!
   size: Int!
   playerRefs: [MemberRef!]!
-  # 👇 List all relation fields
-  # See https://github.com/graphcool/prisma/issues/1907
-  matchTournamentTeamLeft: MatchTournament @relation(name: "TeamLeftMatchTournament")
-  matchTournamentTeamRight: MatchTournament @relation(name: "TeamRightMatchTournament")
-  matchTournamentTeamWinner: MatchTournament @relation(name: "TeamWinnerMatchTournament")
+
   _ignore_: String
 }
 
@@ -89,14 +85,9 @@ type TeamMatchSingle {
   id: ID! @unique
   createdAt: DateTime!
   updatedAt: DateTime!
-
   size: Int!
   playerRefs: [MemberRef!]!
-  # 👇 List all relation fields
-  # See https://github.com/graphcool/prisma/issues/1907
-  matchSingleTeamLeft: MatchSingle @relation(name: "TeamLeftMatchSingle")
-  matchSingleTeamRight: MatchSingle @relation(name: "TeamRightMatchSingle")
-  matchSingleTeamWinner: MatchSingle @relation(name: "TeamWinnerMatchSingle")
+
   _ignore_: String
 }
 
@@ -150,23 +141,7 @@ type MatchTournament {
   teamRight: TeamMatchTournament @relation(name: "TeamRightMatchTournament")
   winner: TeamMatchTournament @relation(name: "TeamWinnerMatchTournament")
   nextMatch: MatchTournament
-  # 👇 List all relation fields
-  # See https://github.com/graphcool/prisma/issues/1907
-  roundLastSixteenMatchA: RoundLastSixteen @relation(name: "MatchAOfRoundLastSixteen")
-  roundLastSixteenMatchB: RoundLastSixteen @relation(name: "MatchBOfRoundLastSixteen")
-  roundLastSixteenMatchC: RoundLastSixteen @relation(name: "MatchCOfRoundLastSixteen")
-  roundLastSixteenMatchD: RoundLastSixteen @relation(name: "MatchDOfRoundLastSixteen")
-  roundLastSixteenMatchE: RoundLastSixteen @relation(name: "MatchEOfRoundLastSixteen")
-  roundLastSixteenMatchF: RoundLastSixteen @relation(name: "MatchFOfRoundLastSixteen")
-  roundLastSixteenMatchG: RoundLastSixteen @relation(name: "MatchGOfRoundLastSixteen")
-  roundLastSixteenMatchH: RoundLastSixteen @relation(name: "MatchHOfRoundLastSixteen")
-  roundQuarterfinalsMatchA: RoundQuarterfinals @relation(name: "MatchAOfRoundQuarterfinals")
-  roundQuarterfinalsMatchB: RoundQuarterfinals @relation(name: "MatchBOfRoundQuarterfinals")
-  roundQuarterfinalsMatchC: RoundQuarterfinals @relation(name: "MatchCOfRoundQuarterfinals")
-  roundQuarterfinalsMatchD: RoundQuarterfinals @relation(name: "MatchDOfRoundQuarterfinals")
-  roundSemifinalsMatchA: RoundSemifinals @relation(name: "MatchAOfRoundSemifinals")
-  roundSemifinalsMatchB: RoundSemifinals @relation(name: "MatchBOfRoundSemifinals")
-  roundFinalMatch: RoundFinal @relation(name: "MatchOfRoundFinal")
+
   _ignore_: String
 }
 
