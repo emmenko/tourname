@@ -1,5 +1,5 @@
 # source: http://192.168.99.100:4466/tourname/dev
-# timestamp: Tue May 15 2018 22:03:03 GMT+0200 (CEST)
+# timestamp: Tue May 15 2018 22:12:49 GMT+0200 (CEST)
 
 type AggregateMatchSingle {
   count: Int!
@@ -73,7 +73,6 @@ type MatchSingle implements Node {
   teamLeft(where: TeamMatchSingleWhereInput): TeamMatchSingle!
   teamRight(where: TeamMatchSingleWhereInput): TeamMatchSingle!
   winner(where: TeamMatchSingleWhereInput): TeamMatchSingle
-  _ignore_: String
 }
 
 """A connection to a list of items."""
@@ -89,7 +88,6 @@ type MatchSingleConnection {
 input MatchSingleCreateInput {
   discipline: Discipline!
   status: MatchSingleStatus!
-  _ignore_: String
   organization: OrganizationCreateOneInput!
   teamLeft: TeamMatchSingleCreateOneInput!
   teamRight: TeamMatchSingleCreateOneInput!
@@ -116,8 +114,6 @@ enum MatchSingleOrderByInput {
   discipline_DESC
   status_ASC
   status_DESC
-  _ignore__ASC
-  _ignore__DESC
 }
 
 type MatchSinglePreviousValues {
@@ -126,7 +122,6 @@ type MatchSinglePreviousValues {
   updatedAt: DateTime!
   discipline: Discipline!
   status: MatchSingleStatus!
-  _ignore_: String
 }
 
 enum MatchSingleStatus {
@@ -176,7 +171,6 @@ input MatchSingleSubscriptionWhereInput {
 input MatchSingleUpdateInput {
   discipline: Discipline
   status: MatchSingleStatus
-  _ignore_: String
   organization: OrganizationUpdateOneInput
   teamLeft: TeamMatchSingleUpdateOneInput
   teamRight: TeamMatchSingleUpdateOneInput
@@ -296,46 +290,6 @@ input MatchSingleWhereInput {
 
   """All values that are not contained in given list."""
   status_not_in: [MatchSingleStatus!]
-  _ignore_: String
-
-  """All values that are not equal to given value."""
-  _ignore__not: String
-
-  """All values that are contained in given list."""
-  _ignore__in: [String!]
-
-  """All values that are not contained in given list."""
-  _ignore__not_in: [String!]
-
-  """All values less than the given value."""
-  _ignore__lt: String
-
-  """All values less than or equal the given value."""
-  _ignore__lte: String
-
-  """All values greater than the given value."""
-  _ignore__gt: String
-
-  """All values greater than or equal the given value."""
-  _ignore__gte: String
-
-  """All values containing the given string."""
-  _ignore__contains: String
-
-  """All values not containing the given string."""
-  _ignore__not_contains: String
-
-  """All values starting with the given string."""
-  _ignore__starts_with: String
-
-  """All values not starting with the given string."""
-  _ignore__not_starts_with: String
-
-  """All values ending with the given string."""
-  _ignore__ends_with: String
-
-  """All values not ending with the given string."""
-  _ignore__not_ends_with: String
   organization: OrganizationWhereInput
   teamLeft: TeamMatchSingleWhereInput
   teamRight: TeamMatchSingleWhereInput
@@ -357,7 +311,6 @@ type MatchTournament implements Node {
   teamRight(where: TeamMatchTournamentWhereInput): TeamMatchTournament
   winner(where: TeamMatchTournamentWhereInput): TeamMatchTournament
   nextMatch(where: MatchTournamentWhereInput): MatchTournament
-  _ignore_: String
 }
 
 """A connection to a list of items."""
@@ -372,7 +325,6 @@ type MatchTournamentConnection {
 
 input MatchTournamentCreateInput {
   discipline: Discipline!
-  _ignore_: String
   organization: OrganizationCreateOneInput!
   tournament: TournamentCreateOneInput!
   teamLeft: TeamMatchTournamentCreateOneInput
@@ -404,8 +356,6 @@ enum MatchTournamentOrderByInput {
   updatedAt_DESC
   discipline_ASC
   discipline_DESC
-  _ignore__ASC
-  _ignore__DESC
 }
 
 type MatchTournamentPreviousValues {
@@ -413,7 +363,6 @@ type MatchTournamentPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   discipline: Discipline!
-  _ignore_: String
 }
 
 type MatchTournamentSubscriptionPayload {
@@ -457,7 +406,6 @@ input MatchTournamentSubscriptionWhereInput {
 
 input MatchTournamentUpdateDataInput {
   discipline: Discipline
-  _ignore_: String
   organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneInput
   teamLeft: TeamMatchTournamentUpdateOneInput
@@ -468,7 +416,6 @@ input MatchTournamentUpdateDataInput {
 
 input MatchTournamentUpdateInput {
   discipline: Discipline
-  _ignore_: String
   organization: OrganizationUpdateOneInput
   tournament: TournamentUpdateOneInput
   teamLeft: TeamMatchTournamentUpdateOneInput
@@ -593,46 +540,6 @@ input MatchTournamentWhereInput {
 
   """All values that are not contained in given list."""
   discipline_not_in: [Discipline!]
-  _ignore_: String
-
-  """All values that are not equal to given value."""
-  _ignore__not: String
-
-  """All values that are contained in given list."""
-  _ignore__in: [String!]
-
-  """All values that are not contained in given list."""
-  _ignore__not_in: [String!]
-
-  """All values less than the given value."""
-  _ignore__lt: String
-
-  """All values less than or equal the given value."""
-  _ignore__lte: String
-
-  """All values greater than the given value."""
-  _ignore__gt: String
-
-  """All values greater than or equal the given value."""
-  _ignore__gte: String
-
-  """All values containing the given string."""
-  _ignore__contains: String
-
-  """All values not containing the given string."""
-  _ignore__not_contains: String
-
-  """All values starting with the given string."""
-  _ignore__starts_with: String
-
-  """All values not starting with the given string."""
-  _ignore__not_starts_with: String
-
-  """All values ending with the given string."""
-  _ignore__ends_with: String
-
-  """All values not ending with the given string."""
-  _ignore__not_ends_with: String
   organization: OrganizationWhereInput
   tournament: TournamentWhereInput
   teamLeft: TeamMatchTournamentWhereInput
@@ -2150,7 +2057,6 @@ type TeamMatchSingle implements Node {
   updatedAt: DateTime!
   size: Int!
   playerRefs(where: MemberRefWhereInput, orderBy: MemberRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MemberRef!]
-  _ignore_: String
 }
 
 """A connection to a list of items."""
@@ -2165,7 +2071,6 @@ type TeamMatchSingleConnection {
 
 input TeamMatchSingleCreateInput {
   size: Int!
-  _ignore_: String
   playerRefs: MemberRefCreateManyInput
 }
 
@@ -2192,8 +2097,6 @@ enum TeamMatchSingleOrderByInput {
   updatedAt_DESC
   size_ASC
   size_DESC
-  _ignore__ASC
-  _ignore__DESC
 }
 
 type TeamMatchSinglePreviousValues {
@@ -2201,7 +2104,6 @@ type TeamMatchSinglePreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   size: Int!
-  _ignore_: String
 }
 
 type TeamMatchSingleSubscriptionPayload {
@@ -2245,13 +2147,11 @@ input TeamMatchSingleSubscriptionWhereInput {
 
 input TeamMatchSingleUpdateDataInput {
   size: Int
-  _ignore_: String
   playerRefs: MemberRefUpdateManyInput
 }
 
 input TeamMatchSingleUpdateInput {
   size: Int
-  _ignore_: String
   playerRefs: MemberRefUpdateManyInput
 }
 
@@ -2383,46 +2283,6 @@ input TeamMatchSingleWhereInput {
 
   """All values greater than or equal the given value."""
   size_gte: Int
-  _ignore_: String
-
-  """All values that are not equal to given value."""
-  _ignore__not: String
-
-  """All values that are contained in given list."""
-  _ignore__in: [String!]
-
-  """All values that are not contained in given list."""
-  _ignore__not_in: [String!]
-
-  """All values less than the given value."""
-  _ignore__lt: String
-
-  """All values less than or equal the given value."""
-  _ignore__lte: String
-
-  """All values greater than the given value."""
-  _ignore__gt: String
-
-  """All values greater than or equal the given value."""
-  _ignore__gte: String
-
-  """All values containing the given string."""
-  _ignore__contains: String
-
-  """All values not containing the given string."""
-  _ignore__not_contains: String
-
-  """All values starting with the given string."""
-  _ignore__starts_with: String
-
-  """All values not starting with the given string."""
-  _ignore__not_starts_with: String
-
-  """All values ending with the given string."""
-  _ignore__ends_with: String
-
-  """All values not ending with the given string."""
-  _ignore__not_ends_with: String
   playerRefs_every: MemberRefWhereInput
   playerRefs_some: MemberRefWhereInput
   playerRefs_none: MemberRefWhereInput
@@ -2439,7 +2299,6 @@ type TeamMatchTournament implements Node {
   tournament(where: TournamentWhereInput): Tournament!
   size: Int!
   playerRefs(where: MemberRefWhereInput, orderBy: MemberRefOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [MemberRef!]
-  _ignore_: String
 }
 
 """A connection to a list of items."""
@@ -2454,7 +2313,6 @@ type TeamMatchTournamentConnection {
 
 input TeamMatchTournamentCreateInput {
   size: Int!
-  _ignore_: String
   tournament: TournamentCreateOneWithoutTeamsInput!
   playerRefs: MemberRefCreateManyInput
 }
@@ -2471,7 +2329,6 @@ input TeamMatchTournamentCreateOneInput {
 
 input TeamMatchTournamentCreateWithoutTournamentInput {
   size: Int!
-  _ignore_: String
   playerRefs: MemberRefCreateManyInput
 }
 
@@ -2493,8 +2350,6 @@ enum TeamMatchTournamentOrderByInput {
   updatedAt_DESC
   size_ASC
   size_DESC
-  _ignore__ASC
-  _ignore__DESC
 }
 
 type TeamMatchTournamentPreviousValues {
@@ -2502,7 +2357,6 @@ type TeamMatchTournamentPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   size: Int!
-  _ignore_: String
 }
 
 type TeamMatchTournamentSubscriptionPayload {
@@ -2546,14 +2400,12 @@ input TeamMatchTournamentSubscriptionWhereInput {
 
 input TeamMatchTournamentUpdateDataInput {
   size: Int
-  _ignore_: String
   tournament: TournamentUpdateOneWithoutTeamsInput
   playerRefs: MemberRefUpdateManyInput
 }
 
 input TeamMatchTournamentUpdateInput {
   size: Int
-  _ignore_: String
   tournament: TournamentUpdateOneWithoutTeamsInput
   playerRefs: MemberRefUpdateManyInput
 }
@@ -2578,7 +2430,6 @@ input TeamMatchTournamentUpdateOneInput {
 
 input TeamMatchTournamentUpdateWithoutTournamentDataInput {
   size: Int
-  _ignore_: String
   playerRefs: MemberRefUpdateManyInput
 }
 
@@ -2713,46 +2564,6 @@ input TeamMatchTournamentWhereInput {
 
   """All values greater than or equal the given value."""
   size_gte: Int
-  _ignore_: String
-
-  """All values that are not equal to given value."""
-  _ignore__not: String
-
-  """All values that are contained in given list."""
-  _ignore__in: [String!]
-
-  """All values that are not contained in given list."""
-  _ignore__not_in: [String!]
-
-  """All values less than the given value."""
-  _ignore__lt: String
-
-  """All values less than or equal the given value."""
-  _ignore__lte: String
-
-  """All values greater than the given value."""
-  _ignore__gt: String
-
-  """All values greater than or equal the given value."""
-  _ignore__gte: String
-
-  """All values containing the given string."""
-  _ignore__contains: String
-
-  """All values not containing the given string."""
-  _ignore__not_contains: String
-
-  """All values starting with the given string."""
-  _ignore__starts_with: String
-
-  """All values not starting with the given string."""
-  _ignore__not_starts_with: String
-
-  """All values ending with the given string."""
-  _ignore__ends_with: String
-
-  """All values not ending with the given string."""
-  _ignore__not_ends_with: String
   tournament: TournamentWhereInput
   playerRefs_every: MemberRefWhereInput
   playerRefs_some: MemberRefWhereInput
