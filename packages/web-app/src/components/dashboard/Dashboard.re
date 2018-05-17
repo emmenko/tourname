@@ -15,26 +15,24 @@ module Styles = {
  * https://bucklescript.github.io/docs/en/generate-converters-accessors.html#convert-between-js-string-enum-and-bs-polymorphic-variant
  */
 [@bs.deriving jsConverter]
-type discipline = [ | `POOL_TABLE | `TABLE_TENNIS];
+type discipline = [ | `PoolTable | `TableTennis];
 
 module ActiveTournamentsQuery = [%graphql
   {|
   query ActiveTournaments($key: String!, $page: Int!, $perPage: Int!) {
-    organization(key: $key) {
-      key
-      tournaments(
-        status: [NEW, IN_PROGRESS]
-        sort: { key: "createdAt", order: DESC }
-        page: $page
-        perPage: $perPage
-      ) {
-        id
-        discipline
-        name
-        status
-        size
-        teamSize
-      }
+    tournaments(
+      organizationKey: $key
+      status: [New, InProgress]
+      orderBy: createdAt_DESC
+      page: $page
+      perPage: $perPage
+    ) {
+      id
+      discipline
+      name
+      status
+      size
+      teamSize
     }
   }
 |}
@@ -46,21 +44,19 @@ module FetchActiveTournaments =
 module FinishedTournamentsQuery = [%graphql
   {|
   query FinishedTournaments($key: String!, $page: Int!, $perPage: Int!) {
-    organization(key: $key) {
-      key
-      tournaments(
-        status: [FINISHED]
-        sort: { key: "createdAt", order: DESC }
-        page: $page
-        perPage: $perPage
-      ) {
-        id
-        discipline
-        name
-        status
-        size
-        teamSize
-      }
+    tournaments(
+      organizationKey: $key
+      status: [Finished]
+      sort: createdAt_DESC
+      page: $page
+      perPage: $perPage
+    ) {
+      id
+      discipline
+      name
+      status
+      size
+      teamSize
     }
   }
 |}
@@ -162,22 +158,21 @@ let make = (~match: RouterMatch.match, _children) => {
                        Js.log(error);
                        ReasonReact.nullElement;
                      | Data(response) =>
-                       switch (response##organization) {
-                       | None =>
+                       if (Array.length(response##tournaments) == 0) {
                          renderTournamentsList(
                            ~labelEmptyList=
                              "There are no active tournaments at the moment",
                            ~organizationKey,
                            (),
-                         )
-                       | Some(org) =>
+                         );
+                       } else {
                          renderTournamentsList(
                            ~labelEmptyList=
                              "There are no active tournaments at the moment",
-                           ~tournaments=org##tournaments,
+                           ~tournaments=response##tournaments,
                            ~organizationKey,
                            (),
-                         )
+                         );
                        }
                      }
                  )
@@ -196,22 +191,21 @@ let make = (~match: RouterMatch.match, _children) => {
                        Js.log(error);
                        ReasonReact.nullElement;
                      | Data(response) =>
-                       switch (response##organization) {
-                       | None =>
+                       if (Array.length(response##tournaments) == 0) {
                          renderTournamentsList(
                            ~labelEmptyList=
-                             "There are no active tournaments at the moment",
+                             "There are no finished tournaments at the moment",
                            ~organizationKey,
                            (),
-                         )
-                       | Some(org) =>
+                         );
+                       } else {
                          renderTournamentsList(
                            ~labelEmptyList=
-                             "There are no active tournaments at the moment",
-                           ~tournaments=org##tournaments,
+                             "There are no finished tournaments at the moment",
+                           ~tournaments=response##tournaments,
                            ~organizationKey,
                            (),
-                         )
+                         );
                        }
                      }
                  )
