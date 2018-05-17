@@ -68,11 +68,6 @@ let make = (~match: RouterMatch.match, _children) => {
                        path="/:organizationKey/tournament/:tournamentId"
                        component=tournamentDetail
                      />
-                     <Route
-                       exact=true
-                       path="/:organizationKey/match/:matchId"
-                       component=MatchDetail.default
-                     />
                    </Switch>
                  </div>
                }

@@ -1,4 +1,5 @@
 {
+  "flow.enabled": false,
   "yaml.schemas": {
     "http://json.schemastore.org/prisma": "prisma.yml"
   }

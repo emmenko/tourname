@@ -1,12 +1,18 @@
+/**
+ * Convert polymorphic variant to JS string
+ * https://bucklescript.github.io/docs/en/generate-converters-accessors.html#convert-between-js-string-enum-and-bs-polymorphic-variant
+ */
+[@bs.deriving jsConverter]
+type role = [ | `Admin | `Member];
+
 type member = {
   .
-  "createdAt": string,
-  "email": string,
   "id": string,
-  "isAdmin": Js.boolean,
-  "lastModifiedAt": string,
+  "auth0Id": string,
+  "email": string,
   "name": string,
   "picture": string,
+  "role": role,
 };
 
 module OrganizationQuery = [%graphql
@@ -17,12 +23,11 @@ module OrganizationQuery = [%graphql
       name
       members {
         id
-        createdAt
-        lastModifiedAt
+        auth0Id
         email
         name
         picture
-        isAdmin
+        role
       }
     }
   }

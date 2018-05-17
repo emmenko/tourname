@@ -2,7 +2,6 @@ module LoggedInUserQuery = [%graphql
   {|
   query LoggedInUser {
     me {
-      id
       name
       email
       picture
