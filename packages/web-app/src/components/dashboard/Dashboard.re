@@ -47,7 +47,7 @@ module FinishedTournamentsQuery = [%graphql
     tournaments(
       organizationKey: $key
       status: [Finished]
-      sort: createdAt_DESC
+      orderBy: createdAt_DESC
       page: $page
       perPage: $perPage
     ) {

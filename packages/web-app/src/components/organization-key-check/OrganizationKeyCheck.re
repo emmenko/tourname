@@ -49,10 +49,7 @@ let make = (~value, ~onChange, _children) => {
                ReasonReact.nullElement;
              | Data(response) =>
                let isOrganizationKeyUsed = response##isOrganizationKeyUsed;
-               <KeyCheckHandler
-                 isOrganizationKeyUsed=(Js.to_bool(isOrganizationKeyUsed))
-                 onChange
-               />;
+               <KeyCheckHandler isOrganizationKeyUsed onChange />;
              }
          )
     </FetchOrganizationKeyCheck>;
