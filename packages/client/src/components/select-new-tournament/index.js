@@ -1,1 +1,1 @@
-export { default } from './select-new-tournament';
+export { default } from './SelectNewTournament.bs';
