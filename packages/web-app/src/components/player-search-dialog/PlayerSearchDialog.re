@@ -95,7 +95,6 @@ module PlayerSearchDialog = {
                   ...(
                        ({result}) =>
                          switch (result) {
-                         | NoData => ReasonReact.stringToElement("No data...")
                          | Loading => <LoadingSpinner />
                          | Data(response) =>
                            /* We need to convert it to a list to perform some basic

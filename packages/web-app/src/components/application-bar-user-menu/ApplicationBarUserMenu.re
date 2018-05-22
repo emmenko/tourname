@@ -41,7 +41,6 @@ let make = _children => {
       ...(
            ({result}) =>
              switch (result) {
-             | NoData => ReasonReact.stringToElement("No data...")
              | Loading => <div className=Styles.placeholder />
              | Data(response) =>
                <Downshift

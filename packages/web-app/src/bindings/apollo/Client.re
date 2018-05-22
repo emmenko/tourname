@@ -44,7 +44,7 @@ let authLink =
 /* Create an Error Link */
 let errorLink =
   ApolloLinks.createErrorLink(errorResponse =>
-    switch (errorResponse##networkError) {
+    switch (Js.Nullable.toOption(errorResponse##networkError)) {
     | Some(error) =>
       if (error##statusCode == 401) {
         ReasonAuth.logout();
