@@ -1753,9 +1753,9 @@ bs-platform@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-3.0.0.tgz#38f200730db52fdea37819376b6ac3dfb20244c0"
 
-bsb-js@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/bsb-js/-/bsb-js-1.0.2.tgz#b9e7af1dfdb8de6191bb36fdff43f59359a7dfe7"
+bsb-js@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/bsb-js/-/bsb-js-1.1.0.tgz#12d129a61abb98cae84aaf283f8c2ce633f2f881"
 
 bser@^2.0.0:
   version "2.0.0"
