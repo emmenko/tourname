@@ -8502,9 +8502,9 @@ realpath-native@^1.0.0:
   dependencies:
     util.promisify "^1.0.0"
 
-reason-apollo@emmenko/reason-apollo#pending-patches:
-  version "0.7.4"
-  resolved "https://codeload.github.com/emmenko/reason-apollo/tar.gz/474c82e481866c284835efff098fe1993baa98c0"
+reason-apollo@emmenko/reason-apollo#pending-patches-0.9.0:
+  version "0.8.0"
+  resolved "https://codeload.github.com/emmenko/reason-apollo/tar.gz/391b709797255f3a5c44b8ccbee4e5a317e356a3"
 
 reason-react@0.4.1:
   version "0.4.1"

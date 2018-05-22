@@ -134,7 +134,6 @@ let make = (~match: RouterMatch.match, _children) => {
             ...(
                  ({result}) =>
                    switch (result) {
-                   | NoData => ReasonReact.stringToElement("No data...")
                    | Loading => <Welcome />
                    | Error(error) =>
                      Js.log(error);
@@ -152,11 +151,9 @@ let make = (~match: RouterMatch.match, _children) => {
               ...(
                    ({result}) =>
                      switch (result) {
-                     | NoData => ReasonReact.stringToElement("No data...")
                      | Loading => <LoadingSpinner />
                      | Error(error) =>
-                       Js.log(error);
-                       ReasonReact.nullElement;
+                       <NetworkErrorMessage error=error##networkError />
                      | Data(response) =>
                        if (Array.length(response##tournaments) == 0) {
                          renderTournamentsList(
@@ -185,11 +182,9 @@ let make = (~match: RouterMatch.match, _children) => {
               ...(
                    ({result}) =>
                      switch (result) {
-                     | NoData => ReasonReact.stringToElement("No data...")
                      | Loading => <LoadingSpinner />
                      | Error(error) =>
-                       Js.log(error);
-                       ReasonReact.nullElement;
+                       <NetworkErrorMessage error=error##networkError />
                      | Data(response) =>
                        if (Array.length(response##tournaments) == 0) {
                          renderTournamentsList(

@@ -42,7 +42,6 @@ let make = (~value, ~onChange, _children) => {
       ...(
            ({result}) =>
              switch (result) {
-             | NoData => ReasonReact.stringToElement("NoData")
              | Loading => ReasonReact.stringToElement("...")
              | Error(error) =>
                Js.log2("[KeyCheck] Error while fetching", error);

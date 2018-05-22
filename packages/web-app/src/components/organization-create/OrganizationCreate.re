@@ -68,10 +68,8 @@ let make = _children => {
              (mutation, mutationResult) => {
                let mutationResultComponent =
                  switch (mutationResult.result) {
-                 | NotCalled
-                 | Called
                  | Loading
-                 | NoData => ReasonReact.nullElement
+                 | NotCalled => ReasonReact.nullElement
                  | Error(error) =>
                    let errorMsg =
                      switch (Js.Exn.message(apolloErrorToJsError(error))) {
@@ -136,11 +134,9 @@ let make = _children => {
                      |> Js.Promise.then_(_rawResult => {
                           switch (mutationResult.result) {
                           | NotCalled
-                          | Called
                           | Loading
                           | Data(_) => ()
                           /* Reset the form state only if the mutation did not succeeded */
-                          | NoData
                           | Error(_) =>
                             CreateOrganizationForm.FormikActions.setSubmitting(
                               formikActions,

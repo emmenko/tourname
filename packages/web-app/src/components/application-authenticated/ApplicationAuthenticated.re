@@ -19,7 +19,6 @@ let make = _children => {
         ...(
              ({result}) =>
                switch (result) {
-               | NoData => ReasonReact.stringToElement("No data")
                | Loading => ReasonReact.stringToElement("Loading...")
                | Error(error) =>
                  Js.log(error);

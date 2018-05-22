@@ -38,7 +38,6 @@ let make = (~match: RouterMatch.match, _children) => {
         ...(
              ({result}) =>
                switch (result) {
-               | NoData => ReasonReact.stringToElement("No data...")
                | Loading => ReasonReact.stringToElement("Loading...")
                | Error(_error) => <NotFound />
                | Data(_response) =>

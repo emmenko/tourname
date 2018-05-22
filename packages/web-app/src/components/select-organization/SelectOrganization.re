@@ -80,7 +80,6 @@ let make = _children => {
             ...(
                  ({result}) =>
                    switch (result) {
-                   | NoData => ReasonReact.stringToElement("No data...")
                    | Loading =>
                      <SelectOrganization
                        history=renderProps##history
