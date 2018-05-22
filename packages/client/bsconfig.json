@@ -8,8 +8,8 @@
   ],
   "bs-dependencies": [
     "@glennsl/bs-jest",
-    "@glennsl/bs-typed-glamor",
     "bs-downshift",
+    "bs-typed-glamor",
     "reason-apollo",
     "reason-react"
   ],
