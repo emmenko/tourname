@@ -1,8 +1,8 @@
-open Glamor;
+open TypedGlamor;
 
 module Styles = {
-  let slot = css([display("inline-flex"), alignItems("center")]);
-  let userAvatar = css([height("36px"), borderRadius("18px")]);
+  let slot = css([display(inlineFlex), alignItems(center)]);
+  let userAvatar = css([height(px(36)), borderRadius(px(18))]);
 };
 
 let component = ReasonReact.statelessComponent("PlayerSlot");
@@ -10,10 +10,10 @@ let component = ReasonReact.statelessComponent("PlayerSlot");
 let make = (~player: FetchOrganization.member, ~onRemoveClick=?, _children) => {
   ...component,
   render: _self =>
-    <div className=Styles.slot>
+    <div className=(Styles.slot |> TypedGlamor.toString)>
       <div>
         <img
-          className=Styles.userAvatar
+          className=(Styles.userAvatar |> TypedGlamor.toString)
           key="picture"
           alt="User avatar"
           src=player##picture
@@ -24,7 +24,7 @@ let make = (~player: FetchOrganization.member, ~onRemoveClick=?, _children) => {
         <div> (ReasonReact.stringToElement(player##email)) </div>
       </div>
       (
-        switch onRemoveClick {
+        switch (onRemoveClick) {
         | Some(onClick) =>
           <div>
             <button onClick> (ReasonReact.stringToElement("Remove")) </button>
@@ -32,7 +32,7 @@ let make = (~player: FetchOrganization.member, ~onRemoveClick=?, _children) => {
         | None => ReasonReact.nullElement
         }
       )
-    </div>
+    </div>,
 };
 
 let default =

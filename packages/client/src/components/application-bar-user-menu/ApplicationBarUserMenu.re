@@ -1,34 +1,39 @@
-open Glamor;
+open TypedGlamor;
 
 module Styles = {
   let placeholder =
     css([
-      backgroundColor("#eaeaea"),
-      borderRadius("36px"),
-      height("36px"),
-      width("36px"),
+      backgroundColor(hex("#eaeaea")),
+      borderRadius(px(36)),
+      height(px(36)),
+      width(px(36)),
     ]);
-  let avatar = css([height("36px"), borderRadius("18px")]);
-  let menuContainer = css([position("relative")]);
+  let avatar = css([height(px(36)), borderRadius(px(18))]);
+  let menuContainer = css([position(relative)]);
   let menu =
     css([
-      border("1px solid rgba(34, 36, 38, 0.15)"),
-      maxHeight("150px"),
-      width("200px"),
-      overflow("scroll"),
-      position("absolute"),
-      right("0px"),
-      top("3px"),
-      Selector("> * + *", [margin("8px 0 0")]),
+      border3(px(1), solid, rgba(34, 36, 38, 0.15)),
+      maxHeight(px(150)),
+      width(px(200)),
+      overflow(scroll),
+      position(absolute),
+      offsetRight(zero),
+      offsetTop(px(3)),
+      select("> * + *", [marginTop(px(8))]),
     ]);
-  let menuHeadline = css([borderBottom("1px solid #ccc"), padding("8px")]);
+  let menuHeadline =
+    css([borderBottom3(px(1), solid, hex("ccc")), padding(px(8))]);
   let userEmail =
-    css([color("#aaa"), fontSize("0.7rem"), wordBreak("break-all")]);
+    css([
+      color(hex("aaa")),
+      fontSize(rem(0.7)),
+      /* wordBreak(breakAll) */
+    ]);
   let likeLink =
     css([
-      display("block"),
-      padding("4px 8px"),
-      Selector(":hover", [backgroundColor("#ccc")]),
+      display(block),
+      padding2(~v=px(4), ~h=px(8)),
+      select(":hover", [backgroundColor(hex("ccc"))]),
     ]);
 };
 
@@ -41,7 +46,8 @@ let make = _children => {
       ...(
            ({result}) =>
              switch (result) {
-             | Loading => <div className=Styles.placeholder />
+             | Loading =>
+               <div className=(Styles.placeholder |> TypedGlamor.toString) />
              | Data(response) =>
                <Downshift
                  render=(
@@ -56,7 +62,7 @@ let make = _children => {
                              )
                          )>
                          <img
-                           className=Styles.avatar
+                           className=(Styles.avatar |> TypedGlamor.toString)
                            key="picture"
                            alt="User avatar"
                            src=response##me##picture
@@ -66,18 +72,30 @@ let make = _children => {
                          if (Downshift.ControllerStateAndHelpers.isOpen(t)) {
                            let fullName = response##me##name;
                            let email = response##me##email;
-                           <div className=Styles.menuContainer>
-                             <div className=Styles.menu>
-                               <div className=Styles.menuHeadline>
+                           <div
+                             className=(
+                               Styles.menuContainer |> TypedGlamor.toString
+                             )>
+                             <div
+                               className=(Styles.menu |> TypedGlamor.toString)>
+                               <div
+                                 className=(
+                                   Styles.menuHeadline |> TypedGlamor.toString
+                                 )>
                                  <div>
                                    (ReasonReact.stringToElement(fullName))
                                  </div>
-                                 <div className=Styles.userEmail>
+                                 <div
+                                   className=(
+                                     Styles.userEmail |> TypedGlamor.toString
+                                   )>
                                    (ReasonReact.stringToElement(email))
                                  </div>
                                </div>
                                <a
-                                 className=Styles.likeLink
+                                 className=(
+                                   Styles.likeLink |> TypedGlamor.toString
+                                 )
                                  onClick=(_event => ReasonAuth.logout())>
                                  (ReasonReact.stringToElement("Logout"))
                                </a>

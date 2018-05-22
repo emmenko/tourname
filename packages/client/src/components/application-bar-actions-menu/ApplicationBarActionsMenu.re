@@ -1,19 +1,19 @@
-open Glamor;
+open TypedGlamor;
 
 open ReasonReactRouterDom;
 
 module Styles = {
-  let menuContainer = css([position("relative")]);
+  let menuContainer = css([position(relative)]);
   let menu =
     css([
-      border("1px solid rgba(34, 36, 38, 0.15)"),
-      maxHeight("150px"),
-      width("200px"),
-      overflow("scroll"),
-      position("absolute"),
-      right("0px"),
-      top("3px"),
-      Selector("> * + *", [margin("8px 0 0")])
+      border3(px(1), solid, rgba(34, 36, 38, 0.15)),
+      maxHeight(px(150)),
+      width(px(200)),
+      overflow(scroll),
+      position(absolute),
+      offsetRight(zero),
+      offsetTop(px(3)),
+      select("> * + *", [marginTop(px(8))]),
     ]);
 };
 
@@ -28,27 +28,28 @@ let make = _children => {
           <div>
             <div
               onClick=(
-                _event => Downshift.ControllerStateAndHelpers.toggleMenu(t, ())
+                _event =>
+                  Downshift.ControllerStateAndHelpers.toggleMenu(t, ())
               )>
               (ReasonReact.stringToElement("New"))
             </div>
             (
               if (Downshift.ControllerStateAndHelpers.isOpen(t)) {
-                <div className=Styles.menuContainer>
-                  <div className=Styles.menu>
+                <div className=(Styles.menuContainer |> TypedGlamor.toString)>
+                  <div className=(Styles.menu |> TypedGlamor.toString)>
                     <div>
                       <span
                         onClick=(
                           _event =>
                             Downshift.ControllerStateAndHelpers.closeMenu(
                               t,
-                              ()
+                              (),
                             )
                         )>
                         <Link to_="/new">
                           (
                             ReasonReact.stringToElement(
-                              "New match / tournament"
+                              "New match / tournament",
                             )
                           )
                         </Link>
@@ -60,7 +61,7 @@ let make = _children => {
                           _event =>
                             Downshift.ControllerStateAndHelpers.closeMenu(
                               t,
-                              ()
+                              (),
                             )
                         )>
                         <Link to_="/organizations/new">
@@ -76,7 +77,7 @@ let make = _children => {
             )
           </div>
       )
-    />
+    />,
 };
 
 let default = ReasonReact.wrapReasonForJs(~component, (_) => make([||]));
