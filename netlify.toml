@@ -1,3 +1,3 @@
 [build]
-  command = "yarn build"
+  command = "cd packages/client; yarn build"
   publish = "packages/client/dist"
