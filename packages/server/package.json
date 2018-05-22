@@ -11,19 +11,19 @@
   },
   "dependencies": {
     "@commercetools/sdk-client": "1.5.6",
-    "@commercetools/sdk-middleware-http": "3.0.1",
+    "@commercetools/sdk-middleware-http": "4.0.0",
     "dataloader": "1.4.0",
     "dotenv": "5.0.1",
     "express-jwt": "5.3.1",
-    "graphql-tools": "3.0.1",
-    "graphql-yoga": "1.13.1",
+    "graphql-tools": "3.0.2",
+    "graphql-yoga": "1.14.1",
     "jwks-rsa": "1.2.1",
     "lodash.shuffle": "4.2.0",
-    "prisma-binding": "1.5.18"
+    "node-fetch": "2.1.2",
+    "prisma-binding": "2.0.0"
   },
   "devDependencies": {
-    "graphql-cli": "2.15.14",
-    "npm-run-all": "4.1.2",
+    "graphql-cli": "2.16.0",
     "prisma": "1.8.3"
   }
 }

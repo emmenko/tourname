@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const { createClient } = require('@commercetools/sdk-client');
 const { createHttpMiddleware } = require('@commercetools/sdk-middleware-http');
 const createAuthMiddleware = require('./create-auth-middleware');
@@ -9,6 +10,7 @@ const authMiddleware = createAuthMiddleware({
 });
 const httpMiddleware = createHttpMiddleware({
   host: `${process.env.AUTH0_DOMAIN}/api/v2`,
+  fetch,
 });
 const httpClient = createClient({
   middlewares: [authMiddleware, httpMiddleware],
