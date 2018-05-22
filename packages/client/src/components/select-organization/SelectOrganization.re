@@ -1,9 +1,9 @@
-open Glamor;
+open TypedGlamor;
 
 open ReasonReactRouterDom;
 
 module Styles = {
-  let view = css([Selector("> * + *", [margin("16px 0 0")])]);
+  let view = css([select("> * + *", [marginTop(px(16))])]);
 };
 
 type organization = {
@@ -33,7 +33,7 @@ module SelectOrganization = {
         History.History.push(history, ~url={j|/$orgKey|j}, ~state=[]);
       },
     render: _self =>
-      <div className=Styles.view>
+      <div className=(Styles.view |> TypedGlamor.toString)>
         <h2>
           (
             ReasonReact.stringToElement("Select an organization from the list")

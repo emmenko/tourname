@@ -1,13 +1,13 @@
-open Glamor;
+open TypedGlamor;
 
 module Styles = {
-  let slot = css([display("inline-flex"), alignItems("center")]);
+  let slot = css([display(inlineFlex), alignItems(center)]);
   let avatarPlaceholder =
     css([
-      height("36px"),
-      width("36px"),
-      border("1px dashed #ccc"),
-      borderRadius("36px"),
+      height(px(36)),
+      width(px(36)),
+      border3(px(1), dashed, hex("ccc")),
+      borderRadius(px(36)),
     ]);
 };
 
@@ -39,8 +39,10 @@ let make =
     },
   render: self =>
     <Fragment>
-      <div className=Styles.slot>
-        <div> <div className=Styles.avatarPlaceholder /> </div>
+      <div className=(Styles.slot |> TypedGlamor.toString)>
+        <div>
+          <div className=(Styles.avatarPlaceholder |> TypedGlamor.toString) />
+        </div>
         <div>
           <button onClick=(_event => self.send(ShowPlayerSearchDialog))>
             (ReasonReact.stringToElement("Add a player to this team"))

@@ -1,42 +1,42 @@
-open Glamor;
+open TypedGlamor;
 
 open ReasonReactRouterDom;
 
 module Styles = {
   let overlay =
     css([
-      backgroundColor("rgba(0,0,0,0.5)"),
-      position("fixed"),
-      top("0"),
-      bottom("0"),
-      left("0"),
-      right("0"),
-      display("flex"),
-      alignItems("center"),
-      justifyContent("center"),
+      backgroundColor(rgba(0, 0, 0, 0.5)),
+      position(fixed),
+      offsetTop(zero),
+      offsetRight(zero),
+      offsetBottom(zero),
+      offsetLeft(zero),
+      display(flex),
+      alignItems(center),
+      justifyContent(center),
     ]);
   let dialog =
-    css([backgroundColor("white"), width("400px"), padding("16px")]);
-  let dialogHeader = css([borderBottom("1px solid #ccc")]);
-  let dialogBody = css([margin("16px 0")]);
-  let dialogFooter = css([borderTop("1px solid #ccc")]);
+    css([backgroundColor(white), width(px(400)), padding(px(16))]);
+  let dialogHeader = css([borderBottom3(px(1), solid, hex("ccc"))]);
+  let dialogBody = css([margin2(~v=px(16), ~h=zero)]);
+  let dialogFooter = css([borderTop3(px(1), solid, hex("ccc"))]);
   let searchResults =
     css([
-      marginTop("16px"),
-      width("100%"),
-      Selector("> * + *", [margin("4px 0 0")]),
+      marginTop(px(16)),
+      width(pct(100.)),
+      select("> * + *", [marginTop(px(4))]),
     ]);
   let selectableItem =
     css([
-      borderLeft("2px solid #ccc"),
-      backgroundColor("white"),
-      Selector(":hover", [backgroundColor("#eee")]),
+      borderLeft3(px(2), solid, hex("ccc")),
+      backgroundColor(white),
+      select(":hover", [backgroundColor(hex("eee"))]),
     ]);
   let activeSelectableItem =
     css([
-      borderLeft("2px solid #aaa"),
-      backgroundColor("#ccc"),
-      Selector(":hover", [backgroundColor("#ccc")]),
+      borderLeft3(px(2), solid, hex("aaa")),
+      backgroundColor(hex("ccc")),
+      select(":hover", [backgroundColor(hex("ccc"))]),
     ]);
 };
 
@@ -74,23 +74,23 @@ module PlayerSearchDialog = {
       let organizationQuery =
         FetchOrganization.OrganizationQuery.make(~key=organizationKey, ());
       <Modal>
-        <div className=Styles.overlay>
-          <div className=Styles.dialog>
-            <div className=Styles.dialogHeader>
+        <div className=(Styles.overlay |> TypedGlamor.toString)>
+          <div className=(Styles.dialog |> TypedGlamor.toString)>
+            <div className=(Styles.dialogHeader |> TypedGlamor.toString)>
               (
                 ReasonReact.stringToElement(
                   "Search and select a player to add to the team",
                 )
               )
             </div>
-            <div className=Styles.dialogBody>
+            <div className=(Styles.dialogBody |> TypedGlamor.toString)>
               <input
                 value=self.state.searchText
                 onChange=(
                   event => self.send(SetSearchText(getEventValue(event)))
                 )
               />
-              <div className=Styles.searchResults>
+              <div className=(Styles.searchResults |> TypedGlamor.toString)>
                 <FetchOrganization variables=organizationQuery##variables>
                   ...(
                        ({result}) =>
@@ -141,11 +141,15 @@ module PlayerSearchDialog = {
                                       switch (self.state.selectedPlayer) {
                                       | Some(player) =>
                                         if (player##id == member##id) {
-                                          Styles.activeSelectableItem;
+                                          Styles.activeSelectableItem
+                                          |> TypedGlamor.toString;
                                         } else {
-                                          Styles.selectableItem;
+                                          Styles.selectableItem
+                                          |> TypedGlamor.toString;
                                         }
-                                      | None => Styles.selectableItem
+                                      | None =>
+                                        Styles.selectableItem
+                                        |> TypedGlamor.toString
                                       }
                                     )
                                     key=member##id
@@ -166,7 +170,7 @@ module PlayerSearchDialog = {
                 </FetchOrganization>
               </div>
             </div>
-            <div className=Styles.dialogFooter>
+            <div className=(Styles.dialogFooter |> TypedGlamor.toString)>
               <button onClick=onClose>
                 (ReasonReact.stringToElement("Cancel"))
               </button>

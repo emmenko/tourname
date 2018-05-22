@@ -1,13 +1,13 @@
-open Glamor;
+open TypedGlamor;
 
 open ReasonReactRouterDom;
 
 module Styles = {
-  let view = css([Selector("> * + *", [margin("16px 0 0")])]);
-  let section = css([display("flex"), justifyContent("space-between")]);
-  let sectionBlock = css([flex("1")]);
-  let textPrimary = css([fontSize("1.25rem"), fontWeight("bold")]);
-  let textDetail = css([fontSize("0.9rem"), color("#aaa")]);
+  let view = css([select("> * + *", [marginTop(px(16))])]);
+  let section = css([display(flex), justifyContent(spaceBetween)]);
+  let sectionBlock = css([flex_(int(1))]);
+  let textPrimary = css([fontSize(rem(1.25)), fontWeight(bold)]);
+  let textDetail = css([fontSize(rem(0.9)), color(hex("aaa"))]);
 };
 
 /**
@@ -93,10 +93,12 @@ let make = (~match: RouterMatch.match, _children) => {
                    key=tournament##id
                    to_={j|/$organizationKey/tournament/$tournamentId|j}>
                    <li>
-                     <div className=Styles.textPrimary>
+                     <div
+                       className=(Styles.textPrimary |> TypedGlamor.toString)>
                        (ReasonReact.stringToElement(tournament##name))
                      </div>
-                     <div className=Styles.textDetail>
+                     <div
+                       className=(Styles.textDetail |> TypedGlamor.toString)>
                        (
                          ReasonReact.stringToElement(
                            disciplineToJs(tournament##discipline),
@@ -128,8 +130,8 @@ let make = (~match: RouterMatch.match, _children) => {
           ~perPage=20,
           (),
         );
-      <div className=Styles.view>
-        <div className=Styles.section>
+      <div className=(Styles.view |> TypedGlamor.toString)>
+        <div className=(Styles.section |> TypedGlamor.toString)>
           <FetchUser>
             ...(
                  ({result}) =>
@@ -143,8 +145,8 @@ let make = (~match: RouterMatch.match, _children) => {
                )
           </FetchUser>
         </div>
-        <div className=Styles.section>
-          <div className=Styles.sectionBlock>
+        <div className=(Styles.section |> TypedGlamor.toString)>
+          <div className=(Styles.sectionBlock |> TypedGlamor.toString)>
             <h3> (ReasonReact.stringToElement("Active tournaments")) </h3>
             <FetchActiveTournaments
               variables=activeTournamentsQuery##variables>
@@ -175,7 +177,7 @@ let make = (~match: RouterMatch.match, _children) => {
                  )
             </FetchActiveTournaments>
           </div>
-          <div className=Styles.sectionBlock>
+          <div className=(Styles.sectionBlock |> TypedGlamor.toString)>
             <h3> (ReasonReact.stringToElement("Finished tournaments")) </h3>
             <FetchFinishedTournaments
               variables=finishedTournamentsQuery##variables>
@@ -207,7 +209,7 @@ let make = (~match: RouterMatch.match, _children) => {
             </FetchFinishedTournaments>
           </div>
         </div>
-        <div className=Styles.section>
+        <div className=(Styles.section |> TypedGlamor.toString)>
           <Link to_="/new">
             (ReasonReact.stringToElement("Create new tournament"))
           </Link>

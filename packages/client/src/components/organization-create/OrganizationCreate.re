@@ -1,11 +1,11 @@
-open Glamor;
+open TypedGlamor;
 
 open Formik;
 
 open ReasonReactRouterDom;
 
 module Styles = {
-  let formView = css([Selector("> * + *", [margin("16px 0 0")])]);
+  let formView = css([select("> * + *", [marginTop(px(16))])]);
 };
 
 module CreateOrganizationForm =
@@ -55,7 +55,7 @@ let component = ReasonReact.statelessComponent("OrganizationCreate");
 let make = _children => {
   ...component,
   render: _self =>
-    <div className=Styles.formView>
+    <div className=(Styles.formView |> TypedGlamor.toString)>
       <div>
         (
           ReasonReact.stringToElement(

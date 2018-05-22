@@ -1,11 +1,11 @@
-open Glamor;
+open TypedGlamor;
 
 module Styles = {
   let breadcrumbContainer =
     css([
-      display("flex"),
-      alignItems("center"),
-      Selector("> * + *", [margin("0 0 0 8px")])
+      display(flex),
+      alignItems(center),
+      select("> * + *", [marginLeft(px(8))]),
     ]);
 };
 
@@ -22,7 +22,7 @@ let make = (~separator, children) => {
   ...component,
   render: _self => {
     let numberOfBreadcrumbs = Array.length(children);
-    <div className=Styles.breadcrumbContainer>
+    <div className=(Styles.breadcrumbContainer |> TypedGlamor.toString)>
       (
         ReasonReact.arrayToElement(
           Array.mapi(
@@ -34,17 +34,17 @@ let make = (~separator, children) => {
                 <Fragment key=(string_of_int(index))>
                   ...(
                        child,
-                       <div> (ReasonReact.stringToElement(separator)) </div>
+                       <div> (ReasonReact.stringToElement(separator)) </div>,
                      )
                 </Fragment>;
               };
             },
-            children
-          )
+            children,
+          ),
         )
       )
     </div>;
-  }
+  },
 };
 
 let default =
