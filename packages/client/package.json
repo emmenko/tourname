@@ -11,7 +11,6 @@
     "get-schema": "send-introspection-query http://localhost:3999/graphql"
   },
   "dependencies": {
-    "@glennsl/bs-typed-glamor": "glennsl/bs-typed-glamor#d0cc005bbb34e1d3ae76a91c8bc0e55e6fec6526",
     "apollo-cache-inmemory": "1.2.1",
     "apollo-client": "2.3.1",
     "apollo-link": "1.2.2",
@@ -20,6 +19,7 @@
     "apollo-link-http": "1.5.4",
     "auth0-js": "9.5.1",
     "bs-downshift": "1.0.0",
+    "bs-typed-glamor": "glennsl/bs-typed-glamor#d0cc005bbb34e1d3ae76a91c8bc0e55e6fec6526",
     "downshift": "1.25.0",
     "formik": "0.11.11",
     "glamor": "2.20.40",

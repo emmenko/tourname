@@ -253,13 +253,6 @@
   dependencies:
     jest "^22.0.4"
 
-"@glennsl/bs-typed-glamor@glennsl/bs-typed-glamor#d0cc005bbb34e1d3ae76a91c8bc0e55e6fec6526":
-  version "0.1.0"
-  resolved "https://codeload.github.com/glennsl/bs-typed-glamor/tar.gz/d0cc005bbb34e1d3ae76a91c8bc0e55e6fec6526"
-  dependencies:
-    bs-typed-css-core glennsl/bs-typed-css-core
-    glamor "^2.20.40"
-
 "@heroku/linewrap@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@heroku/linewrap/-/linewrap-1.0.0.tgz#a9d4e99f0a3e423a899b775f5f3d6747a1ff15c6"
@@ -1797,6 +1790,13 @@ bs-platform@3.0.0:
 bs-typed-css-core@glennsl/bs-typed-css-core:
   version "0.1.0"
   resolved "https://codeload.github.com/glennsl/bs-typed-css-core/tar.gz/5321201d2e811b2a51ca7c747140a2588e9a9991"
+
+bs-typed-glamor@glennsl/bs-typed-glamor#d0cc005bbb34e1d3ae76a91c8bc0e55e6fec6526:
+  version "0.1.0"
+  resolved "https://codeload.github.com/glennsl/bs-typed-glamor/tar.gz/d0cc005bbb34e1d3ae76a91c8bc0e55e6fec6526"
+  dependencies:
+    bs-typed-css-core glennsl/bs-typed-css-core
+    glamor "^2.20.40"
 
 bsb-js@1.1.0:
   version "1.1.0"
