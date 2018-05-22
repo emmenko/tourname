@@ -1,5 +1,5 @@
 # The endpoint of your Prisma API (deployed to a Prisma Sandbox).
-# endpoint: https://eu1.prisma.sh/public-ebonytwister-402/graphql-server/dev
+# endpoint: https://eu1.prisma.sh/public-ebonytwister-402/server/dev
 endpoint: ${env:PRISMA_API_URL}
 
 # The file containing the definition of your data model.
