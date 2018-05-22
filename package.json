@@ -8,12 +8,12 @@
   "license": "BSD-3-Clause",
   "scripts": {
     "postinstall": "check-node-version --package --print && lerna run prepare",
-    "build": "lerna run --parallel --scope \"{@tourname/http-server,@tourname/web-app}\" build",
     "lint": "jest --config jest.eslint.config.js",
     "format": "npm run format:js & npm run format:md",
     "format:js": "prettier --write 'packages/**/*.js'",
     "format:md": "prettier --parser markdown --write 'packages/**/*.md'",
-    "start": "lerna run --parallel --scope \"{@tourname/http-server,@tourname/web-app}\" start",
+    "start":
+      "lerna run --parallel --scope \"{@tourname/server,@tourname/client}\" start",
     "test":
       "check-node-version --package && echo \"Error: no test specified\" && exit 1",
     "commitmsg": "commitlint -e $GIT_PARAMS",
