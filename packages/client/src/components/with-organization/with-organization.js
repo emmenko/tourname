@@ -10,12 +10,11 @@ const OrganizationQuery = gql`
       name
       members {
         id
-        createdAt
-        lastModifiedAt
+        auth0Id
         email
         name
         picture
-        isAdmin
+        role
       }
     }
   }

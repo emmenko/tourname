@@ -6,7 +6,6 @@ import { graphql } from 'react-apollo';
 const LoggedInUserQuery = gql`
   query LoggedInUser {
     me {
-      id
       name
       email
       picture

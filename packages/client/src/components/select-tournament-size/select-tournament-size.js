@@ -9,7 +9,6 @@ const SIZES = {
   SMALL: 'Small (4 players)',
   MEDIUM: 'Medium (8 players)',
   LARGE: 'Large (16 players)',
-  XLARGE: 'XLarge (32 players)',
 };
 
 class SelectTournamentSize extends React.PureComponent {
