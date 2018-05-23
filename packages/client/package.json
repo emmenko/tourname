@@ -19,7 +19,10 @@
     "apollo-link-http": "1.5.4",
     "auth0-js": "9.5.1",
     "bs-downshift": "1.0.0",
-    "bs-typed-glamor": "glennsl/bs-typed-glamor#9239993373c92015f9cbec25446e9ddb9390d5fb",
+    "bs-typed-css-core":
+      "glennsl/bs-typed-css-core#f5154957359a5c208db104d1aafba4fb5413b4c5",
+    "bs-typed-glamor":
+      "glennsl/bs-typed-glamor#9239993373c92015f9cbec25446e9ddb9390d5fb",
     "downshift": "1.25.0",
     "formik": "0.11.11",
     "glamor": "2.20.40",
@@ -32,7 +35,7 @@
     "react-dom": "16.3.2",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
-    "reason-apollo": "emmenko/reason-apollo#pending-patches-0.9.0",
+    "reason-apollo": "emmenko/reason-apollo#pending-patches-0.10.0",
     "reason-react": "0.4.1",
     "recompose": "0.27.0",
     "styled-components": "2.3.3"
@@ -45,5 +48,9 @@
     "bsb-js": "1.1.0",
     "graphql_ppx": "0.2.1",
     "parcel-bundler": "1.7.1"
+  },
+  "resolutions": {
+    "bs-typed-css-core":
+      "glennsl/bs-typed-css-core#f5154957359a5c208db104d1aafba4fb5413b4c5"
   }
 }
