@@ -7,7 +7,7 @@
   "author": "Nicola Molinari <me@emmenko.org> (http://emmenko.org)",
   "license": "BSD-3-Clause",
   "scripts": {
-    "postinstall": "check-node-version --package --print && lerna run prepare",
+    "postinstall": "check-node-version --package --print && lerna run postinstall",
     "lint": "jest --config jest.eslint.config.js",
     "format": "npm run format:js & npm run format:md",
     "format:js": "prettier --write 'packages/**/*.js'",

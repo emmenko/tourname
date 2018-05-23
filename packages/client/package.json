@@ -4,10 +4,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "parcel build src/index.re",
-    "start": "parcel public/index.html --port 4000",
+    "build": "npm run clean && npm run build:bsb && npm run build:app",
+    "build:app": "parcel build src/index.re",
+    "build:bsb": "bsb -make-world",
+    "start": "npm-run-all --parallel start:app start:bsb",
+    "start:app": "parcel public/index.html --port 4000",
+    "start:bsb": "bsb -make-world -w",
     "clean": "bsb -clean-world",
-    "prepare": "bsb -make-world",
+    "postinstall": "npm run clean && npm run build:bsb",
     "get-schema": "send-introspection-query http://localhost:3999/graphql"
   },
   "dependencies": {
@@ -44,7 +48,7 @@
     "@glennsl/bs-jest": "0.4.2",
     "babel-plugin-transform-class-properties": "6.24.1",
     "babel-preset-env": "1.7.0",
-    "bs-platform": "3.0.0",
+    "bs-platform": "3.1.3",
     "bsb-js": "1.1.0",
     "graphql_ppx": "0.2.1",
     "parcel-bundler": "1.7.1"
