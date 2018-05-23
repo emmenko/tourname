@@ -11,16 +11,26 @@ external config : graphqlConfig = "GRAPHQL_CONFIG";
 /* Create an InMemoryCache */
 type dataObject = {
   .
-  "__typename": string,
-  "id": string,
-  "key": string,
+  "__typename": option(string),
+  "id": option(string),
+  "key": option(string),
 };
 
 let dataIdFromObject = (obj: dataObject) =>
-  if (obj##__typename === "Organization") {
-    obj##key;
-  } else {
-    obj##id;
+  switch (obj##__typename) {
+  | Some("Organization") =>
+    switch (obj##key) {
+    | Some(k) => k
+    | None =>
+      Js.log("Expected a 'key' field in the 'Organization' type");
+      "";
+    }
+  | Some(t) =>
+    switch (obj##id) {
+    | Some(i) => t ++ ":" ++ i
+    | None => ""
+    }
+  | None => ""
   };
 
 let inMemoryCache =
@@ -35,7 +45,7 @@ let authLink =
     let token = ReasonAuth.getAccessToken();
     let headers = {
       "headers": {
-        "authorization": {j|Bearer $token|j},
+        "authorization": "Bearer " ++ token,
       },
     };
     asJsObject(headers);
