@@ -67,7 +67,7 @@ class TournamentCreate extends React.PureComponent {
         <Formik
           initialValues={{
             name: '',
-            size: 'SMALL',
+            size: 'Small',
             discipline: '',
             organizationKey: this.props.defaultOrganizationKey,
             teamSize: 1,

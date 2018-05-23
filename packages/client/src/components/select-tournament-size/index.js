@@ -1,1 +1,1 @@
-export { default } from './select-tournament-size';
+export { default } from './SelectTournamentSize.bs';
