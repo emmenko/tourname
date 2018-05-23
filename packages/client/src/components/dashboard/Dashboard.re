@@ -1,8 +1,7 @@
-open TypedGlamor;
-
 open ReasonReactRouterDom;
 
 module Styles = {
+  open TypedGlamor;
   let view = css([select("> * + *", [marginTop(px(16))])]);
   let section = css([display(flex), justifyContent(spaceBetween)]);
   let sectionBlock = css([flex_(int(1))]);

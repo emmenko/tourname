@@ -1,8 +1,7 @@
-open TypedGlamor;
-
 open ReasonReactRouterDom;
 
 module Styles = {
+  open TypedGlamor;
   let overlay =
     css([
       backgroundColor(rgba(0, 0, 0, 0.5)),

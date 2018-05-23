@@ -1,8 +1,7 @@
-open TypedGlamor;
-
 open ReasonReactRouterDom;
 
 module Styles = {
+  open TypedGlamor;
   let activeColor = css([color(hex("0074d9"))]);
   let inactiveColor = css([color(hex("aaa"))]);
 };

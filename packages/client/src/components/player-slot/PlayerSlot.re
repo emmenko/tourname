@@ -1,6 +1,5 @@
-open TypedGlamor;
-
 module Styles = {
+  open TypedGlamor;
   let slot = css([display(inlineFlex), alignItems(center)]);
   let userAvatar = css([height(px(36)), borderRadius(px(18))]);
 };

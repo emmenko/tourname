@@ -1,6 +1,5 @@
-open TypedGlamor;
-
 module Styles = {
+  open TypedGlamor;
   let text = css([margin(zero)]);
   let placeholder =
     css([

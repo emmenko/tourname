@@ -1,5 +1,3 @@
-open TypedGlamor;
-
 /* FIXME: remove once the component has been migrated to reason */
 module QuickMatchCreate = {
   [@bs.module "../quick-match-create"]
@@ -25,6 +23,7 @@ module TournamentCreate = {
 };
 
 module Styles = {
+  open TypedGlamor;
   let selectionHeader =
     css([
       display(inlineFlex),

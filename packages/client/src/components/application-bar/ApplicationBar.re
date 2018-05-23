@@ -1,8 +1,7 @@
-open TypedGlamor;
-
 open ReasonReactRouterDom;
 
 module Styles = {
+  open TypedGlamor;
   let container =
     css([
       display(flex),

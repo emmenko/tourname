@@ -1,10 +1,9 @@
-open TypedGlamor;
-
 open Formik;
 
 open ReasonReactRouterDom;
 
 module Styles = {
+  open TypedGlamor;
   let formView = css([select("> * + *", [marginTop(px(16))])]);
 };
 

@@ -1,6 +1,5 @@
-open TypedGlamor;
-
 module Styles = {
+  open TypedGlamor;
   let breadcrumbContainer =
     css([
       display(flex),
