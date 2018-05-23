@@ -43,7 +43,7 @@ module CreateForm = (Config: CreateFormType) => {
       ~reactClass,
       ~props={
         "initialValues": initialValues,
-        "validate": Js.Null_undefined.from_opt(validate),
+        "validate": Js.Null_undefined.fromOption(validate),
         "onSubmit": onSubmit,
         "render": render
       },

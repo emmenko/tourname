@@ -5,7 +5,7 @@ let make = _children => {
   render: _self =>
     <div>
       <ApplicationBar.Unauthenticated />
-      (ReasonReact.stringToElement("Landing page"))
+      ("Landing page" |> ReasonReact.string)
     </div>,
 };
 

@@ -23,7 +23,7 @@ let make = _children => {
     });
     ();
   },
-  render: _self => ReasonReact.nullElement,
+  render: _self => ReasonReact.null,
 };
 
 let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

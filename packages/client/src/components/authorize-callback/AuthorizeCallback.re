@@ -51,26 +51,25 @@ let make = (~history: history, _children) => {
         | Some(type_) =>
           switch (type_) {
           | NoHashParam =>
-            ReasonReact.stringToElement(
-              "This route has been called without any hash parameter. Please ensure that this route is called by Auth0 for handling authentication requests.",
-            )
+            "This route has been called without any hash parameter. Please ensure that this route is called by Auth0 for handling authentication requests."
+            |> ReasonReact.string
           | General(description) =>
             <div>
-              <p> (ReasonReact.stringToElement(description)) </p>
+              <p> (description |> ReasonReact.string) </p>
               <p>
-                <span> (ReasonReact.stringToElement("Please ")) </span>
+                <span> ("Please " |> ReasonReact.string) </span>
                 <a
                   onClick=(
                     _event =>
                       ReasonAuth.authorize(Js_null_undefined.undefined)
                   )>
-                  (ReasonReact.stringToElement("Log in"))
+                  ("Log in" |> ReasonReact.string)
                 </a>
-                <span> (ReasonReact.stringToElement(" again")) </span>
+                <span> (" again" |> ReasonReact.string) </span>
               </p>
             </div>
           }
-        | None => ReasonReact.stringToElement("Loading")
+        | None => "Loading" |> ReasonReact.string
         }
       )
     </div>,

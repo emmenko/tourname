@@ -31,7 +31,7 @@ let make = _children => {
                 _event =>
                   Downshift.ControllerStateAndHelpers.toggleMenu(t, ())
               )>
-              (ReasonReact.stringToElement("New"))
+              ("New" |> ReasonReact.string)
             </div>
             (
               if (Downshift.ControllerStateAndHelpers.isOpen(t)) {
@@ -47,11 +47,7 @@ let make = _children => {
                             )
                         )>
                         <Link to_="/new">
-                          (
-                            ReasonReact.stringToElement(
-                              "New match / tournament",
-                            )
-                          )
+                          ("New match / tournament" |> ReasonReact.string)
                         </Link>
                       </span>
                     </div>
@@ -65,14 +61,14 @@ let make = _children => {
                             )
                         )>
                         <Link to_="/organizations/new">
-                          (ReasonReact.stringToElement("New organization"))
+                          ("New organization" |> ReasonReact.string)
                         </Link>
                       </span>
                     </div>
                   </div>
                 </div>;
               } else {
-                ReasonReact.nullElement;
+                ReasonReact.null;
               }
             )
           </div>

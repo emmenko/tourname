@@ -79,10 +79,10 @@ let make = (~match: RouterMatch.match, _children) => {
   let renderTournamentsList =
       (~tournaments=?, ~organizationKey, ~labelEmptyList, ()) =>
     switch (tournaments) {
-    | None => <div> (ReasonReact.stringToElement(labelEmptyList)) </div>
+    | None => <div> (labelEmptyList |> ReasonReact.string) </div>
     | Some(listOfTournaments) =>
       if (Js.Array.length(listOfTournaments) == 0) {
-        <div> (ReasonReact.stringToElement(labelEmptyList)) </div>;
+        <div> (labelEmptyList |> ReasonReact.string) </div>;
       } else {
         <ul>
           (
@@ -95,20 +95,19 @@ let make = (~match: RouterMatch.match, _children) => {
                    <li>
                      <div
                        className=(Styles.textPrimary |> TypedGlamor.toString)>
-                       (ReasonReact.stringToElement(tournament##name))
+                       (tournament##name |> ReasonReact.string)
                      </div>
                      <div
                        className=(Styles.textDetail |> TypedGlamor.toString)>
                        (
-                         ReasonReact.stringToElement(
-                           disciplineToJs(tournament##discipline),
-                         )
+                         disciplineToJs(tournament##discipline)
+                         |> ReasonReact.string
                        )
                      </div>
                    </li>
                  </Link>;
                })
-            |> ReasonReact.arrayToElement
+            |> ReasonReact.array
           )
         </ul>;
       }
@@ -139,7 +138,7 @@ let make = (~match: RouterMatch.match, _children) => {
                    | Loading => <Welcome />
                    | Error(error) =>
                      Js.log(error);
-                     ReasonReact.nullElement;
+                     ReasonReact.null;
                    | Data(response) => <Welcome name=response##me##name />
                    }
                )
@@ -147,7 +146,7 @@ let make = (~match: RouterMatch.match, _children) => {
         </div>
         <div className=(Styles.section |> TypedGlamor.toString)>
           <div className=(Styles.sectionBlock |> TypedGlamor.toString)>
-            <h3> (ReasonReact.stringToElement("Active tournaments")) </h3>
+            <h3> ("Active tournaments" |> ReasonReact.string) </h3>
             <FetchActiveTournaments
               variables=activeTournamentsQuery##variables>
               ...(
@@ -178,7 +177,7 @@ let make = (~match: RouterMatch.match, _children) => {
             </FetchActiveTournaments>
           </div>
           <div className=(Styles.sectionBlock |> TypedGlamor.toString)>
-            <h3> (ReasonReact.stringToElement("Finished tournaments")) </h3>
+            <h3> ("Finished tournaments" |> ReasonReact.string) </h3>
             <FetchFinishedTournaments
               variables=finishedTournamentsQuery##variables>
               ...(
@@ -211,7 +210,7 @@ let make = (~match: RouterMatch.match, _children) => {
         </div>
         <div className=(Styles.section |> TypedGlamor.toString)>
           <Link to_="/new">
-            (ReasonReact.stringToElement("Create new tournament"))
+            ("Create new tournament" |> ReasonReact.string)
           </Link>
         </div>
       </div>;

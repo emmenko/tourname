@@ -62,9 +62,9 @@ module Route = {
       ~reactClass,
       ~props={
         "exact": Js.Boolean.to_js_boolean(optionToBool(exact)),
-        "path": Js.Null_undefined.from_opt(path),
-        "component": Js.Null_undefined.from_opt(component),
-        "render": Js.Null_undefined.from_opt(render)
+        "path": Js.Null_undefined.fromOption(path),
+        "component": Js.Null_undefined.fromOption(component),
+        "render": Js.Null_undefined.fromOption(render)
       },
       children
     );

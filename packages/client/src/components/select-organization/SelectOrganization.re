@@ -35,9 +35,7 @@ module SelectOrganization = {
     render: _self =>
       <div className=(Styles.view |> TypedGlamor.toString)>
         <h2>
-          (
-            ReasonReact.stringToElement("Select an organization from the list")
-          )
+          ("Select an organization from the list" |> ReasonReact.string)
         </h2>
         <select
           onChange=(
@@ -48,18 +46,16 @@ module SelectOrganization = {
           )>
           (
             if (Array.length(availableOrganizations) > 0) {
-              ReasonReact.arrayToElement(
-                Array.map(
-                  org =>
-                    <option key=org##key value=org##key>
-                      (ReasonReact.stringToElement(org##name))
-                    </option>,
-                  availableOrganizations,
-                ),
-              );
+              availableOrganizations
+              |> Array.map(org =>
+                   <option key=org##key value=org##key>
+                     (org##name |> ReasonReact.string)
+                   </option>
+                 )
+              |> ReasonReact.array;
             } else {
               <option disabled=true>
-                (ReasonReact.stringToElement("Loading..."))
+                ("Loading..." |> ReasonReact.string)
               </option>;
             }
           )
@@ -87,7 +83,7 @@ let make = _children => {
                      />
                    | Error(error) =>
                      Js.log(error);
-                     ReasonReact.nullElement;
+                     ReasonReact.null;
                    | Data(response) =>
                      <SelectOrganization
                        history=renderProps##history

@@ -19,7 +19,7 @@ let make = (~name=?, _children) => {
     switch (name) {
     | Some(n) =>
       <h1 className=(Styles.text |> TypedGlamor.toString)>
-        (ReasonReact.stringToElement({j|Welcome $n|j}))
+        ({j|Welcome $n|j} |> ReasonReact.string)
       </h1>
     | None => <h1 className=(Styles.placeholder |> TypedGlamor.toString) />
     },

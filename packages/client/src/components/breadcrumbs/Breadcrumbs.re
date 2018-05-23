@@ -24,24 +24,18 @@ let make = (~separator, children) => {
     let numberOfBreadcrumbs = Array.length(children);
     <div className=(Styles.breadcrumbContainer |> TypedGlamor.toString)>
       (
-        ReasonReact.arrayToElement(
-          Array.mapi(
-            (index, child) => {
-              let isLastChild = index == numberOfBreadcrumbs - 1;
-              if (isLastChild) {
-                child;
-              } else {
-                <Fragment key=(string_of_int(index))>
-                  ...(
-                       child,
-                       <div> (ReasonReact.stringToElement(separator)) </div>,
-                     )
-                </Fragment>;
-              };
-            },
-            children,
-          ),
-        )
+        children
+        |> Array.mapi((index, child) => {
+             let isLastChild = index == numberOfBreadcrumbs - 1;
+             if (isLastChild) {
+               child;
+             } else {
+               <Fragment key=(string_of_int(index))>
+                 ...(child, <div> (separator |> ReasonReact.string) </div>)
+               </Fragment>;
+             };
+           })
+        |> ReasonReact.array
       )
     </div>;
   },

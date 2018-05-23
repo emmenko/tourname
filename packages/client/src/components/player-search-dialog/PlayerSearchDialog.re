@@ -78,9 +78,8 @@ module PlayerSearchDialog = {
           <div className=(Styles.dialog |> TypedGlamor.toString)>
             <div className=(Styles.dialogHeader |> TypedGlamor.toString)>
               (
-                ReasonReact.stringToElement(
-                  "Search and select a player to add to the team",
-                )
+                "Search and select a player to add to the team"
+                |> ReasonReact.string
               )
             </div>
             <div className=(Styles.dialogBody |> TypedGlamor.toString)>
@@ -113,9 +112,7 @@ module PlayerSearchDialog = {
                              | None => [||]
                              };
                            if (Js.Array.length(filteredList) == 0) {
-                             ReasonReact.stringToElement(
-                               "No more members available",
-                             );
+                             "No more members available" |> ReasonReact.string;
                            } else {
                              /* Filter our members already in use,
                                 then render the list of available members */
@@ -160,11 +157,11 @@ module PlayerSearchDialog = {
                                     <PlayerSlot player=member />
                                   </div>
                                 )
-                             |> ReasonReact.arrayToElement;
+                             |> ReasonReact.array;
                            };
                          | Error(error) =>
                            Js.log(error);
-                           ReasonReact.nullElement;
+                           ReasonReact.null;
                          }
                      )
                 </FetchOrganization>
@@ -172,7 +169,7 @@ module PlayerSearchDialog = {
             </div>
             <div className=(Styles.dialogFooter |> TypedGlamor.toString)>
               <button onClick=onClose>
-                (ReasonReact.stringToElement("Cancel"))
+                ("Cancel" |> ReasonReact.string)
               </button>
               (
                 switch (self.state.selectedPlayer) {
@@ -185,11 +182,11 @@ module PlayerSearchDialog = {
                         onClose(event);
                       }
                     )>
-                    (ReasonReact.stringToElement("Select"))
+                    ("Select" |> ReasonReact.string)
                   </button>
                 | None =>
                   <button disabled=true>
-                    (ReasonReact.stringToElement("Select"))
+                    ("Select" |> ReasonReact.string)
                   </button>
                 }
               )

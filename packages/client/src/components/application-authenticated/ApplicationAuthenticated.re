@@ -19,10 +19,10 @@ let make = _children => {
         ...(
              ({result}) =>
                switch (result) {
-               | Loading => ReasonReact.stringToElement("Loading...")
+               | Loading => "Loading..." |> ReasonReact.string
                | Error(error) =>
                  Js.log(error);
-                 ReasonReact.nullElement;
+                 ReasonReact.null;
                | Data(response) =>
                  let shouldForceToCreateAnOrganization =
                    Array.length(response##me##availableOrganizations) == 0;

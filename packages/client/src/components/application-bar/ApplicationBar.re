@@ -45,7 +45,7 @@ module ApplicationBarContainer = {
     ...component,
     render: _self =>
       <div className=(Styles.container |> TypedGlamor.toString)>
-        <Link to_="/"> (ReasonReact.stringToElement("Logo")) </Link>
+        <Link to_="/"> ("Logo" |> ReasonReact.string) </Link>
         (
           /* See https://reasonml.github.io/reason-react/docs/en/children.html#pitfall */
           ReasonReact.createDomElement(
@@ -67,10 +67,7 @@ module Authenticated = {
     ...component,
     render: _self =>
       <ApplicationBarContainer>
-        (
-          showActionsMenu ?
-            <ApplicationBarActionsMenu /> : ReasonReact.nullElement
-        )
+        (showActionsMenu ? <ApplicationBarActionsMenu /> : ReasonReact.null)
         <ApplicationBarUserMenu />
       </ApplicationBarContainer>,
   };
@@ -88,7 +85,7 @@ module Unauthenticated = {
             _event => ReasonAuth.authorize(Js_null_undefined.undefined)
           )>
           <div className=(Styles.button |> TypedGlamor.toString)>
-            (ReasonReact.stringToElement("Login"))
+            ("Login" |> ReasonReact.string)
           </div>
         </a>
       </ApplicationBarContainer>,

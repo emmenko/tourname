@@ -4,17 +4,17 @@ type disciplines =
 
 let listOptions = [|
   TableTennis("TABLE_TENNIS", "Table Tennis"),
-  PoolTable("POOL_TABLE", "Pool Table")
+  PoolTable("POOL_TABLE", "Pool Table"),
 |];
 
 let getOptionKey = option =>
-  switch option {
+  switch (option) {
   | TableTennis(key, _) => key
   | PoolTable(key, _) => key
   };
 
 let getOptionLabel = option =>
-  switch option {
+  switch (option) {
   | TableTennis(_, label) => label
   | PoolTable(_, label) => label
   };
@@ -27,17 +27,15 @@ let make = (~value=?, ~onChange, _children) => {
     <select name="discipline" ?value onChange>
       <option />
       (
-        ReasonReact.arrayToElement(
-          Array.mapi(
-            (index, option) =>
-              <option key=(string_of_int(index)) value=(getOptionKey(option))>
-                (ReasonReact.stringToElement(getOptionLabel(option)))
-              </option>,
-            listOptions
-          )
-        )
+        listOptions
+        |> Array.mapi((index, option) =>
+             <option key=(string_of_int(index)) value=(getOptionKey(option))>
+               (getOptionLabel(option) |> ReasonReact.string)
+             </option>
+           )
+        |> ReasonReact.array
       )
-    </select>
+    </select>,
 };
 
 let default =
@@ -45,6 +43,6 @@ let default =
     make(
       ~value=?Js.Nullable.to_opt(jsProps##value),
       ~onChange=jsProps##onChange,
-      [||]
+      [||],
     )
   );

@@ -43,11 +43,10 @@ let renderErrorHint =
   switch (Js.Dict.get(touched, key)) {
   | Some(_) =>
     switch (Js.Dict.get(errors, key)) {
-    | Some(errorMessage) =>
-      <div> (ReasonReact.stringToElement(errorMessage)) </div>
-    | None => ReasonReact.nullElement
+    | Some(errorMessage) => <div> (errorMessage |> ReasonReact.string) </div>
+    | None => ReasonReact.null
     }
-  | None => ReasonReact.nullElement
+  | None => ReasonReact.null
   };
 
 let component = ReasonReact.statelessComponent("OrganizationCreate");
@@ -58,9 +57,8 @@ let make = _children => {
     <div className=(Styles.formView |> TypedGlamor.toString)>
       <div>
         (
-          ReasonReact.stringToElement(
-            "Create  a new organization (or ask to be invited to an existing organization)",
-          )
+          "Create  a new organization (or ask to be invited to an existing organization)"
+          |> ReasonReact.string
         )
       </div>
       <CreateOrganization>
@@ -69,21 +67,21 @@ let make = _children => {
                let mutationResultComponent =
                  switch (mutationResult.result) {
                  | Loading
-                 | NotCalled => ReasonReact.nullElement
+                 | NotCalled => ReasonReact.null
                  | Error(error) =>
                    let errorMsg =
                      switch (Js.Exn.message(apolloErrorToJsError(error))) {
                      | Some(message) => {j|Mutation error: $message|j}
                      | None => "An unknown error occurred"
                      };
-                   ReasonReact.stringToElement(errorMsg);
+                   errorMsg |> ReasonReact.string;
                  | Data(response) =>
                    switch (response##createOrganization) {
                    | Some(org) =>
                      let createOrganizationKey = org##key;
                      Js.log2("Organization created", createOrganizationKey);
                      <Redirect to_={j|/$createOrganizationKey|j} />;
-                   | None => ReasonReact.nullElement
+                   | None => ReasonReact.null
                    }
                  };
                <CreateOrganizationForm
@@ -161,9 +159,7 @@ let make = _children => {
                          CreateOrganizationForm.FormikProps.handleSubmit(t)
                        )>
                        <div>
-                         <label>
-                           (ReasonReact.stringToElement("Name"))
-                         </label>
+                         <label> ("Name" |> ReasonReact.string) </label>
                          <input
                            _type="text"
                            name="name"
@@ -180,7 +176,7 @@ let make = _children => {
                          (renderErrorHint(~errors, ~touched, ~key="name"))
                        </div>
                        <div>
-                         <label> (ReasonReact.stringToElement("Key")) </label>
+                         <label> ("Key" |> ReasonReact.string) </label>
                          <input
                            _type="text"
                            name="key"
@@ -220,11 +216,7 @@ let make = _children => {
                            <button
                              _type="submit"
                              disabled=(! isValid || isSubmitting)>
-                             (
-                               ReasonReact.stringToElement(
-                                 "Create organization",
-                               )
-                             )
+                             ("Create organization" |> ReasonReact.string)
                            </button>;
                          }
                        </div>

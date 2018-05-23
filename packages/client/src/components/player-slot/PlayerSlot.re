@@ -20,16 +20,16 @@ let make = (~player: FetchOrganization.member, ~onRemoveClick=?, _children) => {
         />
       </div>
       <div>
-        <div> (ReasonReact.stringToElement(player##name)) </div>
-        <div> (ReasonReact.stringToElement(player##email)) </div>
+        <div> (player##name |> ReasonReact.string) </div>
+        <div> (player##email |> ReasonReact.string) </div>
       </div>
       (
         switch (onRemoveClick) {
         | Some(onClick) =>
           <div>
-            <button onClick> (ReasonReact.stringToElement("Remove")) </button>
+            <button onClick> ("Remove" |> ReasonReact.string) </button>
           </div>
-        | None => ReasonReact.nullElement
+        | None => ReasonReact.null
         }
       )
     </div>,

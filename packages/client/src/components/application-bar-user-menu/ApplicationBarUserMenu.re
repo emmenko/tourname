@@ -82,14 +82,12 @@ let make = _children => {
                                  className=(
                                    Styles.menuHeadline |> TypedGlamor.toString
                                  )>
-                                 <div>
-                                   (ReasonReact.stringToElement(fullName))
-                                 </div>
+                                 <div> (fullName |> ReasonReact.string) </div>
                                  <div
                                    className=(
                                      Styles.userEmail |> TypedGlamor.toString
                                    )>
-                                   (ReasonReact.stringToElement(email))
+                                   (email |> ReasonReact.string)
                                  </div>
                                </div>
                                <a
@@ -97,12 +95,12 @@ let make = _children => {
                                    Styles.likeLink |> TypedGlamor.toString
                                  )
                                  onClick=(_event => ReasonAuth.logout())>
-                                 (ReasonReact.stringToElement("Logout"))
+                                 ("Logout" |> ReasonReact.string)
                                </a>
                              </div>
                            </div>;
                          } else {
-                           ReasonReact.nullElement;
+                           ReasonReact.null;
                          }
                        )
                      </div>
@@ -110,7 +108,7 @@ let make = _children => {
                />
              | Error(error) =>
                Js.log(error);
-               ReasonReact.nullElement;
+               ReasonReact.null;
              }
          )
     </FetchUser>,

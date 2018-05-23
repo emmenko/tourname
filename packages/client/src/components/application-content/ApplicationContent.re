@@ -10,8 +10,7 @@ module NotFound = {
   let component = ReasonReact.statelessComponent("NotFound");
   let make = _children => {
     ...component,
-    render: _self =>
-      <div> (ReasonReact.stringToElement("404 Not Found")) </div>,
+    render: _self => <div> ("404 Not Found" |> ReasonReact.string) </div>,
   };
 };
 
@@ -38,7 +37,7 @@ let make = (~match: RouterMatch.match, _children) => {
         ...(
              ({result}) =>
                switch (result) {
-               | Loading => ReasonReact.stringToElement("Loading...")
+               | Loading => "Loading..." |> ReasonReact.string
                | Error(_error) => <NotFound />
                | Data(_response) =>
                  <div>
@@ -47,7 +46,7 @@ let make = (~match: RouterMatch.match, _children) => {
                      render=(
                        _renderFunc => {
                          setItem("organizationKey", organizationKey);
-                         ReasonReact.nullElement;
+                         ReasonReact.null;
                        }
                      )
                    />

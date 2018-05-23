@@ -45,7 +45,7 @@ let make =
         </div>
         <div>
           <button onClick=(_event => self.send(ShowPlayerSearchDialog))>
-            (ReasonReact.stringToElement("Add a player to this team"))
+            ("Add a player to this team" |> ReasonReact.string)
           </button>
         </div>
       </div>
@@ -57,7 +57,7 @@ let make =
             onClose=(_event => self.send(HidePlayerSearchDialog))
             fallbackOrganizationKey
           /> :
-          ReasonReact.nullElement
+          ReasonReact.null
       )
     </Fragment>,
 };

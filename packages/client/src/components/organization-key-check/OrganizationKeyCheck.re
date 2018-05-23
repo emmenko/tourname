@@ -22,7 +22,7 @@ module KeyCheckHandler = {
     },
     render: _self => {
       let hintText = if (isOrganizationKeyUsed) {"NO"} else {"OK"};
-      ReasonReact.stringToElement(hintText);
+      hintText |> ReasonReact.string;
     },
   };
 };
@@ -42,10 +42,10 @@ let make = (~value, ~onChange, _children) => {
       ...(
            ({result}) =>
              switch (result) {
-             | Loading => ReasonReact.stringToElement("...")
+             | Loading => "..." |> ReasonReact.string
              | Error(error) =>
                Js.log2("[KeyCheck] Error while fetching", error);
-               ReasonReact.nullElement;
+               ReasonReact.null;
              | Data(response) =>
                let isOrganizationKeyUsed = response##isOrganizationKeyUsed;
                <KeyCheckHandler isOrganizationKeyUsed onChange />;
