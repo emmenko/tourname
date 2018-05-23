@@ -28,7 +28,7 @@ module Styles = {
   let selectionHeader =
     css([
       display(inlineFlex),
-      /* justifyContent(spaceEvenly), */
+      justifyContent(spaceEvenly),
       alignItems(center),
       width(pct(100.)),
     ]);

@@ -19,7 +19,7 @@
     "apollo-link-http": "1.5.4",
     "auth0-js": "9.5.1",
     "bs-downshift": "1.0.0",
-    "bs-typed-glamor": "glennsl/bs-typed-glamor#d0cc005bbb34e1d3ae76a91c8bc0e55e6fec6526",
+    "bs-typed-glamor": "glennsl/bs-typed-glamor#9239993373c92015f9cbec25446e9ddb9390d5fb",
     "downshift": "1.25.0",
     "formik": "0.11.11",
     "glamor": "2.20.40",
