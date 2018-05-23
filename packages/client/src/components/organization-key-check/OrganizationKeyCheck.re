@@ -16,6 +16,10 @@ module KeyCheckHandler = {
     /* Since the Apollo query is triggered using a declarative component we need
        to use a child component to trigger `onChange` updates each time the query
        returns a result */
+    didMount: _self => {
+      onChange(! isOrganizationKeyUsed);
+      ();
+    },
     didUpdate: _oldAndNewSelf => {
       onChange(! isOrganizationKeyUsed);
       ();
