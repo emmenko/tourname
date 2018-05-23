@@ -1,36 +1,35 @@
-type disciplines =
-  | TableTennis(string, string)
-  | PoolTable(string, string);
+/**
+ * Convert polymorphic variant to JS string
+ * https://bucklescript.github.io/docs/en/generate-converters-accessors.html#convert-between-js-string-enum-and-bs-polymorphic-variant
+ */
+[@bs.deriving jsConverter]
+type discipline = [ | `PoolTable | `TableTennis];
 
-let listOptions = [|
-  TableTennis("TABLE_TENNIS", "Table Tennis"),
-  PoolTable("POOL_TABLE", "Pool Table"),
+let availableDisciplines = [|
+  (`PoolTable, "Pool Table"),
+  (`TableTennis, "Table Tennis"),
 |];
-
-let getOptionKey = option =>
-  switch (option) {
-  | TableTennis(key, _) => key
-  | PoolTable(key, _) => key
-  };
-
-let getOptionLabel = option =>
-  switch (option) {
-  | TableTennis(_, label) => label
-  | PoolTable(_, label) => label
-  };
 
 let component = ReasonReact.statelessComponent("SelectDiscipline");
 
-let make = (~value=?, ~onChange, _children) => {
+let make = (~value, ~onChange, _children) => {
   ...component,
   render: _self =>
-    <select name="discipline" ?value onChange>
+    <select
+      name="discipline"
+      onChange
+      defaultValue=(
+        switch (value) {
+        | Some(v) => disciplineToJs(v)
+        | None => ""
+        }
+      )>
       <option />
       (
-        listOptions
-        |> Array.mapi((index, option) =>
-             <option key=(string_of_int(index)) value=(getOptionKey(option))>
-               (getOptionLabel(option) |> ReasonReact.string)
+        availableDisciplines
+        |> Array.mapi((index, (key, label)) =>
+             <option key=(string_of_int(index)) value=(disciplineToJs(key))>
+               (label |> ReasonReact.string)
              </option>
            )
         |> ReasonReact.array
@@ -41,7 +40,7 @@ let make = (~value=?, ~onChange, _children) => {
 let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(
-      ~value=?Js.Nullable.to_opt(jsProps##value),
+      ~value=disciplineFromJs(jsProps##value),
       ~onChange=jsProps##onChange,
       [||],
     )
