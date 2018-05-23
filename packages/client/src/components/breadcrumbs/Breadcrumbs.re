@@ -8,13 +8,6 @@ module Styles = {
     ]);
 };
 
-module Fragment = {
-  [@bs.module "react"]
-  external reactClass : ReasonReact.reactClass = "Fragment";
-  let make = children =>
-    ReasonReact.wrapJsForReason(~reactClass, ~props=Js.Obj.empty(), children);
-};
-
 let component = ReasonReact.statelessComponent("Breadcrumbs");
 
 let make = (~separator, children) => {
