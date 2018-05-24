@@ -20,6 +20,8 @@ module CreateForm = (Config: CreateFormType) => {
     [@bs.send] external handleSubmit : (t, ReactEventRe.Form.t) => unit = "";
     [@bs.send]
     external setFieldValue : (t, ~key: string, ~value: any) => unit = "";
+    [@bs.send]
+    external setFieldTouched : (t, ~key: string, ~value: bool) => unit = "";
     [@bs.send] external setSubmitting : (t, bool) => unit = "";
     [@bs.get] external isSubmitting : t => bool = "";
     [@bs.get] external isValid : t => bool = "";
@@ -37,7 +39,7 @@ module CreateForm = (Config: CreateFormType) => {
         ~validate: option(validateFunc)=?,
         ~onSubmit: (Config.valueTypes, FormikActions.t) => unit,
         ~render: renderFunc,
-        _children
+        _children,
       ) =>
     ReasonReact.wrapJsForReason(
       ~reactClass,
@@ -45,8 +47,8 @@ module CreateForm = (Config: CreateFormType) => {
         "initialValues": initialValues,
         "validate": Js.Null_undefined.fromOption(validate),
         "onSubmit": onSubmit,
-        "render": render
+        "render": render,
       },
-      [||]
+      [||],
     );
 };

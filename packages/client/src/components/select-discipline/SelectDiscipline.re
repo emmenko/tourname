@@ -1,10 +1,3 @@
-/**
- * Convert polymorphic variant to JS string
- * https://bucklescript.github.io/docs/en/generate-converters-accessors.html#convert-between-js-string-enum-and-bs-polymorphic-variant
- */
-[@bs.deriving jsConverter]
-type discipline = [ | `PoolTable | `TableTennis];
-
 let availableDisciplines = [|
   (`PoolTable, "Pool Table"),
   (`TableTennis, "Table Tennis"),
@@ -20,15 +13,16 @@ let make = (~value, ~onChange, _children) => {
       onChange
       defaultValue=(
         switch (value) {
-        | Some(v) => disciplineToJs(v)
+        | Some(v) => TournameTypes.disciplineToJs(v)
         | None => ""
         }
       )>
-      <option />
       (
         availableDisciplines
         |> Array.mapi((index, (key, label)) =>
-             <option key=(string_of_int(index)) value=(disciplineToJs(key))>
+             <option
+               key=(string_of_int(index))
+               value=(TournameTypes.disciplineToJs(key))>
                (label |> ReasonReact.string)
              </option>
            )
@@ -40,7 +34,7 @@ let make = (~value, ~onChange, _children) => {
 let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(
-      ~value=disciplineFromJs(jsProps##value),
+      ~value=TournameTypes.disciplineFromJs(jsProps##value),
       ~onChange=jsProps##onChange,
       [||],
     )

@@ -9,13 +9,6 @@ module Styles = {
   let textDetail = css([fontSize(rem(0.9)), color(hex("aaa"))]);
 };
 
-/**
- * Convert polymorphic variant to JS string
- * https://bucklescript.github.io/docs/en/generate-converters-accessors.html#convert-between-js-string-enum-and-bs-polymorphic-variant
- */
-[@bs.deriving jsConverter]
-type discipline = [ | `PoolTable | `TableTennis];
-
 module ActiveTournamentsQuery = [%graphql
   {|
   query ActiveTournaments($key: String!, $page: Int!, $perPage: Int!) {
@@ -99,7 +92,7 @@ let make = (~match: RouterMatch.match, _children) => {
                      <div
                        className=(Styles.textDetail |> TypedGlamor.toString)>
                        (
-                         disciplineToJs(tournament##discipline)
+                         TournameTypes.disciplineToJs(tournament##discipline)
                          |> ReasonReact.string
                        )
                      </div>

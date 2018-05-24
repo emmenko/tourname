@@ -1,1 +1,1 @@
-export { default } from './quick-match-create';
+export { default } from './QuickMatchCreate.bs';

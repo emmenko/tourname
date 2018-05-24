@@ -1,5 +1,3 @@
-open Formik;
-
 open ReasonReactRouterDom;
 
 module Styles = {
@@ -8,7 +6,7 @@ module Styles = {
 };
 
 module CreateOrganizationForm =
-  CreateForm(
+  Formik.CreateForm(
     {
       type valueTypes = {
         .
@@ -85,7 +83,7 @@ let make = _children => {
                  };
                <CreateOrganizationForm
                  initialValues=(
-                   valuesToJsObject({
+                   Formik.valuesToJsObject({
                      "name": "",
                      "key": "",
                      "isValidKey": false,
@@ -93,13 +91,12 @@ let make = _children => {
                  )
                  validate=(
                    values => {
-                     Js.log2("validating values", values);
                      let errors = Js.Dict.empty();
                      if (values##name == "") {
                        Js.Dict.set(errors, "name", "Requried");
                      };
                      if (values##key == "") {
-                       Js.Dict.set(errors, "key", "Requried");
+                       Js.Dict.set(errors, "key", "Required");
                      } else if (Js.Re.test(values##key, noWhitespacesRegex)) {
                        Js.Dict.set(
                          errors,
@@ -196,7 +193,7 @@ let make = _children => {
                                CreateOrganizationForm.FormikProps.setFieldValue(
                                  t,
                                  ~key="isValidKey",
-                                 ~value=toAny(isValidKey),
+                                 ~value=Formik.toAny(isValidKey),
                                );
                              }
                            )
@@ -230,4 +227,4 @@ let make = _children => {
     </div>,
 };
 
-let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));
+let default = ReasonReact.wrapReasonForJs(~component, () => make([||]));
