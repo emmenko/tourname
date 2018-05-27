@@ -1748,9 +1748,9 @@ bs-typed-css-core@glennsl/bs-typed-css-core, bs-typed-css-core@glennsl/bs-typed-
   uid f5154957359a5c208db104d1aafba4fb5413b4c5
   resolved "https://codeload.github.com/glennsl/bs-typed-css-core/tar.gz/f5154957359a5c208db104d1aafba4fb5413b4c5"
 
-bs-typed-glamor@glennsl/bs-typed-glamor#9239993373c92015f9cbec25446e9ddb9390d5fb:
+bs-typed-glamor@glennsl/bs-typed-glamor#622a26502d0e6e94ed1a0b16fb45d860bf8366eb:
   version "0.1.0"
-  resolved "https://codeload.github.com/glennsl/bs-typed-glamor/tar.gz/9239993373c92015f9cbec25446e9ddb9390d5fb"
+  resolved "https://codeload.github.com/glennsl/bs-typed-glamor/tar.gz/622a26502d0e6e94ed1a0b16fb45d860bf8366eb"
   dependencies:
     bs-typed-css-core glennsl/bs-typed-css-core
     glamor "^2.20.40"
