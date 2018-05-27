@@ -99,7 +99,7 @@ let make = _children => {
         <div
           className=(
             Styles.headerBox(
-              ~isSmall=self.state.mode == NoSelection,
+              ~isSmall=self.state.mode != NoSelection,
               ~isSelected=self.state.mode == QuickMatch,
             )
             |> TypedGlamor.toString
@@ -110,7 +110,7 @@ let make = _children => {
         <div
           className=(
             Styles.headerBox(
-              ~isSmall=self.state.mode == NoSelection,
+              ~isSmall=self.state.mode != NoSelection,
               ~isSelected=self.state.mode == Tournament,
             )
             |> TypedGlamor.toString
