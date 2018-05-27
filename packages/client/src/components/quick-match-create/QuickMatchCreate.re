@@ -285,80 +285,26 @@ let make = _children => {
                                           "Team left players"
                                           |> ReasonReact.string
                                         )
-                                        (
-                                          Array.make(values##teamSize, true)
-                                          |> Array.mapi((index, _empty) => {
-                                               let team = values##teamLeft;
-                                               switch (team[index]) {
-                                               | playerForIndex =>
-                                                 <PlayerSlot
-                                                   key=(string_of_int(index))
-                                                   player=playerForIndex
-                                                   onRemoveClick=(
-                                                     _event => {
-                                                       let teamWithoutPlayer =
-                                                         values##teamLeft
-                                                         |> Array.to_list
-                                                         |> List.filter(player =>
-                                                              player
-                                                              != playerForIndex
-                                                            )
-                                                         |> Array.of_list;
-                                                       CreateQuickMatchForm.FormikProps.setFieldValue(
-                                                         t,
-                                                         ~key="teamLeft",
-                                                         ~value=
-                                                           Formik.toAny(
-                                                             teamWithoutPlayer,
-                                                           ),
-                                                       );
-                                                       CreateQuickMatchForm.FormikProps.setFieldTouched(
-                                                         t,
-                                                         ~key="teamLeft",
-                                                         ~value=true,
-                                                       );
-                                                     }
-                                                   )
-                                                 />
-                                               | exception (
-                                                             Invalid_argument(
-                                                               _e
-                                                             )
-                                                           ) =>
-                                                 <PlayerSlotEmpty
-                                                   key=(string_of_int(index))
-                                                   registeredPlayers=(
-                                                     Array.to_list(
-                                                       registeredPlayers,
-                                                     )
-                                                   )
-                                                   onSelect=(
-                                                     player => {
-                                                       let teamWithPlayer =
-                                                         values##teamLeft
-                                                         |> Array.copy;
-                                                       teamWithPlayer[index] = player;
-                                                       CreateQuickMatchForm.FormikProps.setFieldValue(
-                                                         t,
-                                                         ~key="teamLeft",
-                                                         ~value=
-                                                           Formik.toAny(
-                                                             teamWithPlayer,
-                                                           ),
-                                                       );
-                                                       CreateQuickMatchForm.FormikProps.setFieldTouched(
-                                                         t,
-                                                         ~key="teamLeft",
-                                                         ~value=true,
-                                                       );
-                                                     }
-                                                   )
-                                                   fallbackOrganizationKey=values##organizationKey
-                                                 />
-                                               };
-                                             })
-                                          |> ReasonReact.array
-                                        )
+                                        <PlayersTeamSelection
+                                          organizationKey=values##organizationKey
+                                          teamSize=values##teamSize
+                                          team=values##teamLeft
+                                          registeredPlayers
+                                          setFieldValue=(
+                                            newTeam => {
+                                              CreateQuickMatchForm.FormikProps.setFieldValue(
+                                                t,
+                                                ~key="teamLeft",
+                                                ~value=Formik.toAny(newTeam),
+                                              );
+                                              CreateQuickMatchForm.FormikProps.setFieldTouched(
+                                                t,
+                                                ~key="teamLeft",
+                                                ~value=true,
+                                              );
+                                            }
+                                          )
+                                        />
                                       </label>
                                     </div>
                                     <div
@@ -370,6 +316,26 @@ let make = _children => {
                                           "Team right players"
                                           |> ReasonReact.string
                                         )
+                                        <PlayersTeamSelection
+                                          organizationKey=values##organizationKey
+                                          teamSize=values##teamSize
+                                          team=values##teamRight
+                                          registeredPlayers
+                                          setFieldValue=(
+                                            newTeam => {
+                                              CreateQuickMatchForm.FormikProps.setFieldValue(
+                                                t,
+                                                ~key="teamRight",
+                                                ~value=Formik.toAny(newTeam),
+                                              );
+                                              CreateQuickMatchForm.FormikProps.setFieldTouched(
+                                                t,
+                                                ~key="teamRight",
+                                                ~value=true,
+                                              );
+                                            }
+                                          )
+                                        />
                                       </label>
                                     </div>
                                   </div>
