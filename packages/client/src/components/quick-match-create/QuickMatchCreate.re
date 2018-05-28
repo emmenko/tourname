@@ -193,9 +193,20 @@ module QuickMatchCreateFormView = {
                        <div>
                          <label> ("Discipline" |> ReasonReact.string) </label>
                          <SelectDiscipline
-                           value=(Some(values##discipline))
+                           value=values##discipline
                            onChange=(
-                             CreateQuickMatchForm.FormikProps.handleChange(t)
+                             value => {
+                               CreateQuickMatchForm.FormikProps.setFieldValue(
+                                 t,
+                                 ~key="discipline",
+                                 ~value=Formik.toAny(value),
+                               );
+                               CreateQuickMatchForm.FormikProps.setFieldTouched(
+                                 t,
+                                 ~key="discipline",
+                                 ~value=true,
+                               );
+                             }
                            )
                          />
                        </div>

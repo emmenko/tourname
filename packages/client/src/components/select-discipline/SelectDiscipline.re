@@ -3,6 +3,10 @@ let availableDisciplines = [|
   (`TableTennis, "Table Tennis"),
 |];
 
+let getEventValue = event => ReactDOMRe.domElementToObj(
+                               ReactEventRe.Form.target(event),
+                             )##value;
+
 let component = ReasonReact.statelessComponent("SelectDiscipline");
 
 let make = (~value, ~onChange, _children) => {
@@ -10,22 +14,22 @@ let make = (~value, ~onChange, _children) => {
   render: _self =>
     <select
       name="discipline"
-      onChange
-      defaultValue=(
-        switch (value) {
-        | Some(v) => TournameTypes.disciplineToJs(v)
-        | None => ""
+      onChange=(
+        event => {
+          let value = getEventValue(event);
+          switch (TournameTypes.disciplineFromJs(value)) {
+          | Some(v) => onChange(v)
+          | None => ()
+          };
         }
-      )>
+      )
+      defaultValue=(TournameTypes.disciplineToJs(value))>
       (
         availableDisciplines
-        |> Array.mapi((index, (key, label)) =>
-             <option
-               key=(string_of_int(index))
-               value=(TournameTypes.disciplineToJs(key))>
-               (label |> ReasonReact.string)
-             </option>
-           )
+        |> Array.map(((key, label)) => {
+             let value = TournameTypes.disciplineToJs(key);
+             <option key=value value> (label |> ReasonReact.string) </option>;
+           })
         |> ReasonReact.array
       )
     </select>,
@@ -33,9 +37,5 @@ let make = (~value, ~onChange, _children) => {
 
 let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~value=TournameTypes.disciplineFromJs(jsProps##value),
-      ~onChange=jsProps##onChange,
-      [||],
-    )
+    make(~value=jsProps##value, ~onChange=jsProps##onChange, [||])
   );
