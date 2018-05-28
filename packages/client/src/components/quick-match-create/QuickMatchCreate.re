@@ -282,66 +282,62 @@ let make = _children => {
                                         Styles.column |> TypedGlamor.toString
                                       )>
                                       <label>
-                                        <h3>
-                                          (
-                                            "Team left players"
-                                            |> ReasonReact.string
-                                          )
-                                        </h3>
-                                        <PlayersTeamSelection
-                                          organizationKey=values##organizationKey
-                                          teamSize=values##teamSize
-                                          team=values##teamLeft
-                                          registeredPlayers
-                                          setFieldValue=(
-                                            newTeam => {
-                                              CreateQuickMatchForm.FormikProps.setFieldValue(
-                                                t,
-                                                ~key="teamLeft",
-                                                ~value=Formik.toAny(newTeam),
-                                              );
-                                              CreateQuickMatchForm.FormikProps.setFieldTouched(
-                                                t,
-                                                ~key="teamLeft",
-                                                ~value=true,
-                                              );
-                                            }
-                                          )
-                                        />
+                                        (
+                                          "Team left players"
+                                          |> ReasonReact.string
+                                        )
                                       </label>
+                                      <PlayersTeamSelection
+                                        organizationKey=values##organizationKey
+                                        teamSize=values##teamSize
+                                        team=values##teamLeft
+                                        registeredPlayers
+                                        setFieldValue=(
+                                          newTeam => {
+                                            CreateQuickMatchForm.FormikProps.setFieldValue(
+                                              t,
+                                              ~key="teamLeft",
+                                              ~value=Formik.toAny(newTeam),
+                                            );
+                                            CreateQuickMatchForm.FormikProps.setFieldTouched(
+                                              t,
+                                              ~key="teamLeft",
+                                              ~value=true,
+                                            );
+                                          }
+                                        )
+                                      />
                                     </div>
                                     <div
                                       className=(
                                         Styles.column |> TypedGlamor.toString
                                       )>
                                       <label>
-                                        <h3>
-                                          (
-                                            "Team right players"
-                                            |> ReasonReact.string
-                                          )
-                                        </h3>
-                                        <PlayersTeamSelection
-                                          organizationKey=values##organizationKey
-                                          teamSize=values##teamSize
-                                          team=values##teamRight
-                                          registeredPlayers
-                                          setFieldValue=(
-                                            newTeam => {
-                                              CreateQuickMatchForm.FormikProps.setFieldValue(
-                                                t,
-                                                ~key="teamRight",
-                                                ~value=Formik.toAny(newTeam),
-                                              );
-                                              CreateQuickMatchForm.FormikProps.setFieldTouched(
-                                                t,
-                                                ~key="teamRight",
-                                                ~value=true,
-                                              );
-                                            }
-                                          )
-                                        />
+                                        (
+                                          "Team right players"
+                                          |> ReasonReact.string
+                                        )
                                       </label>
+                                      <PlayersTeamSelection
+                                        organizationKey=values##organizationKey
+                                        teamSize=values##teamSize
+                                        team=values##teamRight
+                                        registeredPlayers
+                                        setFieldValue=(
+                                          newTeam => {
+                                            CreateQuickMatchForm.FormikProps.setFieldValue(
+                                              t,
+                                              ~key="teamRight",
+                                              ~value=Formik.toAny(newTeam),
+                                            );
+                                            CreateQuickMatchForm.FormikProps.setFieldTouched(
+                                              t,
+                                              ~key="teamRight",
+                                              ~value=true,
+                                            );
+                                          }
+                                        )
+                                      />
                                     </div>
                                   </div>
                                   mutationResultComponent
