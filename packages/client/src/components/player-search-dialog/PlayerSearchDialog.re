@@ -101,22 +101,27 @@ module PlayerSearchDialog = {
                            let filteredList =
                              switch (response##organization) {
                              | Some(org) =>
-                               org##members
-                               |> Js.Array.filter(member =>
-                                    List.exists(
-                                      id => id != member##id,
-                                      registeredPlayers,
+                               switch (registeredPlayers) {
+                               | [] => org##members |> Array.to_list
+                               | _ =>
+                                 org##members
+                                 |> Array.to_list
+                                 |> List.filter(member =>
+                                      List.exists(
+                                        id => id != member##id,
+                                        registeredPlayers,
+                                      )
                                     )
-                                  )
-                             | None => [||]
+                               }
+                             | None => []
                              };
-                           if (Js.Array.length(filteredList) == 0) {
+                           if (List.length(filteredList) == 0) {
                              "No more members available" |> ReasonReact.string;
                            } else {
                              /* Filter our members already in use,
                                 then render the list of available members */
                              filteredList
-                             |> Js.Array.filter(member =>
+                             |> List.filter(member =>
                                   self.state.searchText == ""
                                   || Js.String.includes(
                                        String.lowercase(
@@ -131,7 +136,7 @@ module PlayerSearchDialog = {
                                        String.lowercase(member##email),
                                      )
                                 )
-                             |> Js.Array.map(member =>
+                             |> List.map(member =>
                                   <div
                                     className=(
                                       switch (self.state.selectedPlayer) {
@@ -156,6 +161,7 @@ module PlayerSearchDialog = {
                                     <PlayerSlot player=member />
                                   </div>
                                 )
+                             |> Array.of_list
                              |> ReasonReact.array;
                            };
                          | Error(error) =>

@@ -11,38 +11,43 @@ let make =
     ) => {
   ...component,
   render: _self =>
-    Array.make(teamSize, true)
-    |> Array.mapi((index, _empty) =>
-         switch (team[index]) {
-         | playerForIndex =>
-           <PlayerSlot
-             key=(string_of_int(index))
-             player=playerForIndex
-             onRemoveClick=(
-               _event => {
-                 let teamWithoutPlayer =
-                   team
-                   |> Array.to_list
-                   |> List.filter(player => player != playerForIndex)
-                   |> Array.of_list;
-                 setFieldValue(teamWithoutPlayer);
-               }
-             )
-           />
-         | exception (Invalid_argument(_e)) =>
-           <PlayerSlotEmpty
-             key=(string_of_int(index))
-             registeredPlayers=(Array.to_list(registeredPlayers))
-             onSelect=(
-               player => {
-                 let teamWithPlayer = team |> Array.copy;
-                 teamWithPlayer[index] = player;
-                 setFieldValue(teamWithPlayer);
-               }
-             )
-             fallbackOrganizationKey=organizationKey
-           />
-         }
-       )
-    |> ReasonReact.array,
+    <Fragment>
+      (
+        team
+        |> List.mapi((index, player) =>
+             <PlayerSlot
+               key=(string_of_int(index))
+               player
+               onRemoveClick=(
+                 _event => {
+                   let teamWithoutPlayer =
+                     team |> List.filter(p => p != player);
+                   setFieldValue(teamWithoutPlayer);
+                 }
+               )
+             />
+           )
+        |> Array.of_list
+        |> ReasonReact.array
+      )
+      {
+        let teamSizeDelta = teamSize - List.length(team);
+        let numOfRemainingSlots = teamSizeDelta >= 0 ? teamSizeDelta : 0;
+        Array.make(numOfRemainingSlots, true)
+        |> Array.mapi((index, _empty) =>
+             <PlayerSlotEmpty
+               key=(string_of_int(index))
+               registeredPlayers
+               onSelect=(
+                 player => {
+                   let teamWithPlayer = [player, ...team];
+                   setFieldValue(teamWithPlayer);
+                 }
+               )
+               fallbackOrganizationKey=organizationKey
+             />
+           )
+        |> ReasonReact.array;
+      }
+    </Fragment>,
 };
