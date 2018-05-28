@@ -4,29 +4,33 @@ let availableTournamentSizes = [|
   (`Large, "Large (16 players)"),
 |];
 
+let getEventValue = event => ReactDOMRe.domElementToObj(
+                               ReactEventRe.Form.target(event),
+                             )##value;
+
 let component = ReasonReact.statelessComponent("SelectTournamentSize");
 
 let make = (~value, ~onChange, _children) => {
   ...component,
   render: _self =>
     <select
-      name="discipline"
-      onChange
-      defaultValue=(
-        switch (value) {
-        | Some(v) => TournameTypes.tournamentSizeToJs(v)
-        | None => ""
+      name="tournamentSize"
+      onChange=(
+        event => {
+          let value = getEventValue(event);
+          switch (TournameTypes.tournamentSizeFromJs(value)) {
+          | Some(v) => onChange(v)
+          | None => ()
+          };
         }
-      )>
+      )
+      defaultValue=(TournameTypes.tournamentSizeToJs(value))>
       (
         availableTournamentSizes
-        |> Array.mapi((index, (key, label)) =>
-             <option
-               key=(string_of_int(index))
-               value=(TournameTypes.tournamentSizeToJs(key))>
-               (label |> ReasonReact.string)
-             </option>
-           )
+        |> Array.map(((key, label)) => {
+             let value = TournameTypes.tournamentSizeToJs(key);
+             <option key=value value> (label |> ReasonReact.string) </option>;
+           })
         |> ReasonReact.array
       )
     </select>,
@@ -34,9 +38,5 @@ let make = (~value, ~onChange, _children) => {
 
 let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~value=TournameTypes.tournamentSizeFromJs(jsProps##value),
-      ~onChange=jsProps##onChange,
-      [||],
-    )
+    make(~value=jsProps##value, ~onChange=jsProps##onChange, [||])
   );
