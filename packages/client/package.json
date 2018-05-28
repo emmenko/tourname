@@ -50,7 +50,7 @@
     "babel-preset-env": "1.7.0",
     "bs-platform": "3.1.3",
     "bsb-js": "1.1.0",
-    "graphql_ppx": "0.2.1",
+    "graphql_ppx": "0.2.3",
     "parcel-bundler": "1.8.1"
   },
   "resolutions": {
