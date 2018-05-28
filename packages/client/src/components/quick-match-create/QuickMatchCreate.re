@@ -296,7 +296,7 @@ module QuickMatchCreateFormView = {
                          let isSubmitting =
                            CreateQuickMatchForm.FormikProps.isSubmitting(t);
                          <button
-                           _type="submit" disabled=(! isValid || isSubmitting)>
+                           type_="submit" disabled=(! isValid || isSubmitting)>
                            ("Create quick match" |> ReasonReact.string)
                          </button>;
                        }

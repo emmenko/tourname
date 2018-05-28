@@ -157,7 +157,7 @@ let make = _children => {
                        <div>
                          <label> ("Name" |> ReasonReact.string) </label>
                          <input
-                           _type="text"
+                           type_="text"
                            name="name"
                            onChange=(
                              CreateOrganizationForm.FormikProps.handleChange(
@@ -174,7 +174,7 @@ let make = _children => {
                        <div>
                          <label> ("Key" |> ReasonReact.string) </label>
                          <input
-                           _type="text"
+                           type_="text"
                            name="key"
                            onChange=(
                              CreateOrganizationForm.FormikProps.handleChange(
@@ -210,7 +210,7 @@ let make = _children => {
                                t,
                              );
                            <button
-                             _type="submit"
+                             type_="submit"
                              disabled=(! isValid || isSubmitting)>
                              ("Create organization" |> ReasonReact.string)
                            </button>;
