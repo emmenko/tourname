@@ -15,8 +15,8 @@ module CreateQuickMatchForm =
         "organizationKey": string,
         "discipline": TournameTypes.discipline,
         "teamSize": int,
-        "teamLeft": array(FetchOrganization.member),
-        "teamRight": array(FetchOrganization.member),
+        "teamLeft": list(FetchOrganization.member),
+        "teamRight": list(FetchOrganization.member),
       };
     },
   );
@@ -75,6 +75,7 @@ let make = _children => {
                  Js.log(error);
                  ReasonReact.null;
                | Data(userResponse) =>
+                 let availableOrganizations = userResponse##me##availableOrganizations;
                  <CreateQuickMatch>
                    ...(
                         (mutation, mutationResult) => {
@@ -97,7 +98,6 @@ let make = _children => {
                               | Some(singleMatch) =>
                                 let organizationKey = singleMatch##organization##key;
                                 let singleMatchId = singleMatch##id;
-                                Js.log2("Quick match created", singleMatchId);
                                 <Redirect
                                   to_={j|/$organizationKey/match/$singleMatchId|j}
                                 />;
@@ -105,20 +105,19 @@ let make = _children => {
                               }
                             };
                           <CreateQuickMatchForm
-                            initialValues={
-                                            let availableOrganizations = userResponse##me##availableOrganizations;
-                                            Formik.valuesToJsObject({
-                                              "organizationKey": availableOrganizations[0]##key,
-                                              "discipline": `TableTennis,
-                                              "teamSize": 1,
-                                              "teamLeft": [||],
-                                              "teamRight": [||],
-                                            });
-                                          }
+                            initialValues=(
+                              Formik.valuesToJsObject({
+                                "organizationKey": availableOrganizations[0]##key,
+                                "discipline": `TableTennis,
+                                "teamSize": 1,
+                                "teamLeft": [],
+                                "teamRight": [],
+                              })
+                            )
                             validate=(
                               values => {
                                 let errors = Js.Dict.empty();
-                                if (Array.length(values##teamLeft)
+                                if (List.length(values##teamLeft)
                                     != values##teamSize) {
                                   Js.Dict.set(
                                     errors,
@@ -128,7 +127,7 @@ let make = _children => {
                                     ++ " players",
                                   );
                                 };
-                                if (Array.length(values##teamRight)
+                                if (List.length(values##teamRight)
                                     != values##teamSize) {
                                   Js.Dict.set(
                                     errors,
@@ -151,13 +150,15 @@ let make = _children => {
                                       "size": values##teamSize,
                                       "playerIds":
                                         values##teamLeft
-                                        |> Array.map(player => player##id),
+                                        |> List.map(player => player##id)
+                                        |> Array.of_list,
                                     },
                                     ~teamRight={
                                       "size": values##teamSize,
                                       "playerIds":
                                         values##teamRight
-                                        |> Array.map(player => player##id),
+                                        |> List.map(player => player##id)
+                                        |> Array.of_list,
                                     },
                                     (),
                                   );
@@ -191,11 +192,11 @@ let make = _children => {
                                 let errors =
                                   CreateQuickMatchForm.FormikProps.errors(t);
                                 let registeredPlayers =
-                                  Array.append(
+                                  List.append(
                                     values##teamLeft,
                                     values##teamRight,
                                   )
-                                  |> Array.map(p => p##id);
+                                  |> List.map(p => p##id);
                                 <form
                                   onSubmit=(
                                     CreateQuickMatchForm.FormikProps.handleSubmit(
@@ -281,10 +282,12 @@ let make = _children => {
                                         Styles.column |> TypedGlamor.toString
                                       )>
                                       <label>
-                                        (
-                                          "Team left players"
-                                          |> ReasonReact.string
-                                        )
+                                        <h3>
+                                          (
+                                            "Team left players"
+                                            |> ReasonReact.string
+                                          )
+                                        </h3>
                                         <PlayersTeamSelection
                                           organizationKey=values##organizationKey
                                           teamSize=values##teamSize
@@ -312,10 +315,12 @@ let make = _children => {
                                         Styles.column |> TypedGlamor.toString
                                       )>
                                       <label>
-                                        (
-                                          "Team right players"
-                                          |> ReasonReact.string
-                                        )
+                                        <h3>
+                                          (
+                                            "Team right players"
+                                            |> ReasonReact.string
+                                          )
+                                        </h3>
                                         <PlayersTeamSelection
                                           organizationKey=values##organizationKey
                                           teamSize=values##teamSize
@@ -346,7 +351,7 @@ let make = _children => {
                           />;
                         }
                       )
-                 </CreateQuickMatch>
+                 </CreateQuickMatch>;
                }
            )
       </FetchUser>
