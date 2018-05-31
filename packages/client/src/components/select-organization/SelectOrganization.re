@@ -32,34 +32,39 @@ module SelectOrganization = {
         History.History.push(history, ~url={j|/$orgKey|j}, ~state=[]);
       },
     render: _self =>
-      <div className=(Styles.view |> TypedGlamor.toString)>
-        <h2>
-          ("Select an organization from the list" |> ReasonReact.string)
-        </h2>
-        <select
-          onChange=(
-            event => {
-              let value = getEventValue(event);
-              History.History.push(history, ~url={j|/$value|j}, ~state=[]);
-            }
-          )>
-          (
-            if (Array.length(availableOrganizations) > 0) {
-              availableOrganizations
-              |> Array.map(org =>
-                   <option key=org##key value=org##key>
-                     (org##name |> ReasonReact.string)
-                   </option>
-                 )
-              |> ReasonReact.array;
-            } else {
-              <option disabled=true>
-                ("Loading..." |> ReasonReact.string)
-              </option>;
-            }
-          )
-        </select>
-      </div>,
+      if (Array.length(availableOrganizations) === 1) {
+        let target = availableOrganizations[0]##key;
+        <Redirect to_={j|/$target|j} />;
+      } else {
+        <div className=(Styles.view |> TypedGlamor.toString)>
+          <h2>
+            ("Select an organization from the list" |> ReasonReact.string)
+          </h2>
+          <select
+            onChange=(
+              event => {
+                let value = getEventValue(event);
+                History.History.push(history, ~url={j|/$value|j}, ~state=[]);
+              }
+            )>
+            (
+              if (Array.length(availableOrganizations) > 0) {
+                availableOrganizations
+                |> Array.map(org =>
+                     <option key=org##key value=org##key>
+                       (org##name |> ReasonReact.string)
+                     </option>
+                   )
+                |> ReasonReact.array;
+              } else {
+                <option disabled=true>
+                  ("Loading..." |> ReasonReact.string)
+                </option>;
+              }
+            )
+          </select>
+        </div>;
+      },
   };
 };
 
