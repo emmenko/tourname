@@ -11,26 +11,45 @@ external config : graphqlConfig = "GRAPHQL_CONFIG";
 /* Create an InMemoryCache */
 type dataObject = {
   .
-  "__typename": option(string),
-  "id": option(string),
-  "key": option(string),
+  "__typename": Js.Nullable.t(string),
+  "id": Js.Nullable.t(string),
+  "key": Js.Nullable.t(string),
 };
 
+let formatDataId = (~typename, ~id) => typename ++ ":" ++ id;
+
 let dataIdFromObject = (obj: dataObject) =>
-  switch (obj##__typename) {
-  | Some("Organization") =>
-    switch (obj##key) {
-    | Some(k) => k
-    | None =>
-      Js.log("Expected a 'key' field in the 'Organization' type");
+  switch (obj##__typename |> Js.Nullable.toOption) {
+  | Some(t) =>
+    if (t == "Organization") {
+      switch (obj##key |> Js.Nullable.toOption) {
+      | Some(k) => formatDataId(~typename=t, ~id=k)
+      | None =>
+        Js.log(
+          "Expected a 'key' field in the 'Organization' type, falling back to only '__typename' as the cache key.",
+        );
+        t;
+      };
+    } else {
+      switch (obj##id |> Js.Nullable.toOption) {
+      | Some(i) => t ++ ":" ++ i
+      | None => ""
+      };
+    }
+  | None =>
+    switch (obj##id |> Js.Nullable.toOption, obj##key |> Js.Nullable.toOption) {
+    | (Some(i), _) =>
+      Js.log("Missing '__typename' field, using 'id' as the cache key");
+      i;
+    | (None, Some(k)) =>
+      Js.log("Missing '__typename' field, using 'key' as the cache key");
+      k;
+    | (None, None) =>
+      Js.log(
+        "Missing '__typename' field and both 'id' and 'key', falling back to empty string as the cache key",
+      );
       "";
     }
-  | Some(t) =>
-    switch (obj##id) {
-    | Some(i) => t ++ ":" ++ i
-    | None => ""
-    }
-  | None => ""
   };
 
 let inMemoryCache =
