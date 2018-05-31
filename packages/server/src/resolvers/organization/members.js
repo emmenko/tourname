@@ -1,9 +1,14 @@
 module.exports = async (parent, args, context) => {
-  const organizationKey = args.key || args.organizationKey;
+  if (!parent.key) {
+    throw new Error(
+      'Cannot resolve members without the organization key. Make sure the parent resolver correctly returns a valid object.'
+    );
+  }
+
   const members = await context.db.query.memberRefs(
     {
       where: {
-        organization: { key: organizationKey },
+        organization: { key: parent.key },
       },
     },
     '{ id auth0Id role }'
