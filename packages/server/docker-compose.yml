@@ -1,7 +1,7 @@
 version: '3'
 services:
   prisma:
-    image: prismagraphql/prisma:1.8@sha256:922a533d68d23c02ab248971e6a076c2840d2a98efff21fcfcc3882254661ec8
+    image: prismagraphql/prisma:1.8@sha256:a0db4fa719944da226e78b8925ebff08a7790d3a323c386d0f89c98b3513d872
     restart: always
     ports:
     - "4466:4466"
