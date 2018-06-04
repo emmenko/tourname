@@ -1739,9 +1739,9 @@ bs-downshift@1.0.0:
   dependencies:
     downshift "1.25.0"
 
-bs-platform@3.1.4:
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-3.1.4.tgz#fe8495443b35aff73dfb61cba1e6d7b88311910b"
+bs-platform@3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-3.1.5.tgz#fb34ee4702bc9163848d5537096c4f31ebaeed40"
 
 bs-typed-css-core@glennsl/bs-typed-css-core, bs-typed-css-core@glennsl/bs-typed-css-core#f5154957359a5c208db104d1aafba4fb5413b4c5:
   version "0.1.0"
