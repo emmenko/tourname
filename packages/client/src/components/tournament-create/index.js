@@ -1,1 +1,1 @@
-export { default } from './tournament-create';
+export { default } from './TournamentCreate.bs';
