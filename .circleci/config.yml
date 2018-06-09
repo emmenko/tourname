@@ -17,7 +17,7 @@ jobs:
   lint_and_test:
     working_directory: *working_directory
     docker:
-      - image: circleci/node:8@sha256:6c4798762f12894ebfb64c1be5e5dabbb99ab321285c332b0ece3d236fd9b8a3
+      - image: circleci/node:8@sha256:32c015ea2135d3ce9cebe56270239cbfc2285fc064005fed5f5446f90ff069dd
     steps:
       - checkout
       - restore_cache: *restore_yarn_cache
