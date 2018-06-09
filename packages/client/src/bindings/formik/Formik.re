@@ -1,5 +1,6 @@
 type any;
 
+/* TODO: use a bs.derive abstract */
 external valuesToJsObject : 'a => Js.t({..}) = "%identity";
 
 external toAny : 'a => any = "%identity";
