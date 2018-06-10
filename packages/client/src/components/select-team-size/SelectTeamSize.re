@@ -38,7 +38,7 @@ let make = (~value: option(int)=?, ~onChange, _children) => {
 let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(
-      ~value=?Js.Nullable.to_opt(jsProps##value),
+      ~value=?Js.Nullable.toOption(jsProps##value),
       ~onChange=jsProps##onChange,
       [||],
     )
