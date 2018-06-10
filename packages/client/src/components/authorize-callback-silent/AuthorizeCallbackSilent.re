@@ -11,8 +11,8 @@ let make = _children => {
   ...component,
   didMount: _self => {
     ReasonAuth.parseHash((~error as error_, ~authResult as authResult_) => {
-      let error = Js.Nullable.to_opt(error_);
-      let authResult = Js.Nullable.to_opt(authResult_);
+      let error = Js.Nullable.toOption(error_);
+      let authResult = Js.Nullable.toOption(authResult_);
       switch (error, authResult) {
       | (None, None) =>
         postMessage(Js_null_undefined.undefined, config##url);

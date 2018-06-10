@@ -8,11 +8,10 @@ module Styles = {
 
 let component = ReasonReact.statelessComponent("Breadcrumb");
 
-let make = (~linkTo: Js.Nullable.t(string), children) => {
+let make = (~linkTo: option(string)=?, children) => {
   ...component,
-  render: _self => {
-    let linkToOption = Js.Nullable.to_opt(linkTo);
-    switch (linkToOption) {
+  render: _self =>
+    switch (linkTo) {
     | Some(to_) =>
       <div className=(Styles.activeColor |> TypedGlamor.toString)>
         <Link to_> children </Link>
@@ -24,8 +23,7 @@ let make = (~linkTo: Js.Nullable.t(string), children) => {
         ~props={"className": Styles.inactiveColor |> TypedGlamor.toString},
         children,
       )
-    };
-  },
+    },
 };
 
 let default =

@@ -21,8 +21,8 @@ let make = (~history: history, _children) => {
     },
   didMount: self => {
     ReasonAuth.parseHash((~error as error_, ~authResult as authResult_) => {
-      let error = Js.Nullable.to_opt(error_);
-      let authResult = Js.Nullable.to_opt(authResult_);
+      let error = Js.Nullable.toOption(error_);
+      let authResult = Js.Nullable.toOption(authResult_);
       switch (error, authResult) {
       | (None, None) =>
         self.send(AuthError(NoHashParam));

@@ -18,11 +18,9 @@ module NotFound = {
 external setItem : (string, string) => unit = "";
 
 module RouterMatch =
-  SpecifyRouterMatch(
-    {
-      type params = {. "organizationKey": string};
-    },
-  );
+  SpecifyRouterMatch({
+    type params = {. "organizationKey": string};
+  });
 
 let component = ReasonReact.statelessComponent("ApplicationContent");
 
@@ -64,7 +62,7 @@ let make = (~match: RouterMatch.match, _children) => {
                      <Route
                        exact=true
                        path="/:organizationKey/tournament/:tournamentId"
-                       component=tournamentDetail
+                       component=TournamentDetail.default
                      />
                    </Switch>
                  </div>
