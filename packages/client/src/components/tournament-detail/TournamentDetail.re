@@ -17,6 +17,7 @@ let make = (~match: RouterMatch.match, _children) => {
     let tournamentDetailQuery =
       FetchTournament.FetchTournamentQuery.make(
         ~id=match##params##tournamentId,
+        ~organizationKey=match##params##organizationKey,
         (),
       );
     <FetchTournament variables=tournamentDetailQuery##variables>
@@ -88,7 +89,7 @@ let make = (~match: RouterMatch.match, _children) => {
   },
 };
 
-let default =
+let reactClass =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(~match=jsProps##_match, [||])
   );

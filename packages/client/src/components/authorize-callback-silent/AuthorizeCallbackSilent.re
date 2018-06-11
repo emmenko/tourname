@@ -26,4 +26,4 @@ let make = _children => {
   render: _self => ReasonReact.null,
 };
 
-let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));
+let reactClass = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

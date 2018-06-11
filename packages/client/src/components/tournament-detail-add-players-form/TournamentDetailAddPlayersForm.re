@@ -50,6 +50,19 @@ module TeamForm = {
   };
 };
 
+let split = (splitIndex, listToSplit) => {
+  let rec aux = (i, acc) =>
+    fun
+    | [] => (List.rev(acc), [])
+    | [h, ...t] as l =>
+      if (i == 0) {
+        (List.rev(acc), l);
+      } else {
+        aux(i - 1, [h, ...acc], t);
+      };
+  aux(splitIndex, [], listToSplit);
+};
+
 let component =
   ReasonReact.statelessComponent("TournamentDetailAddPlayersForm");
 
@@ -64,18 +77,11 @@ let make =
     ) => {
   ...component,
   render: _self => {
-    let teams = teams |> Array.of_list;
-    let halfTheNumberOfTeams = Array.length(teams) / 2;
-    let firstHalf =
-      teams |> Js.Array.slice(~start=0, ~end_=halfTheNumberOfTeams);
-    let secondHalf =
-      teams
-      |> Js.Array.slice(
-           ~start=halfTheNumberOfTeams,
-           ~end_=Array.length(teams) - 1,
-         );
+    let halfTheNumberOfTeams = List.length(teams) / 2;
+    let (firstHalf, secondHalf) = teams |> split(halfTheNumberOfTeams);
     let canStartTournament =
       teams
+      |> Array.of_list
       |> Js.Array.every((team: FetchTournament.team) =>
            List.length(team.playerRefs) == teamSize
          );
@@ -85,7 +91,7 @@ let make =
         <div className=(Styles.column |> TypedGlamor.toString)>
           (
             firstHalf
-            |> Array.map((team: FetchTournament.team) =>
+            |> List.map((team: FetchTournament.team) =>
                  <TeamForm
                    key=team.id
                    team
@@ -95,13 +101,14 @@ let make =
                    registeredPlayerIds
                  />
                )
+            |> Array.of_list
             |> ReasonReact.array
           )
         </div>
         <div className=(Styles.column |> TypedGlamor.toString)>
           (
             secondHalf
-            |> Array.map((team: FetchTournament.team) =>
+            |> List.map((team: FetchTournament.team) =>
                  <TeamForm
                    key=team.id
                    team
@@ -111,6 +118,7 @@ let make =
                    registeredPlayerIds
                  />
                )
+            |> Array.of_list
             |> ReasonReact.array
           )
         </div>

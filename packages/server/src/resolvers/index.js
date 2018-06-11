@@ -3,6 +3,7 @@ const isOrganizationKeyUsed = require('./query/is-organization-key-used');
 const member = require('./query/member');
 const members = require('./query/members');
 const organization = require('./query/organization');
+const tournament = require('./query/tournament');
 const tournaments = require('./query/tournaments');
 const singleMatches = require('./query/single-matches');
 const auth0Id = require('./user/auth0Id');
@@ -29,6 +30,7 @@ module.exports = {
     member,
     members,
     organization,
+    tournament,
     tournaments,
     singleMatches,
   },

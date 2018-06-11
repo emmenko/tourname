@@ -210,7 +210,7 @@ let make = (~match: RouterMatch.match, _children) => {
   };
 };
 
-let default =
+let reactClass =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(~match=jsProps##_match, [||])
   );

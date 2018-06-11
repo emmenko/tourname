@@ -65,7 +65,7 @@ let make = _children => {
                                />
                                <Route
                                  path="/:organizationKey"
-                                 component=ApplicationContent.default
+                                 component=ApplicationContent.reactClass
                                />
                              </Switch>;
                            }
