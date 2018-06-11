@@ -45,9 +45,6 @@ module CreateTournamentMutation = [%graphql
 module CreateTournament =
   ReasonApollo.CreateMutation(CreateTournamentMutation);
 
-external apolloErrorToJsError : ReasonApolloTypes.apolloError => Js.Exn.t =
-  "%identity";
-
 let renderErrorHint =
     (~errors: Js.Dict.t(string), ~touched: Js.Dict.t(string), ~key: string) =>
   switch (Js.Dict.get(touched, key)) {
@@ -73,7 +70,9 @@ module TournamentCreateFormView = {
                  | NotCalled => ReasonReact.null
                  | Error(error) =>
                    let errorMsg =
-                     switch (Js.Exn.message(apolloErrorToJsError(error))) {
+                     switch (
+                       Js.Exn.message(Client.apolloErrorToJsError(error))
+                     ) {
                      | Some(message) => "Mutation error: " ++ message
                      | None => "An unknown error occurred"
                      };

@@ -3,6 +3,9 @@
  */
 external asJsObject : 'a => Js.t({..}) = "%identity";
 
+external apolloErrorToJsError : ReasonApolloTypes.apolloError => Js.Exn.t =
+  "%identity";
+
 type graphqlConfig = {. "url": string};
 
 [@bs.module "../../config.js"]

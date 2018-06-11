@@ -43,9 +43,6 @@ module CreateQuickMatchMutation = [%graphql
 module CreateQuickMatch =
   ReasonApollo.CreateMutation(CreateQuickMatchMutation);
 
-external apolloErrorToJsError : ReasonApolloTypes.apolloError => Js.Exn.t =
-  "%identity";
-
 module QuickMatchCreateFormView = {
   let component = ReasonReact.statelessComponent("QuickMatchCreate");
   let make = (~availableOrganizations, _children) => {
@@ -60,7 +57,9 @@ module QuickMatchCreateFormView = {
                  | NotCalled => ReasonReact.null
                  | Error(error) =>
                    let errorMsg =
-                     switch (Js.Exn.message(apolloErrorToJsError(error))) {
+                     switch (
+                       Js.Exn.message(Client.apolloErrorToJsError(error))
+                     ) {
                      | Some(message) => "Mutation error: " ++ message
                      | None => "An unknown error occurred"
                      };

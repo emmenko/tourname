@@ -4,6 +4,136 @@ module Styles = {
   let column = css([display(flex), flexDirection(column), flex_(int(1))]);
 };
 
+module RemovePlayerFromTeamMutation = [%graphql
+  {|
+  mutation RemovePlayerFromTeam(
+    $organizationKey: String!,
+    $tournamentId: ID!,
+    $teamId: ID!,
+    $memberId: ID!
+  ) {
+    removePlayerFromTeam(
+      organizationKey: $organizationKey,
+      tournamentId: $tournamentId,
+      teamId: $teamId,
+      memberId: $memberId
+    ) {
+      id
+      organization { key }
+      teams {
+        id
+        playerRefs {
+          id
+        }
+      }
+    }
+  }
+|}
+];
+
+module AddPlayerToTeamMutation = [%graphql
+  {|
+  mutation AddPlayerToTeam(
+    $organizationKey: String!,
+    $tournamentId: ID!,
+    $teamId: ID!,
+    $memberId: ID!
+  ) {
+    addPlayerToTeam(
+      organizationKey: $organizationKey,
+      tournamentId: $tournamentId,
+      teamId: $teamId,
+      memberId: $memberId
+    ) {
+      id
+      organization { key }
+      teams {
+        id
+        playerRefs {
+          id
+        }
+      }
+    }
+  }
+|}
+];
+
+module RemovePlayerFromTeam =
+  ReasonApollo.CreateMutation(RemovePlayerFromTeamMutation);
+
+module AddPlayerToTeam = ReasonApollo.CreateMutation(AddPlayerToTeamMutation);
+
+module TeamFormConnectors = {
+  let component = ReasonReact.statelessComponent("TeamFormConnectors");
+  let make = children => {
+    ...component,
+    render: _self =>
+      <RemovePlayerFromTeam>
+        ...(
+             (removePlayerMutation, removePlayerMutationResult) =>
+               <AddPlayerToTeam>
+                 ...(
+                      (addPlayerMutation, addPlayerMutationResult) => {
+                        let removePlayerResultComponent =
+                          switch (removePlayerMutationResult.result) {
+                          | Loading
+                          | NotCalled => ReasonReact.null
+                          | Error(error) =>
+                            let errorMsg =
+                              switch (
+                                Js.Exn.message(
+                                  Client.apolloErrorToJsError(error),
+                                )
+                              ) {
+                              | Some(message) => "Mutation error: " ++ message
+                              | None => "An unknown error occurred"
+                              };
+                            errorMsg |> ReasonReact.string;
+                          | Data(_) =>
+                            "Player successfully removed" |> ReasonReact.string
+                          };
+                        let addPlayerResultComponent =
+                          switch (addPlayerMutationResult.result) {
+                          | Loading
+                          | NotCalled => ReasonReact.null
+                          | Error(error) =>
+                            let errorMsg =
+                              switch (
+                                Js.Exn.message(
+                                  Client.apolloErrorToJsError(error),
+                                )
+                              ) {
+                              | Some(message) => "Mutation error: " ++ message
+                              | None => "An unknown error occurred"
+                              };
+                            errorMsg |> ReasonReact.string;
+                          | Data(_) =>
+                            "Player successfully added" |> ReasonReact.string
+                          };
+                        let shouldDisableActions =
+                          switch (
+                            removePlayerMutationResult.result,
+                            addPlayerMutationResult.result,
+                          ) {
+                          | (Loading, _)
+                          | (_, Loading) => true
+                          | _ => false
+                          };
+                        children(
+                          ~removePlayerMutation,
+                          ~addPlayerMutation,
+                          ~removePlayerResultComponent,
+                          ~addPlayerResultComponent,
+                          ~shouldDisableActions,
+                        );
+                      }
+                    )
+               </AddPlayerToTeam>
+           )
+      </RemovePlayerFromTeam>,
+  };
+};
+
 module TeamForm = {
   let component = ReasonReact.statelessComponent("TeamForm");
   let make =
@@ -13,6 +143,9 @@ module TeamForm = {
         ~tournamentId,
         ~organizationKey,
         ~registeredPlayerIds,
+        ~removePlayerMutation: RemovePlayerFromTeam.apolloMutation,
+        ~addPlayerMutation: AddPlayerToTeam.apolloMutation,
+        ~shouldDisableActions,
         _children,
       ) => {
     ...component,
@@ -26,7 +159,24 @@ module TeamForm = {
                  key=(string_of_int(index))
                  playerId=playerRef.id
                  organizationKey
-                 onRemoveClick=(_event => Js.log("removed"))
+                 disableAction=shouldDisableActions
+                 onRemoveClick=(
+                   _event => {
+                     let removePlayerFromTeamMutation =
+                       RemovePlayerFromTeamMutation.make(
+                         ~organizationKey,
+                         ~tournamentId,
+                         ~teamId=team.id,
+                         ~memberId=playerRef.id,
+                         (),
+                       );
+                     removePlayerMutation(
+                       ~variables=removePlayerFromTeamMutation##variables,
+                       (),
+                     )
+                     |> ignore;
+                   }
+                 )
                />
              )
           |> Array.of_list
@@ -41,7 +191,24 @@ module TeamForm = {
                  key=(string_of_int(index))
                  registeredPlayerIds
                  fallbackOrganizationKey=organizationKey
-                 onSelect=(_player => Js.log("on select"))
+                 disableAction=shouldDisableActions
+                 onSelect=(
+                   playerId => {
+                     let addPlayerToTeamMutation =
+                       AddPlayerToTeamMutation.make(
+                         ~organizationKey,
+                         ~tournamentId,
+                         ~teamId=team.id,
+                         ~memberId=playerId,
+                         (),
+                       );
+                     addPlayerMutation(
+                       ~variables=addPlayerToTeamMutation##variables,
+                       (),
+                     )
+                     |> ignore;
+                   }
+                 )
                />
              )
           |> ReasonReact.array;
@@ -86,43 +253,76 @@ let make =
            List.length(team.playerRefs) == teamSize
          );
 
-    <div>
-      <div className=(Styles.columns |> TypedGlamor.toString)>
-        <div className=(Styles.column |> TypedGlamor.toString)>
-          (
-            firstHalf
-            |> List.map((team: FetchTournament.team) =>
-                 <TeamForm
-                   key=team.id
-                   team
-                   teamSize
-                   organizationKey
-                   tournamentId
-                   registeredPlayerIds
-                 />
-               )
-            |> Array.of_list
-            |> ReasonReact.array
-          )
-        </div>
-        <div className=(Styles.column |> TypedGlamor.toString)>
-          (
-            secondHalf
-            |> List.map((team: FetchTournament.team) =>
-                 <TeamForm
-                   key=team.id
-                   team
-                   teamSize
-                   organizationKey
-                   tournamentId
-                   registeredPlayerIds
-                 />
-               )
-            |> Array.of_list
-            |> ReasonReact.array
-          )
-        </div>
-      </div>
-    </div>;
+    <TeamFormConnectors>
+      ...(
+           (
+             ~removePlayerMutation,
+             ~addPlayerMutation,
+             ~removePlayerResultComponent,
+             ~addPlayerResultComponent,
+             ~shouldDisableActions,
+           ) =>
+             <div>
+               removePlayerResultComponent
+               addPlayerResultComponent
+               <div>
+                 (
+                   canStartTournament ?
+                     <button>
+                       ("Start tournament" |> ReasonReact.string)
+                     </button> :
+                     <button disabled=true>
+                       (
+                         "Not enough players to start the tournament"
+                         |> ReasonReact.string
+                       )
+                     </button>
+                 )
+               </div>
+               <div className=(Styles.columns |> TypedGlamor.toString)>
+                 <div className=(Styles.column |> TypedGlamor.toString)>
+                   (
+                     firstHalf
+                     |> List.map((team: FetchTournament.team) =>
+                          <TeamForm
+                            key=team.id
+                            team
+                            teamSize
+                            organizationKey
+                            tournamentId
+                            registeredPlayerIds
+                            removePlayerMutation
+                            addPlayerMutation
+                            shouldDisableActions
+                          />
+                        )
+                     |> Array.of_list
+                     |> ReasonReact.array
+                   )
+                 </div>
+                 <div className=(Styles.column |> TypedGlamor.toString)>
+                   (
+                     secondHalf
+                     |> List.map((team: FetchTournament.team) =>
+                          <TeamForm
+                            key=team.id
+                            team
+                            teamSize
+                            organizationKey
+                            tournamentId
+                            registeredPlayerIds
+                            removePlayerMutation
+                            addPlayerMutation
+                            shouldDisableActions
+                          />
+                        )
+                     |> Array.of_list
+                     |> ReasonReact.array
+                   )
+                 </div>
+               </div>
+             </div>
+         )
+    </TeamFormConnectors>;
   },
 };
