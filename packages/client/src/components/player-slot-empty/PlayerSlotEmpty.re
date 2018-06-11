@@ -19,7 +19,13 @@ type action =
 let component = ReasonReact.reducerComponent("PlayerSlotEmpty");
 
 let make =
-    (~registeredPlayerIds, ~onSelect, ~fallbackOrganizationKey, _children) => {
+    (
+      ~registeredPlayerIds,
+      ~disableAction=false,
+      ~onSelect,
+      ~fallbackOrganizationKey,
+      _children,
+    ) => {
   ...component,
   initialState: () => {showPlayerSearchDialog: false},
   reducer: (action, _state) =>
@@ -36,7 +42,9 @@ let make =
           <div className=(Styles.avatarPlaceholder |> TypedGlamor.toString) />
         </div>
         <div>
-          <button onClick=(_event => self.send(ShowPlayerSearchDialog))>
+          <button
+            onClick=(_event => self.send(ShowPlayerSearchDialog))
+            disabled=disableAction>
             ("Add a player to this team" |> ReasonReact.string)
           </button>
         </div>
@@ -53,13 +61,3 @@ let make =
       )
     </Fragment>,
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~registeredPlayerIds=jsProps##registeredPlayerIds,
-      ~onSelect=jsProps##onSelect,
-      ~fallbackOrganizationKey=jsProps##fallbackOrganizationKey,
-      [||],
-    )
-  );

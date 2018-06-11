@@ -17,9 +17,6 @@ module CreateOrganizationForm =
 
 let noWhitespacesRegex = [%bs.re "/\\s/g"];
 
-external apolloErrorToJsError : ReasonApolloTypes.apolloError => Js.Exn.t =
-  "%identity";
-
 module CreateOrganizationMutation = [%graphql
   {|
   mutation CreateOrganization($key: String!, $name: String!) {
@@ -65,7 +62,9 @@ let make = _children => {
                  | NotCalled => ReasonReact.null
                  | Error(error) =>
                    let errorMsg =
-                     switch (Js.Exn.message(apolloErrorToJsError(error))) {
+                     switch (
+                       Js.Exn.message(Client.apolloErrorToJsError(error))
+                     ) {
                      | Some(message) => {j|Mutation error: $message|j}
                      | None => "An unknown error occurred"
                      };

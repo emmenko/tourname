@@ -6,7 +6,14 @@ module Styles = {
 
 let component = ReasonReact.statelessComponent("PlayerSlot");
 
-let make = (~playerId, ~organizationKey, ~onRemoveClick=?, _children) => {
+let make =
+    (
+      ~playerId,
+      ~organizationKey,
+      ~disableAction=false,
+      ~onRemoveClick=?,
+      _children,
+    ) => {
   ...component,
   render: _self => {
     let memberQuery =
@@ -37,7 +44,7 @@ let make = (~playerId, ~organizationKey, ~onRemoveClick=?, _children) => {
                      switch (onRemoveClick) {
                      | Some(onClick) =>
                        <div>
-                         <button onClick>
+                         <button onClick disabled=disableAction>
                            ("Remove" |> ReasonReact.string)
                          </button>
                        </div>
@@ -56,13 +63,3 @@ let make = (~playerId, ~organizationKey, ~onRemoveClick=?, _children) => {
     </FetchMember>;
   },
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~playerId=jsProps##playerId,
-      ~organizationKey=jsProps##organizationKey,
-      ~onRemoveClick=jsProps##onRemoveClick,
-      [||],
-    )
-  );

@@ -105,8 +105,10 @@ module PlayerSearchDialog = {
                                response##members
                                |> Array.to_list
                                |> List.filter(member =>
-                                    registeredPlayerIds
-                                    |> List.exists(id => id != member##id)
+                                    ! (
+                                      registeredPlayerIds
+                                      |> List.exists(id => id == member##id)
+                                    )
                                   )
                              };
                            if (List.length(filteredList) == 0) {
