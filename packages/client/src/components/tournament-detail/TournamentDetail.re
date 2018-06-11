@@ -9,41 +9,17 @@ module RouterMatch =
     };
   });
 
-module TournamentDetailQuery = [%graphql
-  {|
-  query TournamentDetail($id: String!) {
-    tournament(id: $id) {
-      id
-      createdAt
-      updatedAt
-      name
-      size
-      status
-      discipline
-      teamSize
-      teams {
-        id
-        size
-        playerRefs {
-          id
-        }
-      }
-    }
-  }
-|}
-];
-
-module FetchTournamentDetail =
-  ReasonApollo.CreateQuery(TournamentDetailQuery);
-
 let component = ReasonReact.statelessComponent("TournamentDetail");
 
 let make = (~match: RouterMatch.match, _children) => {
   ...component,
   render: _self => {
     let tournamentDetailQuery =
-      TournamentDetailQuery.make(~id=match##params##tournamentId, ());
-    <FetchTournamentDetail variables=tournamentDetailQuery##variables>
+      FetchTournament.FetchTournamentQuery.make(
+        ~id=match##params##tournamentId,
+        (),
+      );
+    <FetchTournament variables=tournamentDetailQuery##variables>
       ...(
            ({result}) =>
              switch (result) {
@@ -51,6 +27,7 @@ let make = (~match: RouterMatch.match, _children) => {
              | Error(error) =>
                <NetworkErrorMessage error=error##networkError />
              | Data(response) =>
+               let tournament = response##tournament;
                <div>
                  <Breadcrumbs separator="//">
                    <Breadcrumb linkTo=("/" ++ match##params##organizationKey)>
@@ -60,48 +37,54 @@ let make = (~match: RouterMatch.match, _children) => {
                      ("Tournament" |> ReasonReact.string)
                    </Breadcrumb>
                  </Breadcrumbs>
-                 <p>
-                   (
-                     "Name: "
-                     ++ response##tournament##name
-                     |> ReasonReact.string
-                   )
-                 </p>
+                 <p> ("Name: " ++ tournament.name |> ReasonReact.string) </p>
                  <p>
                    (
                      "Status: "
-                     ++ TournameTypes.tournamentStatusToJs(
-                          response##tournament##status,
-                        )
+                     ++ TournameTypes.tournamentStatusToJs(tournament.status)
                      |> ReasonReact.string
                    )
                  </p>
                  <p>
                    (
                      "Discipline: "
-                     ++ TournameTypes.disciplineToJs(
-                          response##tournament##discipline,
-                        )
+                     ++ TournameTypes.disciplineToJs(tournament.discipline)
                      |> ReasonReact.string
                    )
                  </p>
                  <p>
                    (
                      "Max players for each time: "
-                     ++ string_of_int(response##tournament##teamSize)
+                     ++ string_of_int(tournament.teamSize)
                      |> ReasonReact.string
                    )
                  </p>
                  (
-                   switch (response##tournament##status) {
-                   | `New => ReasonReact.string("Add players form")
+                   switch (tournament.status) {
+                   | `New =>
+                     <TournamentDetailAddPlayersForm
+                       tournamentId=tournament.id
+                       teamSize=tournament.teamSize
+                       teams=tournament.teams
+                       organizationKey=match##params##organizationKey
+                       registeredPlayerIds=(
+                         tournament.teams
+                         |> List.map((team: FetchTournament.team) =>
+                              team.playerRefs
+                            )
+                         |> List.flatten
+                         |> List.map((playerRef: FetchTournament.playerRef) =>
+                              playerRef.id
+                            )
+                       )
+                     />
                    | _ => ReasonReact.null
                    }
                  )
-               </div>
+               </div>;
              }
          )
-    </FetchTournamentDetail>;
+    </FetchTournament>;
   },
 };
 

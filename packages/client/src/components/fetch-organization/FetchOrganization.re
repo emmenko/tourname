@@ -4,9 +4,6 @@ module OrganizationQuery = [%graphql
     organization(key: $key) {
       key
       name
-      memberRefs {
-        id
-      }
     }
   }
 |}
