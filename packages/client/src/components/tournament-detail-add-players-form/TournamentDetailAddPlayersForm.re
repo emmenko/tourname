@@ -50,7 +50,7 @@ module TeamForm = {
   };
 };
 
-let split = (splitIndex, listToSplit) => {
+let split = (numberOfElementsToSplit, listToSplit) => {
   let rec aux = (i, acc) =>
     fun
     | [] => (List.rev(acc), [])
@@ -60,7 +60,7 @@ let split = (splitIndex, listToSplit) => {
       } else {
         aux(i - 1, [h, ...acc], t);
       };
-  aux(splitIndex, [], listToSplit);
+  aux(numberOfElementsToSplit, [], listToSplit);
 };
 
 let component =

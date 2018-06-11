@@ -16,8 +16,8 @@ type member = {
 
 module FetchMemberQuery = [%graphql
   {|
-  query MemberQuery($id: String!, $organizationKey: String!) {
-    member(id: $id, organizationKey: $key) @bsRecord {
+  query MemberQuery($id: ID!, $organizationKey: String!) {
+    member(id: $id, organizationKey: $organizationKey) @bsRecord {
       id
       auth0Id
       email

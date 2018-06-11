@@ -40,9 +40,9 @@ let make =
                key=(string_of_int(index))
                registeredPlayerIds
                onSelect=(
-                 player => {
+                 playerId => {
                    let teamPlayerIdsWithPlayerId = [
-                     player.id,
+                     playerId,
                      ...teamPlayerIds,
                    ];
                    setFieldValue(teamPlayerIdsWithPlayerId);
