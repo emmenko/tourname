@@ -20,7 +20,7 @@ let make = (~separator, children) => {
         |> Array.mapi((index, child) => {
              let isLastChild = index == numberOfBreadcrumbs - 1;
              if (isLastChild) {
-               child;
+               <Fragment key=(string_of_int(index))> child </Fragment>;
              } else {
                <Fragment key=(string_of_int(index))>
                  ...(child, <div> (separator |> ReasonReact.string) </div>)

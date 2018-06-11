@@ -1,11 +1,7 @@
-open FetchMember;
-
-type members = list(member);
-
 module FetchMembersQuery = [%graphql
   {|
   query MembersQuery($organizationKey: String!) {
-    members(organizationKey: $key) @bsRecord @bsDecoder(fn: "Array.to_list") {
+    members(organizationKey: $organizationKey) {
       id
       auth0Id
       email

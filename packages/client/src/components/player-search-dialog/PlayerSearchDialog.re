@@ -52,22 +52,22 @@ module PlayerSearchDialog = {
                                )##value;
   type state = {
     searchText: string,
-    selectedPlayer: option(FetchMember.member),
+    selectedPlayerId: option(string),
   };
   type action =
     | SetSearchText(string)
-    | SetSelectedPlayer(FetchMember.member);
+    | SetSelectedPlayerId(string);
   let component = ReasonReact.reducerComponent("PlayerSearchDialog");
   let make =
       (~registeredPlayerIds, ~onSelect, ~onClose, ~organizationKey, _children) => {
     ...component,
-    initialState: () => {searchText: "", selectedPlayer: None},
+    initialState: () => {searchText: "", selectedPlayerId: None},
     reducer: (action, state) =>
       switch (action) {
       | SetSearchText(value) =>
         ReasonReact.Update({...state, searchText: value})
-      | SetSelectedPlayer(player) =>
-        ReasonReact.Update({...state, selectedPlayer: Some(player)})
+      | SetSelectedPlayerId(playerId) =>
+        ReasonReact.Update({...state, selectedPlayerId: Some(playerId)})
       },
     render: self => {
       let membersQuery =
@@ -95,18 +95,20 @@ module PlayerSearchDialog = {
                          switch (result) {
                          | Loading => <LoadingSpinner />
                          | Data(response) =>
-                           open FetchMember;
                            /* We need to convert it to a list to perform some basic
                               operations like `filter` and `exists` because `Array` does
                               not support it. */
                            let filteredList =
-                             response##members
-                             |> List.filter(member =>
-                                  List.exists(
-                                    id => id != member.id,
-                                    registeredPlayerIds,
+                             switch (registeredPlayerIds) {
+                             | [] => response##members |> Array.to_list
+                             | _ =>
+                               response##members
+                               |> Array.to_list
+                               |> List.filter(member =>
+                                    registeredPlayerIds
+                                    |> List.exists(id => id != member##id)
                                   )
-                                );
+                             };
                            if (List.length(filteredList) == 0) {
                              "No more members available" |> ReasonReact.string;
                            } else {
@@ -119,21 +121,21 @@ module PlayerSearchDialog = {
                                        String.lowercase(
                                          self.state.searchText,
                                        ),
-                                       String.lowercase(member.name),
+                                       String.lowercase(member##name),
                                      )
                                   || Js.String.includes(
                                        String.lowercase(
                                          self.state.searchText,
                                        ),
-                                       String.lowercase(member.email),
+                                       String.lowercase(member##email),
                                      )
                                 )
                              |> List.map(member =>
                                   <div
                                     className=(
-                                      switch (self.state.selectedPlayer) {
-                                      | Some(player) =>
-                                        if (player.id == member.id) {
+                                      switch (self.state.selectedPlayerId) {
+                                      | Some(playerId) =>
+                                        if (playerId == member##id) {
                                           Styles.activeSelectableItem
                                           |> TypedGlamor.toString;
                                         } else {
@@ -145,13 +147,15 @@ module PlayerSearchDialog = {
                                         |> TypedGlamor.toString
                                       }
                                     )
-                                    key=member.id
+                                    key=member##id
                                     onClick=(
                                       _event =>
-                                        self.send(SetSelectedPlayer(member))
+                                        self.send(
+                                          SetSelectedPlayerId(member##id),
+                                        )
                                     )>
                                     <PlayerSlot
-                                      playerId=member.id
+                                      playerId=member##id
                                       organizationKey
                                     />
                                   </div>
@@ -172,13 +176,13 @@ module PlayerSearchDialog = {
                 ("Cancel" |> ReasonReact.string)
               </button>
               (
-                switch (self.state.selectedPlayer) {
-                | Some(player) =>
+                switch (self.state.selectedPlayerId) {
+                | Some(playerId) =>
                   <button
                     disabled=false
                     onClick=(
                       event => {
-                        onSelect(player);
+                        onSelect(playerId);
                         onClose(event);
                       }
                     )>
