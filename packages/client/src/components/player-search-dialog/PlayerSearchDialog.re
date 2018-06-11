@@ -59,13 +59,7 @@ module PlayerSearchDialog = {
     | SetSelectedPlayer(FetchMember.member);
   let component = ReasonReact.reducerComponent("PlayerSearchDialog");
   let make =
-      (
-        ~registeredPlayerIds: list(string),
-        ~onSelect,
-        ~onClose,
-        ~organizationKey,
-        _children,
-      ) => {
+      (~registeredPlayerIds, ~onSelect, ~onClose, ~organizationKey, _children) => {
     ...component,
     initialState: () => {searchText: "", selectedPlayer: None},
     reducer: (action, state) =>
@@ -107,7 +101,6 @@ module PlayerSearchDialog = {
                               not support it. */
                            let filteredList =
                              response##members
-                             |> Array.to_list
                              |> List.filter(member =>
                                   List.exists(
                                     id => id != member.id,

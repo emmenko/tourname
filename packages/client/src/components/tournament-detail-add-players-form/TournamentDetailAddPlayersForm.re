@@ -1,4 +1,4 @@
-/* module Styles = {
+module Styles = {
   open TypedGlamor;
   let columns = css([display(flex), flexDirection(row)]);
   let column = css([display(flex), flexDirection(column), flex_(int(1))]);
@@ -7,30 +7,40 @@
 module TeamForm = {
   let component = ReasonReact.statelessComponent("TeamForm");
   let make =
-      (~team, ~teamSize, ~tournamentId, ~registeredPlayerIds, _children) => {
+      (
+        ~team: FetchTournament.team,
+        ~teamSize,
+        ~tournamentId,
+        ~organizationKey,
+        ~registeredPlayerIds,
+        _children,
+      ) => {
     ...component,
     render: _self =>
-      <div key=team##id>
-        <p> ("Team id: " ++ team##id |> ReasonReact.string) </p>
+      <div key=team.id>
+        <p> ("Team id: " ++ team.id |> ReasonReact.string) </p>
         (
-          team##playerRefs
-          |> Array.mapi((index, player) =>
+          team.playerRefs
+          |> List.mapi((index, playerRef: FetchTournament.playerRef) =>
                <PlayerSlot
                  key=(string_of_int(index))
-                 playerId
+                 playerId=playerRef.id
+                 organizationKey
                  onRemoveClick=(_event => Js.log("removed"))
                />
              )
+          |> Array.of_list
           |> ReasonReact.array
         )
         {
-          let teamSizeDelta = teamSize - List.length(team##playerRefs);
+          let teamSizeDelta = teamSize - List.length(team.playerRefs);
           let numOfRemainingSlots = teamSizeDelta >= 0 ? teamSizeDelta : 0;
           Array.make(numOfRemainingSlots, true)
           |> Array.mapi((index, _empty) =>
                <PlayerSlotEmpty
                  key=(string_of_int(index))
                  registeredPlayerIds
+                 fallbackOrganizationKey=organizationKey
                  onSelect=(_player => Js.log("on select"))
                />
              )
@@ -43,9 +53,18 @@ module TeamForm = {
 let component =
   ReasonReact.statelessComponent("TournamentDetailAddPlayersForm");
 
-let make = (~tournamentId, ~teamSize, ~teams, ~registeredPlayerIds, _children) => {
+let make =
+    (
+      ~tournamentId,
+      ~teamSize,
+      ~teams,
+      ~organizationKey,
+      ~registeredPlayerIds,
+      _children,
+    ) => {
   ...component,
   render: _self => {
+    let teams = teams |> Array.of_list;
     let halfTheNumberOfTeams = Array.length(teams) / 2;
     let firstHalf =
       teams |> Js.Array.slice(~start=0, ~end_=halfTheNumberOfTeams);
@@ -57,23 +76,45 @@ let make = (~tournamentId, ~teamSize, ~teams, ~registeredPlayerIds, _children) =
          );
     let canStartTournament =
       teams
-      |> Js.Array.every(team => Array.length(team##playerRefs) == teamSize);
+      |> Js.Array.every((team: FetchTournament.team) =>
+           List.length(team.playerRefs) == teamSize
+         );
 
     <div>
       <div className=(Styles.columns |> TypedGlamor.toString)>
         <div className=(Styles.column |> TypedGlamor.toString)>
           (
             firstHalf
-            |> Array.map(team => <div> (ReasonReact.string("F")) </div>)
+            |> Array.map((team: FetchTournament.team) =>
+                 <TeamForm
+                   key=team.id
+                   team
+                   teamSize
+                   organizationKey
+                   tournamentId
+                   registeredPlayerIds
+                 />
+               )
+            |> ReasonReact.array
           )
         </div>
         <div className=(Styles.column |> TypedGlamor.toString)>
           (
             secondHalf
-            |> Array.map(team => <div> (ReasonReact.string("F")) </div>)
+            |> Array.map((team: FetchTournament.team) =>
+                 <TeamForm
+                   key=team.id
+                   team
+                   teamSize
+                   organizationKey
+                   tournamentId
+                   registeredPlayerIds
+                 />
+               )
+            |> ReasonReact.array
           )
         </div>
       </div>
     </div>;
   },
-}; */
+};
