@@ -26,8 +26,8 @@ let optionArrayToList = values =>
 
 module FetchTournamentQuery = [%graphql
   {|
-  query TournamentDetail($id: String!) {
-    tournament(id: $id) @bsRecord {
+  query TournamentDetail($id: ID!, $organizationKey: String!) {
+    tournament(id: $id, organizationKey: $organizationKey) @bsRecord {
       id
       createdAt @bsDecoder(fn: "string_of_datetime")
       updatedAt @bsDecoder(fn: "string_of_datetime")

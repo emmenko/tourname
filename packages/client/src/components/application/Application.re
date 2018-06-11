@@ -28,7 +28,7 @@ let make = (~location: History.History.Location.t, _children) => {
     },
 };
 
-let default =
+let reactClass =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(~location=jsProps##location, [||])
   );

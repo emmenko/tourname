@@ -12,6 +12,8 @@ type Query {
   members(organizationKey: String!): [MemberInfo!]!
     @isAuthenticated(role: Member)
   organization(key: String!): Organization @isAuthenticated(role: Member)
+  tournament(id: ID!, organizationKey: String!): Tournament!
+    @isAuthenticated(role: Member)
   tournaments(
     organizationKey: String!
     status: [TournamentStatus!] # OR condition
@@ -19,7 +21,6 @@ type Query {
     page: Int!
     perPage: Int!
   ): [Tournament!]! @isAuthenticated(role: Member)
-  tournament(id: ID!): Tournament! @isAuthenticated(role: Member)
   singleMatches(
     organizationKey: String!
     status: MatchSingleStatus!

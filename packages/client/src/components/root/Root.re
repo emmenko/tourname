@@ -10,14 +10,14 @@ let make = _children => {
         <Route
           exact=true
           path="/auth/callback/silent"
-          component=AuthorizeCallbackSilent.default
+          component=AuthorizeCallbackSilent.reactClass
         />
         <Route
           exact=true
           path="/auth/callback"
-          component=AuthorizeCallback.default
+          component=AuthorizeCallback.reactClass
         />
-        <Route component=Application.default />
+        <Route component=Application.reactClass />
       </Switch>
     </BrowserRouter>
 };

@@ -75,7 +75,7 @@ let make = (~history: history, _children) => {
     </div>,
 };
 
-let default =
+let reactClass =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(~history=jsProps##history, [||])
   );

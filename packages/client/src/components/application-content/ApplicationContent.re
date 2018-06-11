@@ -52,7 +52,7 @@ let make = (~match: RouterMatch.match, _children) => {
                      <Route
                        exact=true
                        path="/:organizationKey"
-                       component=Dashboard.default
+                       component=Dashboard.reactClass
                      />
                      <Route
                        exact=true
@@ -62,7 +62,7 @@ let make = (~match: RouterMatch.match, _children) => {
                      <Route
                        exact=true
                        path="/:organizationKey/tournament/:tournamentId"
-                       component=TournamentDetail.default
+                       component=TournamentDetail.reactClass
                      />
                    </Switch>
                  </div>
@@ -73,7 +73,7 @@ let make = (~match: RouterMatch.match, _children) => {
   };
 };
 
-let default =
+let reactClass =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(~match=jsProps##_match, [||])
   );
