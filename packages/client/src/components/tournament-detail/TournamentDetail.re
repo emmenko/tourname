@@ -26,7 +26,6 @@ module TournamentDetailQuery = [%graphql
         size
         playerRefs {
           id
-          auth0Id
         }
       }
     }

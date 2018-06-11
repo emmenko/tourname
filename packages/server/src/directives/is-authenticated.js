@@ -19,15 +19,15 @@ const setUserInRequestContextFromJwt = context =>
     // and we can only verify the JWT using the public key.
     // For that reason, when using the GraphQL Playground we pass a custom header
     // which will skip the JWT validation. This is only possible in dev mode.
-    const userIdFromHeaders = context.request.headers['x-graphql-userid'];
-    if (userIdFromHeaders) {
+    const auth0IdFromHeaders = context.request.headers['x-graphql-auth0id'];
+    if (auth0IdFromHeaders) {
       if (isProd) {
-        console.warn('Ignoring header "X-GraphQL-UserId" in production mode.');
+        console.warn('Ignoring header "X-GraphQL-Auth0Id" in production mode.');
       } else {
         console.warn(
-          'You are passing a header "X-GraphQL-UserId", which is used to skip the JWT check. This is usually helpful when developing with GraphQL Playground. BE CAREFUL not to enable this on production!'
+          'You are passing a header "X-GraphQL-Auth0Id", which is used to skip the JWT check. This is usually helpful when developing with GraphQL Playground. BE CAREFUL not to enable this on production!'
         );
-        context.userId = userIdFromHeaders;
+        context.auth0Id = auth0IdFromHeaders;
         return resolve();
       }
     }
@@ -49,7 +49,7 @@ const setUserInRequestContextFromJwt = context =>
       if (error) reject(error);
       else {
         // Alias user id
-        context.userId = context.request.user.sub;
+        context.auth0Id = context.request.user.sub;
         resolve();
       }
     });

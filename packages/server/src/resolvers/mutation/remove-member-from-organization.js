@@ -9,7 +9,7 @@ const isTargetMemberNotSelfAndNotLastAdmin = async (args, context) => {
   if (
     adminMembersOfOrganization &&
     adminMembersOfOrganization.length === 1 &&
-    context.userId === args.memberAuth0Id
+    context.auth0Id === args.memberAuth0Id
   )
     throw new ValidationError(
       `You are the only Admin of the organization "${

@@ -4,8 +4,8 @@ let make =
     (
       ~organizationKey,
       ~teamSize,
-      ~team,
-      ~registeredPlayers,
+      ~teamPlayerIds,
+      ~registeredPlayerIds,
       ~setFieldValue,
       _children,
     ) => {
@@ -13,16 +13,17 @@ let make =
   render: _self =>
     <Fragment>
       (
-        team
-        |> List.mapi((index, player) =>
+        teamPlayerIds
+        |> List.mapi((index, playerId) =>
              <PlayerSlot
                key=(string_of_int(index))
-               player
+               playerId
+               organizationKey
                onRemoveClick=(
                  _event => {
-                   let teamWithoutPlayer =
-                     team |> List.filter(p => p != player);
-                   setFieldValue(teamWithoutPlayer);
+                   let teamPlayerIdsWithoutPlayerId =
+                     teamPlayerIds |> List.filter(id => id != playerId);
+                   setFieldValue(teamPlayerIdsWithoutPlayerId);
                  }
                )
              />
@@ -31,17 +32,20 @@ let make =
         |> ReasonReact.array
       )
       {
-        let teamSizeDelta = teamSize - List.length(team);
+        let teamSizeDelta = teamSize - List.length(teamPlayerIds);
         let numOfRemainingSlots = teamSizeDelta >= 0 ? teamSizeDelta : 0;
         Array.make(numOfRemainingSlots, true)
         |> Array.mapi((index, _empty) =>
              <PlayerSlotEmpty
                key=(string_of_int(index))
-               registeredPlayers
+               registeredPlayerIds
                onSelect=(
                  player => {
-                   let teamWithPlayer = [player, ...team];
-                   setFieldValue(teamWithPlayer);
+                   let teamPlayerIdsWithPlayerId = [
+                     player.id,
+                     ...teamPlayerIds,
+                   ];
+                   setFieldValue(teamPlayerIdsWithPlayerId);
                  }
                )
                fallbackOrganizationKey=organizationKey

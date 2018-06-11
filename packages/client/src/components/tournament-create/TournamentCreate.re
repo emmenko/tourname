@@ -79,15 +79,11 @@ module TournamentCreateFormView = {
                      };
                    errorMsg |> ReasonReact.string;
                  | Data(mutationResponse) =>
-                   switch (mutationResponse##createTournament) {
-                   | Some(tournament) =>
-                     let organizationKey = tournament##organization##key;
-                     let tournamentId = tournament##id;
-                     <Redirect
-                       to_={j|/$organizationKey/tournament/$tournamentId|j}
-                     />;
-                   | None => ReasonReact.null
-                   }
+                   let organizationKey = mutationResponse##createTournament##organization##key;
+                   let tournamentId = mutationResponse##createTournament##id;
+                   <Redirect
+                     to_={j|/$organizationKey/tournament/$tournamentId|j}
+                   />;
                  };
                <CreateTournamentForm
                  initialValues=(

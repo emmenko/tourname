@@ -1,7 +1,7 @@
 const { ValidationError } = require('../../utils/errors');
 
 const isTargetMemberNotSelf = (args, context) => {
-  if (context.userId === args.memberAuth0Id)
+  if (context.auth0Id === args.memberAuth0Id)
     throw new ValidationError(
       `You cannot set yourself admin of the organization "${
         args.organizationKey

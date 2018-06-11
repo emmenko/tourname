@@ -1,5 +1,7 @@
 const me = require('./query/me');
 const isOrganizationKeyUsed = require('./query/is-organization-key-used');
+const member = require('./query/member');
+const members = require('./query/members');
 const organization = require('./query/organization');
 const tournaments = require('./query/tournaments');
 const singleMatches = require('./query/single-matches');
@@ -7,7 +9,6 @@ const auth0Id = require('./user/auth0Id');
 const createdAt = require('./user/created-at');
 const updatedAt = require('./user/updated-at');
 const availableOrganizations = require('./user/available-organizations');
-const members = require('./organization/members');
 const createOrganization = require('./mutation/create-organization');
 const addMemberToOrganization = require('./mutation/add-member-to-organization');
 const removeMemberFromOrganization = require('./mutation/remove-member-from-organization');
@@ -25,6 +26,8 @@ module.exports = {
   Query: {
     me,
     isOrganizationKeyUsed,
+    member,
+    members,
     organization,
     tournaments,
     singleMatches,
@@ -34,9 +37,6 @@ module.exports = {
     createdAt,
     updatedAt,
     availableOrganizations,
-  },
-  Organization: {
-    members,
   },
   Mutation: {
     createOrganization,

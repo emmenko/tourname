@@ -12,7 +12,7 @@ module.exports = async (role, args, context) => {
         {
           memberRefs_some: {
             AND: [
-              { auth0Id: context.userId },
+              { auth0Id: context.auth0Id },
               role === 'Admin'
                 ? { role: 'Admin' }
                 : // Make `Admin` inclusive in all other cases
