@@ -19,7 +19,7 @@ type action =
 let component = ReasonReact.reducerComponent("PlayerSlotEmpty");
 
 let make =
-    (~registeredPlayers, ~onSelect, ~fallbackOrganizationKey, _children) => {
+    (~registeredPlayerIds, ~onSelect, ~fallbackOrganizationKey, _children) => {
   ...component,
   initialState: () => {showPlayerSearchDialog: false},
   reducer: (action, _state) =>
@@ -44,7 +44,7 @@ let make =
       (
         self.state.showPlayerSearchDialog ?
           <PlayerSearchDialog
-            registeredPlayers
+            registeredPlayerIds
             onSelect
             onClose=(_event => self.send(HidePlayerSearchDialog))
             fallbackOrganizationKey
@@ -57,7 +57,7 @@ let make =
 let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(
-      ~registeredPlayers=jsProps##registeredPlayers,
+      ~registeredPlayerIds=jsProps##registeredPlayerIds,
       ~onSelect=jsProps##onSelect,
       ~fallbackOrganizationKey=jsProps##fallbackOrganizationKey,
       [||],

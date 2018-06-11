@@ -1,14 +1,20 @@
-# import Role,Discipline,MatchSingle,MatchSingleStatus,Tournament,TournamentStatus,TournamentSize,TournamentOrderByInput from "./generated/prisma.graphql"
+# import Organization,Tournament,MatchSingle,Role,Discipline,MatchSingleStatus,TournamentStatus,TournamentSize,TournamentOrderByInput from "./generated/prisma.graphql"
 
 directive @isAuthenticated(role: Role) on FIELD_DEFINITION
 
 type Query {
-  me: User! @isAuthenticated
+  # Public
   isOrganizationKeyUsed(key: String!): Boolean!
+  # Protected
+  me: User! @isAuthenticated
+  member(id: ID!, organizationKey: String!): MemberInfo
+    @isAuthenticated(role: Member)
+  members(organizationKey: String!): [MemberInfo!]!
+    @isAuthenticated(role: Member)
   organization(key: String!): Organization @isAuthenticated(role: Member)
   tournaments(
     organizationKey: String!
-    status: [TournamentStatus!] # OR`condition
+    status: [TournamentStatus!] # OR condition
     orderBy: TournamentOrderByInput!
     page: Int!
     perPage: Int!
@@ -29,23 +35,23 @@ type Mutation {
   createOrganization(
     key: String! # unique identifier
     name: String!
-  ): Organization @isAuthenticated
+  ): Organization! @isAuthenticated
   promoteMemberToAdmin(
     organizationKey: String!
     memberAuth0Id: String!
-  ): Organization @isAuthenticated(role: Admin)
+  ): Organization! @isAuthenticated(role: Admin)
   demoteAdminToMember(
     organizationKey: String!
     memberAuth0Id: String!
-  ): Organization @isAuthenticated(role: Admin)
+  ): Organization! @isAuthenticated(role: Admin)
   addMemberToOrganization(
     organizationKey: String!
     memberAuth0Id: String!
-  ): Organization @isAuthenticated(role: Admin)
+  ): Organization! @isAuthenticated(role: Admin)
   removeMemberFromOrganization(
     organizationKey: String!
     memberAuth0Id: String!
-  ): Organization @isAuthenticated(role: Admin)
+  ): Organization! @isAuthenticated(role: Admin)
 
   createTournament(
     organizationKey: String!
@@ -53,39 +59,39 @@ type Mutation {
     size: TournamentSize!
     discipline: Discipline!
     teamSize: Int!
-  ): Tournament @isAuthenticated(role: Member)
+  ): Tournament! @isAuthenticated(role: Member)
   addPlayerToTeam(
     organizationKey: String!
     tournamentId: ID!
     teamId: ID!
     memberId: ID!
-  ): Tournament @isAuthenticated(role: Member)
+  ): Tournament! @isAuthenticated(role: Member)
   removePlayerFromTeam(
     organizationKey: String!
     tournamentId: ID!
     teamId: ID!
     memberId: ID!
-  ): Tournament @isAuthenticated(role: Member)
-  startTournament(organizationKey: String!, tournamentId: String!): Tournament
+  ): Tournament! @isAuthenticated(role: Member)
+  startTournament(organizationKey: String!, tournamentId: String!): Tournament!
     @isAuthenticated(role: Member)
   setTournamentMatchTeamWinner(
     organizationKey: String!
     tournamentId: ID!
     matchTournamentId: ID!
     teamWinnerId: ID!
-  ): Tournament @isAuthenticated(role: Member)
+  ): Tournament! @isAuthenticated(role: Member)
 
   createSingleMatch(
     organizationKey: String!
     discipline: Discipline!
     teamLeft: MatchSingleTeamInput!
     teamRight: MatchSingleTeamInput!
-  ): MatchSingle @isAuthenticated(role: Member)
+  ): MatchSingle! @isAuthenticated(role: Member)
   setSingleMatchTeamWinner(
     organizationKey: String!
     matchId: ID!
     teamWinnerId: ID!
-  ): MatchSingle @isAuthenticated(role: Member)
+  ): MatchSingle! @isAuthenticated(role: Member)
 }
 
 type User {
@@ -96,15 +102,7 @@ type User {
   name: String!
   picture: String!
   role: Role!
-  availableOrganizations: [OrganizationInfo!]!
-}
-
-type Organization {
-  key: String!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  name: String!
-  members: [MemberInfo!]!
+  availableOrganizations: [Organization!]!
 }
 
 # A `MemberInfo` contains basic user profile data plus
@@ -116,22 +114,6 @@ type MemberInfo {
   name: String!
   picture: String!
   role: Role!
-}
-
-type OrganizationInfo {
-  key: String!
-  name: String!
-}
-
-type TournamentInfo {
-  id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  name: String!
-  discipline: Discipline!
-  status: TournamentStatus!
-  size: TournamentSize!
-  teamSize: Int!
 }
 
 input MatchSingleTeamInput {

@@ -10,8 +10,9 @@
     "postinstall":
       "check-node-version --package --print && lerna run postinstall",
     "lint": "jest --config jest.eslint.config.js",
-    "format": "npm run format:js & npm run format:md",
+    "format": "npm run format:js & npm run format:graphql && npm run format:md",
     "format:js": "prettier --write 'packages/**/*.js'",
+    "format:graphql": "prettier --write 'packages/**/*.graphql'",
     "format:md": "prettier --parser markdown --write 'packages/**/*.md'",
     "start":
       "lerna run --parallel --scope \"{@tourname/server,@tourname/client}\" start",

@@ -4,7 +4,7 @@ module.exports = async (parent, args, context, info) => {
       where: {
         AND: [
           { key: args.key },
-          { memberRefs_some: { auth0Id: context.userId } },
+          { memberRefs_some: { auth0Id: context.auth0Id } },
         ],
       },
       first: 1,

@@ -15,16 +15,19 @@ const isOrganizationKeyAvailable = async (args, context) => {
  * - key
  * - name
  */
-module.exports = async (parent, args, context) => {
+module.exports = async (parent, args, context, info) => {
   await isOrganizationKeyAvailable(args, context);
 
-  return context.db.mutation.createOrganization({
-    data: {
-      key: args.key,
-      name: args.name,
-      memberRefs: {
-        create: [{ auth0Id: context.userId, role: 'Admin' }],
+  return context.db.mutation.createOrganization(
+    {
+      data: {
+        key: args.key,
+        name: args.name,
+        memberRefs: {
+          create: [{ auth0Id: context.auth0Id, role: 'Admin' }],
+        },
       },
     },
-  });
+    info
+  );
 };

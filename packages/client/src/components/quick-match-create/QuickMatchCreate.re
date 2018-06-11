@@ -8,18 +8,16 @@ module Styles = {
 };
 
 module CreateQuickMatchForm =
-  Formik.CreateForm(
-    {
-      type valueTypes = {
-        .
-        "organizationKey": string,
-        "discipline": TournameTypes.discipline,
-        "teamSize": int,
-        "teamLeft": list(FetchOrganization.member),
-        "teamRight": list(FetchOrganization.member),
-      };
-    },
-  );
+  Formik.CreateForm({
+    type valueTypes = {
+      .
+      "organizationKey": string,
+      "discipline": TournameTypes.discipline,
+      "teamSize": int,
+      "playerIdsTeamLeft": list(string),
+      "playerIdsTeamRight": list(string),
+    };
+  });
 
 module CreateQuickMatchMutation = [%graphql
   {|
@@ -68,15 +66,11 @@ module QuickMatchCreateFormView = {
                      };
                    errorMsg |> ReasonReact.string;
                  | Data(mutationResponse) =>
-                   switch (mutationResponse##createSingleMatch) {
-                   | Some(singleMatch) =>
-                     let organizationKey = singleMatch##organization##key;
-                     let singleMatchId = singleMatch##id;
-                     <Redirect
-                       to_={j|/$organizationKey/match/$singleMatchId|j}
-                     />;
-                   | None => ReasonReact.null
-                   }
+                   let organizationKey = mutationResponse##createSingleMatch##organization##key;
+                   let singleMatchId = mutationResponse##createSingleMatch##id;
+                   <Redirect
+                     to_={j|/$organizationKey/match/$singleMatchId|j}
+                   />;
                  };
                <CreateQuickMatchForm
                  initialValues=(
@@ -84,26 +78,28 @@ module QuickMatchCreateFormView = {
                      "organizationKey": availableOrganizations[0]##key,
                      "discipline": `TableTennis,
                      "teamSize": 1,
-                     "teamLeft": [],
-                     "teamRight": [],
+                     "playerIdsTeamLeft": [],
+                     "playerIdsTeamRight": [],
                    })
                  )
                  validate=(
                    values => {
                      let errors = Js.Dict.empty();
-                     if (List.length(values##teamLeft) != values##teamSize) {
+                     if (List.length(values##playerIdsTeamLeft)
+                         != values##teamSize) {
                        Js.Dict.set(
                          errors,
-                         "teamLeft",
+                         "playerIdsTeamLeft",
                          "Each team must contain "
                          ++ string_of_int(values##teamSize)
                          ++ " players",
                        );
                      };
-                     if (List.length(values##teamRight) != values##teamSize) {
+                     if (List.length(values##playerIdsTeamRight)
+                         != values##teamSize) {
                        Js.Dict.set(
                          errors,
-                         "teamRight",
+                         "playerIdsTeamRight",
                          "Each team must contain "
                          ++ string_of_int(values##teamSize)
                          ++ " players",
@@ -121,16 +117,12 @@ module QuickMatchCreateFormView = {
                          ~teamLeft={
                            "size": values##teamSize,
                            "playerIds":
-                             values##teamLeft
-                             |> List.map(player => player##id)
-                             |> Array.of_list,
+                             values##playerIdsTeamLeft |> Array.of_list,
                          },
                          ~teamRight={
                            "size": values##teamSize,
                            "playerIds":
-                             values##teamRight
-                             |> List.map(player => player##id)
-                             |> Array.of_list,
+                             values##playerIdsTeamRight |> Array.of_list,
                          },
                          (),
                        );
@@ -158,9 +150,11 @@ module QuickMatchCreateFormView = {
                  render=(
                    t => {
                      let values = CreateQuickMatchForm.FormikProps.values(t);
-                     let registeredPlayers =
-                       List.append(values##teamLeft, values##teamRight)
-                       |> List.map(p => p##id);
+                     let registeredPlayerIds =
+                       List.append(
+                         values##playerIdsTeamLeft,
+                         values##playerIdsTeamRight,
+                       );
                      <form
                        onSubmit=(
                          CreateQuickMatchForm.FormikProps.handleSubmit(t)
@@ -244,18 +238,18 @@ module QuickMatchCreateFormView = {
                            <PlayersTeamSelection
                              organizationKey=values##organizationKey
                              teamSize=values##teamSize
-                             team=values##teamLeft
-                             registeredPlayers
+                             teamPlayerIds=values##playerIdsTeamLeft
+                             registeredPlayerIds
                              setFieldValue=(
                                newTeam => {
                                  CreateQuickMatchForm.FormikProps.setFieldValue(
                                    t,
-                                   ~key="teamLeft",
+                                   ~key="playerIdsTeamLeft",
                                    ~value=Formik.toAny(newTeam),
                                  );
                                  CreateQuickMatchForm.FormikProps.setFieldTouched(
                                    t,
-                                   ~key="teamLeft",
+                                   ~key="playerIdsTeamLeft",
                                    ~value=true,
                                  );
                                }
@@ -270,18 +264,18 @@ module QuickMatchCreateFormView = {
                            <PlayersTeamSelection
                              organizationKey=values##organizationKey
                              teamSize=values##teamSize
-                             team=values##teamRight
-                             registeredPlayers
+                             teamPlayerIds=values##playerIdsTeamRight
+                             registeredPlayerIds
                              setFieldValue=(
                                newTeam => {
                                  CreateQuickMatchForm.FormikProps.setFieldValue(
                                    t,
-                                   ~key="teamRight",
+                                   ~key="playerIdsTeamRight",
                                    ~value=Formik.toAny(newTeam),
                                  );
                                  CreateQuickMatchForm.FormikProps.setFieldTouched(
                                    t,
-                                   ~key="teamRight",
+                                   ~key="playerIdsTeamRight",
                                    ~value=true,
                                  );
                                }

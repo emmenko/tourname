@@ -6,16 +6,14 @@ module Styles = {
 };
 
 module CreateOrganizationForm =
-  Formik.CreateForm(
-    {
-      type valueTypes = {
-        .
-        "name": string,
-        "key": string,
-        "isValidKey": bool,
-      };
-    },
-  );
+  Formik.CreateForm({
+    type valueTypes = {
+      .
+      "name": string,
+      "key": string,
+      "isValidKey": bool,
+    };
+  });
 
 let noWhitespacesRegex = [%bs.re "/\\s/g"];
 
@@ -73,13 +71,9 @@ let make = _children => {
                      };
                    errorMsg |> ReasonReact.string;
                  | Data(response) =>
-                   switch (response##createOrganization) {
-                   | Some(org) =>
-                     let createOrganizationKey = org##key;
-                     Js.log2("Organization created", createOrganizationKey);
-                     <Redirect to_={j|/$createOrganizationKey|j} />;
-                   | None => ReasonReact.null
-                   }
+                   let createOrganizationKey = response##createOrganization##key;
+                   Js.log2("Organization created", createOrganizationKey);
+                   <Redirect to_={j|/$createOrganizationKey|j} />;
                  };
                <CreateOrganizationForm
                  initialValues=(
