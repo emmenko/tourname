@@ -125,7 +125,7 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@commercetools/sdk-middleware-http/-/sdk-middleware-http-4.0.0.tgz#9c1e6dee0f67fb90a33d3a713bfceba4bf9507b8"
 
-"@commitlint/cli@^7.0.0":
+"@commitlint/cli@7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@commitlint/cli/-/cli-7.0.0.tgz#3bf86d8ab2fbd5074c3114b7ba3f4b41b775f3dc"
   dependencies:
@@ -140,7 +140,7 @@
     lodash.pick "4.4.0"
     meow "^5.0.0"
 
-"@commitlint/config-conventional@^7.0.1":
+"@commitlint/config-conventional@7.0.1":
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/@commitlint/config-conventional/-/config-conventional-7.0.1.tgz#276977f8ee60d8c56d7fdd43296af76dfee9b5f7"
 
@@ -4750,9 +4750,9 @@ graphql@^0.12.3:
   dependencies:
     iterall "1.1.3"
 
-graphql_ppx@0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/graphql_ppx/-/graphql_ppx-0.2.1.tgz#7e8c164e271d21e9d19ed7b302a239c1d5b0b189"
+graphql_ppx@0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/graphql_ppx/-/graphql_ppx-0.2.3.tgz#d7bd39876518b0b183b1e472b2898cb11cdf7aff"
   dependencies:
     request "^2.82.0"
     yargs "^11.0.0"
