@@ -19,7 +19,7 @@ const server = new GraphQLServer({
       typeDefs: 'src/generated/prisma.graphql', // the auto-generated GraphQL schema of the Prisma API
       endpoint: process.env.PRISMA_API_URL, // the endpoint of the Prisma API
       debug: process.env.DEBUG === 'true', // log all GraphQL queries & mutations sent to the Prisma API
-      // secret: 'mysecret123', // only needed if specified in `database/prisma.yml`
+      secret: process.env.PRISMA_API_SECRET, // only needed if specified in `database/prisma.yml`
     }),
     loaders: {
       users: new DataLoader(ids => {
