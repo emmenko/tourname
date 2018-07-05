@@ -8,7 +8,9 @@
   AUTH_CALLBACK_URL = "https://tourname.netlify.com/auth/callback"
   API_URL = "https://tourname-staging.now.sh/graphql"
 
+# COMMENT: This a rule for Single Page Applications
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = true
