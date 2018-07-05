@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "npm run clean && npm run build:bsb && npm run build:app",
-    "build:app": "parcel build src/index.re",
+    "build:app": "parcel build public/index.html",
     "build:bsb": "bsb -make-world",
     "start": "npm-run-all --parallel start:app start:bsb",
     "start:app": "parcel public/index.html --port 4000",

@@ -1,5 +1,5 @@
 [build]
-  command = "pushd packages/client; yarn build; ls -lah dist; popd"
+  command = "pushd packages/client; yarn build; popd"
   publish = "packages/client/dist"
 
 [build.environment]
