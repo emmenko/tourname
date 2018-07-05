@@ -3,9 +3,6 @@ open ReasonReactRouterDom;
 [@bs.module "../tournaments-list"]
 external tournamentsList : ReasonReact.reactClass = "default";
 
-[@bs.module "../tournament-detail"]
-external tournamentDetail : ReasonReact.reactClass = "default";
-
 module NotFound = {
   let component = ReasonReact.statelessComponent("NotFound");
   let make = _children => {

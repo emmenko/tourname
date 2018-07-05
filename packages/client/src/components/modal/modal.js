@@ -6,6 +6,7 @@ const modalRoot = document.getElementById('modal-root');
 
 class Modal extends React.PureComponent {
   static displayName = 'Modal';
+
   static propTypes = {
     children: PropTypes.element.isRequired,
   };

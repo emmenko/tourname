@@ -23,8 +23,3 @@ let make = (~name=?, _children) => {
     | None => <h1 className=(Styles.placeholder |> TypedGlamor.toString) />
     },
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(~name=jsProps##name, [||])
-  );

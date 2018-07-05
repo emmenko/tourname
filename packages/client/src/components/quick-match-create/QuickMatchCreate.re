@@ -305,11 +305,12 @@ module QuickMatchCreateFormView = {
 
 let component = ReasonReact.statelessComponent("QuickMatchCreate");
 
-let make = _children => {
+let make = (~onCancel, _children) => {
   ...component,
   render: _self =>
     <div className=(Styles.formView |> TypedGlamor.toString)>
       <h3> ("Create a Quick Match" |> ReasonReact.string) </h3>
+      <button onClick=onCancel> ("Cancel" |> ReasonReact.string) </button>
       <FetchUser>
         ...(
              ({result}) =>
@@ -326,5 +327,3 @@ let make = _children => {
       </FetchUser>
     </div>,
 };
-
-let default = ReasonReact.wrapReasonForJs(~component, () => make([||]));

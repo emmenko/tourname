@@ -34,8 +34,3 @@ let make = (~value, ~onChange, _children) => {
       )
     </select>,
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(~value=jsProps##value, ~onChange=jsProps##onChange, [||])
-  );

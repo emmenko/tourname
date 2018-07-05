@@ -235,14 +235,3 @@ let make =
       )
     />,
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~registeredPlayerIds=jsProps##registeredPlayerIds,
-      ~onSelect=jsProps##onSelect,
-      ~onClose=jsProps##onClose,
-      ~fallbackOrganizationKey=jsProps##fallbackOrganizationKey,
-      [||],
-    )
-  );

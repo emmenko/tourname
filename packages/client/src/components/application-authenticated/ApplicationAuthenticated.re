@@ -1,11 +1,5 @@
 open ReasonReactRouterDom;
 
-[@bs.module "../organization-create"]
-external organizationCreate : ReasonReact.reactClass = "default";
-
-[@bs.module "../select-new-tournament"]
-external selectNewTournament : ReasonReact.reactClass = "default";
-
 [@bs.scope "localStorage"] [@bs.val] [@bs.return nullable]
 external getItem : string => option(string) = "";
 
@@ -34,12 +28,12 @@ let make = _children => {
                      <Route
                        exact=true
                        path="/new"
-                       component=selectNewTournament
+                       component=SelectNewTournament.reactClass
                      />
                      <Route
                        exact=true
                        path="/organizations/new"
-                       component=organizationCreate
+                       component=OrganizationCreate.reactClass
                      />
                      <Route
                        render=(
@@ -78,5 +72,3 @@ let make = _children => {
       </FetchUser>
     </div>,
 };
-
-let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

@@ -58,8 +58,3 @@ let make = (~value, ~onChange, _children) => {
     </FetchOrganizationKeyCheck>;
   },
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(~value=jsProps##value, ~onChange=jsProps##onChange, [||])
-  );

@@ -25,8 +25,3 @@ let make = (~linkTo: option(string)=?, children) => {
       )
     },
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(~linkTo=jsProps##linkTo, jsProps##children)
-  );

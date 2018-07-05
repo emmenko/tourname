@@ -32,8 +32,3 @@ let make = (~separator, children) => {
     </div>;
   },
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(~separator=jsProps##separator, jsProps##children)
-  );
