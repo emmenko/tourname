@@ -7,3 +7,8 @@
   AUTH_CLIENT_ID = "ZpxENtfYcVeKgokEz5WkNpyy8PQC8XmN"
   AUTH_CALLBACK_URL = "https://tourname.netlify.com/auth/callback"
   API_URL = "https://tourname-staging.now.sh/graphql"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
