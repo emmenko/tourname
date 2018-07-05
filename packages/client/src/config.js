@@ -1,14 +1,10 @@
-export const APP_CONFIG = {
-  url: 'http://localhost:4000',
+const config = {
+  appUrl: process.env.APP_URL,
+  apiUrl: process.env.API_URL,
+  authDomain: 'tourname.eu.auth0.com',
+  authClientId: process.env.AUTH_CLIENT_ID,
+  authCallbackUrl: process.env.AUTH_CALLBACK_URL,
+  authApiUrl: 'https://tourname.eu.auth0.com/api/v2/',
 };
 
-export const AUTH_CONFIG = {
-  domain: 'tourname.eu.auth0.com',
-  clientId: 'ZpxENtfYcVeKgokEz5WkNpyy8PQC8XmN',
-  callbackUrl: 'http://localhost:4000/auth/callback',
-  apiUrl: 'https://tourname.eu.auth0.com/api/v2/',
-};
-
-export const GRAPHQL_CONFIG = {
-  url: 'http://localhost:3999/graphql',
-};
+export default config;
