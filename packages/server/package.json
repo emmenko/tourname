@@ -7,7 +7,8 @@
     "start": "node -r dotenv/config src/index.js",
     "dev": "npm-run-all --parallel start playground",
     "playground": "graphql playground",
-    "prisma": "prisma"
+    "prisma": "prisma",
+    "now-deploy": "now --public && now alias"
   },
   "dependencies": {
     "@commercetools/sdk-client": "1.5.6",
