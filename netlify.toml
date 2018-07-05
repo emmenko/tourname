@@ -1,3 +1,9 @@
 [build]
   command = "cd packages/client; yarn build"
   publish = "packages/client/dist"
+
+[build.environment]
+  APP_URL = "https://tourname.netlify.com"
+  AUTH_CLIENT_ID = "ZpxENtfYcVeKgokEz5WkNpyy8PQC8XmN"
+  AUTH_CALLBACK_URL = "https://tourname.netlify.com/auth/callback"
+  API_URL = "https://tourname-staging.now.sh/graphql"

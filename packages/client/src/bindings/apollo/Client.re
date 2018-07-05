@@ -6,10 +6,9 @@ external asJsObject : 'a => Js.t({..}) = "%identity";
 external apolloErrorToJsError : ReasonApolloTypes.apolloError => Js.Exn.t =
   "%identity";
 
-type graphqlConfig = {. "url": string};
+type appConfig = {. "apiUrl": string};
 
-[@bs.module "../../config.js"]
-external config : graphqlConfig = "GRAPHQL_CONFIG";
+[@bs.module "../../config.js"] external config : appConfig = "default";
 
 /* Create an InMemoryCache */
 type dataObject = {
@@ -59,7 +58,7 @@ let inMemoryCache =
   ApolloInMemoryCache.createInMemoryCache(~dataIdFromObject, ());
 
 /* Create an HTTP Link */
-let httpLink = ApolloLinks.createHttpLink(~uri=config##url, ());
+let httpLink = ApolloLinks.createHttpLink(~uri=config##apiUrl, ());
 
 /* Create an Auth Link */
 let authLink =

@@ -1,21 +1,22 @@
 import { WebAuth } from 'auth0-js';
-import { APP_CONFIG, AUTH_CONFIG } from '../config';
+import config from '../config';
 
 const STORAGE_KEY_ACCESS_TOKEN = 'tourname:access_token';
 const STORAGE_KEY_ACCESS_TOKEN_EXPIRES_AT = 'tourname:access_token_expires_at';
 const STORAGE_KEY_ID_TOKEN = 'tourname:id_token';
 
 const auth0Options = {
-  domain: AUTH_CONFIG.domain,
-  clientID: AUTH_CONFIG.clientId,
-  redirectUri: AUTH_CONFIG.callbackUrl,
-  audience: AUTH_CONFIG.apiUrl,
+  domain: config.authDomain,
+  clientID: config.authClientId,
+  redirectUri: config.authCallbackUrl,
+  audience: config.authApiUrl,
   responseType: 'token id_token',
   scope: 'openid profile email',
 };
 
 class Auth {
   webAuth0 = new WebAuth(auth0Options);
+
   tokenRenewalTimeout = null;
 
   authorize = (...args) => this.webAuth0.authorize(...args);
@@ -31,8 +32,8 @@ class Auth {
 
     // Logout from auth0
     this.webAuth0.logout({
-      redirectTo: APP_CONFIG.url,
-      clientID: AUTH_CONFIG.clientId,
+      redirectTo: config.appUrl,
+      clientID: config.authClientId,
     });
   };
 
@@ -75,8 +76,8 @@ class Auth {
     console.warn('Attempting to renew token');
     this.webAuth0.renewAuth(
       {
-        audience: AUTH_CONFIG.apiUrl,
-        redirectUri: `${AUTH_CONFIG.callbackUrl}/silent`,
+        audience: config.authApiUrl,
+        redirectUri: `${config.authCallbackUrl}/silent`,
         usePostMessage: true,
       },
       (error, authResult) => {
