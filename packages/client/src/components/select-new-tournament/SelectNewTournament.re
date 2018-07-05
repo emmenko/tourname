@@ -1,27 +1,3 @@
-/* FIXME: remove once the component has been migrated to reason */
-module QuickMatchCreate = {
-  [@bs.module "../quick-match-create"]
-  external reactClass : ReasonReact.reactClass = "default";
-  let make = (~onCancel, children) =>
-    ReasonReact.wrapJsForReason(
-      ~reactClass,
-      ~props={"onCancel": onCancel},
-      children,
-    );
-};
-
-/* FIXME: remove once the component has been migrated to reason */
-module TournamentCreate = {
-  [@bs.module "../tournament-create"]
-  external reactClass : ReasonReact.reactClass = "default";
-  let make = (~onCancel, children) =>
-    ReasonReact.wrapJsForReason(
-      ~reactClass,
-      ~props={"onCancel": onCancel},
-      children,
-    );
-};
-
 module Styles = {
   open TypedGlamor;
   let selectionHeader =
@@ -124,4 +100,4 @@ let make = _children => {
   },
 };
 
-let default = ReasonReact.wrapReasonForJs(~component, () => make([||]));
+let reactClass = ReasonReact.wrapReasonForJs(~component, () => make([||]));

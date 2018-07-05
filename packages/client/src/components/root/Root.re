@@ -21,5 +21,3 @@ let make = _children => {
       </Switch>
     </BrowserRouter>
 };
-
-let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

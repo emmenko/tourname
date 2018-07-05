@@ -112,5 +112,3 @@ let make = _children => {
          )
     </FetchUser>,
 };
-
-let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

@@ -8,5 +8,3 @@ let make = _children => {
       ("Landing page" |> ReasonReact.string)
     </div>,
 };
-
-let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));
