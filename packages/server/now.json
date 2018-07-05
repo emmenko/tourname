@@ -1,0 +1,5 @@
+{
+  "dotenv": ".env.staging",
+  "alias": "tourname-staging",
+  "name": "tourname-staging"
+}
