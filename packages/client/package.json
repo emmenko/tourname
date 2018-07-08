@@ -25,7 +25,7 @@
     "bs-downshift": "1.0.0",
     "bs-typed-css-core": "glennsl/bs-typed-css-core#f5154957359a5c208db104d1aafba4fb5413b4c5",
     "bs-typed-glamor": "glennsl/bs-typed-glamor#622a26502d0e6e94ed1a0b16fb45d860bf8366eb",
-    "downshift": "1.25.0",
+    "downshift": "1.31.16",
     "formik": "0.11.11",
     "glamor": "2.20.40",
     "graphql": "0.13.2",
