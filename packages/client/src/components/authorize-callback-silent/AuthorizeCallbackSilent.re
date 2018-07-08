@@ -1,7 +1,3 @@
-type appConfig = {. "url": string};
-
-[@bs.module "../../config.js"] external config : appConfig = "APP_CONFIG";
-
 [@bs.scope ("window", "parent")] [@bs.val]
 external postMessage : ('a, string) => unit = "postMessage";
 
@@ -15,10 +11,10 @@ let make = _children => {
       let authResult = Js.Nullable.toOption(authResult_);
       switch (error, authResult) {
       | (None, None) =>
-        postMessage(Js_null_undefined.undefined, config##url);
+        postMessage(Js_null_undefined.undefined, Config.appUrl);
         ();
-      | (Some(e), _) => postMessage(e, config##url)
-      | (_, Some(r)) => postMessage(r, config##url)
+      | (Some(e), _) => postMessage(e, Config.appUrl)
+      | (_, Some(r)) => postMessage(r, Config.appUrl)
       };
     });
     ();
@@ -26,4 +22,5 @@ let make = _children => {
   render: _self => ReasonReact.null,
 };
 
-let reactClass = ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));
+let reactClass =
+  ReasonReact.wrapReasonForJs(~component, _jsProps => make([||]));

@@ -1,5 +1,5 @@
 import { WebAuth } from 'auth0-js';
-import config from '../config';
+import * as config from '../Config.bs';
 
 const STORAGE_KEY_ACCESS_TOKEN = 'tourname:access_token';
 const STORAGE_KEY_ACCESS_TOKEN_EXPIRES_AT = 'tourname:access_token_expires_at';
