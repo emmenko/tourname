@@ -6,10 +6,6 @@ external asJsObject : 'a => Js.t({..}) = "%identity";
 external apolloErrorToJsError : ReasonApolloTypes.apolloError => Js.Exn.t =
   "%identity";
 
-type appConfig = {. "apiUrl": string};
-
-[@bs.module "../../config.js"] external config : appConfig = "default";
-
 /* Create an InMemoryCache */
 type dataObject = {
   .
@@ -58,7 +54,7 @@ let inMemoryCache =
   ApolloInMemoryCache.createInMemoryCache(~dataIdFromObject, ());
 
 /* Create an HTTP Link */
-let httpLink = ApolloLinks.createHttpLink(~uri=config##apiUrl, ());
+let httpLink = ApolloLinks.createHttpLink(~uri=Config.apiUrl, ());
 
 /* Create an Auth Link */
 let authLink =
