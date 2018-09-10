@@ -42,7 +42,7 @@
     "eslint-plugin-prettier": "2.6.1",
     "eslint-plugin-react": "7.10.0",
     "husky": "0.14.3",
-    "jest": "23.3.0",
+    "jest": "23.6.0",
     "jest-runner-eslint": "0.6.0",
     "jest-silent-reporter": "0.0.5",
     "jest-plugin-filename": "0.0.1",
