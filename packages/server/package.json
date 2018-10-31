@@ -24,7 +24,7 @@
     "prisma-binding": "2.1.0"
   },
   "devDependencies": {
-    "graphql-cli": "2.16.4",
+    "graphql-cli": "2.17.0",
     "prisma": "1.11.0"
   }
 }
