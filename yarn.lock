@@ -117,9 +117,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@commercetools/sdk-client@1.5.6":
-  version "1.5.6"
-  resolved "https://registry.yarnpkg.com/@commercetools/sdk-client/-/sdk-client-1.5.6.tgz#dee49e825d13eda6646de325444490f3116c0a2a"
+"@commercetools/sdk-client@1.5.10":
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/@commercetools/sdk-client/-/sdk-client-1.5.10.tgz#7c01818c176393846368b8e8617ec73d1e889046"
 
 "@commercetools/sdk-middleware-http@4.0.0":
   version "4.0.0"
