@@ -121,9 +121,9 @@
   version "1.5.6"
   resolved "https://registry.yarnpkg.com/@commercetools/sdk-client/-/sdk-client-1.5.6.tgz#dee49e825d13eda6646de325444490f3116c0a2a"
 
-"@commercetools/sdk-middleware-http@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@commercetools/sdk-middleware-http/-/sdk-middleware-http-4.0.0.tgz#9c1e6dee0f67fb90a33d3a713bfceba4bf9507b8"
+"@commercetools/sdk-middleware-http@4.0.10":
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/@commercetools/sdk-middleware-http/-/sdk-middleware-http-4.0.10.tgz#5b08e23906f4542a7a920befc576b59ede478c78"
 
 "@commitlint/cli@7.0.0":
   version "7.0.0"
