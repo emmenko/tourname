@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@commercetools/sdk-client": "1.5.6",
-    "@commercetools/sdk-middleware-http": "4.0.0",
+    "@commercetools/sdk-middleware-http": "4.0.10",
     "dataloader": "1.4.0",
     "dotenv": "6.0.0",
     "express-jwt": "5.3.1",
