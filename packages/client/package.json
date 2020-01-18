@@ -21,7 +21,7 @@
     "apollo-link-context": "1.0.8",
     "apollo-link-error": "1.1.0",
     "apollo-link-http": "1.5.4",
-    "auth0-js": "9.6.1",
+    "auth0-js": "9.12.2",
     "bs-downshift": "1.0.0",
     "bs-typed-css-core": "glennsl/bs-typed-css-core#f5154957359a5c208db104d1aafba4fb5413b4c5",
     "bs-typed-glamor": "glennsl/bs-typed-glamor#622a26502d0e6e94ed1a0b16fb45d860bf8366eb",
