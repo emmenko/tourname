@@ -19,7 +19,7 @@ services:
             user: root
             password: prisma
   db:
-    image: mysql:5.7@sha256:81679f23e0ece3e50a7300050191272e5afbf5b66be9b60d2ee0e8b575b152e2
+    image: mysql:5.7@sha256:7eab7393cf42c596b8491e6b3d6931eb116e998e2307bb7901b0379a4d36bf5c
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: prisma
